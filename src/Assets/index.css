@@ -2,16 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  @apply bg-[#FCFCFC];
+}
+.app {
+  @apply flex flex-col;
+}
+.body {
+  @apply flex-1 flex-col min-h-screen;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.navbar {
+  @apply bg-[#333333] flex p-4 text-[#19B391];
+}
+.nav-start {
+  @apply flex flex-row items-center;
+}
+.nav-center {
+  @apply flex flex-1 justify-center items-center space-x-4;
+}
+.nav-end {
+  @apply flex justify-end items-center space-x-2;
+}
+.nav-link {
+  @apply flex items-center space-x-1;
+}
+.SearchInput {
+  @apply border-2 border-black rounded-lg p-1 text-black;
+}
+.footer {
+  @apply bg-[#333333] flex p-4 text-white justify-center;
 }
