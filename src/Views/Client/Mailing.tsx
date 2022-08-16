@@ -8,9 +8,9 @@ export default function Mailing() {
     setIsShown((current) => !current);
   };
   return (
-    <div className="max-w-2xl mt-4 container mx-auto">
+    <div className="container max-w-2xl mx-auto mt-4">
       <div className="flex">
-        <h1 className="text-4xl flex-1">Mailing</h1>
+        <h1 className="flex-1 text-4xl">Mailing</h1>
         <button
           type="button"
           onClick={handleClick}
@@ -20,7 +20,12 @@ export default function Mailing() {
           Create Campagne
         </button>
       </div>
-      {isShown && <Emailform />}
+      {isShown && (
+        <div>
+          <h1>Create campagne</h1>
+          <Emailform />
+        </div>
+      )}
     </div>
   );
 }

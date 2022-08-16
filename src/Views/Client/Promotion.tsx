@@ -10,9 +10,9 @@ export default function Promotion() {
   };
 
   return (
-    <div className="max-w-6xl mt-4 container mx-auto">
+    <div className="container max-w-6xl mx-auto mt-4">
       <div className="flex">
-        <h1 className="text-4xl flex-1">Promotion</h1>
+        <h1 className="flex-1 text-4xl">Promotion</h1>
         <button
           type="button"
           onClick={handleClick}
@@ -22,7 +22,12 @@ export default function Promotion() {
           Add Promotion
         </button>
       </div>
-      {isShown && <Promotionform />}
+      {isShown && (
+        <div>
+          <h1>Add Promotion</h1>
+          <Promotionform />
+        </div>
+      )}
     </div>
   );
 }

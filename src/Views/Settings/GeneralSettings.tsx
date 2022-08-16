@@ -13,9 +13,9 @@ export default function GeneralSettings() {
     setCard((current) => !current);
   };
   return (
-    <div className="max-w-6xl mt-4 container mx-auto">
+    <div className="container max-w-6xl mx-auto mt-4">
       <div className="flex">
-        <h1 className="text-4xl flex-1">GeneralSettings</h1>
+        <h1 className="flex-1 text-4xl">GeneralSettings</h1>
         <button
           type="button"
           onClick={handleClick}
@@ -33,8 +33,18 @@ export default function GeneralSettings() {
           Edit card
         </button>
       </div>
-      {Profile && <ProfileForm />}
-      {Card && <Cardform />}
+      {Profile && (
+        <div>
+          <h1>Edit profile</h1>
+          <ProfileForm />
+        </div>
+      )}
+      {Card && (
+        <div>
+          <h1>Edit card</h1>
+          <Cardform />
+        </div>
+      )}
     </div>
   );
 }

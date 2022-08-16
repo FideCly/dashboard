@@ -1,82 +1,77 @@
 import * as React from "react";
-import useWebSocket from "react-use-websocket";
-const WSS_FEED_URL: string = "ws://localhost:8999";
 
 export default function ValidationPopup() {
-  const [message, setMessage] = React.useState("");
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isValid, setIsValid] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
-  const [isWarning, setIsWarning] = React.useState(false);
-  const [isInfo, setIsInfo] = React.useState(false);
-  const [isDanger, setIsDanger] = React.useState(false);
-  const [isPrimary, setIsPrimary] = React.useState(false);
-  const [isSecondary, setIsSecondary] = React.useState(false);
-  const [isLight, setIsLight] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(false);
-  const [isLink, setIsLink] = React.useState(false);
-  const [isSmall, setIsSmall] = React.useState(false);
-  const [isMedium, setIsMedium] = React.useState(false);
-  const [isLarge, setIsLarge] = React.useState(false);
-
-  const { sendMessage, lastMessage } = useWebSocket(WSS_FEED_URL, {
-    onOpen: () => {
-      console.log("WebSocket connection opened");
-    },
-  });
-  React.useEffect(() => {
-    if (lastMessage) {
-      setMessage(lastMessage);
-      setIsOpen(true);
-    }
-  }, [lastMessage]);
-  React.useEffect(() => {
-    if (message) {
-      const messageObject = JSON.parse(message);
-      setIsOpen(true);
-      setIsValid(messageObject.valid);
-      setIsLoading(messageObject.loading);
-      setIsError(messageObject.error);
-      setIsSuccess(messageObject.success);
-      setIsWarning(messageObject.warning);
-      setIsInfo(messageObject.info);
-      setIsDanger(messageObject.danger);
-      setIsPrimary(messageObject.primary);
-      setIsSecondary(messageObject.secondary);
-      setIsLight(messageObject.light);
-      setIsDark(messageObject.dark);
-      setIsLink(messageObject.link);
-      setIsSmall(messageObject.small);
-      setIsMedium(messageObject.medium);
-      setIsLarge(messageObject.large);
-    }
-  }, [message]);
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-  const handleSend = () => {
-    sendMessage(message);
-  };
   return (
     <div
-      className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      id="toast-interactive"
+      className="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400"
       role="alert"
     >
-      <strong className="font-bold">Validation</strong>
-      <span className="block sm:inline">{message}</span>
-      <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-        <svg
-          className="fill-current h-6 w-6 text-red-500"
-          role="button"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
+      <div className="flex">
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
+          <svg
+            aria-hidden="true"
+            className="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span className="sr-only">Refresh icon</span>
+        </div>
+        <div className="ml-3 text-sm font-normal">
+          <span className="mb-1 text-sm font-semibold text-gray-900 dark:text-white">
+            Update available
+          </span>
+          <div className="mb-2 text-sm font-normal">
+            A new software version is available for download.
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <a
+                href="#"
+                className="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+              >
+                Update
+              </a>
+            </div>
+            <div>
+              <a
+                href="#"
+                className="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+              >
+                Validate
+              </a>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+          data-dismiss-target="#toast-interactive"
+          aria-label="Close"
         >
-          <title>Close</title>
-          <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-        </svg>
-      </span>
+          <span className="sr-only">Close</span>
+          <svg
+            aria-hidden="true"
+            className="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
