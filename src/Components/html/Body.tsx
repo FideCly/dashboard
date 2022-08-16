@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
-import Mailing from "../Views/Client/Mailing";
-import Promotion from "../Views/Client/Promotion";
-import Scanner from "../Views/Client/Scanner";
-import Analytics from "../Views/Data/Analytics";
-import Dashboard from "../Views/Home/Dashboard";
-import GeneralSettings from "../Views/Settings/GeneralSettings";
+import Mailing from "../../Views/Client/Mailing";
+import Promotion from "../../Views/Client/Promotion";
+import Scanner from "../../Views/Client/Scanner";
+import Analytics from "../../Views/Data/Analytics";
+import Dashboard from "../../Views/Home/Dashboard";
+import GeneralSettings from "../../Views/Settings/GeneralSettings";
 
 export default function Body() {
   return (
