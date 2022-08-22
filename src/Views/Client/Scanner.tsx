@@ -10,10 +10,10 @@ export default function Scanner() {
           facingMode: "environment",
         }}
         onResult={(result, error) => {
-          if (!!result) {
+          if (result) {
             setData(result.getText());
           }
-          if (!!error) {
+          if (error) {
             console.info(error);
           }
         }}

@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer, ToastContentProps } from "react-toastify";
 import useWebSocket from "react-use-websocket";
 const WSS_FEED_URL = "ws://localhost:8080/ws";
+
 function App() {
   const { sendJsonMessage, getWebSocket } = useWebSocket(WSS_FEED_URL, {
     onOpen: () => console.log("WebSocket connection opened."),

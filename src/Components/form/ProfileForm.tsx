@@ -25,7 +25,7 @@ export default function ProfileForm() {
     formData.append("country", data.country);
     formData.append("website", data.website);
     axios
-      .post("http://localhost:8080/api/profile", formData)
+      .post(process.env.REACT_APP_API_URL + "/api/profile", formData)
       .then(() => {
         toast.success("Profile created successfully");
       })
