@@ -11,9 +11,8 @@ export default function Scanner() {
         }}
         onResult={(result, error) => {
           if (!!result) {
-            setData(result?.text);
+            setData(result.getText());
           }
-
           if (!!error) {
             console.info(error);
           }

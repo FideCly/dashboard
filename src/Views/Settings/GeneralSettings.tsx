@@ -6,10 +6,10 @@ import Cardform from "../../Components/form/CardForm";
 export default function GeneralSettings() {
   const [Profile, setProfile] = useState(false);
   const [Card, setCard] = useState(false);
-  const handleClick = (envent) => {
+  const handleClick = (_envent: any) => {
     setProfile((current) => !current);
   };
-  const handleClick2 = (envent) => {
+  const handleClick2 = (_envent: any) => {
     setCard((current) => !current);
   };
   return (

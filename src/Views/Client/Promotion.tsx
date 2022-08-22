@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = (envent) => {
+  const handleClick = (_envent: any) => {
     setIsShown((current) => !current);
   };
 

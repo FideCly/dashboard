@@ -11,7 +11,7 @@ function App() {
   const { sendJsonMessage, getWebSocket } = useWebSocket(WSS_FEED_URL, {
     onOpen: () => console.log("WebSocket connection opened."),
     onClose: () => console.log("WebSocket connection closed."),
-    shouldReconnect: (closeEvent) => true,
+    shouldReconnect: (_closeEvent) => true,
     onMessage: (event: WebSocketEventMap["message"]) => toast(event.data),
   });
 

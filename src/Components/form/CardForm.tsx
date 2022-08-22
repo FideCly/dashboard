@@ -1,6 +1,4 @@
-import { Card } from "@material-tailwind/react";
 import axios from "axios";
-import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from "react-hook-form";
 type CardValues = {
@@ -36,7 +34,6 @@ export default function Cardform() {
               type="text"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="name"
-              name="name"
               placeholder=" "
               required
               {...register("name")}
@@ -50,7 +47,6 @@ export default function Cardform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="startAt"
-              name="startAt"
               placeholder=" "
               required
               {...register("startAt")}
@@ -64,7 +60,6 @@ export default function Cardform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="endAt"
-              name="endAt"
               placeholder=" "
               required
               {...register("endAt")}
