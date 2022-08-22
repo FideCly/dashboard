@@ -18,7 +18,7 @@ export default function Promotionform() {
     formData.append("startAt", new Date(data.startAt).toISOString());
     formData.append("endAt", new Date(data.endAt).toISOString());
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/promotion", formData)
+      .post(import.meta.env.VITE_API_URL + "/api/promotion", formData)
       .then(() => {
         toast.success("Promotion created successfully");
       })

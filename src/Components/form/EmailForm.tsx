@@ -22,7 +22,7 @@ export default function Emailform() {
     formData.append("endAt", new Date(data.endAt).toISOString());
     formData.append("template", data.template);
     axios
-      .post(process.env.REACT_APP_API_URL + "api/email", formData)
+      .post(import.meta.env.VITE_API_URL + "api/email", formData)
       .then(() => {
         toast.success("Email created successfully");
       })

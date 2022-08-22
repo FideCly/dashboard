@@ -16,7 +16,7 @@ export default function Cardform() {
     formData.append("startAt", new Date(data.startAt).toISOString());
     formData.append("endAt", new Date(data.endAt).toISOString());
     axios
-      .post(process.env.REACT_APP_API_URL + "api/card", formData)
+      .post(import.meta.env.VITE_API_URL + "api/card", formData)
       .then(() => {
         toast.success("Card created successfully");
       })
