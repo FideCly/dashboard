@@ -1,43 +1,47 @@
 import React, { useState } from "react";
 import Select from "react-select";
-
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
+import axios from "axios";
+type Email = {
+  name: string;
+  typecampagne: string;
+  cible: string;
+  startAt: Date;
+  endAt: Date;
+  template: string;
+};
 export default function Emailform() {
-  const [email, setEmail] = useState({
-    name: "",
-    typecampagne: [
-      { value: "chocolate", label: "Chocolate" },
-      { value: "strawberry", label: "Strawberry" },
-      { value: "vanilla", label: "Vanilla" },
-    ],
-    cible: "",
-    startAt: "",
-    endAt: "",
-    template: "",
-  });
-
-  const onChange = (e) => {
-    setEmail({
-      ...email,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
+  const { register, handleSubmit } = useForm<Email>();
+  const onSubmit: SubmitHandler<Email> = (data) => {
+    console.log(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("typecampagne", data.typecampagne);
+    formData.append("cible", data.cible);
+    formData.append("startAt", new Date(data.startAt).toISOString());
+    formData.append("endAt", new Date(data.endAt).toISOString());
+    formData.append("template", data.template);
+    axios
+      .post("http://localhost:8080/api/email", formData)
+      .then(() => {
+        toast.success("Email created successfully");
+      })
+      .catch((err) => {
+        toast.error("Error creating email : " + err.message);
+      });
   };
   return (
     <div className="max-w-2xl mx-auto mt-4">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="relative z-0 mb-6 w-full group">
           <input
             type="text"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             id="name"
-            name="name"
-            onChange={onChange}
-            value={email.name}
             placeholder=" "
             required
+            {...register("name")}
           />
           <label htmlFor="name" className="label">
             Name
@@ -50,18 +54,16 @@ export default function Emailform() {
           >
             Type de campagne
           </label>
-          <Select options={email.typecampagne} onChange={onChange} />
+          <Select />
         </div>
         <div className="relative z-0 mb-6 w-full group">
           <input
             type="text"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             id="cible"
-            name="cible"
-            onChange={onChange}
-            value={email.cible}
             placeholder=" "
             required
+            {...register("cible")}
           />
           <label htmlFor="cible" className="label">
             Cible
@@ -73,11 +75,9 @@ export default function Emailform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="startAt"
-              name="startAt"
-              onChange={onChange}
-              value={email.startAt}
               placeholder=" "
               required
+              {...register("startAt")}
             />
             <label htmlFor="startAt" className="label">
               Start At
@@ -88,11 +88,9 @@ export default function Emailform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="endAt"
-              name="endAt"
-              onChange={onChange}
-              value={email.endAt}
               placeholder=" "
               required
+              {...register("endAt")}
             />
             <label htmlFor="endAt" className="label">
               End At
@@ -105,11 +103,9 @@ export default function Emailform() {
             type="text"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             id="template"
-            name="template"
-            onChange={onChange}
-            value={email.template}
             placeholder=" "
             required
+            {...register("template")}
           />
           <label htmlFor="template" className="label">
             Template

@@ -1,42 +1,44 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useForm, SubmitHandler } from "react-hook-form";
+type Promotion = {
+  name: string;
+  type: string;
+  startAt: Date;
+  endAt: Date;
+};
 export default function Promotionform() {
-  const [promotion, setPromotion] = useState({
-    name: "",
-    type: [
-      { value: "chocolate", label: "Chocolate" },
-      { value: "strawberry", label: "Strawberry" },
-      { value: "vanilla", label: "Vanilla" },
-    ],
-    startAt: "",
-    endAt: "",
-    description: "",
-    Image: "",
-  });
-  const onChange = (e) => {
-    setPromotion({
-      ...promotion,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(promotion);
+  const { register, handleSubmit } = useForm<Promotion>();
+  const onSubmit: SubmitHandler<Promotion> = (data) => {
+    console.log(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("type", data.type);
+    formData.append("startAt", new Date(data.startAt).toISOString());
+    formData.append("endAt", new Date(data.endAt).toISOString());
+    axios
+      .post("http://localhost:8080/api/promotion", formData)
+      .then(() => {
+        toast.success("Promotion created successfully");
+      })
+      .catch((err) => {
+        toast.error("Error creating promotion : " + err.message);
+      });
   };
 
   return (
     <div className="max-w-2xl mx-auto mt-4">
-      <form onSubmit={onSubmit} className="">
+      <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="relative z-0 mb-6 w-full group">
           <input
             type="text"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             id="name"
-            name="name"
-            onChange={onChange}
-            value={promotion.name}
             placeholder=" "
             required
+            {...register("name")}
           />
           <label htmlFor="name" className="label">
             Name
@@ -49,7 +51,7 @@ export default function Promotionform() {
           >
             Type
           </label>
-          <Select options={promotion.type} onChange={onChange} />
+          <Select />
         </div>
         <div className="flex space-x-4">
           <div className="relative z-0 mb-6 w-full group">
@@ -57,11 +59,9 @@ export default function Promotionform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="startAt"
-              name="startAt"
-              onChange={onChange}
-              value={promotion.startAt}
               placeholder=" "
               required
+              {...register("startAt")}
             />
             <label htmlFor="startAt" className="label">
               Start At
@@ -72,11 +72,9 @@ export default function Promotionform() {
               type="date"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="endAt"
-              name="endAt"
-              onChange={onChange}
-              value={promotion.endAt}
               placeholder=" "
               required
+              {...register("endAt")}
             />
             <label htmlFor="endAt" className="label">
               End At
@@ -84,7 +82,7 @@ export default function Promotionform() {
           </div>
         </div>
 
-        <div className="relative z-0 mb-6 w-full group">
+        {/* <div className="relative z-0 mb-6 w-full group">
           <input
             type="text"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -116,7 +114,7 @@ export default function Promotionform() {
             placeholder=" "
             required
           />
-        </div>
+        </div> */}
         <button type="submit" className="btn">
           Submit
         </button>

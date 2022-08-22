@@ -1,25 +1,35 @@
 import { Card } from "@material-tailwind/react";
+import axios from "axios";
 import React, { useState } from "react";
-
+import { toast } from "react-toastify";
+import { useForm, SubmitHandler } from "react-hook-form";
+type CardValues = {
+  name: string;
+  image: File;
+  startAt: Date;
+  endAt: Date;
+};
 export default function Cardform() {
-  const [card, setCard] = useState({
-    name: "",
-    startAt: "",
-    endAt: "",
-    Image: "",
-  });
-  const onSubmit = (data) => {
-    console.log(data);
+  const { register, handleSubmit } = useForm<CardValues>();
+  const onSubmit: SubmitHandler<CardValues> = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("image", data.image);
+    formData.append("startAt", new Date(data.startAt).toISOString());
+    formData.append("endAt", new Date(data.endAt).toISOString());
+    axios
+      .post("http://localhost:8080/api/card", formData)
+      .then(() => {
+        toast.success("Card created successfully");
+      })
+      .catch((err) => {
+        toast.error("Error creating card : " + err.message);
+      });
   };
-  const onChange = (e) => {
-    setCard({
-      ...card,
-      [e.target.name]: e.target.value,
-    });
-  };
+
   return (
     <div className="max-w-2xl mx-auto mt-4">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex space-x-4">
           <div className="relative z-0 mb-6 w-full group">
             <input
@@ -27,10 +37,9 @@ export default function Cardform() {
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="name"
               name="name"
-              onChange={onChange}
-              value={Card.name}
               placeholder=" "
               required
+              {...register("name")}
             />
             <label htmlFor="name" className="label">
               Name
@@ -42,10 +51,9 @@ export default function Cardform() {
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="startAt"
               name="startAt"
-              onChange={onChange}
-              value={Card.startAt}
               placeholder=" "
               required
+              {...register("startAt")}
             />
             <label htmlFor="startAt" className="label">
               Start At
@@ -57,10 +65,9 @@ export default function Cardform() {
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               id="endAt"
               name="endAt"
-              onChange={onChange}
-              value={Card.endAt}
               placeholder=" "
               required
+              {...register("endAt")}
             />
             <label htmlFor="endAt" className="label">
               End At
@@ -70,7 +77,7 @@ export default function Cardform() {
 
         <div className="flex justify-center items-center w-full">
           <label
-            for="dropzone-file"
+            htmlFor="dropzone-file"
             className="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
             <div className="flex flex-col justify-center items-center pt-5 pb-6">
@@ -101,9 +108,8 @@ export default function Cardform() {
               id="dropzone-file"
               type="file"
               className="hidden"
-              name="Image"
-              onChange={onChange}
-              value={Card.Image}
+              accept="image/*"
+              {...register("image")}
             />
           </label>
         </div>

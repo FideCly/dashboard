@@ -4,7 +4,7 @@ import Emailform from "../../Components/form/EmailForm";
 import { useState } from "react";
 export default function Mailing() {
   const [isShown, setIsShown] = useState(false);
-  const handleClick = (envent) => {
+  const handleClick = (Event) => {
     setIsShown((current) => !current);
   };
   return (
