@@ -28,7 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
     - uses: nashmaniac/create-issue-action@v1.1
       if: ${{ failure() }} # only run when this job is failed.
       name: Create Issue Action
