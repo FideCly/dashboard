@@ -1,42 +1,13 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
-type Email = {
-  name: string;
-  adresse: string;
-  phone: string;
-  email: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  website: string;
-};
-export default function ProfileForm() {
-  const { register, handleSubmit } = useForm<Email>();
-  const onSubmit: SubmitHandler<Email> = (data) => {
-    console.log(data);
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("adresse", data.adresse);
-    formData.append("phone", data.phone);
-    formData.append("email", data.email);
-    formData.append("postalCode", data.postalCode);
-    formData.append("city", data.city);
-    formData.append("country", data.country);
-    formData.append("website", data.website);
-    axios
-      .post(import.meta.env.VITE_API_URL + "/api/profile", formData)
-      .then(() => {
-        toast.success("Profile created successfully");
-      })
-      .catch((err) => {
-        toast.error("Error creating profile : " + err.message);
-      });
-  };
+import { ProfileService } from "../../Services";
+import { Profile } from "../../Types";
 
+export default function ProfileForm() {
   return (
     <div className="max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <div className="relative z-0 mb-6 w-full group">
           <input
             type="text"
@@ -44,7 +15,6 @@ export default function ProfileForm() {
             id="Raison_sociale"
             placeholder=" "
             required
-            {...register("name")}
           />
           <label htmlFor="Raison_sociale" className="label">
             Raison sociale
@@ -57,7 +27,6 @@ export default function ProfileForm() {
             id="email"
             placeholder=" "
             required
-            {...register("email")}
           />
           <label htmlFor="email" className="label">
             Email
@@ -70,7 +39,6 @@ export default function ProfileForm() {
             id="phone"
             placeholder=" "
             required
-            {...register("phone")}
           />
           <label htmlFor="phone" className="label">
             Phone
@@ -83,7 +51,6 @@ export default function ProfileForm() {
             id="adresse"
             placeholder=" "
             required
-            {...register("adresse")}
           />
           <label htmlFor="adresse" className="label">
             Adresse
@@ -97,7 +64,6 @@ export default function ProfileForm() {
               id="postalCode"
               placeholder=" "
               required
-              {...register("postalCode")}
             />
             <label htmlFor="postalCode" className="label">
               Postal Code
@@ -110,7 +76,6 @@ export default function ProfileForm() {
               id="city"
               placeholder=" "
               required
-              {...register("city")}
             />
             <label htmlFor="city" className="label">
               City
@@ -123,7 +88,6 @@ export default function ProfileForm() {
               id="country"
               placeholder=" "
               required
-              {...register("country")}
             />
             <label htmlFor="country" className="label">
               Country
@@ -137,7 +101,6 @@ export default function ProfileForm() {
             id="website"
             placeholder=" "
             required
-            {...register("website")}
           />
           <label htmlFor="website" className="label">
             Website

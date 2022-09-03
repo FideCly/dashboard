@@ -2,7 +2,7 @@ import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileForm from "../../Components/form/ProfileForm";
 import { useState } from "react";
-import Cardform from "../../Components/form/CardForm";
+import CardForm from "../../Components/form/CardForm";
 export default function GeneralSettings() {
   const [Profile, setProfile] = useState(false);
   const [Card, setCard] = useState(false);
@@ -42,7 +42,7 @@ export default function GeneralSettings() {
       {Card && (
         <div>
           <h1>Edit card</h1>
-          <Cardform />
+          <CardForm />
         </div>
       )}
     </div>

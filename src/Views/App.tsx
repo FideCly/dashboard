@@ -4,12 +4,11 @@ import Navbar from "../Components/html/Navbar";
 import Footer from "../Components/html/Footer";
 import Body from "../Components/html/Body";
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer, ToastContentProps } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import useWebSocket from "react-use-websocket";
-const WSS_FEED_URL = "ws://localhost:8080/ws";
-
+const WebSocketURL = import.meta.env.REACT_APP_WEBSOCKET_URL;
 function App() {
-  const { sendJsonMessage, getWebSocket } = useWebSocket(WSS_FEED_URL, {
+  const { sendJsonMessage, getWebSocket } = useWebSocket(WebSocketURL, {
     onOpen: () => console.log("WebSocket connection opened."),
     onClose: () => console.log("WebSocket connection closed."),
     shouldReconnect: (_closeEvent) => true,
