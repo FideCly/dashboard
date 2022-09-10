@@ -1,5 +1,5 @@
 import { callAPI } from "../Modules/api";
-import Promotions from "../Types";
+import {Promotions} from "../Types";
 
 export const PromotionService = {
   /**

@@ -1,5 +1,5 @@
 import { callAPI } from "../Modules/api";
-import Card from "../Types";
+import {Card} from "../Types";
 
 export const CardService = {
   /**

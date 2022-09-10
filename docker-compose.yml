@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  webapp:
+    build: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - '.:/webapp'
+    env_file:
+      - .env
+    working_dir: /webapp
+    command: npm run preview
+    networks:
+      - fidecloud
+networks:
+  fidecloud:
+    driver: bridge

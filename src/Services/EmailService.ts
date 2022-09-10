@@ -1,5 +1,5 @@
 import { callAPI } from "../Modules/api";
-import Email from "../Types";
+import { Email } from "../Types";
 
 export const EmailService = {
   /**

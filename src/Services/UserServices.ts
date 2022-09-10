@@ -1,5 +1,5 @@
 import { callAPI } from "../Modules/api";
-import User from "../Types";
+import {User} from "../Types";
 
 export const UserService = {
   /**

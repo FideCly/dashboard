@@ -19,16 +19,9 @@ const EmailForm: React.FC = () => {
     setEmail({ ...email, [name]: value });
   };
   const createEmail = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("libelle", email.libelle);
-    formData.append("type", email.types);
-    formData.append("startAt", email.startAt);
-    formData.append("endAt", email.endAt);
-    formData.append("template", email.template);
     try {
-      const response = await EmailService.createEmail(formData);
-      if (response.status === 201) {
+      const response = await EmailService.createEmail(email);
+      if (response) {
         toast.success("Email created");
         setEmail(InitialEmailState);
       }

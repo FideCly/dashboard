@@ -25,13 +25,10 @@ const PromotionForm: React.FC = () => {
 
   const createPromotion = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("libelle", promotions.libelle);
-    formData.append("description", promotions.description);
-    formData.append("type", promotions.type);
+
     try {
-      const response = await PromotionService.createPromotion(formData);
-      if (response.status === 201) {
+      const response = await PromotionService.createPromotion(promotions);
+      if (response) {
         toast.success("Promotion created");
         setPromotions(InitialPromotionsState);
       }

@@ -1,5 +1,5 @@
 import { callAPI } from "../Modules/api";
-import Profile from "../Types";
+import {Profile} from "../Types";
 
 export const ProfileService = {
   /**

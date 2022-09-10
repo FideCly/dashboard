@@ -16,13 +16,9 @@ const CardForm: React.FC = () => {
   };
   const createCard = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("name", card.name);
-    formData.append("startAt", card.startAt);
-    formData.append("endAt", card.endAt);
     try {
-      const response = await CardService.createCard(formData);
-      if (response.status === 201) {
+      const response = await CardService.createCard(card);
+      if (response) {
         toast.success("Card created");
         setCard(InitialCardState);
       }
