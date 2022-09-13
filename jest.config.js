@@ -1,4 +1,4 @@
-/*global someFunction, module*/
+/*global module*/
 /* eslint-disable no-undef */
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
