@@ -9,7 +9,7 @@ export const EmailService = {
    * @see src/Types/Email.ts
    */
   getEmails() {
-    return callAPI<Email[]>("/emails", "GET");
+    return callAPI<Array<Email[]>>("/emails", "GET");
   },
 
   /**

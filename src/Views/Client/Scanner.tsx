@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { QrReader } from "react-qr-reader";
+import axios, { Axios } from "axios";
 export default function Scanner() {
   const [Data, setData] = useState("");
   return (
@@ -12,6 +13,11 @@ export default function Scanner() {
         onResult={(result, error) => {
           if (result) {
             setData(result.getText());
+            try {
+              axios.post(Data);
+            } catch (e) {
+              console.log(e);
+            }
           }
           if (error) {
             console.info(error);
