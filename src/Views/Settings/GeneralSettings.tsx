@@ -3,14 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProfileForm from "../../Components/form/ProfileForm";
 import { useState } from "react";
 import Cardform from "../../Components/form/CardForm";
+import ShopForm from "../../Components/form/ShopForm";
 export default function GeneralSettings() {
   const [Profile, setProfile] = useState(false);
   const [Card, setCard] = useState(false);
+  const [Shop, setShop] = useState(false);
   const handleClick = (_envent: any) => {
     setProfile((current) => !current);
   };
   const handleClick2 = (_envent: any) => {
     setCard((current) => !current);
+  };
+  const handleClick3 = (_envent: any) => {
+    setShop((current) => !current);
   };
   return (
     <div className="container max-w-6xl mx-auto mt-4">
@@ -32,6 +37,14 @@ export default function GeneralSettings() {
           <FontAwesomeIcon icon={faPlusSquare} />
           Edit card
         </button>
+        <button
+          type="button"
+          onClick={handleClick3}
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          <FontAwesomeIcon icon={faPlusSquare} />
+          Create Shop
+        </button>
       </div>
       {Profile && (
         <div>
@@ -43,6 +56,11 @@ export default function GeneralSettings() {
         <div>
           <h1>Edit card</h1>
           <Cardform />
+        </div>
+      )}
+      {Shop && (
+        <div>
+          <ShopForm />
         </div>
       )}
     </div>
