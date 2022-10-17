@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { IShopCreatePayload } from "../../interfaces";
 export default function ShopList() {
-  const [shops, setShops] = useState<Shop[]>([]);
+  const [shops, setShops] = useState<IShopCreatePayload[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -10,8 +10,8 @@ export default function ShopList() {
     const loadShops = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get<Shop[]>(
-          import.meta.env.VITE_API_URL + "shops"
+        const response = await axios.get<IShopCreatePayload[]>(
+          import.meta.env.VITE_API_URL + 'shops'
         );
         setShops(response.data);
       } catch (error) {
@@ -38,17 +38,13 @@ export default function ShopList() {
   return (
     <div>
       {shops.map((shop) => (
-        <div key={shop.id}>
-          <span>{shop.name}</span>
-          <span>{shop.description}</span>
+        <div key={shop.companyName}>
+          <span>{shop.companyName}</span>
           <span>{shop.address}</span>
-          <span>{shop.city}</span>
-          <span>{shop.postalCode}</span>
+          <span>{shop.zipCode}</span>
           <span>{shop.phone}</span>
           <span>{shop.email}</span>
-          <span>{shop.website}</span>
-          <span>{shop.openingHours}</span>
-          <span>{shop.promotion}</span>
+          <span>{shop.geoloc}</span>
         </div>
       ))}
     </div>

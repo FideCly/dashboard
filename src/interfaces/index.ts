@@ -10,8 +10,8 @@ import {
 import { IShopCreatePayload, IShopUpdatePayload } from "./shop.payload";
 import { IUserCreatePayload, IUserUpdatePayload } from "./user.payload";
 
-export { ICardCreatePayload, ICardUpdatePayload };
-export { IShopCreatePayload, IShopUpdatePayload };
-export { IUserCreatePayload, IUserUpdatePayload };
-export { IPromotionCreatePayload, IPromotionUpdatePayload };
-export { IPromotionCounterCreatePayload, IPromotionCounterUpdatePayload };
+export type{ ICardCreatePayload, ICardUpdatePayload };
+export type{ IShopCreatePayload, IShopUpdatePayload };
+export type{ IUserCreatePayload, IUserUpdatePayload };
+export type{ IPromotionCreatePayload, IPromotionUpdatePayload };
+export type{ IPromotionCounterCreatePayload, IPromotionCounterUpdatePayload };

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { IPromotionCreatePayload } from "../../interfaces";
 export default function PromotionList() {
-  const [promotions, setPromotions] = useState<Promotion[]>([]);
+  const [promotions, setPromotions] = useState<IPromotionCreatePayload[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -10,8 +10,8 @@ export default function PromotionList() {
     const loadPromotions = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get<Promotion[]>(
-          import.meta.env.VITE_API_URL + "promotions"
+        const response = await axios.get<IPromotionCreatePayload[]>(
+          import.meta.env.VITE_API_URL + 'promotions'
         );
         setPromotions(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ export default function PromotionList() {
   return (
     <div>
       {promotions.map((promotion) => (
-        <div key={promotion.id}>
+        <div key={promotion.name}>
           <span>{promotion.name}</span>
           <span>{promotion.description}</span>
           <span>{promotion.startAt}</span>

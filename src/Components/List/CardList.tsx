@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+import { ICardCreatePayload } from '../../interfaces';
 export default function CardList() {
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<ICardCreatePayload[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -10,7 +10,9 @@ export default function CardList() {
     const loadCards = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get<Card[]>(import.meta.env.VITE_API_URL + 'wallet');
+        const response = await axios.get<ICardCreatePayload[]>(
+          import.meta.env.VITE_API_URL + 'wallet'
+        );
         setCards(response.data);
       } catch (error) {
         setError(true);
@@ -36,11 +38,9 @@ export default function CardList() {
   return (
     <div>
       {cards.map((card) => (
-        <div key={card.id}>
-          <span>{card.name}</span>
-          <span>{card.description}</span>
-          <span>{card.startAt}</span>
-          <span>{card.endAt}</span>
+        <div key={card.url}>
+          <span>{card.startAt.toISOString()}</span>
+          <span>{card.endAt.toISOString()}</span>
         </div>
       ))}
     </div>

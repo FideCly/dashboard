@@ -12,7 +12,7 @@ export default function SignupForm() {
   const onSubmit: SubmitHandler<IUserCreatePayload> = async (data) => {
     JSON.stringify(data);
     try {
-      const response = await axios.post(
+      await axios.post(
         import.meta.env.VITE_API_URL + "users",
         data
       );
@@ -49,17 +49,6 @@ export default function SignupForm() {
               {...register('email', { required: true })}
             />
             {errors.email && <div className="mt-2 alert alert-danger">Email is required</div>}
-          </div>
-          <div className="form-group">
-          <label htmlFor="username">Password</label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="password"
-              {...register('password', { required: true })}
-            />
-            {errors.password && <div className="mt-2 alert alert-danger">Password is required</div>}
           </div>
           <button type="submit" className="btn btn-primary">
             Signup
