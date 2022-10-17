@@ -12,12 +12,21 @@ export default function Scanner() {
         onResult={(result, error) => {
           if (result) {
             setData(result.getText());
+            try {
+              const response = await axios.post(
+              import.meta.env.VITE_API_URL + "promotion-counter",
+              { data }
+              );
+              toast.success("Card created successfully");
+            } catch(error) {
+              toast.error("Error creating card" + error);
+            }          
           }
           if (error) {
             console.info(error);
           }
         }}
-        className="h-36 w-36 rounded-md"
+        className="rounded-md h-36 w-36"
       />
       <p>{Data}</p>
     </div>
