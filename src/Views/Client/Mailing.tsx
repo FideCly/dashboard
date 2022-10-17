@@ -14,15 +14,14 @@ export default function Mailing() {
         <button
           type="button"
           onClick={handleClick}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <FontAwesomeIcon icon={faPlusSquare} />
-          Create Campagne
+          Create Campaign
         </button>
       </div>
       {isShown && (
         <div>
-          <h1>Create campagne</h1>
+          <h1> Create Campaign</h1>
           <Emailform />
         </div>
       )}

@@ -4,6 +4,7 @@ import ProfileForm from "../../Components/form/ProfileForm";
 import { useState } from "react";
 import Cardform from "../../Components/form/CardForm";
 import ShopForm from "../../Components/form/ShopForm";
+import ShopList from "../../Components/List/ShopList";
 export default function GeneralSettings() {
   const [Profile, setProfile] = useState(false);
   const [Card, setCard] = useState(false);
@@ -20,7 +21,7 @@ export default function GeneralSettings() {
   return (
     <div className="container max-w-6xl mx-auto mt-4">
       <div className="flex">
-        <h1 className="flex-1 text-4xl">GeneralSettings</h1>
+        <h1 className="flex-1 text-4xl">Settings</h1>
         <button
           type="button"
           onClick={handleClick}
@@ -63,6 +64,7 @@ export default function GeneralSettings() {
           <ShopForm />
         </div>
       )}
+      <ShopList />
     </div>
   );
 }

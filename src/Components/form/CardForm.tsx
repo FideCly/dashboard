@@ -37,37 +37,33 @@ export default function Cardform() {
               className="form-control"
               id="url"
               placeholder="url"
-              {...register("url", { required: true })}
+              {...register('url', { required: true })}
             />
-            {errors.url && (
-              <div className="mt-2 alert alert-danger">url is required</div>
-            )}
+            {errors.url && <div className="mt-2 alert alert-danger">url is required</div>}
           </div>
           <div className="form-group">
-            <label htmlFor="startAt">startAt</label>
+            <label htmlFor="startAt">Start date</label>
             <input
               type="Date"
               className="form-control"
               id="startAt"
               placeholder="startAt"
-              {...register("startAt", { required: true })}
+              {...register('startAt', { required: true })}
             />
             {errors.startAt && (
-              <div className="mt-2 alert alert-danger">startAt is required</div>
+              <div className="mt-2 alert alert-danger">Start date is required is required</div>
             )}
           </div>
           <div className="form-group">
-            <label htmlFor="endAt">endAt</label>
+            <label htmlFor="endAt">End date</label>
             <input
               type="date"
               className="form-control"
               id="endAt"
               placeholder="endAt"
-              {...register("endAt", { required: true })}
+              {...register('endAt', { required: true })}
             />
-            {errors.endAt && (
-              <div className="mt-2 alert alert-danger">endAt is required</div>
-            )}
+            {errors.endAt && <div className="mt-2 alert alert-danger">End date is required</div>}
           </div>
           <button type="submit" className="btn btn-primary">
             Submit

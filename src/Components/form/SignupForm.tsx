@@ -29,19 +29,15 @@ export default function SignupForm() {
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
-            <label htmlFor="username">username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               className="form-control"
               id="username"
               placeholder="username"
-              {...register("username", { required: true })}
+              {...register('username', { required: true })}
             />
-            {errors.username && (
-              <div className="mt-2 alert alert-danger">
-                password is required
-              </div>
-            )}
+            {errors.username && <div className="mt-2 alert alert-danger">Username is required</div>}
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -50,11 +46,20 @@ export default function SignupForm() {
               className="form-control"
               id="email"
               placeholder="email"
-              {...register("email", { required: true })}
+              {...register('email', { required: true })}
             />
-            {errors.email && (
-              <div className="mt-2 alert alert-danger">email is required</div>
-            )}
+            {errors.email && <div className="mt-2 alert alert-danger">Email is required</div>}
+          </div>
+          <div className="form-group">
+          <label htmlFor="username">Password</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              placeholder="password"
+              {...register('password', { required: true })}
+            />
+            {errors.password && <div className="mt-2 alert alert-danger">Password is required</div>}
           </div>
           <button type="submit" className="btn btn-primary">
             Signup

@@ -2,6 +2,7 @@ import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Promotionform from "../../Components/form/PromotionForm";
 import { useState } from "react";
+import PromotionList from "../../Components/List/PromotionList";
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
 
@@ -28,6 +29,7 @@ export default function Promotion() {
           <Promotionform />
         </div>
       )}
+      <PromotionList />
     </div>
   );
 }

@@ -37,90 +37,76 @@ export default function ShopForm() {
               className="form-control"
               id="companyName"
               placeholder="Enter company name"
-              {...register("companyName", { required: true })}
+              {...register('companyName', { required: true })}
             />
-            {errors.companyName && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.companyName && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="siren">siren</label>
+            <label htmlFor="siren">SIREN</label>
             <input
               type="text"
               className="form-control"
               id="siren"
-              placeholder="Enter siren"
-              {...register("siren", { required: true })}
+              placeholder="Enter SIREN"
+              {...register('siren', { required: true })}
             />
-            {errors.siren && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.siren && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="siret">siret</label>
+            <label htmlFor="siret">SIRET</label>
             <input
               type="text"
               className="form-control"
               id="siret"
-              placeholder="Enter siret"
-              {...register("siret", { required: true })}
+              placeholder="Enter SIRET"
+              {...register('siret', { required: true })}
             />
-            {errors.siret && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.siret && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
             <div className="form-group">
-              <label htmlFor="email">email</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
                 className="form-control"
                 id="email"
                 placeholder="Enter email"
-                {...register("email", { required: true })}
+                {...register('email', { required: true })}
               />
-              {errors.email && (
-                <span className="text-danger">This field is required</span>
-              )}
+              {errors.email && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group">
-              <label htmlFor="zipCode">zipCode</label>
+              <label htmlFor="zipCode">Zip code</label>
               <input
                 type="text"
                 className="form-control"
                 id="zipCode"
-                placeholder="Enter zipCode"
-                {...register("zipCode", { required: true })}
+                placeholder="Enter zip code"
+                {...register('zipCode', { required: true })}
               />
-              {errors.zipCode && (
-                <span className="text-danger">This field is required</span>
-              )}
+              {errors.zipCode && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group">
-              <label htmlFor="geoloc">geoloc</label>
+              <label htmlFor="geoloc">Geolocation</label>
               <input
                 type="text"
                 className="form-control"
                 id="geoloc"
-                placeholder="Enter geoloc"
-                {...register("geoloc", { required: true })}
+                placeholder="Enter geolocation"
+                {...register('geoloc', { required: true })}
               />
-              {errors.geoloc && (
-                <span className="text-danger">This field is required</span>
-              )}
+              {errors.geoloc && <span className="text-danger">This field is required</span>}
             </div>
             <div className="form-group">
-              <label htmlFor="phone">phone</label>
+              <label htmlFor="phone">Phone number</label>
               <input
                 type="text"
                 className="form-control"
                 id="phone"
-                placeholder="Enter phone"
-                {...register("phone", { required: true })}
+                placeholder="Enter phone number"
+                {...register('phone', { required: true })}
               />
-              {errors.phone && (
-                <span className="text-danger">This field is required</span>
-              )}
+              {errors.phone && <span className="text-danger">This field is required</span>}
             </div>
             <label htmlFor="address">Address</label>
             <input
@@ -128,11 +114,9 @@ export default function ShopForm() {
               className="form-control"
               id="address"
               placeholder="Enter address"
-              {...register("address", { required: true })}
+              {...register('address', { required: true })}
             />
-            {errors.address && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.address && <span className="text-danger">This field is required</span>}
           </div>
           <button type="submit">Submit</button>
         </form>

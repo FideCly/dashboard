@@ -42,11 +42,9 @@ export default function Promotionform() {
               className="form-control"
               id="name"
               placeholder="Enter name"
-              {...register("name", { required: true })}
+              {...register('name', { required: true })}
             />
-            {errors.name && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.name && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
             <label htmlFor="description">description</label>
@@ -55,51 +53,42 @@ export default function Promotionform() {
               className="form-control"
               id="description"
               placeholder="Enter description"
-              {...register("description", { required: true })}
+              {...register('description', { required: true })}
             />
-            {errors.description && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.description && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="type">type</label>
+            <label htmlFor="type">Type</label>
             <select
               className="form-control"
               id="type"
-              {...register("type", { valueAsNumber: true })}
-            >
+              {...register('type', { valueAsNumber: true })}>
               <option value="1">percentage</option>
               <option value="2">amount</option>
             </select>
-            {errors.type && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.type && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="startAt">startAt</label>
+            <label htmlFor="startAt">Start date</label>
             <input
               type="date"
               className="form-control"
               id="startAt"
               placeholder="Enter startAt"
-              {...register("startAt", { required: true })}
+              {...register('startAt', { required: true })}
             />
-            {errors.startAt && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.startAt && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="endAt">endAt</label>
+            <label htmlFor="endAt">End date</label>
             <input
               type="date"
               className="form-control"
               id="endAt"
-              placeholder="Enter endAt"
-              {...register("endAt", { required: true })}
+              placeholder="Enter end date"
+              {...register('endAt', { required: true })}
             />
-            {errors.endAt && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.endAt && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
             <label htmlFor="valimitPassagelue">limitPassage</label>
@@ -107,25 +96,21 @@ export default function Promotionform() {
               type="number"
               className="form-control"
               id="limitPassage"
-              placeholder="Enter limitPassage"
-              {...register("limitPassage", { valueAsNumber: true })}
+              placeholder="Enter the checkout threshold at which the promotion applies"
+              {...register('limitPassage', { valueAsNumber: true })}
             />
-            {errors.limitPassage && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.limitPassage && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="limitAmout">limitAmout</label>
+            <label htmlFor="limitAmout">Amount threshold</label>
             <input
               type="number"
               className="form-control"
               id="limitAmout"
-              placeholder="Enter limitAmout"
-              {...register("limitAmout", { valueAsNumber: true })}
+              placeholder="Enter the amount threshold at which the promotion applies"
+              {...register('limitAmout', { valueAsNumber: true })}
             />
-            {errors.limitAmout && (
-              <span className="text-danger">This field is required</span>
-            )}
+            {errors.limitAmout && <span className="text-danger">This field is required</span>}
           </div>
           <button type="submit">Submit</button>
         </form>
