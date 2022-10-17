@@ -9,8 +9,3 @@ services:
       - .:/webapp
     ports:
       - "3000:3000"
-
-networks:
-  default:
-    external:
-      name: fidecloud
