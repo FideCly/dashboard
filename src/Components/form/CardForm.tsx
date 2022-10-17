@@ -21,8 +21,6 @@ export default function Cardform() {
       toast.success("Card created successfully");
     } catch (error) {
       toast.error("Error creating card" + error);
-      console.log(error);
-      console.log(data);
     }
   };
   return (

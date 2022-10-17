@@ -19,8 +19,6 @@ export default function SignupForm() {
       toast.success("User created successfully");
     } catch (error) {
       toast.error("Error creating user" + error);
-      console.log(error);
-      console.log(data);
     }
   };
   return (

@@ -25,8 +25,6 @@ export default function Promotionform() {
       toast.success("Promotion created successfully");
     } catch (error) {
       toast.error("Error creating promotion" + error);
-      console.log(error);
-      console.log(data);
     }
   };
 

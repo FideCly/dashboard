@@ -21,8 +21,6 @@ export default function ShopForm() {
       toast.success("Shop created successfully");
     } catch (error) {
       toast.error("Error creating shop" + error);
-      console.log(error);
-      console.log(data);
     }
   };
   return (
