@@ -6,7 +6,7 @@
     "dev": "vite",
     "test:unit": "vitest run",
     "test:ui": "vitest --ui",
-    "build": "tsc && vite build",
+    "build": "vite build",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
     "preview": "vite preview",
