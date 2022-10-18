@@ -30,6 +30,7 @@ jobs:
           netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
           draft: true
           comment-on-pull-request: true
+          build-dir: './build'
 
   # This job will:
   #   * deploy a production build every time there is a push on the master branch
@@ -52,3 +53,4 @@ jobs:
           netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
           comment-on-commit: true
+          build-dir: './build'
