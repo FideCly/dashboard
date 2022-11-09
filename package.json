@@ -15,7 +15,7 @@
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "vitest": "^0.24.5"
+    "vitest": "^0.25.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
