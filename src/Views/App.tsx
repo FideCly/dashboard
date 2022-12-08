@@ -1,15 +1,24 @@
-import logo from "../Public/logo.svg";
-import "../Assets/App.css";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "../Components/html/Navbar";
+import Footer from "../Components/html/Footer";
+import Body from "../Components/html/Body";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer } from "react-toastify";
+
 
 function App() {
+
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="text-3xl font-bold text-blue-600">
-        Install & Setup Vite + React + Typescript + Tailwind CSS 3
-      </h1>
-    </div>
+    <Router>
+      <Navbar />
+      <div className="">
+        <Body />
+      </div>
+      <Footer />
+      <ToastContainer />
+    </Router>
   );
 }
-
 export default App;

@@ -1,13 +1,14 @@
-FROM node:latest
-WORKDIR /app
+FROM node:lts-alpine
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Create app directory
+WORKDIR /webapp
 
-ADD . .
+# Install app dependencies
+COPY package.json .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Bundle app source
+COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD [ "npm", "run", "dev" ]
