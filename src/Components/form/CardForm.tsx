@@ -51,7 +51,7 @@ export default function Cardform() {
               {...register('startAt', { required: true })}
             />
             {errors.startAt && (
-              <div className="mt-2 alert alert-danger">Start date is required is required</div>
+              <div className="mt-2 alert alert-danger">Start date is required</div>
             )}
           </div>
           <div className="form-group">

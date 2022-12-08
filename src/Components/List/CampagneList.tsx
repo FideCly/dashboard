@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IPromotionCreatePayload } from "../../interfaces";
 export default function CampagneList() {
-  const [campagnes, setCampagnes] = useState<IPromotionCreatePayload[]>([]);
+  const [campaigns, setCampaigns] = useState<IPromotionCreatePayload[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -13,7 +13,7 @@ export default function CampagneList() {
         const response = await axios.get<IPromotionCreatePayload[]>(
           import.meta.env.VITE_API_URL + 'campagnes'
         );
-        setCampagnes(response.data);
+        setCampaigns(response.data);
       } catch (error) {
         setError(true);
       } finally {
@@ -30,19 +30,19 @@ export default function CampagneList() {
   if (error) {
     return (
       <div>
-        <span>Erreur lors du chargement des campagnes</span>
+        <span>Error while loading campaigns</span>
       </div>
     );
   }
 
   return (
     <div>
-      {campagnes.map((campagne) => (
-        <div key={campagne.name}>
-          <span>{campagne.name}</span>
-          <span>{campagne.description}</span>
-          <span>{campagne.startAt}</span>
-          <span>{campagne.endAt}</span>
+      {campaigns.map((campaign) => (
+        <div key={campaign.name}>
+          <span>{campaign.name}</span>
+          <span>{campaign.description}</span>
+          <span>{campaign.startAt}</span>
+          <span>{campaign.endAt}</span>
         </div>
       ))}
     </div>

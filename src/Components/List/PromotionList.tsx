@@ -30,7 +30,7 @@ export default function PromotionList() {
   if (error) {
     return (
       <div>
-        <span>Erreur lors du chargement des promotion</span>
+        <span>Error while loading promotions</span>
       </div>
     );
   }

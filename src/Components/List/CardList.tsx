@@ -30,7 +30,7 @@ export default function CardList() {
   if (error) {
     return (
       <div>
-        <span>Erreur lors du chargement des cartes</span>
+        <span>Error while loading cards</span>
       </div>
     );
   }
