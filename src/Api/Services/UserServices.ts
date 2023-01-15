@@ -1,23 +1,23 @@
-import { callAPI } from "../Modules/api";
-import {User} from "../Types";
+import http from "../http-common";
+import User from "../Models/User";
 
-export const UserService = {
+
   /**
    * Récupère la liste des utilisateurs
    * @returns Retourne une promesse de type User[]
    */
-  getUsers() {
-    return callAPI<User[]>("/users", "GET");
-  },
+  const getUsers = () => {
+    return http.get<User[]>("/users");
+};
 
   /**
    * Récupère l'utilisateur par son id
    * @param id - Id de l'utilisateur
    * @returns Retourne une promesse de type User
    */
-  getUserById(id: string) {
-    return callAPI<User>(`/users/${id}`, "GET");
-  },
+  const getUserById = (id: string) => {
+    return http.get<User>(`/users/${id}`);
+};
 
   /**
    * Met à jour l'utilisateur
@@ -25,25 +25,33 @@ export const UserService = {
    * @param user - Nouvel utilisateur
    * @returns Retourne une promesse de type User
    */
-  updateUser(id: string, user: User) {
-    return callAPI<User>(`/users/${id}`, "PUT", { data: user });
-  },
+  const updateUser = (id: string, user: User) => {
+    return http.post<User>(`/users/${id}`, "PUT", { data: user });
+};
 
   /**
    * Crée un utilisateur
    * @param user - Nouvel utilisateur
    * @returns Retourne une promesse de type User
    */
-  createUser(user: User) {
-    return callAPI<User>(`/users`, "POST", { data: user });
-  },
+  const createUser = (user: User) => {
+    return http.post<User>(`/users`, "POST", { data: user });
+};
 
   /**
    * Supprime un utilisateur
    * @param id - Id de l'utilisateur
    * @returns Retourne une promesse de type User
    */
-  deleteUser(id: string) {
-    return callAPI<User>(`/users/${id}`, "DELETE");
-  },
+  const deleteUser = (id: string) => {
+    return http.delete<User>(`/users/${id}`);
 };
+const UserService = {
+  getUsers,
+  getUserById,
+  updateUser,
+  createUser,
+  deleteUser,
+};
+
+export default UserService;

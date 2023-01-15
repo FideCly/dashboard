@@ -1,16 +1,14 @@
-import { callAPI } from "../Modules/api";
-import {Card} from "../Types";
-
-export const CardService = {
+import http from "../http-common";
+import Card from "../Models/Card";
   /**
    * Récupère la liste des cartes
    * @returns Retourne une promesse de type Card[]
    * @see Card
    * @see src/Types/Card.ts
    */
-  getCards() {
-    return callAPI<Card[]>("/cards", "GET");
-  },
+  const getCards = () =>{
+    return http.get<Card[]>("/cards");
+  };
 
   /**
    * Récupère la la carte par son id
@@ -19,9 +17,9 @@ export const CardService = {
    * @see Card
    * @see src/Types/Card.ts
    */
-  getCardById(id: string) {
-    return callAPI<Card>(`/cards/${id}`, "GET");
-  },
+  const getCardById = (id: string) => {
+    return http.get<Card>(`/cards/${id}`);
+  };
 
   /**
    * Met à jour la carte
@@ -31,9 +29,9 @@ export const CardService = {
    * @see Card
    * @see src/Types/Card.ts
    */
-  updateCard(id: string, card: Card) {
-    return callAPI<Card>(`/cards/${id}`, "PUT", { data: card });
-  },
+  const updateCard = (id: string, card: Card) => {
+    return http.post<Card>(`/cards/${id}`, "PUT", { data: card });
+  };
 
   /**
    * Crée une carte
@@ -41,16 +39,25 @@ export const CardService = {
    * @returns Retourne une promesse de type Card
    * @see Card
    */
-  createCard(card: Card) {
-    return callAPI<Card>(`/cards`, "POST", { data: card });
-  },
+  const createCard = (card: Card) => {
+    return http.post<Card>(`/cards`, "POST", { data: card });
+  };
 
   /**
    * delete une carte
    * @param id - Id de la carte
    * @returns
    */
-  deleteCard(id: string) {
-    return callAPI<Card>(`/cards/${id}`, "DELETE");
-  },
+  const deleteCard = (id: string) => {
+    return http.delete<Card>(`/cards/${id}`);
+  };
+
+const CardService = {
+  getCards,
+  getCardById,
+  updateCard,
+  createCard,
+  deleteCard,
 };
+
+export default CardService;

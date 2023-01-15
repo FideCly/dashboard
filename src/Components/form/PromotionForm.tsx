@@ -2,118 +2,119 @@ import Select from "react-select";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { PromotionService } from "../../Services";
-import { Promotions } from "../../Types";
-
-import { ChangeEvent, useEffect, useState } from "react";
-
-const PromotionForm: React.FC = () => {
-  const InitialPromotionsState = {
-    libelle: "",
-    description: "",
-    type: "",
-    startAt: "",
-    endAt: "",
-  };
-  const [promotions, setPromotions] = useState<Promotions>(
-    InitialPromotionsState
-  );
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setPromotions({ ...promotions, [name]: value });
-  };
-
-  const createPromotion = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+import { IPromotionCreatePayload } from "../../interfaces";
+export default function Promotionform() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IPromotionCreatePayload>();
+  const onSubmit: SubmitHandler<IPromotionCreatePayload> = async (data) => {
+    data.userId = 1;
+    data.shopId = 1;
+    //make type, limitPassage and limitAmout   a number
+    data.type = Number(data.type);
+    data.limitPassage = Number(data.limitPassage);
+    data.limitAmout = Number(data.limitAmout);
+    JSON.stringify(data);
     try {
-      const response = await PromotionService.createPromotion(promotions);
-      if (response) {
-        toast.success("Promotion created");
-        setPromotions(InitialPromotionsState);
-      }
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "promotions",
+        data
+      );
+      toast.success("Promotion created successfully");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Error creating promotion" + error);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-4">
-      <form onSubmit={createPromotion} className="">
-        <div className="relative z-0 mb-6 w-full group">
-          <input
-            type="text"
-            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            id="name"
-            placeholder=" "
-            value={promotions.libelle}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="name" className="label">
-            Name
-          </label>
-        </div>
-        <div className="relative mb-6 w-full group">
-          <label
-            htmlFor="type"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >
-            Type
-          </label>
-          <Select />
-        </div>
-        <div className="flex space-x-4">
-          <div className="relative z-0 mb-6 w-full group">
-            <input
-              type="date"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              id="startAt"
-              placeholder=" "
-              value={promotions.startAt}
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="startAt" className="label">
-              Start At
-            </label>
-          </div>
-          <div className="relative z-0 mb-6 w-full group">
-            <input
-              type="date"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              id="endAt"
-              placeholder=" "
-              value={promotions.endAt}
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="endAt" className="label">
-              End At
-            </label>
-          </div>
-
-          <div className="relative z-0 mb-6 w-full group">
+    <div className="card">
+      <div className="card-header">
+        <h3 className="card-title">Create Promotion</h3>
+      </div>
+      <div className="card-body">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label htmlFor="name">name</label>
             <input
               type="text"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              id="description"
-              placeholder=" "
-              value={promotions.description}
-              onChange={handleChange}
-              required
+              className="form-control"
+              id="name"
+              placeholder="Enter name"
+              {...register('name', { required: true })}
             />
-            <label htmlFor="description" className="label">
-              Description
-            </label>
+            {errors.name && <span className="text-danger">This field is required</span>}
           </div>
-        </div>
-        <button type="submit" className="btn">
-          Submit
-        </button>
-      </form>
+          <div className="form-group">
+            <label htmlFor="description">description</label>
+            <input
+              type="text"
+              className="form-control"
+              id="description"
+              placeholder="Enter description"
+              {...register('description', { required: true })}
+            />
+            {errors.description && <span className="text-danger">This field is required</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="type">Type</label>
+            <select
+              className="form-control"
+              id="type"
+              {...register('type', { valueAsNumber: true })}>
+              <option value="1">percentage</option>
+              <option value="2">amount</option>
+            </select>
+            {errors.type && <span className="text-danger">This field is required</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="startAt">Start date</label>
+            <input
+              type="date"
+              className="form-control"
+              id="startAt"
+              placeholder="Enter startAt"
+              {...register('startAt', { required: true })}
+            />
+            {errors.startAt && <span className="text-danger">This field is required</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="endAt">End date</label>
+            <input
+              type="date"
+              className="form-control"
+              id="endAt"
+              placeholder="Enter end date"
+              {...register('endAt', { required: true })}
+            />
+            {errors.endAt && <span className="text-danger">This field is required</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="valimitPassagelue">limitPassage</label>
+            <input
+              type="number"
+              className="form-control"
+              id="limitPassage"
+              placeholder="Enter the checkout threshold at which the promotion applies"
+              {...register('limitPassage', { valueAsNumber: true })}
+            />
+            {errors.limitPassage && <span className="text-danger">This field is required</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="limitAmout">Amount threshold</label>
+            <input
+              type="number"
+              className="form-control"
+              id="limitAmout"
+              placeholder="Enter the amount threshold at which the promotion applies"
+              {...register('limitAmout', { valueAsNumber: true })}
+            />
+            {errors.limitAmout && <span className="text-danger">This field is required</span>}
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
-};
-
-export default PromotionForm;
+}

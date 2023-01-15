@@ -1,84 +1,75 @@
-import React, { useState, ChangeEvent } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
-import { CardService } from "../../Services";
-import { Card } from "../../Types";
-const CardForm: React.FC = () => {
-  const InitialCardState = {
-    name: "",
-    // image: new File([], ""),
-    startAt: "",
-    endAt: "",
-  };
-  const [card, setCard] = useState<Card>(InitialCardState);
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setCard((current) => ({ ...current, [name]: value }));
-  };
-  const createCard = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+import { useForm, SubmitHandler } from "react-hook-form";
+import { ICardCreatePayload } from "../../interfaces";
+export default function Cardform() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICardCreatePayload>();
+  const onSubmit: SubmitHandler<ICardCreatePayload> = async (data) => {
+    data.shopId = 1;
+    data.userId = 1;
     try {
-      const response = await CardService.createCard(card);
-      if (response) {
-        toast.success("Card created");
-        setCard(InitialCardState);
-      }
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "wallet",
+        {
+          data,
+        }
+      );
+      toast.success("Card created successfully");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Error creating card" + error);
     }
   };
   return (
-    <div className="max-w-2xl mx-auto mt-4">
-      <form onSubmit={createCard}>
-        <div className="flex space-x-4">
-          <div className="relative z-0 w-full mb-6 group">
+    <div className="card">
+      <div className="card-header">
+        <h3 className="card-title">Create Card</h3>
+      </div>
+      <div className="card-body">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label htmlFor="url">Url</label>
             <input
               type="text"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              id="name"
-              placeholder=" "
-              value={card.name}
-              onChange={handleChange}
-              required
+              className="form-control"
+              id="url"
+              placeholder="url"
+              {...register('url', { required: true })}
             />
-            <label htmlFor="name" className="label">
-              Name
-            </label>
+            {errors.url && <div className="mt-2 alert alert-danger">url is required</div>}
           </div>
-          <div className="relative z-0 w-full mb-6 group">
+          <div className="form-group">
+            <label htmlFor="startAt">Start date</label>
             <input
-              type="date"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              type="Date"
+              className="form-control"
               id="startAt"
-              placeholder=" "
-              value={card.startAt}
-              onChange={handleChange}
-              required
+              placeholder="startAt"
+              {...register('startAt', { required: true })}
             />
-            <label htmlFor="startAt" className="label">
-              Start At
-            </label>
+            {errors.startAt && (
+              <div className="mt-2 alert alert-danger">Start date is required</div>
+            )}
           </div>
-          <div className="relative z-0 w-full mb-6 group">
+          <div className="form-group">
+            <label htmlFor="endAt">End date</label>
             <input
               type="date"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="form-control"
               id="endAt"
-              placeholder=" "
-              value={card.endAt}
-              onChange={handleChange}
-              required
+              placeholder="endAt"
+              {...register('endAt', { required: true })}
             />
-            <label htmlFor="endAt" className="label">
-              End At
-            </label>
+            {errors.endAt && <div className="mt-2 alert alert-danger">End date is required</div>}
           </div>
-        </div>
-        <div className="relative z-0 w-full mb-6 group">
-          <input type="submit" value="Submit" className="btn btn-primary" />
-        </div>
-      </form>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
-};
-
-export default CardForm;
+}

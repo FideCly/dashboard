@@ -4,6 +4,7 @@ import Promotion from "../../Views/Client/Promotion";
 import Scanner from "../../Views/Client/Scanner";
 import Dashboard from "../../Views/Home/Dashboard";
 import GeneralSettings from "../../Views/Settings/GeneralSettings";
+import Signup from "../../Views/Auth/Signup";
 
 export default function Body() {
   return (
@@ -14,6 +15,7 @@ export default function Body() {
         <Route path="/scan" element={<Scanner />} />
         <Route path="/promotion" element={<Promotion />} />
         <Route path="/settings" element={<GeneralSettings />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );

@@ -1,29 +1,48 @@
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { EmailService } from "../../Services";
-import { Email } from "../../Types";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { ICardCreatePayload } from '../../interfaces';
+export default function CardList() {
+  const [cards, setCards] = useState<ICardCreatePayload[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-export default function CampagneList() {
-  const [Mail, setMail] = useState<Array<Email>>([]);
-    useEffect(() => {
-        retrieveEmail();
-    }, []);
-    const retrieveEmail = () => {
-        EmailService.getEmails()
-            .then((response: any) => {
-                setMail(response.data);
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                toast.error("error while charging caompagne :" + e);
-            })           
-        }
-    }
+  useEffect(() => {
+    const loadCards = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get<ICardCreatePayload[]>(
+          import.meta.env.VITE_API_URL + 'wallet'
+        );
+        setCards(response.data);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCards();
+  }, []);
+
+  if (isLoading) {
+    return <div>loading....</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <span>Error while loading cards</span>
+      </div>
+    );
+  }
 
   return (
     <div>
-        {Mail && Mail.map()}
-      <h1>P</h1>
+      {cards.map((card) => (
+        <div key={card.url}>
+          <span>{card.startAt.toISOString()}</span>
+          <span>{card.endAt.toISOString()}</span>
+        </div>
+      ))}
     </div>
   );
 }
