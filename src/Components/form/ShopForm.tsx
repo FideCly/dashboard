@@ -1,126 +1,185 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IShopCreatePayload } from "../../interfaces";
-import { json } from "@remix-run/node";
+import React, { useState, ChangeEvent } from "react";
+import Shop from "../../Api/Models/Shop";
+import { ShopService } from "../../Api/Services";
 
-export default function ShopForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IShopCreatePayload>();
-  const onSubmit: SubmitHandler<IShopCreatePayload> = async (data) => {
-    // data.userId = 1;
-    JSON.stringify(data);
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "shops",
-        data
-      );
-      toast.success("Shop created successfully");
-    } catch (error) {
-      toast.error("Error creating shop" + error);
-    }
-  };
+const ShopForm : React.FC = () => {
+  const initialShopState: Shop = {
+    companyName: "",
+    address: "",
+    siren: "",
+    siret: "",
+    zipCode: "",
+    phone: "",
+    email: "",
+    geoloc: "",
+  }
+  const [shop, setShop] = useState<Shop>(initialShopState);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setShop({ ...shop, [name]: value });
+  }
+
+  const saveShop = () => {
+    var data = {
+      companyName: shop.companyName,
+      address: shop.address,
+      siren: shop.siren,
+      siret: shop.siret,
+      zipCode: shop.zipCode,
+      phone: shop.phone,
+      email: shop.email,
+      geoloc: shop.geoloc,
+    };
+
+    ShopService.createShop(data)
+      .then((response : any) => {
+        setShop({
+          companyName: response.data.companyName,
+          address: response.data.address,
+          siren: response.data.siren,
+          siret: response.data.siret,
+          zipCode: response.data.zipCode,
+          phone: response.data.phone,
+          email: response.data.email,
+          geoloc: response.data.geoloc,
+      });
+        setSubmitted(true);
+        console.log(response.data);
+      })
+      .catch((e : Error )=> {
+        console.log(e);
+      });
+  }
+
+  const newShop = () => {
+    setShop(initialShopState);
+    setSubmitted(false);
+  }
+
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">Create Shop</h3>
-      </div>
-      <div className="card-body">
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="submit-form">
+      {submitted ? (
+        <div>
+          <h4>You submitted successfully!</h4>
+          <button className="btn btn-success" onClick={newShop}>
+            Add
+          </button>
+        </div>
+      ) : (
+        <div>
           <div className="form-group">
-            <label htmlFor="companyName">Name</label>
+            <label htmlFor="companyName">Company Name</label>
             <input
               type="text"
               className="form-control"
               id="companyName"
-              placeholder="Enter company name"
-              {...register('companyName', { required: true })}
+              required
+              value={shop.companyName}
+              onChange={handleInputChange}
+              name="companyName"
             />
-            {errors.companyName && <span className="text-danger">This field is required</span>}
           </div>
+
           <div className="form-group">
-            <label htmlFor="siren">SIREN</label>
-            <input
-              type="text"
-              className="form-control"
-              id="siren"
-              placeholder="Enter SIREN"
-              {...register('siren', { required: true })}
-            />
-            {errors.siren && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="siret">SIRET</label>
-            <input
-              type="text"
-              className="form-control"
-              id="siret"
-              placeholder="Enter SIRET"
-              {...register('siret', { required: true })}
-            />
-            {errors.siret && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                className="form-control"
-                id="email"
-                placeholder="Enter email"
-                {...register('email', { required: true })}
-              />
-              {errors.email && <span className="text-danger">This field is required</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="zipCode">Zip code</label>
-              <input
-                type="text"
-                className="form-control"
-                id="zipCode"
-                placeholder="Enter zip code"
-                {...register('zipCode', { required: true })}
-              />
-              {errors.zipCode && <span className="text-danger">This field is required</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="geoloc">Geolocation</label>
-              <input
-                type="text"
-                className="form-control"
-                id="geoloc"
-                placeholder="Enter geolocation"
-                {...register('geoloc', { required: true })}
-              />
-              {errors.geoloc && <span className="text-danger">This field is required</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone number</label>
-              <input
-                type="text"
-                className="form-control"
-                id="phone"
-                placeholder="Enter phone number"
-                {...register('phone', { required: true })}
-              />
-              {errors.phone && <span className="text-danger">This field is required</span>}
-            </div>
             <label htmlFor="address">Address</label>
             <input
               type="text"
               className="form-control"
               id="address"
-              placeholder="Enter address"
-              {...register('address', { required: true })}
+              required
+              value={shop.address}
+              onChange={handleInputChange}
+              name="address"
             />
-            {errors.address && <span className="text-danger">This field is required</span>}
           </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+
+          <div className="form-group">
+            <label htmlFor="siren">Siren</label>
+            <input
+              type="text"
+              className="form-control"
+              id="siren"
+              required
+              value={shop.siren}
+              onChange={handleInputChange}
+              name="siren"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="siret">Siret</label>
+            <input
+              type="text"
+              className="form-control"
+              id="siret"
+              required
+              value={shop.siret}
+              onChange={handleInputChange}
+              name="siret"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="zipCode">Zip Code</label>
+            <input
+              type="text"
+              className="form-control"
+              id="zipCode"
+              required
+              value={shop.zipCode}
+              onChange={handleInputChange}
+              name="zipCode"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="phone">Phone</label>
+            <input
+              type="text"
+              className="form-control"
+              id="phone"
+              required
+              value={shop.phone}
+              onChange={handleInputChange}
+              name="phone"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              className="form-control"
+              id="email"
+              required
+              value={shop.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="geoloc">Geoloc</label>
+            <input
+              type="text"
+              className="form-control"
+              id="geoloc"
+              required
+              value={shop.geoloc}
+              onChange={handleInputChange}
+              name="geoloc"
+            />
+          </div>
+          
+          <button onClick={saveShop} className="btn btn-success">
+            Submit
+          </button>
+        </div>
+      )}
     </div>
   );
 }
+
+export default ShopForm;

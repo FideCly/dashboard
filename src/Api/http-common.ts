@@ -2,8 +2,10 @@ import axios from "axios";
 
 export default axios.create({
     // import base url from config file
-  baseURL: process.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    "Content-type": "application/json"
+    "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+    
   }
 });

@@ -1,5 +1,5 @@
 import http from "../http-common";
-import {Promotions} from "../Models/Promotions";
+import Promotions from "../Models/Promotions";
 
 
   /**
@@ -26,7 +26,7 @@ import {Promotions} from "../Models/Promotions";
    * @returns Retourne une promesse de type Promotions
    */
   const updatePromotion = (id: string, promotion: Promotions) => {
-    return http.post<Promotions>(`/promotions/${id}`, "PUT", { data: promotion });
+    return http.post<Promotions>(`/promotions/${id}`,promotion);
 };
 
   /**
@@ -35,7 +35,7 @@ import {Promotions} from "../Models/Promotions";
    * @returns Retourne une promesse de type Promotions
    */
   const createPromotion = (promotion: Promotions) => {
-    return http.post<Promotions>(`/promotions`, "POST", { data: promotion });
+    return http.post<Promotions>(`/promotions`, promotion);
 };
 
   /**

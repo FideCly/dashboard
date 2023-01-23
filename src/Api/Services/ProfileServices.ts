@@ -1,5 +1,5 @@
 import http from "../http-common";
-import {Profile} from "../Models/Profile";
+import Profile from "../Models/Profile";
 
   /**
    * recupere la liste des profiles
@@ -25,7 +25,7 @@ import {Profile} from "../Models/Profile";
    * @returns Retourne une promesse de type Profile
    */
   const updateProfile = (id: string, profile: Profile) => {
-    return http.post<Profile>(`/profiles/${id}`, "PUT", { data: profile });
+    return http.put<Profile>(`/profiles/${id}`, profile);
   };
 
   /**
@@ -34,7 +34,7 @@ import {Profile} from "../Models/Profile";
    * @returns Retourne une promesse de type Profile
    */
   const createProfile = (profile: Profile) => {
-    return http.post<Profile>(`/profiles`, "POST", { data: profile });
+    return http.post<Profile>(`/profiles`, profile);
   };
 
   /**

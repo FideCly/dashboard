@@ -26,7 +26,7 @@ import User from "../Models/User";
    * @returns Retourne une promesse de type User
    */
   const updateUser = (id: string, user: User) => {
-    return http.post<User>(`/users/${id}`, "PUT", { data: user });
+    return http.post<User>(`/users/${id}`, user);
 };
 
   /**
@@ -35,7 +35,7 @@ import User from "../Models/User";
    * @returns Retourne une promesse de type User
    */
   const createUser = (user: User) => {
-    return http.post<User>(`/users`, "POST", { data: user });
+    return http.post<User>(`/users`, user);
 };
 
   /**

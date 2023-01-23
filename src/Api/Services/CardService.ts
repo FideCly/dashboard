@@ -30,7 +30,7 @@ import Card from "../Models/Card";
    * @see src/Types/Card.ts
    */
   const updateCard = (id: string, card: Card) => {
-    return http.post<Card>(`/cards/${id}`, "PUT", { data: card });
+    return http.put<Card>(`/cards/${id}`,card);
   };
 
   /**
@@ -40,7 +40,7 @@ import Card from "../Models/Card";
    * @see Card
    */
   const createCard = (card: Card) => {
-    return http.post<Card>(`/cards`, "POST", { data: card });
+    return http.post<Card>(`/cards`, card);
   };
 
   /**

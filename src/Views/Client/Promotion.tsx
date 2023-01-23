@@ -29,7 +29,6 @@ export default function Promotion() {
           <Promotionform />
         </div>
       )}
-      <PromotionList />
     </div>
   );
 }

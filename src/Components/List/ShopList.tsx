@@ -1,18 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { IShopCreatePayload } from "../../interfaces";
+import Shop from "../../Api/Models/Shop";
+import { ShopService } from "../../Api/Services";
+
 export default function ShopList() {
-  const [shops, setShops] = useState<IShopCreatePayload[]>([]);
+
+  const [shops, setShops] = useState<Shop[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const loadShops = async () => {
       try {
-        setIsLoading(true);
-        const response = await axios.get<IShopCreatePayload[]>(
-          import.meta.env.VITE_API_URL + 'shops'
-        );
+        const response = await ShopService.getShops();
         setShops(response.data);
       } catch (error) {
         setError(true);

@@ -1,120 +1,148 @@
-import Select from "react-select";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IPromotionCreatePayload } from "../../interfaces";
-export default function Promotionform() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IPromotionCreatePayload>();
-  const onSubmit: SubmitHandler<IPromotionCreatePayload> = async (data) => {
-    data.userId = 1;
-    data.shopId = 1;
-    //make type, limitPassage and limitAmout   a number
-    data.type = Number(data.type);
-    data.limitPassage = Number(data.limitPassage);
-    data.limitAmout = Number(data.limitAmout);
-    JSON.stringify(data);
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "promotions",
-        data
-      );
-      toast.success("Promotion created successfully");
-    } catch (error) {
-      toast.error("Error creating promotion" + error);
-    }
-  };
+import React, { useState, ChangeEvent } from "react";
+import Promotions from "../../Api/Models/Promotions";
+import { PromotionService } from "../../Api/Services";
+
+const PromotionForm : React.FC = () => {
+  const initialPromotionState: Promotions = {
+    name: "",
+    description: "",
+    startAt: "",
+    endAt: "",
+    shopId: 0,
+    checkoutLimit: 0,
+    
+  }
+  const [promotion, setPromotion] = useState<Promotions>(initialPromotionState);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPromotion({ ...promotion, [name]: value });
+  }
+
+  const savePromotion = () => {
+    var data = {
+      name: promotion.name,
+      description: promotion.description,
+      startAt: promotion.startAt,
+      endAt: promotion.endAt,
+      shopId: promotion.shopId,
+      checkoutLimit: promotion.checkoutLimit,
+    };
+
+    PromotionService.createPromotion(data)
+      .then((response : any) => {
+        setPromotion({
+          name: response.data.name,
+          description: response.data.description,
+          startAt: response.data.startAt,
+          endAt: response.data.endAt,
+          shopId: response.data.shopId,
+          checkoutLimit: response.data.checkoutLimit,
+      });
+        setSubmitted(true);
+        console.log(response.data);
+      })
+      .catch((e : Error )=> {
+        console.log(e);
+      });
+  }
+
+  const newPromotion = () => {
+    setPromotion(initialPromotionState);
+    setSubmitted(false);
+  }
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">Create Promotion</h3>
-      </div>
-      <div className="card-body">
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="submit-form">
+      {submitted ? (
+        <div>
+          <h4>You submitted successfully!</h4>
+          <button className="btn btn-success" onClick={newPromotion}>
+            Add
+          </button>
+        </div>
+      ) : (
+        <div>
           <div className="form-group">
-            <label htmlFor="name">name</label>
+            <label htmlFor="title">Name</label>
             <input
               type="text"
               className="form-control"
               id="name"
-              placeholder="Enter name"
-              {...register('name', { required: true })}
+              required
+              value={promotion.name}
+              onChange={handleInputChange}
+              name="name"
             />
-            {errors.name && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">Description</label>
             <input
               type="text"
               className="form-control"
               id="description"
-              placeholder="Enter description"
-              {...register('description', { required: true })}
+              required
+              value={promotion.description}
+              onChange={handleInputChange}
+              name="description"
             />
-            {errors.description && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="type">Type</label>
-            <select
-              className="form-control"
-              id="type"
-              {...register('type', { valueAsNumber: true })}>
-              <option value="1">percentage</option>
-              <option value="2">amount</option>
-            </select>
-            {errors.type && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="startAt">Start date</label>
+            <label htmlFor="startAt">Start At</label>
             <input
-              type="date"
+              type="text"
               className="form-control"
               id="startAt"
-              placeholder="Enter startAt"
-              {...register('startAt', { required: true })}
+              required
+              value={promotion.startAt}
+              onChange={handleInputChange}
+              name="startAt"
             />
-            {errors.startAt && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="endAt">End date</label>
+            <label htmlFor="endAt">End At</label>
             <input
-              type="date"
+              type="text"
               className="form-control"
               id="endAt"
-              placeholder="Enter end date"
-              {...register('endAt', { required: true })}
+              required
+              value={promotion.endAt}
+              onChange={handleInputChange}
+              name="endAt"
             />
-            {errors.endAt && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="valimitPassagelue">limitPassage</label>
+            <label htmlFor="shop">Shop</label>
             <input
-              type="number"
+              type="text"
               className="form-control"
-              id="limitPassage"
-              placeholder="Enter the checkout threshold at which the promotion applies"
-              {...register('limitPassage', { valueAsNumber: true })}
+              id="shop"
+              required
+              value={promotion.shop}
+              onChange={handleInputChange}
+              name="shop"
             />
-            {errors.limitPassage && <span className="text-danger">This field is required</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="limitAmout">Amount threshold</label>
+            <label htmlFor="card">Card</label>
             <input
-              type="number"
+              type="text"
               className="form-control"
-              id="limitAmout"
-              placeholder="Enter the amount threshold at which the promotion applies"
-              {...register('limitAmout', { valueAsNumber: true })}
+              id="card"
+              required
+              value={promotion.card}
+              onChange={handleInputChange}
+              name="card"
             />
-            {errors.limitAmout && <span className="text-danger">This field is required</span>}
           </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+          <button onClick={savePromotion} className="btn btn-success">
+            Submit
+          </button>
+        </div>
+      )}
     </div>
   );
 }
+
+export default PromotionForm;
