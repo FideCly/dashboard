@@ -1,12 +1,12 @@
-import { Route, Routes } from "react-router";
-import Mailing from "../../Views/Client/Mailing";
-import Promotion from "../../Views/Client/Promotion";
-import Scanner from "../../Views/Client/Scanner";
-import Dashboard from "../../Views/Home/Dashboard";
-import GeneralSettings from "../../Views/Settings/GeneralSettings";
-import Signup from "../../Views/Auth/Signup";
+import { Route, Routes } from 'react-router'
+import Mailing from '../../Views/Client/Mailing'
+import Promotion from '../../Views/Client/Promotion'
+import Scanner from '../../Views/Client/Scanner'
+import Dashboard from '../../Views/Home/Dashboard'
+import GeneralSettings from '../../Views/Settings/GeneralSettings'
+import Signup from '../../Views/Auth/Signup'
 
-export default function Body() {
+export default function Body (): JSX.Element {
   return (
     <div className="body">
       <Routes>
@@ -18,5 +18,5 @@ export default function Body() {
         <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
-  );
+  )
 }

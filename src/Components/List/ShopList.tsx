@@ -1,30 +1,28 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Shop from "../../Api/Models/Shop";
-import { ShopService } from "../../Api/Services";
+import { useEffect, useState } from 'react'
+import type Shop from '../../Api/Models/Shop'
+import { ShopService } from '../../Api/Services'
 
-export default function ShopList() {
-
-  const [shops, setShops] = useState<Shop[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+export default function ShopList (): JSX.Element {
+  const [shops, setShops] = useState<Shop[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    const loadShops = async () => {
+    const loadShops = async (): Promise<void> => {
       try {
-        const response = await ShopService.getShops();
-        setShops(response.data);
+        const response = await ShopService.getShops()
+        setShops(response.data)
       } catch (error) {
-        setError(true);
+        setError(true)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    loadShops();
-  }, []);
+    }
+    void loadShops()
+  }, [])
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>loading....</div>
   }
 
   if (error) {
@@ -32,7 +30,7 @@ export default function ShopList() {
       <div>
         <span>Error while loading shops</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -48,5 +46,5 @@ export default function ShopList() {
         </div>
       ))}
     </div>
-  );
+  )
 }

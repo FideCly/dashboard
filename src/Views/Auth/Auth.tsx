@@ -1,3 +1,3 @@
-export default function Auth() {
-  return <></>;
+export default function Auth (): JSX.Element {
+  return <></>
 }

@@ -1,14 +1,13 @@
-import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Promotionform from "../../Components/form/PromotionForm";
-import { useState } from "react";
-import PromotionList from "../../Components/List/PromotionList";
-export default function Promotion() {
-  const [isShown, setIsShown] = useState(false);
-
-  const handleClick = (_envent: any) => {
-    setIsShown((current) => !current);
-  };
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Promotionform from '../../Components/form/PromotionForm'
+import { useState } from 'react'
+import PromotionList from '../../Components/List/PromotionList'
+export default function Promotion (): JSX.Element {
+  const [isShown, setIsShown] = useState(false)
+  const handleClick = (_envent: any): void => {
+    setIsShown((current) => !current)
+  }
 
   return (
     <div className="container max-w-6xl mx-auto mt-4">
@@ -30,5 +29,5 @@ export default function Promotion() {
         </div>
       )}
     </div>
-  );
+  )
 }

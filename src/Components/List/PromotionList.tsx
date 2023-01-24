@@ -1,30 +1,28 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { IPromotionCreatePayload } from "../../interfaces";
-export default function PromotionList() {
-  const [promotions, setPromotions] = useState<IPromotionCreatePayload[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useEffect, useState } from 'react'
+import type Promotions from '../../Api/Models/Promotions'
+import { PromotionService } from '../../Api/Services'
+export default function PromotionList (): JSX.Element {
+  const [promotions, setPromotions] = useState<Promotions[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    const loadPromotions = async () => {
+    const loadPromotions = async (): Promise<void> => {
       try {
-        setIsLoading(true);
-        const response = await axios.get<IPromotionCreatePayload[]>(
-          import.meta.env.VITE_API_URL + 'promotions'
-        );
-        setPromotions(response.data);
+        setIsLoading(true)
+        const response = await PromotionService.getPromotions()
+        setPromotions(response.data)
       } catch (error) {
-        setError(true);
+        setError(true)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    loadPromotions();
-  }, []);
+    }
+    void loadPromotions()
+  }, [])
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>loading....</div>
   }
 
   if (error) {
@@ -32,7 +30,7 @@ export default function PromotionList() {
       <div>
         <span>Error while loading promotions</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -46,5 +44,5 @@ export default function PromotionList() {
         </div>
       ))}
     </div>
-  );
+  )
 }
