@@ -11,6 +11,7 @@ export default function Promotion (): JSX.Element {
 
   return (
     <div className="container max-w-6xl mx-auto mt-4">
+      <PromotionList />
       <div className="flex">
         <h1 className="flex-1 text-4xl">Promotion</h1>
         <button
