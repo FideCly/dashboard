@@ -1,4 +1,3 @@
-import Emailform from '../../Components/form/EmailForm'
 export default function Mailing (): JSX.Element {
   return (
     <div className="container max-w-2xl mx-auto mt-4">
@@ -7,7 +6,6 @@ export default function Mailing (): JSX.Element {
       </div>
       <div>
         <h1> Create Campaign</h1>
-        <Emailform />
       </div>
     </div>
   )
