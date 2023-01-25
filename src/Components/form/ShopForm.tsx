@@ -1,6 +1,7 @@
 import React, { useState, type ChangeEvent } from 'react'
 import type Shop from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
+import { toast } from 'react-toastify'
 
 const ShopForm: React.FC = () => {
   const initialShopState: Shop = {
@@ -44,7 +45,7 @@ const ShopForm: React.FC = () => {
           email: response.data.email,
           geoloc: response.data.geoloc
         })
-        console.log(response.data)
+        toast.success('The shop was created successfully!')
       })
       .catch((e: Error) => {
         console.log(e)

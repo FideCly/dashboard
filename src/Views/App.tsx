@@ -6,15 +6,18 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 
 function App (): JSX.Element {
-  return (
-    <Router>
-      <Navbar />
-      <div className="">
-        <Body />
-      </div>
-      <Footer />
-      <ToastContainer />
-    </Router>
+  return (<>
+    <div className="flex">
+      <Router>
+        <Navbar />
+        <div className='flex flex-col flex-1'>
+          <Body />
+          <Footer />
+        </div>
+      </Router>
+    </div>
+    <ToastContainer className="shadow-lg alert alert-error" />
+  </>
   )
 }
 export default App

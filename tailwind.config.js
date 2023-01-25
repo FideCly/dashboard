@@ -10,7 +10,8 @@ module.exports = {
     extend: {}
   },
   plugins: [
-    require('flowbite/plugin')
+    require('@tailwindcss/forms'),
+    require('daisyui')
   ],
   purge: ['./src/**/*.{js,jsx,ts,tsx}']
 }

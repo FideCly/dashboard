@@ -8,7 +8,7 @@ import Signup from '../../Views/Auth/Signup'
 
 export default function Body (): JSX.Element {
   return (
-    <div className="body">
+    <div className="min-h-screen body">
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/mailing" element={<Mailing />} />

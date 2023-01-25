@@ -7,21 +7,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import logo from '../../Assets/logo.svg'
+import logo from '../../assets/logo.png'
 export default function Navbar (): JSX.Element {
   return (
-    <nav className="bg-[#69B578] border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
+    <nav className="bg-[#69B578] border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900 min-h-screen min-w-max">
+      <div className="container flex flex-col justify-between mx-auto tems-center -flex-wrap">
         <a href="" className="flex items-center">
-          <img src={logo} alt="logo" className="h-6 mr-1 sm:h-9" />
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            FideCly
-          </span>
+          <img src={logo} alt="logo" className="" />
         </a>
-        <div className="flex md:order-2">
-          <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <div className="flex">
+          <ul className="flex flex-col">
             <li>
-              <Link className="nav-link" to="/">
+              <Link className="flex nav-link" to="/" >
                 <FontAwesomeIcon icon={faHouse} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
@@ -32,7 +29,7 @@ export default function Navbar (): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/mailing">
+              <Link className="flex nav-link" to="/mailing">
                 <FontAwesomeIcon icon={faEnvelope} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
@@ -43,7 +40,7 @@ export default function Navbar (): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="scan">
+              <Link className="flex nav-link" to="scan">
                 <FontAwesomeIcon icon={faQrcode} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
@@ -54,7 +51,7 @@ export default function Navbar (): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/promotion">
+              <Link className="flex nav-link" to="/promotion">
                 <FontAwesomeIcon icon={faRectangleAd} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
@@ -65,7 +62,7 @@ export default function Navbar (): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/settings">
+              <Link className="flex nav-link" to="/settings">
                 <FontAwesomeIcon icon={faGear} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
@@ -76,7 +73,7 @@ export default function Navbar (): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/signup">
+              <Link className="flex nav-link" to="/signup">
                 <FontAwesomeIcon icon={faGear} />
                 <span
                   className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"

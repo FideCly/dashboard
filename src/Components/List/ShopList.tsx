@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type Shop from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
+import { Placeholder } from 'semantic-ui-react'
 
 export default function ShopList (): JSX.Element {
   const [shops, setShops] = useState<Shop[]>([])
@@ -22,29 +23,102 @@ export default function ShopList (): JSX.Element {
   }, [])
 
   if (isLoading) {
-    return <div>loading....</div>
+    return <div>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Adresse</th>
+              <th>Zipcode</th>
+              <th>phone</th>
+              <th>email</th>
+              <th>geoloc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>
+                <Placeholder>
+                  <Placeholder.Line />
+                </Placeholder>
+              </th>
+              <th>              <Placeholder>
+                <Placeholder.Line />
+              </Placeholder></th>
+              <th>              <Placeholder>
+                <Placeholder.Line />
+              </Placeholder></th>
+              <th>              <Placeholder>
+                <Placeholder.Line />
+              </Placeholder></th>
+              <th>              <Placeholder>
+                <Placeholder.Line />
+              </Placeholder></th>
+              <th>              <Placeholder>
+                <Placeholder.Line />
+              </Placeholder></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div >
   }
 
   if (error) {
     return (
       <div>
-        <span>Error while loading shops</span>
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Adresse</th>
+                <th>Zipcode</th>
+                <th>phone</th>
+                <th>email</th>
+                <th>geoloc</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colSpan={4} className='text-4xl font-bold text-center'>
+                  OH no! A error has occured....
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
 
   return (
-    <div>
-      {shops.map((shop) => (
-        <div key={shop.companyName}>
-          <span>{shop.companyName}</span>
-          <span>{shop.address}</span>
-          <span>{shop.zipCode}</span>
-          <span>{shop.phone}</span>
-          <span>{shop.email}</span>
-          <span>{shop.geoloc}</span>
-        </div>
-      ))}
+    <div className="overflow-x-auto">
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Adresse</th>
+            <th>Zipcode</th>
+            <th>phone</th>
+            <th>email</th>
+            <th>geoloc</th>
+          </tr>
+        </thead>
+        <tbody>
+          {shops.map((shop) => (
+            <tr key={shop.companyName}>
+              <th>{shop.companyName}</th>
+              <th>{shop.address}</th>
+              <th>{shop.zipCode}</th>
+              <th>{shop.phone}</th>
+              <th>{shop.email}</th>
+              <th>{shop.geoloc}</th>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

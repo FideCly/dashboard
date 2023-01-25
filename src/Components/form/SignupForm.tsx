@@ -33,39 +33,17 @@ const SignupForm: React.FC = () => {
   }
 
   return (
-    <div className="submit-form">
-      <div>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            className="form-control"
-            id="email"
-            required
-            value={user.email}
-            onChange={handleInputChange}
-            name="email"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            required
-            value={user.username}
-            onChange={handleInputChange}
-            name="username"
-          />
-        </div>
-
-        <button onClick={saveUser} className="btn btn-success">
-          Submit
-        </button>
+    <form method="post">
+      <div className="form-control">
+        <h1 className="mb-3 h3 font-weight-normal">Please sign in</h1>
+        <label htmlFor="username" className="label">Username</label>
+        <input className="input input-bordered form-control" type="text" value={user.username} name="mail" id="username" autoComplete="username" required autoFocus onChange={handleInputChange} />
+        <label htmlFor="email" className="label">Email</label>
+        <input className="input input-bordered form-control" type="email" name="email" id="email" autoComplete="current-password" required onChange={handleInputChange} />
+        <label className="label"><a href="" className="label-text-alt link link-hover">Forgot password?</a></label>
+        <button className="btn btn-primary" type="submit" onClick={saveUser}>Sign in</button>
       </div>
-    </div>
+    </form>
   )
 }
 
