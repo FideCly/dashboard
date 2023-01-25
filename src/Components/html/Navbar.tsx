@@ -7,13 +7,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import logo from '../../assets/logo.png'
 export default function Navbar (): JSX.Element {
   return (
     <nav className="bg-[#69B578] border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900 min-h-screen min-w-max">
       <div className="container flex flex-col justify-between mx-auto tems-center -flex-wrap">
         <a href="" className="flex items-center">
-          <img src={logo} alt="logo" className="" />
+          <img src="" alt="logo" className="" />
         </a>
         <div className="flex">
           <ul className="flex flex-col">
