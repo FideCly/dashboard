@@ -9,7 +9,6 @@
         "lint": "eslint src/**/*.ts src/**/*.tsx"
     },
     "dependencies": {
-        "@faker-js/faker": "^7.6.0",
         "@fortawesome/fontawesome-svg-core": "^6.1.1",
         "@fortawesome/free-regular-svg-icons": "^6.1.1",
         "@fortawesome/free-solid-svg-icons": "^6.1.1",
