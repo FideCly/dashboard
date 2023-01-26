@@ -29,6 +29,7 @@ export default function Promotion (): JSX.Element {
           <Promotionform />
         </div>
       )}
+      <PromotionList />
     </div>
   )
 }
