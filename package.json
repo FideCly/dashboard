@@ -7,7 +7,7 @@
         "build": "tsc && vite build",
         "preview": "vite preview",
         "lint": "eslint src/**/*.ts src/**/*.tsx",
-        "test": "vitest",
+        "test": "vitest --run",
         "coverage": "vitest run --coverage"
     },
     "dependencies": {
