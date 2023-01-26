@@ -7,6 +7,6 @@ export default {
   cors: false,
   test: {
     globals: true,
-    environment: 'jsdom'
+    environment: 'happy-dom'
   }
 };
