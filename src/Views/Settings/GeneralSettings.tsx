@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Cardform from '../../Components/form/CardForm'
 import ShopForm from '../../Components/form/ShopForm'
 import ShopList from '../../Components/List/ShopList'
-export default function GeneralSettings (): JSX.Element {
+export default function GeneralSettings () {
   const [Card, setCard] = useState(false)
   const [Shop, setShop] = useState(false)
   const handleClick2 = (_envent: any): void => {

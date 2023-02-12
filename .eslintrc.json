@@ -19,7 +19,6 @@
   ],
   "rules": {},
   "globals": {
-    "React": true,
-    "JSX": true
+    "React": true
   }
 }

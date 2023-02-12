@@ -6,7 +6,7 @@ import Dashboard from '../../Views/Home/Dashboard'
 import GeneralSettings from '../../Views/Settings/GeneralSettings'
 import Signup from '../../Views/Auth/Signup'
 
-export default function Body (): JSX.Element {
+export default function Body () {
   return (
     <div className="body">
       <Routes>

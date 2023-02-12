@@ -1,4 +1,4 @@
-export default function Mailing (): JSX.Element {
+export default function Mailing () {
   return (
     <div className="container max-w-2xl mx-auto mt-4">
       <div className="flex">

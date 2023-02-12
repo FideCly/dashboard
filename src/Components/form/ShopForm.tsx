@@ -11,7 +11,8 @@ const ShopForm: React.FC = () => {
     zipCode: '',
     phone: '',
     email: '',
-    geoloc: ''
+    lat: '',
+    long: ''
   }
   const [shop, setShop] = useState<Shop>(initialShopState)
 
@@ -29,7 +30,8 @@ const ShopForm: React.FC = () => {
       zipCode: shop.zipCode,
       phone: shop.phone,
       email: shop.email,
-      geoloc: shop.geoloc
+      lat: shop.lat,
+      long: shop.long
     }
 
     ShopService.createShop(data)
@@ -42,7 +44,8 @@ const ShopForm: React.FC = () => {
           zipCode: response.data.zipCode,
           phone: response.data.phone,
           email: response.data.email,
-          geoloc: response.data.geoloc
+          lat: response.data.lat,
+          long: response.data.long
         })
         console.log(response.data)
       })
@@ -146,15 +149,28 @@ const ShopForm: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="geoloc">Geoloc</label>
+          <label htmlFor="lat">Geoloc</label>
           <input
             type="text"
             className="form-control"
-            id="geoloc"
+            id="lat"
             required
-            value={shop.geoloc}
+            value={shop.lat}
             onChange={handleInputChange}
-            name="geoloc"
+            name="lat"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="long">Geoloc</label>
+          <input
+            type="text"
+            className="form-control"
+            id="long"
+            required
+            value={shop.long}
+            onChange={handleInputChange}
+            name="long"
           />
         </div>
 

@@ -1,4 +1,4 @@
-export default function Scanner (): JSX.Element {
+export default function Scanner () {
   return (
     <div>
 

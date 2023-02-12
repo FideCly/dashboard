@@ -5,7 +5,7 @@ import Body from '../Components/html/Body'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 
-function App (): JSX.Element {
+function App () {
   return (
     <Router>
       <Navbar />

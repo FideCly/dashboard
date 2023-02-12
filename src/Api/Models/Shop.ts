@@ -4,7 +4,8 @@ export default interface Shop {
   siret: string
   email: string
   zipCode: string
-  geoloc: string
+  lat: string
+  long: string
   phone: string
   address: string
 }

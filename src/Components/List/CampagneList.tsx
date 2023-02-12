@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type Promotions from '../../Api/Models/Promotions'
 import { PromotionService } from '../../Api/Services'
-export default function CampagneList (): JSX.Element {
+export default function CampagneList () {
   const [campaigns, setCampaigns] = useState<Promotions[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)

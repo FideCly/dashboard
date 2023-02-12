@@ -1,6 +1,9 @@
 import { type AxiosResponse } from 'axios'
 import http from '../http-common'
 import type Card from '../Models/Card'
+
+const route = '/cards'
+
 /**
    * Récupère la liste des cartes
    * @returns Retourne une promesse de type Card[]
@@ -8,7 +11,7 @@ import type Card from '../Models/Card'
    * @see src/Types/Card.ts
    */
 const getCards = async (): Promise<AxiosResponse<Card[], any>> => {
-  return await http.get<Card[]>('/cards')
+  return await http.get<Card[]>(route)
 }
 
 /**
@@ -19,7 +22,7 @@ const getCards = async (): Promise<AxiosResponse<Card[], any>> => {
    * @see src/Types/Card.ts
    */
 const getCardById = async (id: string): Promise<AxiosResponse<Card, any>> => {
-  return await http.get<Card>(`/cards/${id}`)
+  return await http.get<Card>(`${route}/${id}`)
 }
 
 /**
@@ -31,7 +34,7 @@ const getCardById = async (id: string): Promise<AxiosResponse<Card, any>> => {
    * @see src/Types/Card.ts
    */
 const updateCard = async (id: string, card: Card): Promise<AxiosResponse<Card, any>> => {
-  return await http.put<Card>(`/cards/${id}`, card)
+  return await http.put<Card>(`${route}/${id}`, card)
 }
 
 /**
@@ -41,7 +44,7 @@ const updateCard = async (id: string, card: Card): Promise<AxiosResponse<Card, a
    * @see Card
    */
 const createCard = async (card: Card): Promise<AxiosResponse<Card, any>> => {
-  return await http.post<Card>('/cards', card)
+  return await http.post<Card>(route, card)
 }
 
 /**
@@ -50,7 +53,7 @@ const createCard = async (card: Card): Promise<AxiosResponse<Card, any>> => {
    * @returns
    */
 const deleteCard = async (id: string): Promise<AxiosResponse<Card, any>> => {
-  return await http.delete<Card>(`/cards/${id}`)
+  return await http.delete<Card>(`${route}/${id}`)
 }
 
 const CardService = {

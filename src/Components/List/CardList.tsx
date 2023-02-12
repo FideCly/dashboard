@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type Card from '../../Api/Models/Card'
 import { CardService } from '../../Api/Services'
-export default function CardList (): JSX.Element {
+export default function CardList () {
   const [cards, setCards] = useState<Card[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)

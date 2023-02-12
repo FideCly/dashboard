@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type Shop from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
 
-export default function ShopList (): JSX.Element {
+export default function ShopList () {
   const [shops, setShops] = useState<Shop[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -42,7 +42,8 @@ export default function ShopList (): JSX.Element {
           <span>{shop.zipCode}</span>
           <span>{shop.phone}</span>
           <span>{shop.email}</span>
-          <span>{shop.geoloc}</span>
+          <span>{shop.lat}</span>
+          <span>{shop.long}</span>
         </div>
       ))}
     </div>

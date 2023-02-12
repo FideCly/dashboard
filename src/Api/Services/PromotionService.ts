@@ -46,12 +46,25 @@ const createPromotion = async (promotion: Promotions): Promise<AxiosResponse<Pro
 const deletePromotion = async (id: string): Promise<AxiosResponse<Promotions, any>> => {
   return await http.delete<Promotions>(`/promotions/${id}`)
 }
+
+/**
+ * get promotion for a shop
+ * @param id - Id of the shop
+ * @returns Retourne une promesse de type Promotions
+ * @see Promotions
+ * @see src/Types/Promotions.ts
+ */
+const getPromotionsByShopId = async (id: string): Promise<AxiosResponse<Promotions[], any>> => {
+  return await http.get<Promotions[]>(`/shops/${id}/promotions`)
+}
+
 const PromotionService = {
   getPromotions,
   getPromotionById,
   updatePromotion,
   createPromotion,
-  deletePromotion
+  deletePromotion,
+  getPromotionsByShopId
 }
 
 export default PromotionService

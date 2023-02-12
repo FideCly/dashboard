@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Promotionform from '../../Components/form/PromotionForm'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
-export default function Promotion (): JSX.Element {
+export default function Promotion () {
   const [isShown, setIsShown] = useState(false)
   const handleClick = (_envent: any): void => {
     setIsShown((current) => !current)
