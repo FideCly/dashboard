@@ -1,30 +1,28 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { ICardCreatePayload } from '../../interfaces';
-export default function CardList() {
-  const [cards, setCards] = useState<ICardCreatePayload[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useEffect, useState } from 'react'
+import type Card from '../../Api/Models/Card'
+import { CardService } from '../../Api/Services'
+export default function CardList () {
+  const [cards, setCards] = useState<Card[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    const loadCards = async () => {
+    const loadCards = async (): Promise<void> => {
       try {
-        setIsLoading(true);
-        const response = await axios.get<ICardCreatePayload[]>(
-          import.meta.env.VITE_API_URL + 'wallet'
-        );
-        setCards(response.data);
+        setIsLoading(true)
+        const response = await CardService.getCards()
+        setCards(response.data)
       } catch (error) {
-        setError(true);
+        setError(true)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    loadCards();
-  }, []);
+    }
+    void loadCards()
+  }, [])
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>loading....</div>
   }
 
   if (error) {
@@ -32,17 +30,17 @@ export default function CardList() {
       <div>
         <span>Error while loading cards</span>
       </div>
-    );
+    )
   }
 
   return (
     <div>
       {cards.map((card) => (
-        <div key={card.url}>
-          <span>{card.startAt.toISOString()}</span>
-          <span>{card.endAt.toISOString()}</span>
+        <div key={card.name}>
+          <span>{card.startAt.toString()}</span>
+          <span>{card.endAt.toString()}</span>
         </div>
       ))}
     </div>
-  );
+  )
 }
