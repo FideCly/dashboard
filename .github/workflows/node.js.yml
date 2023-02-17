@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: ["main","dev","feat/migrate-to-nextjs"]
+    branches: ["main","dev"]
   pull_request:
-    branches: ["main","dev","feat/migrate-to-nextjs"]
+    branches: ["main","dev"]
 
 jobs:
   build:
