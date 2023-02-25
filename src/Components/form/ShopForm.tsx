@@ -1,3 +1,4 @@
+import Maps from '../Maps'
 import React, { useState, type ChangeEvent } from 'react'
 import type Shop from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
@@ -147,33 +148,7 @@ const ShopForm: React.FC = () => {
             name="email"
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="lat">Geoloc</label>
-          <input
-            type="text"
-            className="form-control"
-            id="lat"
-            required
-            value={shop.lat}
-            onChange={handleInputChange}
-            name="lat"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="long">Geoloc</label>
-          <input
-            type="text"
-            className="form-control"
-            id="long"
-            required
-            value={shop.long}
-            onChange={handleInputChange}
-            name="long"
-          />
-        </div>
-
+        <Maps />
         <button onClick={saveShop} className="btn btn-success">
           Submit
         </button>
