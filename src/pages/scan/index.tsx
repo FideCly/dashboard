@@ -5,18 +5,9 @@ import { BalanceServices } from '@/Api/Services'
 
 export default function Scan () {
   const [data, setData] = useState('No result')
-  const handleScan = (data: any) => {
-    if (data) {
-      setData(data)
-      BalanceServices.checkout(data)
-    }
-  }
-  const handleError = (err: any) => {
-    console.error(err)
-  }
 
-  const handleConstraints = () => {
-    
+
+  const handleConstraints = () => {  
     return {
       facingMode: 'environment'
     }
@@ -31,14 +22,20 @@ export default function Scan () {
         <QrReader
           onResult={(result, error) => {
             if (result) {
-              handleScan(result)
-            } else {
-              handleError(error)
+              setData(result.getText())
+              BalanceServices.checkout(result.getText()).then((response) => {
+                console.log(response)
+              })
+              .catch((e) => {
+                console.log(e)
+              })
             }
-          } } 
+            if (error) {
+              console.log(error)
+            }
+          }} 
           constraints={handleConstraints()}
         />
-        <p>{data}</p>
       </div>
     </div>
   )

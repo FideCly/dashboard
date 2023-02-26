@@ -17,7 +17,7 @@ const updateBalance = async (id: string, balance: IBalanceUpdatePayload): Promis
 }
 
 const checkout = async (id: string): Promise<AxiosResponse<IBalanceUpdatePayload, any>> => {
-    return await httpCommon.post<IBalanceUpdatePayload>(`${Route}/checkout/${id}`);
+    return await httpCommon.put<IBalanceUpdatePayload>(`${Route}/checkout/${id}`);
 }
 
 const BalanceServices = {
