@@ -56,7 +56,8 @@ const ShopForm: React.FC = () => {
       phone: shop.phone,
       email: shop.email,
       lat: shop.lat,
-      long: shop.long
+      long: shop.long,
+      city: shop.city
     }
 
     ShopService.createShop(data)
@@ -70,7 +71,8 @@ const ShopForm: React.FC = () => {
           phone: response.data.phone,
           email: response.data.email,
           lat: response.data.lat,
-          long: response.data.long
+          long: response.data.long,
+          city: response.data.city
         })
         console.log(response.data)
       })
@@ -100,9 +102,23 @@ const ShopForm: React.FC = () => {
           <PlacesAutocomplete
           onAddressSelect={(address) => {
             getGeocode({ address: address }).then((results) => {
+              // get lat long , zip code, city, country from results
+              const zipCode = () => {
+                const zipCode = results[0].address_components.find(
+                  (component) => component.types[0] === 'postal_code'
+                );
+                return zipCode ? zipCode.long_name : '';
+              };
+              const city = () => {
+                const city = results[0].address_components.find(
+                  (component) => component.types[0] === 'locality'
+                );
+                return city ? city.long_name : '';
+              };
+              
               const lat = () => results[0].geometry.location.lat().toString();
               const lng = () => results[0].geometry.location.lng().toString();
-              setShop({ ...shop, lat: lat(), long: lng(), address: address });
+              setShop({ ...shop, lat: lat(), long: lng(), address: address, zipCode: zipCode() , city: city()});
             });
           }}
         />
