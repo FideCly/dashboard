@@ -69,8 +69,8 @@ const ShopForm: React.FC = () => {
           zipCode: response.data.zipCode,
           phone: response.data.phone,
           email: response.data.email,
-          lat: Maps.lat,
-          long: Maps.lng
+          lat: response.data.lat,
+          long: response.data.long
         })
         console.log(response.data)
       })
