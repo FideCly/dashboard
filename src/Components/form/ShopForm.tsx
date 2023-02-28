@@ -23,7 +23,8 @@ const ShopForm: React.FC = () => {
     phone: '',
     email: '',
     lat: '',
-    long: ''
+    long: '',
+    city: ''
   }
   
   const [shop, setShop] = useState<Shop>(initialShopState)
