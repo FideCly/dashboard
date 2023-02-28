@@ -1,8 +1,19 @@
-import React, { useState, type ChangeEvent } from 'react'
+import React, { useMemo, useState, type ChangeEvent } from 'react'
 import type Shop from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
+import {
+  useLoadScript,
+
+} from '@react-google-maps/api';
+import usePlacesAutocomplete, {
+  getGeocode,
+} from 'use-places-autocomplete';
+
+
+
 
 const ShopForm: React.FC = () => {
+  
   const initialShopState: Shop = {
     companyName: '',
     address: '',
@@ -12,9 +23,24 @@ const ShopForm: React.FC = () => {
     phone: '',
     email: '',
     lat: '',
-    long: ''
+    long: '',
+    city: ''
   }
+  
   const [shop, setShop] = useState<Shop>(initialShopState)
+
+  const libraries = useMemo(() => ['places'], []);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
+    libraries: libraries as any,
+  });
+
+  if (!isLoaded) {
+    return <p>Loading...</p>;
+  }
+    
+
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target
@@ -31,7 +57,8 @@ const ShopForm: React.FC = () => {
       phone: shop.phone,
       email: shop.email,
       lat: shop.lat,
-      long: shop.long
+      long: shop.long,
+      city: shop.city
     }
 
     ShopService.createShop(data)
@@ -45,7 +72,8 @@ const ShopForm: React.FC = () => {
           phone: response.data.phone,
           email: response.data.email,
           lat: response.data.lat,
-          long: response.data.long
+          long: response.data.long,
+          city: response.data.city
         })
         console.log(response.data)
       })
@@ -72,15 +100,29 @@ const ShopForm: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="address">Address</label>
-          <input
-            type="text"
-            className="form-control"
-            id="address"
-            required
-            value={shop.address}
-            onChange={handleInputChange}
-            name="address"
-          />
+          <PlacesAutocomplete
+          onAddressSelect={(address) => {
+            getGeocode({ address: address }).then((results) => {
+              // get lat long , zip code, city, country from results
+              const zipCode = () => {
+                const zipCode = results[0].address_components.find(
+                  (component) => component.types[0] === 'postal_code'
+                );
+                return zipCode ? zipCode.long_name : '';
+              };
+              const city = () => {
+                const city = results[0].address_components.find(
+                  (component) => component.types[0] === 'locality'
+                );
+                return city ? city.long_name : '';
+              };
+              
+              const lat = () => results[0].geometry.location.lat().toString();
+              const lng = () => results[0].geometry.location.lng().toString();
+              setShop({ ...shop, lat: lat(), long: lng(), address: address, zipCode: zipCode() , city: city()});
+            });
+          }}
+        />
         </div>
 
         <div className="form-group">
@@ -108,20 +150,6 @@ const ShopForm: React.FC = () => {
             name="siret"
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="zipCode">Zip Code</label>
-          <input
-            type="text"
-            className="form-control"
-            id="zipCode"
-            required
-            value={shop.zipCode}
-            onChange={handleInputChange}
-            name="zipCode"
-          />
-        </div>
-
         <div className="form-group">
           <label htmlFor="phone">Phone</label>
           <input
@@ -147,33 +175,6 @@ const ShopForm: React.FC = () => {
             name="email"
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="lat">Geoloc</label>
-          <input
-            type="text"
-            className="form-control"
-            id="lat"
-            required
-            value={shop.lat}
-            onChange={handleInputChange}
-            name="lat"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="long">Geoloc</label>
-          <input
-            type="text"
-            className="form-control"
-            id="long"
-            required
-            value={shop.long}
-            onChange={handleInputChange}
-            name="long"
-          />
-        </div>
-
         <button onClick={saveShop} className="btn btn-success">
           Submit
         </button>
@@ -181,5 +182,62 @@ const ShopForm: React.FC = () => {
     </div>
   )
 }
+
+const PlacesAutocomplete = ({
+  onAddressSelect,
+}: {
+  onAddressSelect?: (address: string) => void;
+}) => {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: { componentRestrictions: { country: '' } },
+    debounce: 300,
+    cache: 86400,
+  });
+
+  const renderSuggestions = () => {
+    return data.map((suggestion) => {
+      const {
+        place_id,
+        structured_formatting: { main_text, secondary_text },
+        description,
+      } = suggestion;
+
+      return (
+        <li
+          key={place_id}
+          onClick={() => {
+            setValue(description, false);
+            clearSuggestions();
+            onAddressSelect && onAddressSelect(description);
+          }}
+        >
+          <strong>{main_text}</strong> <small>{secondary_text}</small>
+        </li>
+      );
+    });
+  };
+
+  return (
+    <div className="">
+      <input
+        value={value}
+        className=""
+        disabled={!ready}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="123 Stariway To Heaven"
+      />
+
+      {status === 'OK' && (
+        <ul className="">{renderSuggestions()}</ul>
+      )}
+    </div>
+  );
+};
 
 export default ShopForm

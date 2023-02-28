@@ -8,4 +8,5 @@ export default interface Shop {
   long: string
   phone: string
   address: string
+  city: string
 }
