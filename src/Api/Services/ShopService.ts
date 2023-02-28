@@ -32,7 +32,7 @@ const getShopById = async (id: string): Promise<AxiosResponse<IShop, any>> => {
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosResponse<Shop, any>> => {
+const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosResponse<IShopUpdatePayload, any>> => {
   return await http.post<IShopUpdatePayload>(`/shops/${id}`, shop)
 }
 
@@ -43,7 +43,7 @@ const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosRe
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<Shop, any>> => {
+const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<IShopCreatePayload, any>> => {
   return await http.post<IShopCreatePayload>('/shops/', shop)
 }
 
@@ -54,7 +54,7 @@ const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<Shop,
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const deleteShop = async (id: string): Promise<AxiosResponse<Shop, any>> => {
+const deleteShop = async (id: string): Promise<AxiosResponse<IShop, any>> => {
   return await http.delete<IShop>(`/shops/${id}`)
 }
 

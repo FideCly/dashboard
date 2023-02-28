@@ -10,8 +10,9 @@ export default function ShopList () {
   useEffect(() => {
     const loadShops = async (): Promise<void> => {
       try {
-        const response = await ShopService.
-        setShops(response)
+        setIsLoading(true)
+        const response = await ShopService.getShops()
+        setShops(response.data)
       } catch (error) {
         setError(true)
       } finally {
@@ -36,7 +37,7 @@ export default function ShopList () {
   return (
     <div>
       {shops.map((shop) => (
-        <div key={shop.companyName}>
+        <div key={shop.id}>
           <span>{shop.companyName}</span>
           <span>{shop.address}</span>
           <span>{shop.zipCode}</span>
