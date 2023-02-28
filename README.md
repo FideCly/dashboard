@@ -1,18 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fidecly dashboard
 
+## Status 
 
-# Status 
-
-## production
+### production
 ![example workflow](https://github.com/fidecly/dashboard/actions/workflows/node.js.yml/badge.svg?branch=main)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/eslint.yml/badge.svg?branch=main)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/codeql.yml/badge.svg?branch=main)[![Netlify Status](https://api.netlify.com/api/v1/badges/a322c97e-52d2-4d86-8f7b-b4bc1add9b42/deploy-status)](https://app.netlify.com/sites/fidecly/deploys)
 
-## dev
-
-<div align="left">
+### dev
 
 ![example workflow](https://github.com/fidecly/dashboard/actions/workflows/node.js.yml/badge.svg?branch=dev)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/eslint.yml/badge.svg?branch=dev)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/codeql.yml/badge.svg?branch=dev)[![Netlify Status](https://api.netlify.com/api/v1/badges/a322c97e-52d2-4d86-8f7b-b4bc1add9b42/deploy-status?branch=dev)](https://app.netlify.com/sites/fidecly/deploys/)
 
-</div>
+
 ## Getting Started
 
 First, run the development server:

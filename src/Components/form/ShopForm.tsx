@@ -150,20 +150,6 @@ const ShopForm: React.FC = () => {
             name="siret"
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="zipCode">Zip Code</label>
-          <input
-            type="text"
-            className="form-control"
-            id="zipCode"
-            required
-            value={shop.zipCode}
-            onChange={handleInputChange}
-            name="zipCode"
-          />
-        </div>
-
         <div className="form-group">
           <label htmlFor="phone">Phone</label>
           <input
