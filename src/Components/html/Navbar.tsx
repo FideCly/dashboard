@@ -3,7 +3,8 @@ import {
   faGear,
   faHouse,
   faQrcode,
-  faRectangleAd
+  faRectangleAd,
+  faShop,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
@@ -55,6 +56,19 @@ export default function Navbar () {
                 </span>
               </Link>
             </li>
+
+            <li>
+              <Link className="flex" href="/shops">
+                <FontAwesomeIcon icon={faShop} />
+                <span
+                  className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  aria-current="page"
+                >
+                  Shops
+                </span>
+              </Link>
+            </li>
+            
             <li>
               <Link className="flex" href="/promotion">
                 <FontAwesomeIcon icon={faRectangleAd} />

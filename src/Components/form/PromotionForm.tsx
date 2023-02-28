@@ -1,18 +1,18 @@
 import React, { useState, type ChangeEvent } from 'react'
-import type Promotions from '../../Api/Models/Promotions'
+import type {IPromotionCreatePayload} from '../../Api/Models/Promotions'
 import { PromotionService } from '../../Api/Services'
 
 const PromotionForm: React.FC = () => {
-  const initialPromotionState: Promotions = {
+  const initialPromotionState: IPromotionCreatePayload = {
     name: '',
     description: '',
-    startAt: '',
-    endAt: '',
+    startAt: new Date(),
+    endAt: new Date(),
     shopId: 0,
     checkoutLimit: 0
-
+    
   }
-  const [promotion, setPromotion] = useState<Promotions>(initialPromotionState)
+  const [promotion, setPromotion] = useState<IPromotionCreatePayload>(initialPromotionState)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target
@@ -76,11 +76,11 @@ const PromotionForm: React.FC = () => {
         <div className="form-group">
           <label htmlFor="startAt">Start At</label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             id="startAt"
             required
-            value={promotion.startAt}
+            value={promotion.startAt.toDateString()}
             onChange={handleInputChange}
             name="startAt"
           />
@@ -88,11 +88,11 @@ const PromotionForm: React.FC = () => {
         <div className="form-group">
           <label htmlFor="endAt">End At</label>
           <input
-            type="text"
+            type="date"
             className="form-control"
             id="endAt"
             required
-            value={promotion.endAt}
+            value={promotion.endAt.toDateString()}
             onChange={handleInputChange}
             name="endAt"
           />

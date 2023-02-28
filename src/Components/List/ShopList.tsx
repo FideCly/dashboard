@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
-import type Shop from '../../Api/Models/Shop'
+import type {IShop} from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
 
 export default function ShopList () {
-  const [shops, setShops] = useState<Shop[]>([])
+  const [shops, setShops] = useState<IShop[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
 
   useEffect(() => {
     const loadShops = async (): Promise<void> => {
       try {
-        const response = await ShopService.getShops()
-        setShops(response.data)
+        const response = await ShopService.
+        setShops(response)
       } catch (error) {
         setError(true)
       } finally {

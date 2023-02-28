@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import type Promotions from '../../Api/Models/Promotions'
+import type {IPromotions} from '../../Api/Models/Promotions'
 import { PromotionService } from '../../Api/Services'
 export default function PromotionList () {
-  const [promotions, setPromotions] = useState<Promotions[]>([])
+  const [promotions, setPromotions] = useState<IPromotions[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -41,6 +41,10 @@ export default function PromotionList () {
           <span>{promotion.description}</span>
           <span>{promotion.startAt}</span>
           <span>{promotion.endAt}</span>
+          {/* edit button */}
+            <a href={`/promotion/${promotion.id}'/edit`} />
+          {/* delete button */}
+
         </div>
       ))}
     </div>
