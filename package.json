@@ -43,7 +43,7 @@
     "react-router-dom": "^6.8.2",
     "react-toastify": "^9.1.1",
     "vite-plugin-windicss": "^1.8.10",
-    "vitest": "^0.29.1"
+    "vitest": "^0.29.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
