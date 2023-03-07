@@ -1,4 +1,4 @@
-import ShopForm from '../../Components/form/ShopForm'
+
 import ShopList from '../../Components/List/ShopList'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,7 +24,7 @@ export default function Shops () {
         </div>
         {Shop && (
             <div>
-            <ShopForm />
+
             </div>
         )}
         <ShopList />

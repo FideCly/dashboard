@@ -1,13 +1,13 @@
 import { type AxiosResponse } from 'axios'
 import http from '../http-common'
-import type Promotions from '../Models/Promotions'
+import {IPromotionCreatePayload,IPromotionUpdatePayload,IPromotions} from '../Models/Promotions'
 
 /**
    * Récupère la liste des promotions
    * @returns Retourne une promesse de type Promotions[]
    */
-const getPromotions = async (): Promise<AxiosResponse<Promotions[], any>> => {
-  return await http.get<Promotions[]>('/promotions')
+const getPromotions = async (): Promise<AxiosResponse<IPromotions[], any>> => {
+  return await http.get<IPromotions[]>('/promotions')
 }
 
 /**
@@ -15,8 +15,8 @@ const getPromotions = async (): Promise<AxiosResponse<Promotions[], any>> => {
    * @param id - Id de la promotion
    * @returns Retourne une promesse de type Promotions
    */
-const getPromotionById = async (id: string): Promise<AxiosResponse<Promotions, any>> => {
-  return await http.get<Promotions>(`/promotions/${id}`)
+const getPromotionById = async (id: string): Promise<AxiosResponse<IPromotions, any>> => {
+  return await http.get<IPromotions>(`/promotions/${id}`)
 }
 
 /**
@@ -25,8 +25,8 @@ const getPromotionById = async (id: string): Promise<AxiosResponse<Promotions, a
    * @param promotion - Nouvelle promotion
    * @returns Retourne une promesse de type Promotions
    */
-const updatePromotion = async (id: string, promotion: Promotions): Promise<AxiosResponse<Promotions, any>> => {
-  return await http.post<Promotions>(`/promotions/${id}`, promotion)
+const updatePromotion = async (id: string, promotion: IPromotionUpdatePayload): Promise<AxiosResponse<IPromotionUpdatePayload, any>> => {
+  return await http.post<IPromotionUpdatePayload>(`/promotions/${id}`, promotion)
 }
 
 /**
@@ -34,8 +34,8 @@ const updatePromotion = async (id: string, promotion: Promotions): Promise<Axios
    * @param promotion - Nouvelle promotion
    * @returns Retourne une promesse de type Promotions
    */
-const createPromotion = async (promotion: Promotions): Promise<AxiosResponse<Promotions, any>> => {
-  return await http.post<Promotions>('/promotions', promotion)
+const createPromotion = async (promotion: IPromotionCreatePayload): Promise<AxiosResponse<IPromotionCreatePayload, any>> => {
+  return await http.post<IPromotionCreatePayload>('/promotions', promotion)
 }
 
 /**
@@ -43,8 +43,8 @@ const createPromotion = async (promotion: Promotions): Promise<AxiosResponse<Pro
    * @param id - Id de la promotion
    * @returns Retourne une promesse de type Promotions
    */
-const deletePromotion = async (id: string): Promise<AxiosResponse<Promotions, any>> => {
-  return await http.delete<Promotions>(`/promotions/${id}`)
+const deletePromotion = async (id: string): Promise<AxiosResponse<IPromotions, any>> => {
+  return await http.delete<IPromotions>(`/promotions/${id}`)
 }
 
 /**
@@ -54,8 +54,8 @@ const deletePromotion = async (id: string): Promise<AxiosResponse<Promotions, an
  * @see Promotions
  * @see src/Types/Promotions.ts
  */
-const getPromotionsByShopId = async (id: string): Promise<AxiosResponse<Promotions[], any>> => {
-  return await http.get<Promotions[]>(`/shops/${id}/promotions`)
+const getPromotionsByShopId = async (id: string): Promise<AxiosResponse<IPromotions[], any>> => {
+  return await http.get<IPromotions[]>(`/shops/${id}/promotions`)
 }
 
 const PromotionService = {

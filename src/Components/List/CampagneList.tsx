@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import type Promotions from '../../Api/Models/Promotions'
+import {IPromotions} from '../../Api/Models/Promotions'
 import { PromotionService } from '../../Api/Services'
 export default function CampagneList () {
-  const [campaigns, setCampaigns] = useState<Promotions[]>([])
+  const [campaigns, setCampaigns] = useState<IPromotions[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -39,8 +39,8 @@ export default function CampagneList () {
         <div key={campaign.name}>
           <span>{campaign.name}</span>
           <span>{campaign.description}</span>
-          <span>{campaign.startAt}</span>
-          <span>{campaign.endAt}</span>
+          <span>{campaign.startAt?.toDateString()}</span>
+          <span>{campaign.endAt?.toDateString()}</span>
         </div>
       ))}
     </div>
