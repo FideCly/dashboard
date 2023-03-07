@@ -1,44 +1,35 @@
-import React, { useState, type ChangeEvent } from 'react'
-import type {IPromotionCreatePayload} from '../../Api/Models/Promotions'
-import { PromotionService } from '../../Api/Services'
+import React, { useCallback, useState } from 'react'
+import type {IPromotionCreatePayload} from '@/Api/Models/Promotions'
+import { PromotionService, ShopService } from '@/Api/Services'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { IShop } from '@/Api/Models/Shop'
 
 const PromotionForm: React.FC = () => {
-  const initialPromotionState: IPromotionCreatePayload = {
-    name: '',
-    description: '',
-    startAt: new Date(),
-    endAt: new Date(),
-    shopId: 0,
-    checkoutLimit: 0
-    
-  }
-  const [promotion, setPromotion] = useState<IPromotionCreatePayload>(initialPromotionState)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IPromotionCreatePayload>()
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target
-    setPromotion({ ...promotion, [name]: value })
-  }
-
-  const savePromotion = (): void => {
-    const data = {
-      name: promotion.name,
-      description: promotion.description,
-      startAt: promotion.startAt,
-      endAt: promotion.endAt,
-      shopId: promotion.shopId,
-      checkoutLimit: promotion.checkoutLimit
+  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
+    try {
+      //convert checkoutLimit and shopId to number
+      data.checkoutLimit = Number(data.checkoutLimit)
+      data.shopId = Number(data.shopId)
+      const response = await PromotionService.createPromotion(data)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
     }
+  }, [])
 
-    PromotionService.createPromotion(data)
+  const [shops, setShops] = useState<IShop[]>([])
+
+  // get all shops
+  const getShops = () => {
+    ShopService.getShops()
       .then((response: any) => {
-        setPromotion({
-          name: response.data.name,
-          description: response.data.description,
-          startAt: response.data.startAt,
-          endAt: response.data.endAt,
-          shopId: response.data.shopId,
-          checkoutLimit: response.data.checkoutLimit
-        })
+        setShops(response.data)
         console.log(response.data)
       })
       .catch((e: Error) => {
@@ -46,62 +37,96 @@ const PromotionForm: React.FC = () => {
       })
   }
 
+  React.useEffect(() => {
+    getShops()
+  }, [])
+  
+
   return (
+    <form onSubmit={handleSubmit(onSubmit)}>
     <div className="submit-form">
       <div>
         <div className="form-group">
-          <label htmlFor="title">Name</label>
+          <label htmlFor="name">Name</label>
           <input
+            {...register('name', { required: true })}
             type="text"
             className="form-control"
             id="name"
-            required
-            value={promotion.name}
-            onChange={handleInputChange}
-            name="name"
+            maxLength={50}
           />
+          {errors.name && <span>This field is required</span>}
         </div>
+        
         <div className="form-group">
           <label htmlFor="description">Description</label>
           <input
+            {...register('description', { required: true })}
             type="text"
             className="form-control"
             id="description"
-            required
-            value={promotion.description}
-            onChange={handleInputChange}
-            name="description"
+            maxLength={250}
           />
+          {errors.description && <span>This field is required</span>}
         </div>
+
+        <div className="form-group">
+          <label htmlFor="shopId">Shop</label>
+          <select
+            {...register('shopId', { required: true })}
+            className="form-control"
+            id="shopId"
+          >
+            <option value="">Select a shop</option>
+            {shops.map((shop) => (
+              <option key={shop.id} value={shop.id}>
+                {shop.companyName}
+              </option>
+            ))}
+          </select>
+          {errors.shopId && <span>This field is required</span>}
+        </div>
+        
+
         <div className="form-group">
           <label htmlFor="startAt">Start At</label>
           <input
+            {...register('startAt', { required: true })}
             type="date"
             className="form-control"
             id="startAt"
-            required
-            value={promotion.startAt.toDateString()}
-            onChange={handleInputChange}
-            name="startAt"
           />
+          {errors.startAt && <span>This field is required</span>}
         </div>
+        
         <div className="form-group">
           <label htmlFor="endAt">End At</label>
           <input
+            {...register('endAt', { required: true })}
             type="date"
             className="form-control"
             id="endAt"
-            required
-            value={promotion.endAt.toDateString()}
-            onChange={handleInputChange}
-            name="endAt"
           />
+          {errors.endAt && <span>This field is required</span>}
         </div>
-        <button onClick={savePromotion} className="btn btn-success">
+        
+        <div className="form-group">
+          <label htmlFor="checkoutLimit">Checkout Limit</label>
+          <input
+            {...register('checkoutLimit', { required: true })}
+            type="number"
+            className="form-control"
+            id="checkoutLimit"
+          />
+          {errors.checkoutLimit && <span>This field is required</span>}
+        </div>
+        
+        <button type="submit" className="btn btn-success">
           Submit
         </button>
       </div>
     </div>
+    </form>
   )
 }
 
