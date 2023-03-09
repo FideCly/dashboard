@@ -39,8 +39,11 @@ export default function PromotionList () {
         <div key={promotion.name}>
           <span>{promotion.name}</span>
           <span>{promotion.description}</span>
-          <span>{promotion.startAt}</span>
-          <span>{promotion.endAt}</span>
+          <span>{promotion.checkoutLimit}</span>
+          <span>{promotion.shopId}</span>
+          <span>{promotion.startAt?.toString()}</span>
+          <span>{promotion.endAt.toString()}</span>
+          
           {/* edit button */}
             <a href={`/promotion/${promotion.id}/edit`} >
               PromotionEditById

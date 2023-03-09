@@ -20,7 +20,7 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
         //convert checkoutLimit and shopId to number
         data.checkoutLimit = Number(data.checkoutLimit)
         data.shopId = Number(data.shopId)
-        const response = await PromotionService.updatePromotion(promotion.id as string, data)
+        const response = await PromotionService.updatePromotion(promotion.id.toString(), data)
         console.log(response)
       } catch (error) {
         console.log(error)
@@ -113,7 +113,7 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
             type="date"
             className="form-control"
             id="startAt"
-            value={promotion?.startAt}
+            value={promotion?.startAt?.toString()}
           />
           {errors.startAt && <span>This field is required</span>}
         </div>
@@ -125,7 +125,7 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
             type="date"
             className="form-control"
             id="endAt"
-            value={promotion?.endAt}
+            value={promotion?.endAt.toString()}
           />
           {errors.endAt && <span>This field is required</span>}
         </div>
