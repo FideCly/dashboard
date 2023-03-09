@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type {IPromotions} from '../../Api/Models/Promotions'
-import { PromotionService } from '../../Api/Services'
+import {IPromotions} from '@/Api/Models/Promotions'
+import { PromotionService } from '@/Api/Services'
 export default function PromotionList () {
   const [promotions, setPromotions] = useState<IPromotions[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -39,10 +39,12 @@ export default function PromotionList () {
         <div key={promotion.name}>
           <span>{promotion.name}</span>
           <span>{promotion.description}</span>
-          <span>{promotion.startAt?.toDateString()}</span>
-          <span>{promotion.endAt?.toDateString()}</span>
+          <span>{promotion.startAt}</span>
+          <span>{promotion.endAt}</span>
           {/* edit button */}
-            <a href={`/promotion/${promotion.id}'/edit`} />
+            <a href={`/promotion/${promotion.id}/edit`} >
+              PromotionEditById
+            </a>
           {/* delete button */}
 
         </div>

@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import type {IPromotionCreatePayload} from '@/Api/Models/Promotions'
+import type {IPromotionCreatePayload, IPromotions} from '@/Api/Models/Promotions'
 import { PromotionService, ShopService } from '@/Api/Services'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { IShop } from '@/Api/Models/Shop'
 
-const PromotionForm: React.FC = () => {
+
+// react fc with a promotion variable
+const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
   const {
     register,
     handleSubmit,
@@ -54,6 +56,7 @@ const PromotionForm: React.FC = () => {
             className="form-control"
             id="name"
             maxLength={50}
+            value={promotion?.name}
           />
           {errors.name && <span>This field is required</span>}
         </div>
@@ -66,6 +69,7 @@ const PromotionForm: React.FC = () => {
             className="form-control"
             id="description"
             maxLength={250}
+            value={promotion?.description}
           />
           {errors.description && <span>This field is required</span>}
         </div>
@@ -76,6 +80,7 @@ const PromotionForm: React.FC = () => {
             {...register('shopId', { required: true })}
             className="form-control"
             id="shopId"
+            value={promotion?.shopId}
           >
             <option value="">Select a shop</option>
             {shops.map((shop) => (
@@ -95,6 +100,7 @@ const PromotionForm: React.FC = () => {
             type="date"
             className="form-control"
             id="startAt"
+            value={promotion?.startAt}
           />
           {errors.startAt && <span>This field is required</span>}
         </div>
@@ -106,6 +112,7 @@ const PromotionForm: React.FC = () => {
             type="date"
             className="form-control"
             id="endAt"
+            value={promotion?.endAt}
           />
           {errors.endAt && <span>This field is required</span>}
         </div>
@@ -117,6 +124,7 @@ const PromotionForm: React.FC = () => {
             type="number"
             className="form-control"
             id="checkoutLimit"
+            value={promotion?.checkoutLimit}
           />
           {errors.checkoutLimit && <span>This field is required</span>}
         </div>
