@@ -21,7 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@material-tailwind/react": "^1.4.2",
-    "@remix-run/node": "^1.14.0",
+    "@remix-run/node": "^1.14.1",
     "@remix-run/react": "^1.14.0",
     "@remix-run/serve": "^1.14.0",
     "@storybook/addon-postcss": "^2.0.0",
