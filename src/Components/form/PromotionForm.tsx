@@ -14,7 +14,7 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
   } = useForm<IPromotionCreatePayload>()
 
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
-    if (promotion?.id) {
+    if (promotion?.id !== undefined) {
       // update promotion
       try {
         //convert checkoutLimit and shopId to number
@@ -36,7 +36,7 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
       console.log(error)
     }
     }
-  }, [])
+  }, [promotion?.id])
 
   const [shops, setShops] = useState<IShop[]>([])
 
@@ -62,38 +62,25 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
     <div className="submit-form">
       <div>
         <div className="form-group">
-          <label htmlFor="name">Name</label>
           <input
             {...register('name', { required: true })}
             type="text"
-            className="form-control"
+            className="w-full max-w-xs input"
             id="name"
             maxLength={50}
             value={promotion?.name}
+            placeholder='Name'
           />
           {errors.name && <span>This field is required</span>}
         </div>
-        
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <input
-            {...register('description', { required: true })}
-            type="text"
-            className="form-control"
-            id="description"
-            maxLength={250}
-            value={promotion?.description}
-          />
-          {errors.description && <span>This field is required</span>}
-        </div>
 
         <div className="form-group">
-          <label htmlFor="shopId">Shop</label>
           <select
             {...register('shopId', { required: true })}
-            className="form-control"
+            className="w-full max-w-xs select"
             id="shopId"
             value={promotion?.shopId}
+            placeholder='shop'
           >
             <option value="">Select a shop</option>
             {shops.map((shop) => (
@@ -107,39 +94,51 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
         
 
         <div className="form-group">
-          <label htmlFor="startAt">Start At</label>
           <input
             {...register('startAt', { required: true })}
             type="date"
-            className="form-control"
+            className="w-full max-w-xs input"
             id="startAt"
             value={promotion?.startAt?.toString()}
+            placeholder='date de debut'
           />
           {errors.startAt && <span>This field is required</span>}
         </div>
         
         <div className="form-group">
-          <label htmlFor="endAt">End At</label>
           <input
             {...register('endAt', { required: true })}
             type="date"
-            className="form-control"
+            className="w-full max-w-xs input"
             id="endAt"
             value={promotion?.endAt.toString()}
+            placeholder='date de fin'
           />
           {errors.endAt && <span>This field is required</span>}
         </div>
         
         <div className="form-group">
-          <label htmlFor="checkoutLimit">Checkout Limit</label>
           <input
             {...register('checkoutLimit', { required: true })}
             type="number"
-            className="form-control"
+            className="w-full max-w-xs input"
             id="checkoutLimit"
             value={promotion?.checkoutLimit}
+            placeholder='checkoutLimit'
           />
           {errors.checkoutLimit && <span>This field is required</span>}
+        </div>
+
+        <div className="form-group">
+          <textarea
+            {...register('description', { required: true })}
+            className="textarea textarea-bordered"
+            id="description"
+            maxLength={250}
+            value={promotion?.description}
+            placeholder='Description'
+          />
+          {errors.description && <span>This field is required</span>}
         </div>
         
         <button type="submit" className="btn btn-success">

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import {IPromotions} from '@/Api/Models/Promotions'
 import { PromotionService } from '@/Api/Services'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function PromotionList () {
   const [promotions, setPromotions] = useState<IPromotions[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -34,24 +36,38 @@ export default function PromotionList () {
   }
 
   return (
-    <div>
-      {promotions.map((promotion) => (
-        <div key={promotion.name}>
-          <span>{promotion.name}</span>
-          <span>{promotion.description}</span>
-          <span>{promotion.checkoutLimit}</span>
-          <span>{promotion.shopId}</span>
-          <span>{promotion.startAt?.toString()}</span>
-          <span>{promotion.endAt.toString()}</span>
-          
-          {/* edit button */}
-            <a href={`/promotion/${promotion.id}/edit`} >
-              PromotionEditById
-            </a>
-          {/* delete button */}
-
-        </div>
-      ))}
-    </div>
+    <table className='table w-full'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Checkout Limit</th>
+          <th>Shop Id</th>
+          <th>Start At</th>
+          <th>End At</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {promotions.map((promotion) => (
+          <tr key={promotion.name}>
+            <td>{promotion.name}</td>
+            <td>{promotion.description}</td>
+            <td>{promotion.checkoutLimit}</td>
+            <td>{promotion.shopId}</td>
+            <td>{promotion.startAt?.toString()}</td>
+            <td>{promotion.endAt.toString()}</td>
+            <td className='space-x-2'>
+              <a href={`/promotion/${promotion.id}/edit`} >
+              <FontAwesomeIcon icon={faEdit} />
+              </a>
+              <a href="">
+                <FontAwesomeIcon icon={faTrash} />
+                </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }

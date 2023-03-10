@@ -5,7 +5,6 @@ export default function GeneralSettings () {
       <div className="flex">
         <h1 className="flex-1 text-4xl">Settings</h1>
       </div>
-      <ShopList />
     </div>
     
   )

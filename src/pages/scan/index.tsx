@@ -61,6 +61,11 @@ export default function Scan () {
           }} 
           constraints={handleConstraints()}
         />
+        {data?.length > 0 && 
+          <div>
+            <p>{data}</p>
+          </div>
+        }
       </div>
     </div>
   )

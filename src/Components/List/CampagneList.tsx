@@ -34,15 +34,25 @@ export default function CampagneList () {
   }
 
   return (
-    <div>
-      {campaigns.map((campaign) => (
-        <div key={campaign.name}>
-          <span>{campaign.name}</span>
-          <span>{campaign.description}</span>
-          <span>{campaign.startAt?.toDateString()}</span>
-          <span>{campaign.endAt?.toDateString()}</span>
-        </div>
-      ))}
-    </div>
+    <table className='table w-full'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Start At</th>
+          <th>End At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {campaigns.map((campaign) => (
+          <tr key={campaign.name}>
+            <td>{campaign.name}</td>
+            <td>{campaign.description}</td>
+            <td>{campaign.startAt?.toDateString()}</td>
+            <td>{campaign.endAt?.toDateString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }
