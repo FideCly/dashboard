@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 import http from '../http-common'
-import type Shop from '../Models/Shop'
+import type {IShop, IShopCreatePayload, IShopUpdatePayload} from '../Models/Shop'
 
 /**
      * Récupère la liste des shops
@@ -9,8 +9,8 @@ import type Shop from '../Models/Shop'
      * @see src/Types/Shop.ts
      * @see src/Api/Models/Shop.ts
     */
-const getShops = async (): Promise<AxiosResponse<Shop[], any>> => {
-  return await http.get<Shop[]>('/shops')
+const getShops = async (): Promise<AxiosResponse<IShop[], any>> => {
+  return await http.get<IShop[]>('/shops/')
 }
 
 /**
@@ -20,8 +20,8 @@ const getShops = async (): Promise<AxiosResponse<Shop[], any>> => {
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const getShopById = async (id: string): Promise<AxiosResponse<Shop, any>> => {
-  return await http.get<Shop>(`/shops/${id}`)
+const getShopById = async (id: string): Promise<AxiosResponse<IShop, any>> => {
+  return await http.get<IShop>(`/shops/${id}`)
 }
 
 /**
@@ -32,8 +32,8 @@ const getShopById = async (id: string): Promise<AxiosResponse<Shop, any>> => {
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const updateShop = async (id: string, shop: Shop): Promise<AxiosResponse<Shop, any>> => {
-  return await http.post<Shop>(`/shops/${id}`, shop)
+const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosResponse<IShopUpdatePayload, any>> => {
+  return await http.post<IShopUpdatePayload>(`/shops/${id}`, shop)
 }
 
 /**
@@ -43,8 +43,8 @@ const updateShop = async (id: string, shop: Shop): Promise<AxiosResponse<Shop, a
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const createShop = async (shop: Shop): Promise<AxiosResponse<Shop, any>> => {
-  return await http.post<Shop>('/shops/', shop)
+const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<IShopCreatePayload, any>> => {
+  return await http.post<IShopCreatePayload>('/shops/', shop)
 }
 
 /**
@@ -54,8 +54,8 @@ const createShop = async (shop: Shop): Promise<AxiosResponse<Shop, any>> => {
      * @see Shop
      * @see src/Types/Shop.ts
      */
-const deleteShop = async (id: string): Promise<AxiosResponse<Shop, any>> => {
-  return await http.delete<Shop>(`/shops/${id}`)
+const deleteShop = async (id: string): Promise<AxiosResponse<IShop, any>> => {
+  return await http.delete<IShop>(`/shops/${id}`)
 }
 
 const ShopService = {

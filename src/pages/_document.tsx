@@ -1,4 +1,3 @@
-import Footer from '@/Components/html/Footer'
 import Navbar from '@/Components/html/Navbar'
 import { Html, Head, Main, NextScript } from 'next/document'
 
@@ -6,12 +5,11 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body>
+      <body className='flex'>
         <Navbar />
-        <Main />
-        <NextScript />
-        <Footer />
+          <Main />
       </body>
+      <NextScript />
     </Html>
   )
 }
