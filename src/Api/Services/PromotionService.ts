@@ -11,7 +11,7 @@ const getPromotions = async (): Promise<AxiosResponse<IPromotions[], any>> => {
 }
 
 /**
-   * Récupère la la promotion par son id
+   * Récupère la promotion par son id
    * @param id - Id de la promotion
    * @returns Retourne une promesse de type Promotions
    */

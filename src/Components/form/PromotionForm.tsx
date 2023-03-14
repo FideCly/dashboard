@@ -14,12 +14,13 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
   } = useForm<IPromotionCreatePayload>()
 
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
+    //convert checkoutLimit and shopId to number
+    data.checkoutLimit = Number(data.checkoutLimit)
+    data.shopId = Number(data.shopId)
     if (promotion?.id !== undefined) {
       // update promotion
       try {
         //convert checkoutLimit and shopId to number
-        data.checkoutLimit = Number(data.checkoutLimit)
-        data.shopId = Number(data.shopId)
         const response = await PromotionService.updatePromotion(promotion.id.toString(), data)
         console.log(response)
       } catch (error) {
@@ -27,9 +28,6 @@ const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
       }
     }else{
       try {
-      //convert checkoutLimit and shopId to number
-      data.checkoutLimit = Number(data.checkoutLimit)
-      data.shopId = Number(data.shopId)
       const response = await PromotionService.createPromotion(data)
       console.log(response)
     } catch (error) {
