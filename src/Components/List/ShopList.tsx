@@ -1,30 +1,31 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { IShopCreatePayload } from "../../interfaces";
-export default function ShopList() {
-  const [shops, setShops] = useState<IShopCreatePayload[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useEffect, useState } from 'react'
+import type {IShop} from '../../Api/Models/Shop'
+import { ShopService } from '../../Api/Services'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+
+export default function ShopList () {
+  const [shops, setShops] = useState<IShop[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    const loadShops = async () => {
+    const loadShops = async (): Promise<void> => {
       try {
-        setIsLoading(true);
-        const response = await axios.get<IShopCreatePayload[]>(
-          import.meta.env.VITE_API_URL + 'shops'
-        );
-        setShops(response.data);
+        setIsLoading(true)
+        const response = await ShopService.getShops()
+        setShops(response.data)
       } catch (error) {
-        setError(true);
+        setError(true)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    loadShops();
-  }, []);
+    }
+    void loadShops()
+  }, [])
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>loading....</div>
   }
 
   if (error) {
@@ -32,21 +33,36 @@ export default function ShopList() {
       <div>
         <span>Error while loading shops</span>
       </div>
-    );
+    )
   }
 
   return (
-    <div>
+    <table className='table w-full'>
+    <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>Address</th>
+        <th>Zip Code</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
       {shops.map((shop) => (
-        <div key={shop.companyName}>
-          <span>{shop.companyName}</span>
-          <span>{shop.address}</span>
-          <span>{shop.zipCode}</span>
-          <span>{shop.phone}</span>
-          <span>{shop.email}</span>
-          <span>{shop.geoloc}</span>
-        </div>
+        <tr key={shop.id}>
+          <th>{shop.companyName}</th>
+          <th>{shop.address}</th>
+          <th>{shop.zipCode}</th>
+          <th>{shop.phone}</th>
+          <th>{shop.email}</th>
+          <th className='space-x-2'>
+            <a href=""><FontAwesomeIcon icon={faEdit} /></a>
+            <a href=""><FontAwesomeIcon icon={faTrash} /></a>
+          </th>
+        </tr>
       ))}
-    </div>
-  );
+    </tbody>
+  </table>
+  )
 }

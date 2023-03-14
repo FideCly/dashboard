@@ -1,120 +1,151 @@
-import Select from "react-select";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IPromotionCreatePayload } from "../../interfaces";
-export default function Promotionform() {
+import React, { useCallback, useState } from 'react'
+import type {IPromotionCreatePayload, IPromotions} from '@/Api/Models/Promotions'
+import { PromotionService, ShopService } from '@/Api/Services'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { IShop } from '@/Api/Models/Shop'
+
+
+// react fc with a promotion variable
+const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPromotionCreatePayload>();
-  const onSubmit: SubmitHandler<IPromotionCreatePayload> = async (data) => {
-    data.userId = 1;
-    data.shopId = 1;
-    //make type, limitPassage and limitAmout   a number
-    data.type = Number(data.type);
-    data.limitPassage = Number(data.limitPassage);
-    data.limitAmout = Number(data.limitAmout);
-    JSON.stringify(data);
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "promotions",
-        data
-      );
-      toast.success("Promotion created successfully");
+  } = useForm<IPromotionCreatePayload>()
+
+  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
+    //convert checkoutLimit and shopId to number
+    data.checkoutLimit = Number(data.checkoutLimit)
+    data.shopId = Number(data.shopId)
+    if (promotion?.id !== undefined) {
+      // update promotion
+      try {
+        //convert checkoutLimit and shopId to number
+        const response = await PromotionService.updatePromotion(promotion.id.toString(), data)
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }else{
+      try {
+      const response = await PromotionService.createPromotion(data)
+      console.log(response)
     } catch (error) {
-      toast.error("Error creating promotion" + error);
+      console.log(error)
     }
-  };
+    }
+  }, [promotion?.id])
+
+  const [shops, setShops] = useState<IShop[]>([])
+
+  // get all shops
+  const getShops = () => {
+    ShopService.getShops()
+      .then((response: any) => {
+        setShops(response.data)
+        console.log(response.data)
+      })
+      .catch((e: Error) => {
+        console.log(e)
+      })
+  }
+
+  React.useEffect(() => {
+    getShops()
+  }, [])
+  
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">Create Promotion</h3>
-      </div>
-      <div className="card-body">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-group">
-            <label htmlFor="name">name</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              placeholder="Enter name"
-              {...register('name', { required: true })}
-            />
-            {errors.name && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              placeholder="Enter description"
-              {...register('description', { required: true })}
-            />
-            {errors.description && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="type">Type</label>
-            <select
-              className="form-control"
-              id="type"
-              {...register('type', { valueAsNumber: true })}>
-              <option value="1">percentage</option>
-              <option value="2">amount</option>
-            </select>
-            {errors.type && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="startAt">Start date</label>
-            <input
-              type="date"
-              className="form-control"
-              id="startAt"
-              placeholder="Enter startAt"
-              {...register('startAt', { required: true })}
-            />
-            {errors.startAt && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="endAt">End date</label>
-            <input
-              type="date"
-              className="form-control"
-              id="endAt"
-              placeholder="Enter end date"
-              {...register('endAt', { required: true })}
-            />
-            {errors.endAt && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="valimitPassagelue">limitPassage</label>
-            <input
-              type="number"
-              className="form-control"
-              id="limitPassage"
-              placeholder="Enter the checkout threshold at which the promotion applies"
-              {...register('limitPassage', { valueAsNumber: true })}
-            />
-            {errors.limitPassage && <span className="text-danger">This field is required</span>}
-          </div>
-          <div className="form-group">
-            <label htmlFor="limitAmout">Amount threshold</label>
-            <input
-              type="number"
-              className="form-control"
-              id="limitAmout"
-              placeholder="Enter the amount threshold at which the promotion applies"
-              {...register('limitAmout', { valueAsNumber: true })}
-            />
-            {errors.limitAmout && <span className="text-danger">This field is required</span>}
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="submit-form">
+      <div>
+        <div className="form-group">
+          <input
+            {...register('name', { required: true })}
+            type="text"
+            className="w-full max-w-xs input"
+            id="name"
+            maxLength={50}
+            value={promotion?.name}
+            placeholder='Name'
+          />
+          {errors.name && <span>This field is required</span>}
+        </div>
+
+        <div className="form-group">
+          <select
+            {...register('shopId', { required: true })}
+            className="w-full max-w-xs select"
+            id="shopId"
+            value={promotion?.shopId}
+            placeholder='shop'
+          >
+            <option value="">Select a shop</option>
+            {shops.map((shop) => (
+              <option key={shop.id} value={shop.id}>
+                {shop.companyName}
+              </option>
+            ))}
+          </select>
+          {errors.shopId && <span>This field is required</span>}
+        </div>
+        
+
+        <div className="form-group">
+          <input
+            {...register('startAt', { required: true })}
+            type="date"
+            className="w-full max-w-xs input"
+            id="startAt"
+            value={promotion?.startAt?.toString()}
+            placeholder='date de debut'
+          />
+          {errors.startAt && <span>This field is required</span>}
+        </div>
+        
+        <div className="form-group">
+          <input
+            {...register('endAt', { required: true })}
+            type="date"
+            className="w-full max-w-xs input"
+            id="endAt"
+            value={promotion?.endAt.toString()}
+            placeholder='date de fin'
+          />
+          {errors.endAt && <span>This field is required</span>}
+        </div>
+        
+        <div className="form-group">
+          <input
+            {...register('checkoutLimit', { required: true })}
+            type="number"
+            className="w-full max-w-xs input"
+            id="checkoutLimit"
+            value={promotion?.checkoutLimit}
+            placeholder='checkoutLimit'
+          />
+          {errors.checkoutLimit && <span>This field is required</span>}
+        </div>
+
+        <div className="form-group">
+          <textarea
+            {...register('description', { required: true })}
+            className="textarea textarea-bordered"
+            id="description"
+            maxLength={250}
+            value={promotion?.description}
+            placeholder='Description'
+          />
+          {errors.description && <span>This field is required</span>}
+        </div>
+        
+        <button type="submit" className="btn btn-success">
+          Submit
+        </button>
       </div>
     </div>
-  );
+    </form>
+  )
 }
+
+export default PromotionForm

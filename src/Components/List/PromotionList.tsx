@@ -1,30 +1,30 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { IPromotionCreatePayload } from "../../interfaces";
-export default function PromotionList() {
-  const [promotions, setPromotions] = useState<IPromotionCreatePayload[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useEffect, useState } from 'react'
+import {IPromotions} from '@/Api/Models/Promotions'
+import { PromotionService } from '@/Api/Services'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+export default function PromotionList () {
+  const [promotions, setPromotions] = useState<IPromotions[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
-    const loadPromotions = async () => {
+    const loadPromotions = async (): Promise<void> => {
       try {
-        setIsLoading(true);
-        const response = await axios.get<IPromotionCreatePayload[]>(
-          import.meta.env.VITE_API_URL + 'promotions'
-        );
-        setPromotions(response.data);
+        setIsLoading(true)
+        const response = await PromotionService.getPromotionsByShopId('1')
+        setPromotions(response.data)
       } catch (error) {
-        setError(true);
+        setError(true)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    loadPromotions();
-  }, []);
+    }
+    void loadPromotions()
+  }, [])
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>loading....</div>
   }
 
   if (error) {
@@ -32,19 +32,42 @@ export default function PromotionList() {
       <div>
         <span>Error while loading promotions</span>
       </div>
-    );
+    )
   }
 
   return (
-    <div>
-      {promotions.map((promotion) => (
-        <div key={promotion.name}>
-          <span>{promotion.name}</span>
-          <span>{promotion.description}</span>
-          <span>{promotion.startAt}</span>
-          <span>{promotion.endAt}</span>
-        </div>
-      ))}
-    </div>
-  );
+    <table className='table w-full'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Checkout Limit</th>
+          <th>Shop Id</th>
+          <th>Start At</th>
+          <th>End At</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {promotions.map((promotion) => (
+          <tr key={promotion.name}>
+            <td>{promotion.name}</td>
+            <td>{promotion.description}</td>
+            <td>{promotion.checkoutLimit}</td>
+            <td>{promotion.shopId}</td>
+            <td>{promotion.startAt?.toString()}</td>
+            <td>{promotion.endAt.toString()}</td>
+            <td className='space-x-2'>
+              <a href={`/promotion/${promotion.id}/edit`} >
+              <FontAwesomeIcon icon={faEdit} />
+              </a>
+              <a href="">
+                <FontAwesomeIcon icon={faTrash} />
+                </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
 }

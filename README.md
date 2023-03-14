@@ -1,52 +1,30 @@
-# Dashboard
+# Fidecly dashboard
 
-## Table of Contents
+## Status 
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
+### production
+![example workflow](https://github.com/fidecly/dashboard/actions/workflows/node.js.yml/badge.svg?branch=main)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/eslint.yml/badge.svg?branch=main)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/codeql.yml/badge.svg?branch=main)[![Netlify Status](https://api.netlify.com/api/v1/badges/a322c97e-52d2-4d86-8f7b-b4bc1add9b42/deploy-status)](https://app.netlify.com/sites/fidecly/deploys)
 
-## About <a name = "about"></a>
+### dev
 
-Write about 1-2 paragraphs describing the purpose of your project.
+![example workflow](https://github.com/fidecly/dashboard/actions/workflows/node.js.yml/badge.svg?branch=dev)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/eslint.yml/badge.svg?branch=dev)![example workflow](https://github.com/fidecly/dashboard/actions/workflows/codeql.yml/badge.svg?branch=dev)[![Netlify Status](https://api.netlify.com/api/v1/badges/a322c97e-52d2-4d86-8f7b-b4bc1add9b42/deploy-status?branch=dev)](https://app.netlify.com/sites/fidecly/deploys/)
 
-## Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+## Getting Started
 
-### Prerequisites
+First, run the development server:
 
-What things you need to install the software and how to install them.
-#### development
-
+```bash
+pnpm run dev
 ```
-Nodejs >= 18.*.
-Npm >= 8.0.0.
-```
-#### vscode extensions
 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```antfu.vite``` pour avoir un serveur vite.
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-```RubenConde.vitesse-vitejs-extension-pack``` pour le set basic pour utiliser vite.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 
 
-### Installing
-
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-1. Install Nodejs
-2. Install Npm
-3. Install Vite
-4. Install Vite Extensions
-5. Install Npm Packages with the following command:
-```npm install```
-6. run vite serve with the following command:
-```vite serve --port 3000```
-7. Open your browser and navigate to http://localhost:3000/ or http://localhost:4000/ pour l'extension vite.
-8. Enjoy!
