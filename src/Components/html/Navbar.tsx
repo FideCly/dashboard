@@ -23,16 +23,16 @@ export default function Navbar () {
       <div className="text-sm font-light tracking-wide text-gray-500">Menu</div>
     </div>
   </li>
-  <li className="justify-start flex-1 ml-4 border-0 btn btn-ghost hover:border-primary hover:border-l-4">
+  <li className="justify-start flex-1 ml-4 btn btn-ghost ">
   <Link className="flex items-center space-x-2" href="/">
     <span className="text-sm tracking-wide truncate">dashboard</span>
   </Link>
   </li>
-  <li>
-              <Link className="flex" href="/shops">
+  <li className="justify-start flex-1 ml-4 btn btn-ghost ">
+              <Link className="flex items-center space-x-2" href="/shops">
                 <FontAwesomeIcon icon={faShop} />
                 <span
-                  className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  className="text-sm tracking-wide truncate"
                   aria-current="page"
                 >
                   Shops
@@ -40,33 +40,46 @@ export default function Navbar () {
               </Link>
             </li>
             
-            <li>
-              <Link className="flex" href="/promotion">
+            <li className="justify-start flex-1 ml-4 btn btn-ghost ">
+              <Link className="flex items-center space-x-2" href="/promotion">
                 <FontAwesomeIcon icon={faRectangleAd} />
                 <span
-                  className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  className="text-sm tracking-wide truncate"
                   aria-current="page"
                 >
                   Promotion
                 </span>
               </Link>
             </li>
-            <li>
-              <Link className="flex" href="/settings">
+
+            <li className="justify-start flex-1 ml-4 btn btn-ghost ">
+              <Link className="flex items-center space-x-2" href="/scan">
+                <FontAwesomeIcon icon={faQrcode} />
+                <span
+                  className="text-sm tracking-wide truncate"
+                  aria-current="page"
+                >
+                  QR
+                </span>
+              </Link>
+            </li>
+
+            <li className="justify-start flex-1 ml-4 btn btn-ghost ">
+              <Link className="flex items-center space-x-2" href="/settings">
                 <FontAwesomeIcon icon={faGear} />
                 <span
-                  className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  className="text-sm tracking-wide truncate"
                   aria-current="page"
                 >
                   Settings
                 </span>
               </Link>
             </li>
-            <li>
-              <Link className="flex" href="/auth/signup">
+            <li className="justify-start flex-1 ml-4 btn btn-ghost ">
+              <Link className="flex items-center space-x-2" href="/auth/signup">
                 <FontAwesomeIcon icon={faGear} />
                 <span
-                  className="hidden py-2 pl-3 pr-4 text-white bg-blue-700 rounded lg:block md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                  className="text-sm tracking-wide truncate"
                   aria-current="page"
                 >
                   Signup

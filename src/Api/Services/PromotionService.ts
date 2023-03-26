@@ -26,7 +26,7 @@ const getPromotionById = async (id: string): Promise<AxiosResponse<IPromotions, 
    * @returns Retourne une promesse de type Promotions
    */
 const updatePromotion = async (id: string, promotion: IPromotionUpdatePayload): Promise<AxiosResponse<IPromotionUpdatePayload, any>> => {
-  return await http.post<IPromotionUpdatePayload>(`/promotions/${id}`, promotion)
+  return await http.put<IPromotionUpdatePayload>(`/promotions/${id}`, promotion)
 }
 
 /**

@@ -1,6 +1,6 @@
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Promotionform from '../../Components/form/PromotionForm'
+import {CreatePromotionForm} from '../../Components/form/PromotionForm'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
 export default function Promotion () {
@@ -25,7 +25,7 @@ export default function Promotion () {
       {isShown && (
         <div>
           <h1>Add Promotion</h1>
-          <Promotionform />
+          <CreatePromotionForm />
         </div>
       )}
       <PromotionList />

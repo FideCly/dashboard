@@ -16,7 +16,6 @@ export interface IPromotionUpdatePayload {
   endAt?: Date;
   isActive?: boolean;
 }
-
 export interface IPromotions {
   id: number;
   shopId: number;
