@@ -57,7 +57,7 @@ export default function ShopList () {
           <th>{shop.phone}</th>
           <th>{shop.email}</th>
           <th className='space-x-2'>
-            <a href=""><FontAwesomeIcon icon={faEdit} /></a>
+            <a href={`/shops/${shop.id}/edit`}><FontAwesomeIcon icon={faEdit} /></a>
             <a href=""><FontAwesomeIcon icon={faTrash} /></a>
           </th>
         </tr>
