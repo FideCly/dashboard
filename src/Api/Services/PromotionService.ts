@@ -7,7 +7,7 @@ import {IPromotionCreatePayload,IPromotionUpdatePayload,IPromotions} from '../Mo
    * @returns Retourne une promesse de type Promotions[]
    */
 const getPromotions = async (): Promise<AxiosResponse<IPromotions[], any>> => {
-  return await http.get<IPromotions[]>('/promotions')
+  return await http.get<IPromotions[]>('/promotion')
 }
 
 /**
@@ -16,7 +16,7 @@ const getPromotions = async (): Promise<AxiosResponse<IPromotions[], any>> => {
    * @returns Retourne une promesse de type Promotions
    */
 const getPromotionById = async (id: string): Promise<AxiosResponse<IPromotions, any>> => {
-  return await http.get<IPromotions>(`/promotions/${id}`)
+  return await http.get<IPromotions>(`/promotion/${id}`)
 }
 
 /**
@@ -26,7 +26,7 @@ const getPromotionById = async (id: string): Promise<AxiosResponse<IPromotions, 
    * @returns Retourne une promesse de type Promotions
    */
 const updatePromotion = async (id: string, promotion: IPromotionUpdatePayload): Promise<AxiosResponse<IPromotionUpdatePayload, any>> => {
-  return await http.post<IPromotionUpdatePayload>(`/promotions/${id}`, promotion)
+  return await http.put<IPromotionUpdatePayload>(`/promotion/${id}`, promotion)
 }
 
 /**
@@ -35,7 +35,7 @@ const updatePromotion = async (id: string, promotion: IPromotionUpdatePayload): 
    * @returns Retourne une promesse de type Promotions
    */
 const createPromotion = async (promotion: IPromotionCreatePayload): Promise<AxiosResponse<IPromotionCreatePayload, any>> => {
-  return await http.post<IPromotionCreatePayload>('/promotions', promotion)
+  return await http.post<IPromotionCreatePayload>('/promotion', promotion)
 }
 
 /**
@@ -55,7 +55,7 @@ const deletePromotion = async (id: string): Promise<AxiosResponse<IPromotions, a
  * @see src/Types/Promotions.ts
  */
 const getPromotionsByShopId = async (id: string): Promise<AxiosResponse<IPromotions[], any>> => {
-  return await http.get<IPromotions[]>(`/shops/${id}/promotions`)
+  return await http.get<IPromotions[]>(`/shop/${id}/promotion`)
 }
 
 const PromotionService = {
