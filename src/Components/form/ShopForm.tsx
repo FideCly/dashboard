@@ -112,22 +112,6 @@ export const ShopForm: React.FC = () => {
             />
             {errors.siret && <span>This field is required</span>}
           </div>
-
-          <div className="form-group">
-            <select
-              {...register('activity', { required: true })}
-              className="w-full max-w-xs select"
-              id="activity"
-              placeholder='activity'
-            >
-              <option value="">Select a activity</option>
-              <option value="1">Activity 1</option>
-              <option value="2">Activity 2</option>
-              <option value="3">Activity 3</option>
-            </select>
-            {errors.activity && <span>This field is required</span>}
-          </div>
-
           <button type="submit">
             Submit
           </button>
@@ -146,7 +130,6 @@ export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
       email: shop.email,
       siren: shop.siren,
       siret: shop.siret,
-      activity: shop.activity
     }
   })
 
@@ -207,18 +190,6 @@ export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
             />
             {errors.zipCode && <span>This field is required</span>}
           </div>
-          
-          <div className="form-group">
-            <input
-              {...register('city', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='city'
-            />
-            {errors.city && <span>This field is required</span>}
-          </div>
 
           <div className="form-group">
             <input
@@ -267,21 +238,7 @@ export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
             />
             {errors.siret && <span>This field is required</span>}
           </div>
-          
-          <div className="form-group">
-            <select
-              {...register('activity', { required: true })}
-              className="w-full max-w-xs select"
-              id="activity"
-              placeholder='activity'
-            >
-              <option value="">Select a activity</option>
-              <option value="1">Activity 1</option>
-              <option value="2">Activity 2</option>
-              <option value="3">Activity 3</option>
-            </select>
-            {errors.activity && <span>This field is required</span>}
-          </div>
+
           
           <button type="submit">
             Submit
@@ -333,7 +290,6 @@ const PlacesAutocomplete = ({
   return (
     <div className="">
       <input
-        {...register('address', { required: true,  })}
         value={value}
         className=""
         disabled={!ready}

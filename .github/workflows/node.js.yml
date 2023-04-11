@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: pnpm install 
+      - run: "pnpm install --no-frozen-lockfile
       - run: pnpm run build 
       - uses: JasonEtco/create-an-issue@v2
         if: ${{ failure() }} # only run when this job is failed.
