@@ -6,146 +6,202 @@ import { IShop } from '@/Api/Models/Shop'
 
 
 // react fc with a promotion variable
-const PromotionForm: React.FC<{promotion?: IPromotions}> = ({promotion}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IPromotionCreatePayload>()
-
-  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
-    //convert checkoutLimit and shopId to number
-    data.checkoutLimit = Number(data.checkoutLimit)
-    data.shopId = Number(data.shopId)
-    if (promotion?.id !== undefined) {
-      // update promotion
-      try {
-        //convert checkoutLimit and shopId to number
-        const response = await PromotionService.updatePromotion(promotion.id.toString(), data)
-        console.log(response)
-      } catch (error) {
-        console.log(error)
-      }
-    }else{
-      try {
-      const response = await PromotionService.createPromotion(data)
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
-    }
-  }, [promotion?.id])
-
+export const PromotionCreateForm: React.FC = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IPromotionCreatePayload>()
   const [shops, setShops] = useState<IShop[]>([])
 
-  // get all shops
-  const getShops = () => {
-    ShopService.getShops()
-      .then((response: any) => {
-        setShops(response.data)
-        console.log(response.data)
-      })
-      .catch((e: Error) => {
-        console.log(e)
-      })
-  }
+  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
+    try {
+      await PromotionService.createPromotion(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
+
+  const loadShops = useCallback(async () => {
+    try {
+      const { data } = await ShopService.getShops()
+      setShops(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
 
   React.useEffect(() => {
-    getShops()
-  }, [])
-  
+    loadShops()
+  }, [loadShops])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-    <div className="submit-form">
-      <div>
-        <div className="form-group">
-          <input
-            {...register('name', { required: true })}
-            type="text"
-            className="w-full max-w-xs input"
-            id="name"
-            maxLength={50}
-            value={promotion?.name}
-            placeholder='Name'
-          />
-          {errors.name && <span>This field is required</span>}
+    <form onSubmit={handleSubmit(onSubmit)} data-cy='promotion-form'>
+      <div className="submit-form">
+        <div>
+          <div className="form-group">
+            <input
+              {...register('name', { required: true, maxLength: 50 })}
+              type="text"
+              className="w-full max-w-xs input"
+              id="name"
+              maxLength={50}
+              placeholder='name'
+            />
+            {errors.name && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('description', { required: true, maxLength: 50 })}
+              type="text"
+              className="w-full max-w-xs input"
+              id="description"
+              maxLength={50}
+              placeholder='description'
+            />
+            {errors.description && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('startAt', { required: true, maxLength: 50 })}
+              type="date"
+              className="w-full max-w-xs input"
+              id="startAt"
+              maxLength={50}
+              placeholder='startAt'
+            />
+            {errors.startAt && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('endAt', { required: true, maxLength: 50 })}
+              type="date"
+              className="w-full max-w-xs input"
+              id="endAt"
+              maxLength={50}
+              placeholder='endAt'
+            />
+            {errors.endAt && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('checkoutLimit', { required: true, maxLength: 50 })}
+              type="number"
+              className="w-full max-w-xs input"
+              id="checkoutLimit"
+              maxLength={50}
+              placeholder='checkoutLimit'
+            />
+            {errors.checkoutLimit && <span>This field is required</span>}
+          </div>
+          <button className="btn btn-primary" type="submit" data-cy='submit'>
+            Submit
+          </button>
         </div>
-
-        <div className="form-group">
-          <select
-            {...register('shopId', { required: true })}
-            className="w-full max-w-xs select"
-            id="shopId"
-            value={promotion?.shopId}
-            placeholder='shop'
-          >
-            <option value="">Select a shop</option>
-            {shops.map((shop) => (
-              <option key={shop.id} value={shop.id}>
-                {shop.companyName}
-              </option>
-            ))}
-          </select>
-          {errors.shopId && <span>This field is required</span>}
-        </div>
-        
-
-        <div className="form-group">
-          <input
-            {...register('startAt', { required: true })}
-            type="date"
-            className="w-full max-w-xs input"
-            id="startAt"
-            value={promotion?.startAt?.toString()}
-            placeholder='date de debut'
-          />
-          {errors.startAt && <span>This field is required</span>}
-        </div>
-        
-        <div className="form-group">
-          <input
-            {...register('endAt', { required: true })}
-            type="date"
-            className="w-full max-w-xs input"
-            id="endAt"
-            value={promotion?.endAt.toString()}
-            placeholder='date de fin'
-          />
-          {errors.endAt && <span>This field is required</span>}
-        </div>
-        
-        <div className="form-group">
-          <input
-            {...register('checkoutLimit', { required: true })}
-            type="number"
-            className="w-full max-w-xs input"
-            id="checkoutLimit"
-            value={promotion?.checkoutLimit}
-            placeholder='checkoutLimit'
-          />
-          {errors.checkoutLimit && <span>This field is required</span>}
-        </div>
-
-        <div className="form-group">
-          <textarea
-            {...register('description', { required: true })}
-            className="textarea textarea-bordered"
-            id="description"
-            maxLength={250}
-            value={promotion?.description}
-            placeholder='Description'
-          />
-          {errors.description && <span>This field is required</span>}
-        </div>
-        
-        <button type="submit" className="btn btn-success">
-          Submit
-        </button>
       </div>
-    </div>
     </form>
   )
 }
 
-export default PromotionForm
+export const PromotionUpdateForm: React.FC<{promotion: IPromotions}> = ({promotion}) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IPromotionCreatePayload>({
+    defaultValues: {
+      name: promotion.name,
+      description: promotion.description,
+      startAt: promotion.startAt,
+      endAt: promotion.endAt,
+      checkoutLimit: promotion.checkoutLimit,
+    }
+  })
+
+  const [shops, setShops] = useState<IShop[]>([])
+
+  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(async (data) => {
+    try {
+      await PromotionService.updatePromotion(promotion.id.toString(), data)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [promotion.id])
+
+  const loadShops = useCallback(async () => {
+    try {
+      const { data } = await ShopService.getShops()
+      setShops(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    loadShops()
+  }, [loadShops])
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="submit-form">
+        <div>
+          <div className="form-group">
+            <input
+              {...register('name', { required: true, maxLength: 50 })}
+              type="text"
+              className="w-full max-w-xs input"
+              id="name"
+              maxLength={50}
+              placeholder='name'
+            />
+            {errors.name && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('description', { required: true, maxLength: 50 })}
+              type="text"
+              className="w-full max-w-xs input"
+              id="description"
+              maxLength={50}
+              placeholder='description'
+            />
+            {errors.description && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('startAt', { required: true, maxLength: 50 })}
+              type="date"
+              className="w-full max-w-xs input"
+              id="startAt"
+              maxLength={50}
+              placeholder='startAt'
+            />
+            {errors.startAt && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('endAt', { required: true, maxLength: 50 })}
+              type="date"
+              className="w-full max-w-xs input"
+              id="endAt"
+              maxLength={50}
+              placeholder='endAt'
+            />
+            {errors.endAt && <span>This field is required</span>}
+          </div>
+          <div className="form-group">
+            <input
+              {...register('checkoutLimit', { required: true, maxLength: 50 })}
+              type="number"
+              className="w-full max-w-xs input"
+              id="checkoutLimit"
+              maxLength={50}
+              placeholder='checkoutLimit'
+            />
+            {errors.checkoutLimit && <span>This field is required</span>}
+          </div>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  )
+}
+          
+          
+
+
+  

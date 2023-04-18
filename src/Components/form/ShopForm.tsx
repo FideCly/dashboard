@@ -10,7 +10,7 @@ import usePlacesAutocomplete, {
   getGeocode, getLatLng,
 } from 'use-places-autocomplete';
 
-export const ShopForm: React.FC = () => {
+export const ShopCreateForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IShopCreatePayload>()
 
   const [shops, setShops] = useState<IShop[]>([])
@@ -159,7 +159,7 @@ export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
   
   
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} data-cy='create-shop-form'>
       <div className="submit-form">
         <div>
           <div className="form-group">

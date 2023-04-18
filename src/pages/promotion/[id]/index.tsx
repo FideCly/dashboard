@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import {PromotionUpdateForm} from '@/Components/form/PromotionForm'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
 
-export default function PromotionEditById() {
+export default function PromotionViewById() {
     const [promotion, setPromotion] = useState<IPromotions>()
     const router = useRouter()
     const { id } = router.query
@@ -24,7 +23,10 @@ export default function PromotionEditById() {
     
     return (
         <div>
-        <PromotionUpdateForm promotion={promotion!} />
+        <h1>{promotion?.name}</h1>
+        <p>{promotion?.description}</p>
+        <p>{promotion?.startAt?.toDateString()} </p>
+        <p>{promotion?.endAt?.toDateString()}</p>
         </div>
     )
 }
