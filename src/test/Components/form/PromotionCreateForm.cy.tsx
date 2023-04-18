@@ -1,5 +1,5 @@
 import React from 'react'
-import { PromotionCreateForm } from './PromotionForm'
+import { PromotionCreateForm } from '@/Components/form/PromotionForm'
 import { IPromotions } from '@/Api/Models/Promotions'
 
 describe('<PromotionCreateForm />', () => {

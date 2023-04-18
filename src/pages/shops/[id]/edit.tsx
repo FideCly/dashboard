@@ -24,7 +24,7 @@ export default function ShopEditById() {
     
     return (
         <div>
-        <ShopUpdateForm shop={shop!} />
+        {shop && <ShopUpdateForm shop={shop} />}
         </div>
     )
 }

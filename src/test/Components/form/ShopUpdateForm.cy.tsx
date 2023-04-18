@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShopUpdateForm } from './ShopForm'
+import { ShopUpdateForm } from '@/Components/form/ShopForm'
 import { IShop } from '@/Api/Models/Shop'
 
 describe('<ShopUpdateForm />', () => {

@@ -24,7 +24,7 @@ export default function PromotionEditById() {
     
     return (
         <div>
-        <PromotionUpdateForm promotion={promotion!} />
+            {promotion && <PromotionUpdateForm promotion={promotion} />}
         </div>
     )
 }

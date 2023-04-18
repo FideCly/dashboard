@@ -1,5 +1,6 @@
 describe('template spec', () => {
-  it('passes', () => {
+  it.only('passes', () => {
     cy.visit('http://localhost:3000/campaign')
   })
 })
+export {};

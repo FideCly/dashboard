@@ -1,5 +1,5 @@
 import React from 'react'
-import { Register } from './Auth'
+import { Register } from '@/Components/auth/Auth'
 import Router from 'next/router'
 import { IUserAuthPayload } from '@/Api/Models/User'
 

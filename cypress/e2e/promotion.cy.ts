@@ -22,3 +22,4 @@ describe('promotion spec', () => {
         
     })
 })
+export {};

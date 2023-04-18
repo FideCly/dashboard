@@ -1,5 +1,5 @@
 import React from 'react'
-import ShopList from './ShopList'
+import ShopList from '@/Components/List/ShopList'
 
 describe('<ShopList />', () => {
   it('renders', () => {
