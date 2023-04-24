@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShopCreateForm } from '@/Components/form/ShopForm'
+import { ShopCreateForm } from '@/Components/form/Shop.form'
 
 describe('<ShopForm />', () => {
   it('renders', () => {

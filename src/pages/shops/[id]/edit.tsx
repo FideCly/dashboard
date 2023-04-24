@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ShopUpdateForm } from '@/Components/form/ShopForm'
+import { ShopUpdateForm } from '@/Components/form/Shop.form'
 import { ShopService } from '@/Api/Services'
 import { IShop } from '@/Api/Models/Shop'
 import { useRouter } from 'next/router'

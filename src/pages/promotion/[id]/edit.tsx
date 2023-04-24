@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {PromotionUpdateForm} from '@/Components/form/PromotionForm'
+import {PromotionUpdateForm} from '@/Components/form/Promotion.form'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
