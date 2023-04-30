@@ -1,5 +1,5 @@
 import { IBalanceUpdatePayload } from "../Models/Balance";
-import httpCommon from "../http-common";
+import {httpCommon} from "../http-common";
 import { AxiosResponse } from "axios";
 
 const Route = "/balances";

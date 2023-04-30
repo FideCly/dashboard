@@ -1,5 +1,5 @@
 import { type AxiosResponse } from 'axios'
-import http from '../http-common'
+import {authhttp} from '../http-common'
 import {IUser, IUserAuthPayload, jwttoken } from '../Models/User'
 
 
@@ -9,7 +9,7 @@ import {IUser, IUserAuthPayload, jwttoken } from '../Models/User'
  * @returns Retourne a jwt token
  */
 const login = async (user: IUserAuthPayload): Promise<AxiosResponse<jwttoken, any>> => {
-  return await http.post<jwttoken>('/auth/login', user)
+  return await authhttp.put<jwttoken>('auth/login', user)
 }
 
 /**
@@ -18,7 +18,7 @@ const login = async (user: IUserAuthPayload): Promise<AxiosResponse<jwttoken, an
  * @returns Retourne a jwt token
  */
 const signup = async (user: IUserAuthPayload): Promise<AxiosResponse<IUser, any>> => {
-  return await http.post<IUser>('/auth/signup', user)
+  return await authhttp.post<IUser>('auth/register', user)
 }
 
 

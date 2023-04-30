@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PromotionCreateForm} from '../../Components/form/Promotion.form'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
+import Navbar from '@/Components/html/Navbar'
 export default function Promotion () {
   const [isShown, setIsShown] = useState(false)
   const handleClick = (_envent: any): void => {
@@ -34,3 +35,10 @@ export default function Promotion () {
     </div>
   )
 }
+
+Promotion.getLayout = (page) => (
+  <div className='flex'>
+    <Navbar />
+    {page}
+  </div>
+)

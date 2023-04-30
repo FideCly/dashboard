@@ -3,6 +3,7 @@ import {PromotionUpdateForm} from '@/Components/form/Promotion.form'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
+import Navbar from '@/Components/html/Navbar'
 
 export default function PromotionEditById() {
     const [promotion, setPromotion] = useState<IPromotions>()
@@ -28,3 +29,10 @@ export default function PromotionEditById() {
         </div>
     )
 }
+
+PromotionEditById.getLayout = (page) => (
+    <div className='flex'>
+    <Navbar />
+    {page}
+    </div>
+)

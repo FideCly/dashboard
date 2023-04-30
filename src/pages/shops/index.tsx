@@ -1,4 +1,5 @@
 
+import Navbar from '@/Components/html/Navbar'
 import ShopList from '../../Components/List/ShopList'
 import { ShopCreateForm } from '@/Components/form/Shop.form'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons' 
@@ -33,3 +34,10 @@ export default function Shops () {
         </div>
     )
     }
+
+Shops.getLayout = (page) => (
+    <div className='flex'>
+    <Navbar />
+    {page}
+    </div>
+)

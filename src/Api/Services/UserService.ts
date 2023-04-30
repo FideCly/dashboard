@@ -1,5 +1,5 @@
 import { type AxiosResponse } from 'axios'
-import http from '../http-common'
+import {httpCommon} from '../http-common'
 import {IUserUpdatePayload,IUser} from '../Models/User'
 /**
  * Récupère la liste des utilisateurs
@@ -9,7 +9,7 @@ import {IUserUpdatePayload,IUser} from '../Models/User'
  * @see src/Api/Models/Users.ts
  */
 const getUsers = async (): Promise<AxiosResponse<IUser[], any>> => {
-    return await http.get<IUser[]>('/user')
+    return await httpCommon.get<IUser[]>('/user')
     }
 
 /**
@@ -20,7 +20,7 @@ const getUsers = async (): Promise<AxiosResponse<IUser[], any>> => {
  * @see src/Types/Users.ts
  */
 const getUserById = async (id: string): Promise<AxiosResponse<IUser, any>> => {
-    return await http.get<IUser>(`/user/${id}`)
+    return await httpCommon.get<IUser>(`/user/${id}`)
     }
 
 /**
@@ -31,7 +31,7 @@ const getUserById = async (id: string): Promise<AxiosResponse<IUser, any>> => {
  * @see Users
  */
 const updateUser = async (id: string, user: IUserUpdatePayload): Promise<AxiosResponse<IUserUpdatePayload, any>> => {
-    return await http.put<IUserUpdatePayload>(`/user/${id}`, user)
+    return await httpCommon.put<IUserUpdatePayload>(`/user/${id}`, user)
     }
 
 /**
@@ -41,7 +41,7 @@ const updateUser = async (id: string, user: IUserUpdatePayload): Promise<AxiosRe
  * @see Users
  */
 const deleteUser = async (id: string): Promise<AxiosResponse<IUser, any>> => {
-    return await http.delete<IUser>(`/user/${id}`)
+    return await httpCommon.delete<IUser>(`/user/${id}`)
     }
 
 const UserService = {
