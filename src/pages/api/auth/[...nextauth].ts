@@ -7,6 +7,7 @@ import { AuthServices } from "@/Api/Services";
 import Cookies from "js-cookie";
 
 export const authOptions: NextAuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "Credentials",
