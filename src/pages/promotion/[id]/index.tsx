@@ -9,17 +9,18 @@ export default function PromotionViewById() {
     const router = useRouter()
     const { id } = router.query
     // get promotion by id
-    const getPromotionById = async () => {
-        try {
-            const response = await PromotionService.getPromotionById(id as string)
-            setPromotion(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     useEffect(() => {
+        const getPromotionById = async () => {
+            try {
+                const response = await PromotionService.getPromotionById(id as string)
+                setPromotion(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
         getPromotionById()
-    }, [id])
+    }, [setPromotion, id])
     
     
     return (

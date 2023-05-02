@@ -9,15 +9,16 @@ export default function ShopViewById() {
     const router = useRouter()
     const { id } = router.query
     // get shop by id
-    const getShopById = async () => {
-        try {
-            const response = await ShopService.getShopById(id as string)
-            setShop(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     useEffect(() => {
+        const getShopById = async () => {
+            try {
+                const response = await ShopService.getShopById(id as string)
+                setShop(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
         getShopById()
     }, [id])
     
