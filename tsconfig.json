@@ -20,5 +20,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "types": ["node","cypress","cypress-axe"],
   "exclude": ["node_modules"]
 }
