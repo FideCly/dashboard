@@ -1,11 +1,10 @@
-import React, { ReactComponentElement, useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { IUserAuthPayload, IUser, IUserUpdatePayload} from '@/Api/Models/User'
+import { IUserAuthPayload } from '@/Api/Models/User'
 import { AuthServices } from '@/Api/Services'
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
-import NoSideBarLayout from '../Layout'
-import type { ReactElement } from 'react'
+
 
 export const Login: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IUserAuthPayload>()

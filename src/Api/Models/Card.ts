@@ -16,12 +16,11 @@ export interface ICardUpdatePayload {
 
 export interface ICard {
     id: number;
-    uuid: string;
     startAt: Date;
     endAt: Date;
     isActive: boolean;
-    shopId: IShop[];
-    userId: IUser[];
+    shopId: number;
+    userId: number;
 }
 
   

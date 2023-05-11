@@ -7,11 +7,10 @@ export const Profile = () => {
     const [user, setUser] = useState<IUser>();
     
     useEffect(() => {
-        // get user by id
         const loadUser = async (): Promise<void> => {
             try {
-                const response = await UserService.getUserById('1');
-                setUser(response.data);
+                // const response = await UserService.getUserById();
+                // setUser(response.data);
             } catch (error) {
                 console.error(error);
             }

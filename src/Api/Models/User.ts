@@ -1,5 +1,11 @@
 import { ICard } from './Card';
 export interface IUserAuthPayload {
+  role: string;
+  email: string;
+  password: string;
+}
+
+export interface IAuthPayload {
   email: string;
   password: string;
 }
