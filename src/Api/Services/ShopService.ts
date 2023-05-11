@@ -1,7 +1,6 @@
 import { type AxiosResponse } from 'axios'
 import {httpCommon} from '../http-common'
 import type {IShop, IShopCreatePayload, IShopUpdatePayload} from '../Models/Shop'
-import Cookies from 'js-cookie'
 
 /**
  * Récupère la liste des shops
@@ -11,12 +10,7 @@ import Cookies from 'js-cookie'
  * @see src/Api/Models/Shop.ts
 */
 const getShops = async (): Promise<AxiosResponse<IShop[], any>> => {
-  return await httpCommon.get<IShop[]>('/shop', {
-    headers: {
-      'Content-type': 'application/json',
-      'Authorization': 'Bearer ' + Cookies.get('next-auth.session-token'),
-    },
-  })
+  return await httpCommon.get<IShop[]>('/shop')
 }
 
 /**

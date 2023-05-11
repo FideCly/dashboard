@@ -16,7 +16,7 @@ const httpCommon = axios.create({
   withCredentials: true,
   headers: {
     'Content-type': 'application/json',
-    'Authorization': 'Bearer ' + Cookies.get('token'),
+    'Authorization': 'Bearer ' + Cookies.get("token"),
   },
 })
 

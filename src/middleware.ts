@@ -5,5 +5,19 @@ export default withAuth({
 });
 
 export const config = {
-    matcher: ["/"]
+    matcher: [
+        "/",
+        "/shops",
+        "/shops/[id]",
+        "/shops/[id]/edit",
+        "/shops/create",
+        "/shops/[id]/delete",
+        "/campaign",
+        "/campaign/[id]",
+        "/campaign/[id]/edit",
+        "/scan",
+        "/promotion",
+        "/promotion/[id]",
+        "/promotion/[id]/edit"
+    ],
 };
