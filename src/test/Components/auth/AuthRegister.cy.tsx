@@ -1,10 +1,10 @@
 import React from 'react'
 import { Register } from '@/Components/auth/Auth'
-import Router from 'next/router'
 import { IUserAuthPayload } from '@/Api/Models/User'
 
 describe('<Register />', () => { 
   const user : IUserAuthPayload = {
+    role: 'Fider',
     email: 'test',
     password: 'test',
   }
