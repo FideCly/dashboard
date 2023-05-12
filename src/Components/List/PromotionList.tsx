@@ -36,7 +36,7 @@ export default function PromotionList () {
   }
 
   return (
-    <table className='table w-full'>
+    <table className='table w-full' id='PromotionList' data-cy='PromotionList'>
       <thead>
         <tr>
           <th>Name</th>

@@ -1,30 +1,39 @@
 import { useEffect, useState } from 'react'
-import PromotionFrom from '@/Components/form/PromotionForm'
+import {PromotionUpdateForm} from '@/Components/form/Promotion.form'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
+import Navbar from '@/Components/html/Navbar'
 
 export default function PromotionEditById() {
     const [promotion, setPromotion] = useState<IPromotions>()
     const router = useRouter()
     const { id } = router.query
     // get promotion by id
-    const getPromotionById = async () => {
-        try {
-            const response = await PromotionService.getPromotionById(id as string)
-            setPromotion(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     useEffect(() => {
+        const getPromotionById = async () => {
+            try {
+                const response = await PromotionService.getPromotionById(id as string)
+                setPromotion(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
         getPromotionById()
     }, [id])
     
     
     return (
         <div>
-        <PromotionFrom promotion={promotion} />
+            {promotion && <PromotionUpdateForm promotion={promotion} />}
         </div>
     )
 }
+
+PromotionEditById.getLayout = (page) => (
+    <div className='flex'>
+    <Navbar />
+    {page}
+    </div>
+)

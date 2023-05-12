@@ -1,8 +1,8 @@
 import { IBalanceUpdatePayload } from "../Models/Balance";
-import httpCommon from "../http-common";
+import {httpCommon} from "../http-common";
 import { AxiosResponse } from "axios";
 
-const Route = "/balances";
+const Route = "/balance";
 
 const getBalances = async (): Promise<AxiosResponse<IBalanceUpdatePayload[], any>> => {
   return await httpCommon.get<IBalanceUpdatePayload[]>(Route);

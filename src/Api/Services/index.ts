@@ -1,11 +1,13 @@
-import UserService from './UserServices'
+import AuthServices from './AuthServices'
 import PromotionService from './PromotionService'
 import ShopService from './ShopService'
 import BalanceServices from './BalanceServices'
+import UserService from './UserService'
 
 export {
-  UserService,
+  AuthServices,
   PromotionService,
   ShopService,
-  BalanceServices
+  BalanceServices,
+  UserService
 }

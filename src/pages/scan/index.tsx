@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {QrReader} from 'react-qr-reader'
 import { PromotionService, BalanceServices } from '@/Api/Services'
+import Navbar from '@/Components/html/Navbar'
 
 
 export default function Scan () {
@@ -70,3 +71,10 @@ export default function Scan () {
     </div>
   )
 }
+
+Scan.getLayout = (page) => (
+  <div className='flex'>
+    <Navbar />
+    {page}
+  </div>
+)
