@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {QrReader} from 'react-qr-reader'
 import { PromotionService, BalanceServices } from '@/Api/Services'
-import Navbar from '@/Components/html/Navbar'
+import Sidebar from '@/Components/html/Sidebar'
+import Navbare from '@/Components/html/Navbar'
 
 
 export default function Scan () {
@@ -27,9 +28,9 @@ export default function Scan () {
   }
   
   return (
-    <div className="container max-w-2xl mx-auto mt-4">
+    <div className="max-w-2xl mt-4 ">
       <div className="flex">
-        <h1 className="flex-1 text-4xl">Scan</h1>
+        <h1 className="flex-1 text-4xl">Scanner</h1>
       </div>
       <div>
         {/* select with the promotion */}
@@ -74,7 +75,10 @@ export default function Scan () {
 
 Scan.getLayout = (page) => (
   <div className='flex'>
-    <Navbar />
-    {page}
+  <Sidebar />
+  <div className='flex flex-col flex-1'>
+      <Navbare />
+      {page}
   </div>
+</div>
 )

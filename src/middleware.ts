@@ -19,5 +19,5 @@ export const config = {
         "/promotion",
         "/promotion/[id]",
         "/promotion/[id]/edit"
-    ],
+    ], 
 };

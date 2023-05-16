@@ -1,4 +1,4 @@
-export default interface ICampaignCreatePayload {
+export interface ICampaignCreatePayload {
   libelle: string
   types: string
   startAt: string
@@ -6,7 +6,7 @@ export default interface ICampaignCreatePayload {
   template: string
 }
 
-export default interface ICampaignUpdatePayload {
+export interface ICampaignUpdatePayload {
   id: number
   libelle: string
   types: string
@@ -15,7 +15,7 @@ export default interface ICampaignUpdatePayload {
   template: string
 }
 
-export default interface ICampaign {
+export interface ICampaign {
   id: number
   libelle: string
   types: string

@@ -1,11 +1,23 @@
-import ShopList from '../../Components/List/ShopList'
+import Sidebar from '@/Components/html/Sidebar'
+import Navbare from '@/Components/html/Navbar'
 export default function GeneralSettings () {
   return (
-    <div className="container max-w-6xl mx-auto mt-4">
+    <div className="mt-4 ">
       <div className="flex">
-        <h1 className="flex-1 text-4xl">Settings</h1>
+        <h1 className="flex-1 text-4xl">Réglages</h1>
       </div>
     </div>
     
   )
 }
+
+GeneralSettings.getLayout = (page) => (
+  <div className='flex'>
+  <Sidebar />
+  <div className='flex flex-col flex-1'>
+      <Navbare />
+      {page}
+  </div>
+</div>
+)
+

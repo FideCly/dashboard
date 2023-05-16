@@ -31,7 +31,7 @@ export default function ShopList () {
   if (error) {
     return (
       <div>
-        <span>Error while loading shops</span>
+        <span>Erreur lors du chargement de  shops</span>
       </div>
     )
   }

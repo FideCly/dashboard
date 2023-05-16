@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
-import Navbar from '@/Components/html/Navbar'
+import Navbar from '@/Components/html/Sidebar'
+import Sidebar from '@/Components/html/Sidebar'
 
 export default function PromotionViewById() {
     const [promotion, setPromotion] = useState<IPromotions>()
@@ -35,7 +36,7 @@ export default function PromotionViewById() {
 
 PromotionViewById.getLayout = (page) => (
     <div className='flex'>
-    <Navbar />
+    <Sidebar />
     {page}
     </div>
 )

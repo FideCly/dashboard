@@ -1,9 +1,11 @@
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PromotionCreateForm} from '../../Components/form/Promotion.form'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
-import Navbar from '@/Components/html/Navbar'
+import Navbar from '@/Components/html/Sidebar'
+import Sidebar from '@/Components/html/Sidebar'
+import Navbare from '@/Components/html/Navbar'
 export default function Promotion () {
   const [isShown, setIsShown] = useState(false)
   const handleClick = (_envent: any): void => {
@@ -11,23 +13,22 @@ export default function Promotion () {
   }
 
   return (
-    <div className="container max-w-6xl mx-auto mt-4">
-      <div className="flex">
+    <div className="flex flex-col ">
+      <div className="flex flex-1">
         <h1 className="flex-1 text-4xl">Promotions</h1>
         <button
          data-cy= 'add-promotion'
           id='add-promotion'
           type="button"
           onClick={handleClick}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="inline-flex items-center p-4 font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300 focus:ring-4 focus:outline-none focus:ring-blue-50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          <FontAwesomeIcon icon={faPlusSquare} />
-          Add Promotion
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
       {isShown && (
         <div>
-          <h1>Add Promotion</h1>
+          <h1>Crée une promotion</h1>
           <PromotionCreateForm />
         </div>
       )}
@@ -38,7 +39,10 @@ export default function Promotion () {
 
 Promotion.getLayout = (page) => (
   <div className='flex'>
-    <Navbar />
-    {page}
+  <Sidebar />
+  <div className='flex flex-col flex-1'>
+      <Navbare />
+      {page}
   </div>
+</div>
 )
