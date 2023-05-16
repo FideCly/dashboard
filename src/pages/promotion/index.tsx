@@ -1,11 +1,11 @@
-import { faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PromotionCreateForm} from '../../Components/form/Promotion.form'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
-import Navbar from '@/Components/html/Sidebar'
 import Sidebar from '@/Components/html/Sidebar'
 import Navbare from '@/Components/html/Navbar'
+
 export default function Promotion () {
   const [isShown, setIsShown] = useState(false)
   const handleClick = (_envent: any): void => {

@@ -7,7 +7,6 @@ import type {IShop, IShopCreatePayload, IShopUpdatePayload} from '../Models/Shop
  * @returns Retourne une promesse de type Shop[]
  * @see Shop
  * @see src/Types/Shop.ts
- * @see src/Api/Models/Shop.ts
 */
 const getShops = async (): Promise<AxiosResponse<IShop[], any>> => {
   return await httpCommon.get<IShop[]>('/shop')

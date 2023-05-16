@@ -1,5 +1,6 @@
 import Sidebar from '@/Components/html/Sidebar'
 import Navbare from '@/Components/html/Navbar'
+
 export default function GeneralSettings () {
   return (
     <div className="mt-4 ">

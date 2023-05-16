@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
-import Navbar from '@/Components/html/Sidebar'
 import Sidebar from '@/Components/html/Sidebar'
 
 export default function PromotionViewById() {

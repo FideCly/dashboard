@@ -1,6 +1,6 @@
 import ShopList from '../../Components/List/ShopList'
 import { ShopCreateForm } from '@/Components/form/Shop.form'
-import { faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import Sidebar from '@/Components/html/Sidebar'

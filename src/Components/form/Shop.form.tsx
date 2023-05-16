@@ -10,7 +10,6 @@ import usePlacesAutocomplete, {
   getGeocode, getLatLng,
 } from 'use-places-autocomplete';
 import { Button, Label, TextInput } from 'flowbite-react';
-import { faMailBulk } from '@fortawesome/free-solid-svg-icons';
 
 export const ShopCreateForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IShopCreatePayload>()

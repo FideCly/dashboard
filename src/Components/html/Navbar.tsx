@@ -1,12 +1,12 @@
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Avatar, Button, Label, TextInput } from 'flowbite-react'
+import { Avatar, TextInput } from 'flowbite-react'
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function Navbare () {
     return (
-        <nav className="flex items-center space-x-2 bg-white p-t-4 dark:bg-gray-800">
+        <nav className="flex items-center p-4 space-x-2 bg-green-100 shadow dark:bg-gray-800">
             <TextInput
                 type="text"
                 className="flex-1"
