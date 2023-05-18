@@ -3,6 +3,7 @@ import type {IShop} from '../../Api/Models/Shop'
 import { ShopService } from '../../Api/Services'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { getSession } from 'next-auth/react';
 
 export default function ShopList () {
   const [shops, setShops] = useState<IShop[]>([])
@@ -13,7 +14,9 @@ export default function ShopList () {
     const loadShops = async (): Promise<void> => {
       try {
         setIsLoading(true)
-        const response = await ShopService.getShops()
+        const session = await getSession()
+        console.log(session)
+        const response = await ShopService.getShops(session.user.email)
         setShops(response.data)
       } catch (error) {
         setError(true)

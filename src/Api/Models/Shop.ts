@@ -8,6 +8,7 @@ export interface IShopCreatePayload {
   long: string;
   phone: string;
   address: string;
+  activity: string;
 }
 
 export interface IShopUpdatePayload {

@@ -1,16 +1,18 @@
 import { IUser } from "@/Api/Models/User";
 import { UserService } from "@/Api/Services";
+import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export const Profile = () => {
     // get profile using get user by id using axios
     const [user, setUser] = useState<IUser>();
     
-    useEffect(() => {
+    useEffect(() => {      
         const loadUser = async (): Promise<void> => {
             try {
-                // const response = await UserService.getUserById();
-                // setUser(response.data);
+                const session = await getSession()
+                const response = await UserService.getUserById(session.user.id);
+                setUser(response.data);
             } catch (error) {
                 console.error(error);
             }

@@ -27,4 +27,5 @@ export interface IUser {
 export interface jwttoken {
   status: number;
   token: string;
+  userUuid: string;
 }

@@ -8,8 +8,8 @@ import type {IShop, IShopCreatePayload, IShopUpdatePayload} from '../Models/Shop
  * @see Shop
  * @see src/Types/Shop.ts
 */
-const getShops = async (): Promise<AxiosResponse<IShop[], any>> => {
-  return await httpCommon.get<IShop[]>('/shop')
+const getShops = async (id: string): Promise<AxiosResponse<IShop[], any>> => {
+  return await httpCommon.get<IShop[]>(`/shop/${id}/clients`)
 }
 
 /**

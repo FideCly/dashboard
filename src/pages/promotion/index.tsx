@@ -21,7 +21,7 @@ export default function Promotion () {
           id='add-promotion'
           type="button"
           onClick={handleClick}
-          className="inline-flex items-center p-4 font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300 focus:ring-4 focus:outline-none focus:ring-blue-50 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="inline-flex items-center p-4 font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300 dark:hover:bg-green-500 dark:bg-green-400"
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>

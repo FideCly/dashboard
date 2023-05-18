@@ -87,7 +87,7 @@ export const PromotionCreateForm: React.FC = () => {
       <div className="">
         <Label htmlFor='checkoutLimit'>Promotion checkout limit</Label>
         <TextInput
-          {...register('checkoutLimit', { required: true, maxLength: 50 })}
+          {...register('checkoutLimit', { required: true,  valueAsNumber: true})}
           type="number"
           className=""
           id="checkoutLimit"
@@ -185,11 +185,10 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({ prom
           </div>
           <div className="">
             <TextInput
-              {...register('checkoutLimit', { required: true, maxLength: 50 })}
+              {...register('checkoutLimit', { required: true })}
               type="number"
               className=""
               id="checkoutLimit"
-              maxLength={50}
               placeholder='checkoutLimit'
             />
             {errors.checkoutLimit && <span>This field is required</span>}
