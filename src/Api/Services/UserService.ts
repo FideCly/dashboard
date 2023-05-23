@@ -1,6 +1,6 @@
-import { type AxiosResponse } from 'axios'
-import {httpCommon} from '../http-common'
-import {IUserUpdatePayload,IUser} from '../Models/User'
+import { type AxiosResponse } from "axios";
+import { httpCommon } from "../http-common";
+import { IUserUpdatePayload, IUser } from "../Models/User";
 /**
  * Récupère la liste des utilisateurs
  * @returns Retourne une promesse de type Users[]
@@ -9,8 +9,8 @@ import {IUserUpdatePayload,IUser} from '../Models/User'
  * @see src/Api/Models/Users.ts
  */
 const getUsers = async (): Promise<AxiosResponse<IUser[], any>> => {
-    return await httpCommon.get<IUser[]>('/user')
-    }
+  return await httpCommon.get<IUser[]>("/user");
+};
 
 /**
  * Récupère l'utilisateur par son id
@@ -20,8 +20,8 @@ const getUsers = async (): Promise<AxiosResponse<IUser[], any>> => {
  * @see src/Types/Users.ts
  */
 const getUserById = async (id: string): Promise<AxiosResponse<IUser, any>> => {
-    return await httpCommon.get<IUser>(`/user/${id}`)
-    }
+  return await httpCommon.get<IUser>(`/user/${id}`);
+};
 
 /**
  * Met à jour l'utilisateur
@@ -30,9 +30,12 @@ const getUserById = async (id: string): Promise<AxiosResponse<IUser, any>> => {
  * @returns Retourne une promesse de type Users
  * @see Users
  */
-const updateUser = async (id: string, user: IUserUpdatePayload): Promise<AxiosResponse<IUserUpdatePayload, any>> => {
-    return await httpCommon.put<IUserUpdatePayload>(`/user/${id}`, user)
-    }
+const updateUser = async (
+  id: string,
+  user: IUserUpdatePayload
+): Promise<AxiosResponse<IUserUpdatePayload, any>> => {
+  return await httpCommon.put<IUserUpdatePayload>(`/user/${id}`, user);
+};
 
 /**
  * delete user
@@ -41,14 +44,14 @@ const updateUser = async (id: string, user: IUserUpdatePayload): Promise<AxiosRe
  * @see Users
  */
 const deleteUser = async (id: string): Promise<AxiosResponse<IUser, any>> => {
-    return await httpCommon.delete<IUser>(`/user/${id}`)
-    }
+  return await httpCommon.delete<IUser>(`/user/${id}`);
+};
 
 const UserService = {
-    getUsers,
-    getUserById,
-    updateUser,
-    deleteUser
-}
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+};
 
-export default UserService
+export default UserService;

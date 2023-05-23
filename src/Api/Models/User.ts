@@ -1,4 +1,4 @@
-import { ICard } from './Card';
+import { ICard } from "./Card";
 export interface IUserAuthPayload {
   role: string;
   email: string;
@@ -10,7 +10,7 @@ export interface IAuthPayload {
   password: string;
 }
 
-export interface IUserUpdatePayload{
+export interface IUserUpdatePayload {
   email?: string;
   isActive?: boolean;
 }

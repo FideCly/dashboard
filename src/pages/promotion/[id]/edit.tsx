@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import {PromotionUpdateForm} from '@/Components/form/Promotion.form'
+import { PromotionUpdateForm } from '@/Components/form/Promotion.form'
 import { PromotionService } from '@/Api/Services'
 import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
 import Sidebar from '@/Components/html/Sidebar'
 
-export default function PromotionEditById() {
+export default function PromotionEditById () {
     const [promotion, setPromotion] = useState<IPromotions>()
     const router = useRouter()
     const { id } = router.query
@@ -22,8 +22,8 @@ export default function PromotionEditById() {
         }
         getPromotionById()
     }, [id])
-    
-    
+
+
     return (
         <div>
             {promotion && <PromotionUpdateForm promotion={promotion} />}
@@ -33,7 +33,7 @@ export default function PromotionEditById() {
 
 PromotionEditById.getLayout = (page) => (
     <div className='flex'>
-    <Sidebar />
-    {page}
+        <Sidebar />
+        {page}
     </div>
 )

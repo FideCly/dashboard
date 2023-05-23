@@ -6,12 +6,12 @@ import { usePlacesWidget } from "react-google-autocomplete";
 import { Button, Label, Select, TextInput } from 'flowbite-react';
 import { getSession } from 'next-auth/react';
 
-function extractFromAdress(components, type){
-  for (var i=0; i<components.length; i++)
-   for (var j=0; j<components[i].types.length; j++)
-    if (components[i].types[j]==type) return components[i].long_name;
-   return "";
- }
+function extractFromAdress (components, type) {
+  for (var i = 0; i < components.length; i++)
+    for (var j = 0; j < components[i].types.length; j++)
+      if (components[i].types[j] == type) return components[i].long_name;
+  return "";
+}
 
 export const ShopCreateForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IShopCreatePayload>()
@@ -42,7 +42,7 @@ export const ShopCreateForm: React.FC = () => {
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
     onPlaceSelected: (place) => {
       console.log(place)
-      var  lat  = place.geometry.location.lat.toString();
+      var lat = place.geometry.location.lat.toString();
       var long = place.geometry.location.lng.toString();
       var zipCode = extractFromAdress(place.address_components, "postal_code");
     }
@@ -69,9 +69,9 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-      <Label htmlFor='phone' className='dark:text-white'>Adress</Label>
-      <TextInput
-      {...register('address', { required: true, maxLength: 50 })}
+        <Label htmlFor='phone' className='dark:text-white'>Adress</Label>
+        <TextInput
+          {...register('address', { required: true, maxLength: 50 })}
           type="text"
           id="adress"
           maxLength={50}
@@ -172,7 +172,7 @@ export const ShopUpdateForm: React.FC<{ shop: IShop }> = ({ shop }) => {
 
   const loadShops = useCallback(async () => {
     try {
-      const { data } = await ShopService.getShops()
+      const { data } = await ShopService.getShops('')
       setShops(data)
     } catch (error) {
       console.error(error)

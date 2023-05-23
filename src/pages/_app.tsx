@@ -7,6 +7,8 @@ import type { NextPage } from 'next'
 config.autoAddCss = false;
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from 'next-themes'
+import { CookiesProvider } from 'react-cookie';
+import Consent from '@/Components/Consent'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -27,6 +29,7 @@ export default function MyApp ({ Component,
       <main className='flex-1 p-8 bg-grey-500 dark:bg-grey-500'>
         <ThemeProvider attribute="class">
           <Component {...pageProps} />
+          <Consent />
         </ThemeProvider>
       </main>
     </SessionProvider>

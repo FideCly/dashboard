@@ -1,9 +1,7 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { AuthServices, UserService } from "@/Api/Services";
+import { AuthServices } from "@/Api/Services";
 import { setCookie } from "nookies";
-import { error } from "console";
-import axios from "axios";
 
 const nextAuthOptions = (req, res) => {
     return {
@@ -43,18 +41,18 @@ const nextAuthOptions = (req, res) => {
             strategy: "jwt",
         },
         callbacks: {
-            jwt({ token, account, user }) {
+            jwt ({ token, account, user }) {
                 if (account) {
-                  token.id = user?.data.userUuid
+                    token.id = user?.data.userUuid
                 }
                 return token
-              },
-            async session({ session, token, user }) {
-              // Send properties to the client, like an access_token and user id from a provider.
-              session.user.email = token.id             
-              return session
-            }
-          }
+            },
+            async session ({ session, token, user }) {
+                // Send properties to the client, like an access_token and user id from a provider.
+                session.user.email = token.id
+                return session
+            },
+        },
     };
 };
 

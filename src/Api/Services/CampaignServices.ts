@@ -78,11 +78,11 @@ const deleteCampaign = async (
 };
 
 const CampaignServices = {
-    getCampaigns,
-    getCampaignById,
-    updateCampaign,
-    createCampaign,
-    deleteCampaign
-}
+  getCampaigns,
+  getCampaignById,
+  updateCampaign,
+  createCampaign,
+  deleteCampaign,
+};
 
-export default CampaignServices
+export default CampaignServices;

@@ -8,17 +8,17 @@ export default function GeneralSettings () {
         <h1 className="flex-1 text-4xl">Réglages</h1>
       </div>
     </div>
-    
+
   )
 }
 
 GeneralSettings.getLayout = (page) => (
   <div className='flex'>
-  <Sidebar />
-  <div className='flex flex-col flex-1'>
+    <Sidebar />
+    <div className='flex flex-col flex-1'>
       <Navbare />
       {page}
+    </div>
   </div>
-</div>
 )
 

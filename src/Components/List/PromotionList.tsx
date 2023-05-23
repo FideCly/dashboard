@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {IPromotions} from '@/Api/Models/Promotions'
+import { IPromotions } from '@/Api/Models/Promotions'
 import { PromotionService } from '@/Api/Services'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -59,11 +59,11 @@ export default function PromotionList () {
             <td>{promotion.endAt.toString()}</td>
             <td className='space-x-2'>
               <a href={`/promotion/${promotion.id}/edit`} >
-              <FontAwesomeIcon icon={faEdit} />
+                <FontAwesomeIcon icon={faEdit} />
               </a>
               <a href="">
                 <FontAwesomeIcon icon={faTrash} />
-                </a>
+              </a>
             </td>
           </tr>
         ))}

@@ -1,25 +1,29 @@
+import { IShop } from "./Shop";
+import { IUser } from "./User";
+
 export interface ICampaignCreatePayload {
-  libelle: string
-  types: string
-  startAt: string
-  endAt: string
-  template: string
+  subject: string;
+  message: string;
+  shop: IShop;
+  targets?: IUser[];
 }
 
 export interface ICampaignUpdatePayload {
-  id: number
-  libelle: string
-  types: string
-  startAt: string
-  endAt: string
-  template: string
+  id: number;
+  subject: string;
+  message: string;
+  shop: IShop;
+  targets?: IUser[];
 }
 
 export interface ICampaign {
-  id: number
-  libelle: string
-  types: string
-  startAt: string
-  endAt: string
-  template: string
+  id: number;
+  subject: string;
+  message: string;
+  shop: IShop;
+  targets?: IUser[];
+  isActive: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }

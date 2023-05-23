@@ -1,6 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {PromotionCreateForm} from '../../Components/form/Promotion.form'
+import { PromotionCreateForm } from '../../Components/form/Promotion.form'
 import { useState } from 'react'
 import PromotionList from '../../Components/List/PromotionList'
 import Sidebar from '@/Components/html/Sidebar'
@@ -17,7 +17,7 @@ export default function Promotion () {
       <div className="flex flex-1">
         <h1 className="flex-1 text-4xl">Promotions</h1>
         <button
-         data-cy= 'add-promotion'
+          data-cy='add-promotion'
           id='add-promotion'
           type="button"
           onClick={handleClick}
@@ -39,10 +39,10 @@ export default function Promotion () {
 
 Promotion.getLayout = (page) => (
   <div className='flex'>
-  <Sidebar />
-  <div className='flex flex-col flex-1'>
+    <Sidebar />
+    <div className='flex flex-col flex-1'>
       <Navbare />
       {page}
+    </div>
   </div>
-</div>
 )

@@ -5,7 +5,7 @@ import { IShop } from '@/Api/Models/Shop'
 import { useRouter } from 'next/router'
 import Sidebar from '@/Components/html/Sidebar'
 
-export default function ShopEditById() {
+export default function ShopEditById () {
     const [shop, setShop] = useState<IShop>()
     const router = useRouter()
     const { id } = router.query
@@ -22,17 +22,17 @@ export default function ShopEditById() {
         }
         getShopById()
     }, [id])
-    
-    
+
+
     return (
         <div>
-        {shop && <ShopUpdateForm shop={shop} />}
+            {shop && <ShopUpdateForm shop={shop} />}
         </div>
     )
 }
 ShopEditById.getLayout = (page) => (
     <div className='flex'>
-    <Sidebar />
-    {page}
+        <Sidebar />
+        {page}
     </div>
 )

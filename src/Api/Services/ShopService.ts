@@ -1,16 +1,20 @@
-import { type AxiosResponse } from 'axios'
-import {httpCommon} from '../http-common'
-import type {IShop, IShopCreatePayload, IShopUpdatePayload} from '../Models/Shop'
+import { type AxiosResponse } from "axios";
+import { httpCommon } from "../http-common";
+import type {
+  IShop,
+  IShopCreatePayload,
+  IShopUpdatePayload,
+} from "../Models/Shop";
 
 /**
  * Récupère la liste des shops
  * @returns Retourne une promesse de type Shop[]
  * @see Shop
  * @see src/Types/Shop.ts
-*/
+ */
 const getShops = async (id: string): Promise<AxiosResponse<IShop[], any>> => {
-  return await httpCommon.get<IShop[]>(`/shop/${id}/clients`)
-}
+  return await httpCommon.get<IShop[]>(`/shop/${id}/clients`);
+};
 
 /**
  * Récupère la la shop par son id
@@ -20,8 +24,8 @@ const getShops = async (id: string): Promise<AxiosResponse<IShop[], any>> => {
  * @see src/Types/Shop.ts
  */
 const getShopById = async (id: string): Promise<AxiosResponse<IShop, any>> => {
-  return await httpCommon.get<IShop>(`/shop/${id}`)
-}
+  return await httpCommon.get<IShop>(`/shop/${id}`);
+};
 
 /**
  * Met à jour la shop
@@ -31,9 +35,12 @@ const getShopById = async (id: string): Promise<AxiosResponse<IShop, any>> => {
  * @see Shop
  * @see src/Types/Shop.ts
  */
-const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosResponse<IShopUpdatePayload, any>> => {
-  return await httpCommon.post<IShopUpdatePayload>(`/shop/${id}`, shop)
-}
+const updateShop = async (
+  id: string,
+  shop: IShopUpdatePayload
+): Promise<AxiosResponse<IShopUpdatePayload, any>> => {
+  return await httpCommon.post<IShopUpdatePayload>(`/shop/${id}`, shop);
+};
 
 /**
  * Crée une shop
@@ -42,9 +49,11 @@ const updateShop = async (id: string, shop: IShopUpdatePayload): Promise<AxiosRe
  * @see Shop
  * @see src/Types/Shop.ts
  */
-const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<IShopCreatePayload, any>> => {
-  return await httpCommon.post<IShopCreatePayload>('/shop/', shop)
-}
+const createShop = async (
+  shop: IShopCreatePayload
+): Promise<AxiosResponse<IShopCreatePayload, any>> => {
+  return await httpCommon.post<IShopCreatePayload>("/shop/", shop);
+};
 
 /**
  * delete une shop
@@ -54,15 +63,15 @@ const createShop = async (shop: IShopCreatePayload): Promise<AxiosResponse<IShop
  * @see src/Types/Shop.ts
  */
 const deleteShop = async (id: string): Promise<AxiosResponse<IShop, any>> => {
-  return await httpCommon.delete<IShop>(`/shop/${id}`)
-}
+  return await httpCommon.delete<IShop>(`/shop/${id}`);
+};
 
 const ShopService = {
   getShops,
   getShopById,
   updateShop,
   createShop,
-  deleteShop
-}
+  deleteShop,
+};
 
-export default ShopService
+export default ShopService;

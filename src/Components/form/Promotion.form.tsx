@@ -21,7 +21,7 @@ export const PromotionCreateForm: React.FC = () => {
 
   const loadShops = useCallback(async () => {
     try {
-      const { data } = await ShopService.getShops()
+      const { data } = await ShopService.getShops('')
       setShops(data)
     } catch (error) {
       console.error(error)
@@ -87,7 +87,7 @@ export const PromotionCreateForm: React.FC = () => {
       <div className="">
         <Label htmlFor='checkoutLimit'>Promotion checkout limit</Label>
         <TextInput
-          {...register('checkoutLimit', { required: true,  valueAsNumber: true})}
+          {...register('checkoutLimit', { required: true, valueAsNumber: true })}
           type="number"
           className=""
           id="checkoutLimit"
@@ -126,7 +126,7 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({ prom
 
   const loadShops = useCallback(async () => {
     try {
-      const { data } = await ShopService.getShops()
+      const { data } = await ShopService.getShops('')
       setShops(data)
     } catch (error) {
       console.error(error)
@@ -139,63 +139,63 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({ prom
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="">
-            <TextInput
-              {...register('name', { required: true, maxLength: 50 })}
-              type="text"
-              className=""
-              id="name"
-              maxLength={50}
-              placeholder='name'
-            />
-            {errors.name && <span>This field is required</span>}
-          </div>
-          <div className="">
-            <TextInput
-              {...register('description', { required: true, maxLength: 50 })}
-              type="text"
-              className=""
-              id="description"
-              maxLength={50}
-              placeholder='description'
-            />
-            {errors.description && <span>This field is required</span>}
-          </div>
-          <div className="">
-            <TextInput
-              {...register('startAt', { required: true, maxLength: 50 })}
-              type="date"
-              className=""
-              id="startAt"
-              maxLength={50}
-              placeholder='startAt'
-            />
-            {errors.startAt && <span>This field is required</span>}
-          </div>
-          <div className="">
-            <TextInput
-              {...register('endAt', { required: true, maxLength: 50 })}
-              type="date"
-              className=""
-              id="endAt"
-              maxLength={50}
-              placeholder='endAt'
-            />
-            {errors.endAt && <span>This field is required</span>}
-          </div>
-          <div className="">
-            <TextInput
-              {...register('checkoutLimit', { required: true })}
-              type="number"
-              className=""
-              id="checkoutLimit"
-              placeholder='checkoutLimit'
-            />
-            {errors.checkoutLimit && <span>This field is required</span>}
-          </div>
-          <Button className="btn btn-primary" type="submit">
-            Submit
-          </Button>
+      <div className="">
+        <TextInput
+          {...register('name', { required: true, maxLength: 50 })}
+          type="text"
+          className=""
+          id="name"
+          maxLength={50}
+          placeholder='name'
+        />
+        {errors.name && <span>This field is required</span>}
+      </div>
+      <div className="">
+        <TextInput
+          {...register('description', { required: true, maxLength: 50 })}
+          type="text"
+          className=""
+          id="description"
+          maxLength={50}
+          placeholder='description'
+        />
+        {errors.description && <span>This field is required</span>}
+      </div>
+      <div className="">
+        <TextInput
+          {...register('startAt', { required: true, maxLength: 50 })}
+          type="date"
+          className=""
+          id="startAt"
+          maxLength={50}
+          placeholder='startAt'
+        />
+        {errors.startAt && <span>This field is required</span>}
+      </div>
+      <div className="">
+        <TextInput
+          {...register('endAt', { required: true, maxLength: 50 })}
+          type="date"
+          className=""
+          id="endAt"
+          maxLength={50}
+          placeholder='endAt'
+        />
+        {errors.endAt && <span>This field is required</span>}
+      </div>
+      <div className="">
+        <TextInput
+          {...register('checkoutLimit', { required: true })}
+          type="number"
+          className=""
+          id="checkoutLimit"
+          placeholder='checkoutLimit'
+        />
+        {errors.checkoutLimit && <span>This field is required</span>}
+      </div>
+      <Button className="btn btn-primary" type="submit">
+        Submit
+      </Button>
     </form>
   )
 }

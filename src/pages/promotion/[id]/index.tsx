@@ -4,7 +4,7 @@ import { IPromotions } from '@/Api/Models/Promotions'
 import { useRouter } from 'next/router'
 import Sidebar from '@/Components/html/Sidebar'
 
-export default function PromotionViewById() {
+export default function PromotionViewById () {
     const [promotion, setPromotion] = useState<IPromotions>()
     const router = useRouter()
     const { id } = router.query
@@ -21,21 +21,21 @@ export default function PromotionViewById() {
         }
         getPromotionById()
     }, [setPromotion, id])
-    
-    
+
+
     return (
         <div>
-        <h1>{promotion?.name}</h1>
-        <p>{promotion?.description}</p>
-        <p>{promotion?.startAt?.toDateString()} </p>
-        <p>{promotion?.endAt?.toDateString()}</p>
+            <h1>{promotion?.name}</h1>
+            <p>{promotion?.description}</p>
+            <p>{promotion?.startAt?.toDateString()} </p>
+            <p>{promotion?.endAt?.toDateString()}</p>
         </div>
     )
 }
 
 PromotionViewById.getLayout = (page) => (
     <div className='flex'>
-    <Sidebar />
-    {page}
+        <Sidebar />
+        {page}
     </div>
 )

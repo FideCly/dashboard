@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Sidebar from '@/Components/html/Sidebar'
 import Navbare from '@/Components/html/Navbar'
 
-export default function ShopViewById() {
+export default function ShopViewById () {
     const [shop, setShop] = useState<IShop>()
     const router = useRouter()
     const { id } = router.query
@@ -22,17 +22,17 @@ export default function ShopViewById() {
         }
         getShopById()
     }, [id])
-    
-    
+
+
     return (
         <div>
-        <h1>{shop?.companyName}</h1>
-        <p>{shop?.address}</p>
-        <p>{shop?.zipCode}</p>
-        <p>{shop?.phone}</p>
-        <p>{shop?.email}</p>
-        <p>{shop?.siren}</p>
-        <p>{shop?.siret}</p>
+            <h1>{shop?.companyName}</h1>
+            <p>{shop?.address}</p>
+            <p>{shop?.zipCode}</p>
+            <p>{shop?.phone}</p>
+            <p>{shop?.email}</p>
+            <p>{shop?.siren}</p>
+            <p>{shop?.siret}</p>
         </div>
     )
 }
