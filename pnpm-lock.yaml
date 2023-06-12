@@ -61,8 +61,8 @@ dependencies:
 
 devDependencies:
   '@types/google.maps':
-    specifier: ^3.52.0
-    version: 3.52.0
+    specifier: ^3.53.4
+    version: 3.53.4
   autoprefixer:
     specifier: ^10.4.13
     version: 10.4.13(postcss@8.4.21)
@@ -390,8 +390,8 @@ packages:
     resolution: {integrity: sha512-RuZf1MJtctGlpW+Gd4a/eGtAufUDjMf+eyN1l+B3fbe2YLScJbg8KEljJfb+6vnSPFAeM1/48geVIEg3vqOkxw==}
     dev: false
 
-  /@types/google.maps@3.52.0:
-    resolution: {integrity: sha512-cIwkgSBUOCerEwEpAahg1SxUqqGV+D786TkVWrcZZyPvuCozmXFtzQcpOzvUXBtTUqDzEbCDGlAXDfDSYFXFIw==}
+  /@types/google.maps@3.53.4:
+    resolution: {integrity: sha512-IiDAYTONQEKCBssPtoM0XqWF8YIIk2leba4NOf9qVQ/d8l5gLuS3QT87TrX6/u8rMonQAXC9KEDmM4q7sT6MWg==}
     dev: true
 
   /@types/json5@0.0.29:
