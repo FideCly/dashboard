@@ -11,8 +11,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0(@fortawesome/fontawesome-svg-core@6.3.0)(react@18.2.0)
   '@next/font':
-    specifier: 13.4.4
-    version: 13.4.4
+    specifier: 13.4.5
+    version: 13.4.5
   '@react-google-maps/api':
     specifier: ^2.18.1
     version: 2.18.1(react-dom@18.2.0)(react@18.2.0)
@@ -275,8 +275,8 @@ packages:
       glob: 7.1.7
     dev: false
 
-  /@next/font@13.4.4:
-    resolution: {integrity: sha512-iYmL/O0rV9NS8a2UXuRoZOzImz8Q0mM8bAmxtj8nccrpwZ6iOOZlbf2d0Genczl4wtuXRXVPR8goGjJM4C2SDg==}
+  /@next/font@13.4.5:
+    resolution: {integrity: sha512-pjgtnnyamcFK9rv/WKr9WDmVBcd50VK4zZX9E846jowRm8FadjiumDOV80elXUtYW9GXSpAiqWqNMw/kVXNuQQ==}
     dev: false
 
   /@next/swc-darwin-arm64@13.4.5:
