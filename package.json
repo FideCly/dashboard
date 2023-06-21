@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/google.maps": "^3.53.4",
     "autoprefixer": "^10.4.14",
-    "cypress": "^12.14.0",
+    "cypress": "^12.15.0",
     "cypress-axe": "^1.4.0",
     "eslint-plugin-cypress": "^2.13.3",
     "postcss": "^8.4.24",
