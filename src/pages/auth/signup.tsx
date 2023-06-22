@@ -1,5 +1,5 @@
-import { Register } from '@/Components/auth/Auth'
+import { Register } from '@/Components/auth/Auth';
 
-export default function signup () {
-    return (<Register />)
+export default function signup() {
+  return <Register />;
 }

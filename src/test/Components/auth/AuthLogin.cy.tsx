@@ -1,10 +1,8 @@
-import React from 'react'
-import { Login } from '@/Components/auth/Auth'
-import Router from 'next/router'
+import React from 'react';
+import { Login } from '@/Components/auth/Auth';
 
 describe('<Login />', () => {
   it('renders', () => {
-    cy.mount(<Login />)
-  })
-})
-
+    cy.mount(<Login />);
+  });
+});

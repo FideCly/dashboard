@@ -7,6 +7,7 @@ export interface IPromotionCreatePayload {
 }
 
 export interface IPromotionUpdatePayload {
+  statusCode (statusCode: any): unknown;
   name?: string;
   description?: string;
   checkoutLimit?: number;

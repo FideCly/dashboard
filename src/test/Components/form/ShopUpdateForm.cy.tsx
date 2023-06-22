@@ -1,6 +1,6 @@
-import React from 'react'
-import { ShopUpdateForm } from '@/Components/form/Shop.form'
-import { IShop } from '@/Api/Models/Shop'
+import React from 'react';
+import { ShopUpdateForm } from '@/Components/form/Shop.form';
+import { IShop } from '@/Models/Shop';
 
 describe('<ShopUpdateForm />', () => {
   const shop: IShop = {
@@ -14,18 +14,18 @@ describe('<ShopUpdateForm />', () => {
     zipCode: '',
     lat: '',
     long: '',
-    city: ''
-  }
+    city: '',
+  };
   it('renders', () => {
-    cy.mount(<ShopUpdateForm shop={shop} />)
-  })
+    cy.mount(<ShopUpdateForm shop={shop} />);
+  });
   it('should have a form', () => {
-    cy.mount(<ShopUpdateForm shop={shop} />)
-    cy.get('form').should('exist')
-  })
+    cy.mount(<ShopUpdateForm shop={shop} />);
+    cy.get('form').should('exist');
+  });
   it('should have a error if empty field', () => {
-    cy.mount(<ShopUpdateForm shop={shop} />)
-    cy.get('form').submit()
-    cy.get('span').should('exist')
-  })
-})
+    cy.mount(<ShopUpdateForm shop={shop} />);
+    cy.get('form').submit();
+    cy.get('span').should('exist');
+  });
+});

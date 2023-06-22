@@ -1,5 +1,5 @@
-import { IShop } from "./Shop";
-import { IUser } from "./User";
+import { IShop } from './Shop';
+import { IUser } from './User';
 
 export interface ICampaignCreatePayload {
   subject: string;

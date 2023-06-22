@@ -1,6 +1,6 @@
+import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { AuthServices } from "@/Api/Services";
 import { setCookie } from "nookies";
 
 const nextAuthOptions = (req, res) => {
@@ -15,25 +15,22 @@ const nextAuthOptions = (req, res) => {
                 },
                 async authorize (credentials) {
                     if (!credentials?.email || !credentials?.password) return null;
-
-                    try {
-                        // Sign-in user
-                        const res = await AuthServices.login(credentials);
-                        const data = await res;
-                        if (data.data.status != 200) return null;
-                        setCookie({ res }, "token", res.data.token, {
+                    return axios
+                    .put(`${process.env.NEXT_PUBLIC_API_URL}auth/login`, {
+                        email: credentials.email,
+                        password: credentials.password,
+                    })
+                    .then((response) => {
+                        const user = response.data;
+                        setCookie({ res }, "token", response.data.token, {
                             maxAge: 30 * 24 * 60 * 60,
                             path: "/",
-                        });
-                        // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-                        // axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL
-                        // const user  = await axios.get(`/user/${res.data.userUuid}`)
-                        return data;
-                        // Error
-                    } catch (err) {
-                        console.error(err);
-                        throw new Error(`${err}`);
-                    }
+                        })
+                        return user;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
                 },
             }),
         ],
@@ -43,7 +40,7 @@ const nextAuthOptions = (req, res) => {
         callbacks: {
             jwt ({ token, account, user }) {
                 if (account) {
-                    token.id = user?.data.userUuid
+                    token.id = user?.userUuid
                 }
                 return token
             },

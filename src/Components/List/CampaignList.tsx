@@ -1,37 +1,44 @@
-import { useEffect, useState } from 'react'
-import { CampaignServices } from '@/Api/Services'
-import { ICampaign } from '@/Api/Models/Campaign'
+import { useEffect, useState } from 'react';
+import { ICampaign } from '@/Models/Campaign';
+import { getSession } from 'next-auth/react';
 
-export default function CampaignList () {
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
+export default function CampaignList() {
+  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   // get campaigns by shop id
 
   useEffect(() => {
     const getCampaignsByShopId = async () => {
+      const session = await getSession();
       try {
-        setIsLoading(true)
-        const response = await CampaignServices.getCampaigns()
-        setCampaigns(response.data)
+        setIsLoading(true);
+        const response = await fetch(`/api/campaigns/${session.user.email}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        const data = await response.json(); // Extract JSON data from response
+        setCampaigns(data);
       } catch (error) {
-        setError(true)
+        setError(true);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    getCampaignsByShopId()
-  }, [])
+    };
+    getCampaignsByShopId();
+  }, []);
   if (isLoading) {
-    return <div>loading....</div>
+    return <div>loading....</div>;
   }
 
   if (error) {
     return (
       <div>
-        <span>Erreur lors du chargement de  promotions</span>
+        <span>Erreur lors du chargement de promotions</span>
       </div>
-    )
+    );
   }
   return (
     <div>
@@ -45,6 +52,5 @@ export default function CampaignList () {
         </div>
       ))}
     </div>
-
-  )
+  );
 }
