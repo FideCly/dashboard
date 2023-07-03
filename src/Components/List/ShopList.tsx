@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import type { IShop } from '../../Models/Shop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { getSession } from 'next-auth/react';
+import { Table } from 'flowbite-react';
+import Link from 'next/link';
 
 export default function ShopList() {
   const [shops, setShops] = useState<IShop[]>([]);
@@ -13,13 +14,11 @@ export default function ShopList() {
     const loadShops = async (): Promise<void> => {
       try {
         setIsLoading(true);
-        const session = await getSession();
-        console.log(session);
-        const response = await fetch(`/api/shops/${session.user.email}`, {
+        const response = await fetch(`/api/shop`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
         });
         const data = await response.json(); // Extract JSON data from response
         setShops(data); // Set state with extracted data
@@ -44,37 +43,51 @@ export default function ShopList() {
     );
   }
 
+  function deleteshop(id: number): void {
+    fetch(`/api/shop/${id}`, {
+      method: 'DELETE',
+    }).then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      return res.json();
+    });
+  }
+
   return (
-    <table className="table w-full">
-      <thead>
-        <tr>
-          <th>Company Name</th>
-          <th>Address</th>
-          <th>Zip Code</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {shops.map((shop) => (
-          <tr key={shop.id}>
-            <th>{shop.companyName}</th>
-            <th>{shop.address}</th>
-            <th>{shop.zipCode}</th>
-            <th>{shop.phone}</th>
-            <th>{shop.email}</th>
-            <th className="space-x-2">
-              <a href="">
-                <FontAwesomeIcon icon={faEdit} />
-              </a>
-              <a href="">
-                <FontAwesomeIcon icon={faTrash} />
-              </a>
-            </th>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <main className="p-4">
+      <Table striped className="table w-full ">
+        <Table.Head>
+          <Table.HeadCell>Company Name</Table.HeadCell>
+          <Table.HeadCell>Address</Table.HeadCell>
+          <Table.HeadCell>Zip Code</Table.HeadCell>
+          <Table.HeadCell>Phone</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell></Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {shops.map((shop) => (
+            <Table.Row
+              className=" dark:border-gray-700 dark:bg-gray-800"
+              key={shop.id}
+            >
+              <Table.Cell>{shop.companyName}</Table.Cell>
+              <Table.Cell>{shop.address}</Table.Cell>
+              <Table.Cell>{shop.zipCode}</Table.Cell>
+              <Table.Cell>{shop.phone}</Table.Cell>
+              <Table.Cell>{shop.email}</Table.Cell>
+              <Table.Cell className="space-x-2">
+                <Link href={{ pathname: `/shops/${shop.id}` }}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Link>
+                <button onClick={() => deleteshop(shop.id)}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </main>
   );
 }

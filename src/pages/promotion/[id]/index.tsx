@@ -12,7 +12,7 @@ export default function PromotionViewById() {
   useEffect(() => {
     const getPromotionById = async () => {
       try {
-        const response = await PromotionService.getPromotionById(id as string);
+        const response = await fetch(`/api/promotion/${id}`, {
         setPromotion(response.data);
       } catch (error) {
         console.log(error);

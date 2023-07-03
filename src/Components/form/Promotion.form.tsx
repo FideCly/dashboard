@@ -1,12 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import type {
-  IPromotionCreatePayload,
-  IPromotions,
-} from '@/Models/Promotions';
+import type { IPromotionCreatePayload, IPromotions } from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IShop } from '@/Models/Shop';
 import { Button, Label, TextInput } from 'flowbite-react';
-import Cookies from 'js-cookie';
 
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
@@ -20,14 +16,14 @@ export const PromotionCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch('/api/promotion', {
+        const response = await fetch('/api/promotion', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + Cookies.get('token'),
           },
           body: JSON.stringify(data),
         });
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +37,7 @@ export const PromotionCreateForm: React.FC = () => {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-        }
+        },
       });
       const data = await response.json();
       setShops(data);
@@ -179,7 +175,7 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-        }
+        },
       });
       const data = await response.json();
       setShops(data);

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ShopService } from '@/pages/api/Services';
 import { IShop } from '@/Models/Shop';
 import { useRouter } from 'next/router';
 import Sidebar from '@/Components/html/Sidebar';
@@ -14,8 +13,14 @@ export default function ShopViewById() {
   useEffect(() => {
     const getShopById = async () => {
       try {
-        const response = await ShopService.getShopById(id as string);
-        setShop(response.data);
+        const response = await fetch(`/api/shop/${id}`, {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        setShop(data);
       } catch (error) {
         console.log(error);
       }
@@ -37,12 +42,11 @@ export default function ShopViewById() {
 }
 
 ShopViewById.getLayout = (page) => (
-    <div className="">
-      <Sidebar />
-
-      <div className="p-4 sm:ml-64">
-        <Navbare />
-        {page}
-      </div>
+  <div className="">
+    <Sidebar />
+    <div className="p-4 sm:ml-64">
+      <Navbare />
+      {page}
     </div>
+  </div>
 );

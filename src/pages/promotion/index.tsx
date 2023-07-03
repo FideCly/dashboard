@@ -38,12 +38,11 @@ export default function Promotion() {
 }
 
 Promotion.getLayout = (page) => (
-    <div className="">
-      <Sidebar />
-
-      <div className="p-4 sm:ml-64">
-        <Navbare />
-        {page}
-      </div>
+  <div className="">
+    <Sidebar />
+    <div className="p-4 sm:ml-64">
+      <Navbare />
+      {page}
     </div>
+  </div>
 );

@@ -8,7 +8,7 @@ import Navbare from '@/Components/html/Navbar';
 
 export default function Shops() {
   const [isShown, setIsShown] = useState(false);
-  const handleClick = (_envent: any): void => {
+  const handleClick = (): void => {
     setIsShown((current) => !current);
   };
   return (
@@ -35,12 +35,12 @@ export default function Shops() {
 }
 
 Shops.getLayout = (page) => (
-    <div className="">
-      <Sidebar />
+  <div className="">
+    <Sidebar />
 
-      <div className="p-4 sm:ml-64">
-        <Navbare />
-        {page}
-      </div>
+    <div className="p-4 sm:ml-64">
+      <Navbare />
+      {page}
     </div>
+  </div>
 );

@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { IUser } from '../../../Models/User';
+import { IAnalytics } from '../../../../Models/Analytics';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const uuid = req.query.uuid;
-    const response = await axios.get<IUser>(
-      process.env.NEXT_PUBLIC_API_URL + `user/${uuid}`,
+    const response = await axios.get<IAnalytics[]>(
+      process.env.NEXT_PUBLIC_API_URL + `analytics/nbPassageByHour`,
       {
+        data: req.body,
         headers: {
           Authorization: `Bearer ${req.cookies.token}`,
         },
@@ -15,9 +15,3 @@ export default async function handler(req, res) {
     res.status(response.status).json(response.data);
   }
 }
-
-export const config = {
-  api: {
-    externalResolver: true,
-  },
-};

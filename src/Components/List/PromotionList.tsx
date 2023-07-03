@@ -2,25 +2,36 @@ import { useEffect, useState } from 'react';
 import { IPromotions } from '@/Models/Promotions';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSession } from "next-auth/react"
+import { getSession, useSession } from 'next-auth/react';
 
-export default function PromotionList () {
+export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
   useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
       try {
-        setIsLoading(true);
-        const response = await fetch('/api/Promotions',
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        setPromotions(await response.json());
+        const session = await getSession();
+        const user = await fetch(`/api/user/${session?.user?.email}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await user.json();
+        const response = await fetch(`/api/shop/${data.shop.id}/promotion`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log(response);
+        if (response.status >= 400) {
+          throw new Error('Bad response from server');
+        }
+        const dataPromotion = await response.json();
+        setPromotions(dataPromotion);
       } catch (error) {
         setError(true);
       } finally {
@@ -56,7 +67,7 @@ export default function PromotionList () {
         </tr>
       </thead>
       <tbody>
-        {promotions.map((promotion) => (
+        {promotions?.map((promotion) => (
           <tr key={promotion.name}>
             <td>{promotion.name}</td>
             <td>{promotion.description}</td>
