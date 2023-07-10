@@ -16,7 +16,7 @@ export const Login: React.FC = () => {
   const router = useRouter();
   const onSubmit: SubmitHandler<IUserAuthPayload> = useCallback(
     async (data) => {
-      const res = fetch('/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,18 @@ export const Register: React.FC = () => {
   const onSubmit: SubmitHandler<IUserAuthPayload> = useCallback(
     async (data) => {
       try {
-        await AuthServices.signup(data);
+        await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then(async (res) => {
+          if (res.status >= 400) {
+            throw new Error('Bad response from server');
+          }
+          return await res.json();
+        });
         router.push('/auth/login');
       } catch (error) {
         console.log(error);

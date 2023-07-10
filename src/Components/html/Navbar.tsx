@@ -4,7 +4,7 @@ import { Avatar, TextInput } from 'flowbite-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-export default function Navbare () {
+export default function Navbare() {
   return (
     <nav className="flex content-center w-full space-x-2 ">
       <TextInput
@@ -14,7 +14,7 @@ export default function Navbare () {
         maxLength={50}
         placeholder="Rechercher"
       />
-      <Link href="/me" className='justify-self-start'>
+      <Link href="/me" className="justify-self-start">
         <Avatar
           img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
           rounded={true}
@@ -27,7 +27,6 @@ export default function Navbare () {
       >
         <FontAwesomeIcon icon={faRightToBracket} />
       </button>
-
     </nav>
   );
 }

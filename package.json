@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\" --fix",
     "cypress": "cypress open"
   },

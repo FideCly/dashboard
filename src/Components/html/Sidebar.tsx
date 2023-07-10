@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Avatar, TextInput } from 'flowbite-react';
 import { signOut } from 'next-auth/react';
 
-export default function Sidebar () {
+export default function Sidebar() {
   return (
     <aside
       id="logo-sidebar"
@@ -91,10 +91,7 @@ export default function Sidebar () {
             </Link>
           </li>
           <li>
-            <div className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white'>
-
-            </div>
-
+            <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white"></div>
           </li>
         </ul>
       </div>

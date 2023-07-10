@@ -12,12 +12,11 @@ export default function GeneralSettings() {
 }
 
 GeneralSettings.getLayout = (page) => (
-    <div className="">
-      <Sidebar />
-
-      <div className="p-4 sm:ml-64">
-        <Navbare />
-        {page}
-      </div>
+  <div className="">
+    <Sidebar />
+    <div className="p-4 sm:ml-64">
+      <Navbare />
+      {page}
     </div>
+  </div>
 );

@@ -9,6 +9,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import Consent from '@/Components/Consent';
 
+//@typescript-eslint/no-empty-interface
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };

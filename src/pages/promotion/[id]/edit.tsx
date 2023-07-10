@@ -3,6 +3,7 @@ import { PromotionUpdateForm } from '@/Components/form/Promotion.form';
 import { IPromotions } from '@/Models/Promotions';
 import { useRouter } from 'next/router';
 import Sidebar from '@/Components/html/Sidebar';
+import { getCookies } from 'cookies-next';
 
 export default function PromotionEditById() {
   const [promotion, setPromotion] = useState<IPromotions>();
@@ -13,8 +14,20 @@ export default function PromotionEditById() {
   useEffect(() => {
     const getPromotionById = async () => {
       try {
-        const response = await PromotionService.getPromotionById(id as string);
-        setPromotion(response.data);
+        const response = await fetch(
+          `http://localhost:3000/api/promotions/${id}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        ).then(async (res) => {
+          if (res.status >= 400) {
+            throw new Error('Bad response from server');
+          }
+          setPromotion(await res.json());
+        });
       } catch (error) {
         console.log(error);
       }

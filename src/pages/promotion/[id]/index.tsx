@@ -13,7 +13,16 @@ export default function PromotionViewById() {
     const getPromotionById = async () => {
       try {
         const response = await fetch(`/api/promotion/${id}`, {
-        setPromotion(response.data);
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(async (res) => {
+          if (res.status >= 400) {
+            throw new Error('Bad response from server');
+          }
+          setPromotion(await res.json());
+        });
       } catch (error) {
         console.log(error);
       }

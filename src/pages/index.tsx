@@ -7,7 +7,7 @@ import { Select } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 Chart.register(CategoryScale);
 
-export default function Home () {
+export default function Home() {
   const startDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
@@ -46,7 +46,7 @@ export default function Home () {
     const getPromotionCheckoutCount = async (): Promise<void> => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/analytics/promotion-checkout-count/${id}`,
+          `http://localhost:3000/api/analytics/promotion-checkout-count/1`,
           {
             method: 'GET',
             headers: {
@@ -198,7 +198,7 @@ export default function Home () {
   );
 }
 
-Home.getLayout = function getLayout (page) {
+Home.getLayout = function getLayout(page) {
   return (
     <div className="">
       <Sidebar />

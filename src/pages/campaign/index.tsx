@@ -38,12 +38,12 @@ export default function Campaign() {
 }
 
 Campaign.getLayout = (page) => (
-    <div className="">
-      <Sidebar />
+  <div className="">
+    <Sidebar />
 
-      <div className="p-2 sm:ml-64">
-        <Navbare />
-        {page}
-      </div>
+    <div className="p-2 sm:ml-64">
+      <Navbare />
+      {page}
     </div>
+  </div>
 );

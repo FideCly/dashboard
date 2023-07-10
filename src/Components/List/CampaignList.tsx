@@ -17,7 +17,7 @@ export default function CampaignList() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
         });
         const data = await response.json(); // Extract JSON data from response
         setCampaigns(data);

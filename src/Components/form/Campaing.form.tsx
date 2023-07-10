@@ -24,7 +24,7 @@ export const CampaignCreateForm: React.FC = () => {
           'content-type': 'application/json',
         },
       });
-      const data = await response.json(); 
+      const data = await response.json();
       setShops(data);
     } catch (error) {
       console.error(error);
@@ -142,7 +142,7 @@ export const CampaignUpdateForm: React.FC<{ campaign: ICampaign }> = ({
         headers: {
           'content-type': 'application/json',
         },
-      });       
+      });
       const data = await response.json();
       setShops(data);
     } catch (error) {
