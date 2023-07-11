@@ -1,6 +1,6 @@
 import { IUser } from '@/Models/User';
 
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 export const Profile = () => {

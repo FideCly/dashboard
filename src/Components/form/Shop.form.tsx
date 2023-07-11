@@ -1,16 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
-import { usePlacesWidget } from 'react-google-autocomplete';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
-import { getSession } from 'next-auth/react';
-
-function extractFromAdress(components, type) {
-  for (let i = 0; i < components.length; i++)
-    for (let j = 0; j < components[i].types.length; j++)
-      if (components[i].types[j] == type) return components[i].long_name;
-  return '';
-}
 
 export const ShopCreateForm: React.FC = () => {
   const {
@@ -19,12 +10,9 @@ export const ShopCreateForm: React.FC = () => {
     formState: { errors },
   } = useForm<IShopCreatePayload>();
 
-  const [shops, setShops] = useState<IShop[]>([]);
-
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
       try {
-        const session = await getSession();
         const response = await fetch(`/api/shop`, {
           method: 'POST',
           headers: {
@@ -40,41 +28,6 @@ export const ShopCreateForm: React.FC = () => {
     },
     [],
   );
-
-  const loadShops = useCallback(async () => {
-    try {
-      const session = await getSession();
-      console.log(session);
-
-      const response = await fetch(`/api/shops/${session.user.email}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  const { ref, autocompleteRef } = usePlacesWidget({
-    apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-    onPlaceSelected: (place) => {
-      console.log(place);
-      const lat = place.geometry.location.lat.toString();
-      const long = place.geometry.location.lng.toString();
-      const zipCode = extractFromAdress(
-        place.address_components,
-        'postal_code',
-      );
-    },
-  });
-
-  React.useEffect(() => {
-    loadShops();
-  }, [loadShops]);
 
   return (
     <form
@@ -105,7 +58,6 @@ export const ShopCreateForm: React.FC = () => {
           id="adress"
           maxLength={50}
           placeholder="2 rue test"
-          ref={ref}
         />
       </div>
 
@@ -202,8 +154,6 @@ export const ShopUpdateForm: React.FC<{ shop: IShop }> = ({ shop }) => {
     },
   });
 
-  const [shops, setShops] = useState<IShop[]>([]);
-
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
       try {
@@ -220,26 +170,6 @@ export const ShopUpdateForm: React.FC<{ shop: IShop }> = ({ shop }) => {
     },
     [shop.id],
   );
-
-  const loadShops = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/shop/${shop.id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    loadShops();
-  }, [loadShops]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">
       <div className="">

@@ -1,8 +1,4 @@
-import type {
-  ICampaign,
-  ICampaignCreatePayload,
-  ICampaignUpdatePayload,
-} from '../../../Models/Campaign';
+import type { ICampaignCreatePayload } from '../../../Models/Campaign';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {

@@ -8,7 +8,7 @@ export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { data: session, status } = useSession();
+  useSession();
   useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
       try {

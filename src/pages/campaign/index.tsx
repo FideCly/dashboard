@@ -8,7 +8,7 @@ import CampaignList from '@/Components/List/CampaignList';
 
 export default function Campaign() {
   const [isShown, setIsShown] = useState(false);
-  const handleClick = (_envent: any): void => {
+  const handleClick = (): void => {
     setIsShown((current) => !current);
   };
 

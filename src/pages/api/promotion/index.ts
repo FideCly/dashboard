@@ -7,7 +7,6 @@ import type {
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     // get the id from the query
-    const { id } = req.query;
     // get token from cookies
     const response = await axios.get<IPromotions>(
       process.env.NEXT_PUBLIC_API_URL + `promotion`,

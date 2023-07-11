@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import type { IPromotionCreatePayload, IPromotions } from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IShop } from '@/Models/Shop';
 import { Button, Label, TextInput } from 'flowbite-react';
 
 // react fc with a promotion variable
@@ -11,7 +10,6 @@ export const PromotionCreateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IPromotionCreatePayload>();
-  const [shops, setShops] = useState<IShop[]>([]);
 
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
@@ -30,26 +28,6 @@ export const PromotionCreateForm: React.FC = () => {
     },
     [],
   );
-
-  const loadShops = useCallback(async () => {
-    try {
-      const response = await fetch('/api/shops', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    loadShops();
-  }, [loadShops]);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -149,8 +127,6 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({
     },
   });
 
-  const [shops, setShops] = useState<IShop[]>([]);
-
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -168,26 +144,6 @@ export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({
     },
     [promotion.id],
   );
-
-  const loadShops = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/promotion/${promotion.id}`, {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    loadShops();
-  }, [loadShops]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="">

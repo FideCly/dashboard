@@ -43,6 +43,7 @@ export default function Scanner() {
         setPromotion(dataPromotion);
       } catch (error) {
         setError(true);
+        console.log(error);
       }
     };
     void loadPromotions();
@@ -75,7 +76,7 @@ export default function Scanner() {
           onResult={(result, error) => {
             if (result) {
               setData(result.getText());
-              fetch(`/api/promotion/${data}/checkout`, {
+              fetch(`/api/promotion/${promotionID}/checkout`, {
                 method: 'POST',
               })
                 .then((response) => {
@@ -91,9 +92,11 @@ export default function Scanner() {
           }}
           constraints={handleConstraints()}
         />
+
         {data?.length > 0 && (
           <div>
             <p>{data}</p>
+            <p>{error}</p>
           </div>
         )}
       </div>

@@ -16,7 +16,7 @@ export const CampaignCreateForm: React.FC = () => {
   } = useForm<ICampaignCreatePayload>();
   // get all shops for the select
   const [shops, setShops] = useState<IShop[]>([]);
-  const loadShops = useCallback(async () => {
+  useCallback(async () => {
     try {
       const response = await fetch('/api/shops', {
         method: 'GET',
@@ -31,7 +31,6 @@ export const CampaignCreateForm: React.FC = () => {
     }
   }, []);
 
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -150,8 +149,6 @@ export const CampaignUpdateForm: React.FC<{ campaign: ICampaign }> = ({
     }
   }, []);
 
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
-
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(
     async (data) => {
       try {
@@ -168,6 +165,10 @@ export const CampaignUpdateForm: React.FC<{ campaign: ICampaign }> = ({
     },
     [campaign.id],
   );
+
+  React.useEffect(() => {
+    loadShops();
+  }, [loadShops]);
 
   return (
     <form

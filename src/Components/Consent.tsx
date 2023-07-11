@@ -12,10 +12,6 @@ function Consent() {
     setCookie('localConsent', 'true', { maxAge: 60 * 60 * 24 * 365 });
     console.log('accepring cookies');
   };
-  const closeP = () => {
-    setConsent(true);
-    console.log('closing');
-  };
   const denyCookie = () => {
     setConsent(true);
     setCookie('localConsent', 'false', { maxAge: 60 * 60 * 24 * 365 });
@@ -54,7 +50,7 @@ function Consent() {
                 id="close-modal"
                 type="button"
                 className="w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-lg sm:w-auto hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                onClick={(e) => denyCookie()}
+                onClick={() => denyCookie()}
               >
                 Cancel
               </button>

@@ -8,7 +8,7 @@ import Navbare from '@/Components/html/Navbar';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
-  const handleClick = (_envent: any): void => {
+  const handleClick = (): void => {
     setIsShown((current) => !current);
   };
 

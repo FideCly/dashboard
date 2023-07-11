@@ -12,7 +12,7 @@ export default function PromotionViewById() {
   useEffect(() => {
     const getPromotionById = async () => {
       try {
-        const response = await fetch(`/api/promotion/${id}`, {
+        await fetch(`/api/promotion/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
