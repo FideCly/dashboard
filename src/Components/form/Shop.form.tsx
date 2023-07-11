@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
+import { ParsedUrlQuery } from 'querystring';
 
 export const ShopCreateForm: React.FC = () => {
   const {
@@ -138,7 +139,28 @@ export const ShopCreateForm: React.FC = () => {
   );
 };
 
-export const ShopUpdateForm: React.FC<{ shop: IShop }> = ({ shop }) => {
+export const ShopUpdateForm: React.FC<ParsedUrlQuery> = (
+  id: ParsedUrlQuery,
+) => {
+  const [shop, setShop] = useState<IShop>();
+  useEffect(() => {
+    const getShopById = async () => {
+      try {
+        const response = await fetch(`/api/shop/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        setShop(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getShopById();
+  }, [id]);
+
   const {
     register,
     handleSubmit,

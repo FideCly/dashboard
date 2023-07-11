@@ -1,33 +1,24 @@
-import { useEffect, useState } from 'react';
 import { IShop } from '@/Models/Shop';
-import { useRouter } from 'next/router';
 import Sidebar from '@/Components/html/Sidebar';
 import Navbare from '@/Components/html/Navbar';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export default function ShopViewById() {
-  const [shop, setShop] = useState<IShop>();
-  const router = useRouter();
-  const { id } = router.query;
-  // get shop by id
+const GetServerSideProps: GetServerSideProps<{
+  shop: IShop;
+}> = async (context) => {
+  const id = context.params?.id;
+  const res = await fetch(`http://localhost:3000/api/shop/${id}`);
+  const shop = await res.json();
+  return {
+    props: {
+      shop,
+    },
+  };
+};
 
-  useEffect(() => {
-    const getShopById = async () => {
-      try {
-        const response = await fetch(`/api/shop/${id}`, {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        setShop(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getShopById();
-  }, [id]);
-
+export default function ShopViewById({
+  shop,
+}: InferGetServerSidePropsType<typeof GetServerSideProps>) {
   return (
     <div>
       <h1>{shop?.companyName}</h1>

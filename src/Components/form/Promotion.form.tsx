@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import type { IPromotionCreatePayload, IPromotions } from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
+import { ParsedUrlQuery } from 'querystring';
 
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
@@ -110,9 +111,30 @@ export const PromotionCreateForm: React.FC = () => {
   );
 };
 
-export const PromotionUpdateForm: React.FC<{ promotion: IPromotions }> = ({
-  promotion,
-}) => {
+export const PromotionUpdateForm: React.FC<ParsedUrlQuery> = (
+  id: ParsedUrlQuery,
+) => {
+  // get promotion by id using fetch
+  const [promotion, setPromotion] = useState<IPromotions>();
+  const fetchPromotion = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/promotion/${id}`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setPromotion(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchPromotion();
+  }, [fetchPromotion]);
+
   const {
     register,
     handleSubmit,

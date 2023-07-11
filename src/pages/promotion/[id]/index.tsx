@@ -1,35 +1,32 @@
-import { useEffect, useState } from 'react';
 import { IPromotions } from '@/Models/Promotions';
-import { useRouter } from 'next/router';
 import Sidebar from '@/Components/html/Sidebar';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export default function PromotionViewById() {
-  const [promotion, setPromotion] = useState<IPromotions>();
-  const router = useRouter();
-  const { id } = router.query;
-  // get promotion by id
+export const getServerSideProps: GetServerSideProps<{
+  promotion: IPromotions;
+}> = async (context) => {
+  const id = context.params?.id;
+  const promotion = await fetch(`/api/promotion/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(async (res) => {
+    if (res.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    return await res.json();
+  });
+  return {
+    props: {
+      promotion,
+    },
+  };
+};
 
-  useEffect(() => {
-    const getPromotionById = async () => {
-      try {
-        await fetch(`/api/promotion/${id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(async (res) => {
-          if (res.status >= 400) {
-            throw new Error('Bad response from server');
-          }
-          setPromotion(await res.json());
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getPromotionById();
-  }, [setPromotion, id]);
-
+export default function PromotionViewById({
+  promotion,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
       <h1>{promotion?.name}</h1>

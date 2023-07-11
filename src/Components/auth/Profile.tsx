@@ -10,13 +10,15 @@ export const Profile = () => {
   useEffect(() => {
     const loadUser = async () => {
       const session = await getSession();
+      const endpoint = `/api/user/${session.user?.email}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
       try {
-        const response = await fetch(`/api/user/${session.user?.email}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(endpoint, options);
         const data = await response.json();
         setUser(data);
       } catch (error) {
