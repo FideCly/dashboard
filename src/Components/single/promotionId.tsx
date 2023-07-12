@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 
 export default function PromotionId() {
   const router = useRouter();
-  const id = router.query.id;
   const [promotion, setPromotion] = useState<IPromotions>();
   useEffect(() => {
-    fetch(`/api/promotion/${id}`)
+    fetch(`/api/promotion/${router.query.id}`)
       .then((res) => res.json())
       .then((data) => setPromotion(data));
   }, []);

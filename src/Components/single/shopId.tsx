@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 
 export default function ShopId() {
   const router = useRouter();
-  const id = router.query.id;
   const [shop, setShop] = useState<IShop>();
   useEffect(() => {
-    fetch(`/api/shop/${id}`)
+    fetch(`/api/shop/${router.query.id}`)
       .then((res) => res.json())
       .then((data) => setShop(data));
   }, []);
