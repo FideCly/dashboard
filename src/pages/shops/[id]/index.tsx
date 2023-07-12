@@ -1,24 +1,18 @@
-import { IShop } from '@/Models/Shop';
+import { useRouter } from 'next/router';
 import Sidebar from '@/Components/html/Sidebar';
-import Navbare from '@/Components/html/Navbar';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { IShop } from '@/Models/Shop';
+import { useEffect, useState } from 'react';
 
-const GetServerSideProps: GetServerSideProps<{
-  shop: IShop;
-}> = async (context) => {
-  const id = context.params?.id;
-  const res = await fetch(`http://localhost:3000/api/shop/${id}`);
-  const shop = await res.json();
-  return {
-    props: {
-      shop,
-    },
-  };
-};
+export default function ShopEditById() {
+  const router = useRouter();
+  const id = router.query.id;
+  const [shop, setShop] = useState<IShop>();
+  useEffect(() => {
+    fetch(`/api/shop/${id}`)
+      .then((res) => res.json())
+      .then((data) => setShop(data));
+  }, []);
 
-export default function ShopViewById({
-  shop,
-}: InferGetServerSidePropsType<typeof GetServerSideProps>) {
   return (
     <div>
       <h1>{shop?.companyName}</h1>
@@ -31,13 +25,9 @@ export default function ShopViewById({
     </div>
   );
 }
-
-ShopViewById.getLayout = (page) => (
-  <div className="">
+ShopEditById.getLayout = (page) => (
+  <div className="flex">
     <Sidebar />
-    <div className="p-4 sm:ml-64">
-      <Navbare />
-      {page}
-    </div>
+    {page}
   </div>
 );
