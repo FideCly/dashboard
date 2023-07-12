@@ -1,8 +1,8 @@
 import Sidebar from '@/Components/html/Sidebar';
 import PromotionId from '@/Components/single/promotionId';
 
-export default function PromotionEditById() {
-  return <PromotionId />;
+export default function PromotionEditById({ id }) {
+  return <PromotionId {...id} />;
 }
 
 PromotionEditById.getLayout = (page) => (

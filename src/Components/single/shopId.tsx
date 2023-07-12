@@ -1,12 +1,10 @@
 import { IShop } from '@/Models/Shop';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function ShopId() {
-  const router = useRouter();
+export default function ShopId({ id }) {
   const [shop, setShop] = useState<IShop>();
   useEffect(() => {
-    fetch(`/api/shop/${router.query.id}`, {
+    fetch(`/api/shop/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

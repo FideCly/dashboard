@@ -118,9 +118,9 @@ export const CampaignCreateForm: React.FC = () => {
   );
 };
 
-export const CampaignUpdateForm: React.FC<{ campaign: ICampaign }> = ({
-  campaign,
-}) => {
+export const CampaignUpdateForm: React.FC<ICampaign> = (
+  campaign: ICampaign,
+) => {
   const {
     register,
     handleSubmit,

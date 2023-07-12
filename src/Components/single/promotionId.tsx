@@ -1,12 +1,10 @@
 import { IPromotions } from '@/Models/Promotions';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function PromotionId() {
-  const router = useRouter();
+export default function PromotionId(id: any) {
   const [promotion, setPromotion] = useState<IPromotions>();
   useEffect(() => {
-    fetch(`/api/promotion/${router.query.id}`, {
+    fetch(`/api/promotion/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
