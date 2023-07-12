@@ -6,7 +6,12 @@ export default function PromotionId() {
   const router = useRouter();
   const [promotion, setPromotion] = useState<IPromotions>();
   useEffect(() => {
-    fetch(`/api/promotion/${router.query.id}`)
+    fetch(`/api/promotion/${router.query.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => res.json())
       .then((data) => setPromotion(data));
   }, []);

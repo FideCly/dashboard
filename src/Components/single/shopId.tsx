@@ -6,7 +6,12 @@ export default function ShopId() {
   const router = useRouter();
   const [shop, setShop] = useState<IShop>();
   useEffect(() => {
-    fetch(`/api/shop/${router.query.id}`)
+    fetch(`/api/shop/${router.query.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => res.json())
       .then((data) => setShop(data));
   }, []);
