@@ -1,38 +1,25 @@
-import { useEffect, useState } from 'react'
-import { ShopUpdateForm } from '@/Components/form/Shop.form'
-import { ShopService } from '@/Api/Services'
-import { IShop } from '@/Api/Models/Shop'
-import { useRouter } from 'next/router'
-import Navbar from '@/Components/html/Navbar'
+import { ShopUpdateForm } from '@/Components/form/Shop.form';
+import Sidebar from '@/Components/html/Sidebar';
+import { IShop } from '@/Models/Shop';
+import { useEffect, useState } from 'react';
 
-export default function ShopEditById() {
-    const [shop, setShop] = useState<IShop>()
-    const router = useRouter()
-    const { id } = router.query
-    // get shop by id
-
-    useEffect(() => {
-        const getShopById = async () => {
-            try {
-                const response = await ShopService.getShopById(id as string)
-                setShop(response.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getShopById()
-    }, [id])
-    
-    
-    return (
-        <div>
-        {shop && <ShopUpdateForm shop={shop} />}
-        </div>
-    )
+export default function ShopEditById({ id }) {
+  const [shop, setShop] = useState<IShop>();
+  useEffect(() => {
+    fetch(`/api/shop/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setShop(data));
+  }, []);
+  return <ShopUpdateForm {...shop} />;
 }
 ShopEditById.getLayout = (page) => (
-    <div className='flex'>
-    <Navbar />
+  <div className="flex">
+    <Sidebar />
     {page}
-    </div>
-)
+  </div>
+);

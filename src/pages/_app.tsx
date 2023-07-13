@@ -1,32 +1,38 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-import { config } from '@fortawesome/fontawesome-svg-core'
-import type { ReactElement, ReactNode } from 'react'
-import type { NextPage } from 'next'
-// Tell Font Awesome to skip adding the CSS automatically 
-// since it's already imported above
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import type { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
 config.autoAddCss = false;
-import Navbar from '@/Components/html/Navbar'
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from 'next-auth/react';
+import { ThemeProvider } from 'next-themes';
+import Consent from '@/Components/Consent';
 
+//@typescript-eslint/no-empty-interface
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
-export default function MyApp({ Component,
-   pageProps: { session, ...pageProps } }: AppPropsWithLayout
-   ) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page)
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
     <SessionProvider session={session}>
-    <main><Component {...pageProps} /></main>
-    </SessionProvider>
-  )
+      <main className="flex-1 p-8 bg-grey-500 dark:bg-grey-500">
+        <ThemeProvider attribute="class">
+          <Component {...pageProps} />
+          <Consent />
+        </ThemeProvider>
+      </main>
+    </SessionProvider>,
+  );
 }

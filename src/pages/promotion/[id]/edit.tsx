@@ -1,39 +1,27 @@
-import { useEffect, useState } from 'react'
-import {PromotionUpdateForm} from '@/Components/form/Promotion.form'
-import { PromotionService } from '@/Api/Services'
-import { IPromotions } from '@/Api/Models/Promotions'
-import { useRouter } from 'next/router'
-import Navbar from '@/Components/html/Navbar'
+import { PromotionUpdateForm } from '@/Components/form/Promotion.form';
+import Sidebar from '@/Components/html/Sidebar';
+import { IPromotions } from '@/Models/Promotions';
+import { useEffect, useState } from 'react';
 
-export default function PromotionEditById() {
-    const [promotion, setPromotion] = useState<IPromotions>()
-    const router = useRouter()
-    const { id } = router.query
-    // get promotion by id
+export default function PromotionEditById({ id }) {
+  const [promotion, setPromotion] = useState<IPromotions>();
+  useEffect(() => {
+    fetch(`/api/promotion/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setPromotion(data));
+  }, []);
 
-    useEffect(() => {
-        const getPromotionById = async () => {
-            try {
-                const response = await PromotionService.getPromotionById(id as string)
-                setPromotion(response.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getPromotionById()
-    }, [id])
-    
-    
-    return (
-        <div>
-            {promotion && <PromotionUpdateForm promotion={promotion} />}
-        </div>
-    )
+  return <PromotionUpdateForm {...promotion} />;
 }
 
 PromotionEditById.getLayout = (page) => (
-    <div className='flex'>
-    <Navbar />
+  <div className="flex">
+    <Sidebar />
     {page}
-    </div>
-)
+  </div>
+);

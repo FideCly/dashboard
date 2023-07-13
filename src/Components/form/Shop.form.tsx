@@ -1,128 +1,149 @@
-import React, { useCallback, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { IShopCreatePayload, IShopUpdatePayload, IShop  } from '@/Api/Models/Shop'
-import { ShopService } from '@/Api/Services/index'
-import {
-  Autocomplete,
-  useLoadScript,
-} from '@react-google-maps/api';
-import usePlacesAutocomplete, {
-  getGeocode, getLatLng,
-} from 'use-places-autocomplete';
+import React, { useCallback } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
+import { Button, Label, Select, TextInput } from 'flowbite-react';
 
 export const ShopCreateForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IShopCreatePayload>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IShopCreatePayload>();
 
-  const [shops, setShops] = useState<IShop[]>([])
-
-  const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(async (data) => {
-    try {
-      await ShopService.createShop(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  const loadShops = useCallback(async () => {
-    try {
-      const { data } = await ShopService.getShops()
-      setShops(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    loadShops()
-  }, [loadShops])
-
-  const libraries = ["places"];
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
-    libraries: libraries as any,
-  })
-
-  if (!isLoaded) return <div>Loading...</div>;
+  const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
+    async (data) => {
+      try {
+        const response = await fetch(`/api/shop`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        const shop = await response.json();
+        console.log(shop);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [],
+  );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="submit-form">
-        <div>
-          <div className="form-group">
-            <input
-              {...register('companyName', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='companyName'
-            />
-            {errors.companyName && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <PlacesAutocomplete
-            />      
-          </div> 
-
-          <div className="form-group">
-            <input
-              {...register('phone', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='phone'
-            />
-            {errors.phone && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('email', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='email'
-            />
-            {errors.email && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('siren', { required: true, maxLength: 9 })}
-              type=""
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={9}
-              placeholder='siren'
-            />
-            {errors.siren && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('siret', { required: true, maxLength: 14 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={14}
-              placeholder='siret'
-            />
-            {errors.siret && <span>This field is required</span>}
-          </div>
-          <button type="submit">
-            Submit
-          </button>
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 dark:text-white"
+    >
+      <div className="">
+        <Label htmlFor="companyName" className="dark:text-white">
+          Company Name
+        </Label>
+        <TextInput
+          {...register('companyName', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="companyName"
+        />
+        {errors.companyName && <span>Ce champ est requis</span>}
       </div>
-    </form>
-  )
-}
 
-export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IShopUpdatePayload>({
+      <div className="">
+        <Label htmlFor="phone" className="dark:text-white">
+          Adress
+        </Label>
+        <TextInput
+          {...register('address', { required: true, maxLength: 50 })}
+          type="text"
+          id="adress"
+          maxLength={50}
+          placeholder="2 rue test"
+        />
+      </div>
+
+      <div className="">
+        <Label htmlFor="phone" className="dark:text-white">
+          Numero de telephone
+        </Label>
+        <TextInput
+          {...register('phone', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="phone"
+        />
+        {errors.phone && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <Label htmlFor="email" className="dark:text-white">
+          Email
+        </Label>
+        <TextInput
+          {...register('email', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="email"
+        />
+        {errors.email && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <Label htmlFor="siren" className="dark:text-white">
+          Siren
+        </Label>
+        <TextInput
+          {...register('siren', { required: true, maxLength: 9 })}
+          type="text"
+          id="name"
+          maxLength={9}
+          placeholder="siren"
+        />
+        {errors.siren && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <Label htmlFor="siret" className="dark:text-white">
+          Siret
+        </Label>
+        <TextInput
+          {...register('siret', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          placeholder="siret"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <Label htmlFor="activity" className="dark:text-white">
+          Type de magazin
+        </Label>
+        <Select {...register('activity', { required: true, maxLength: 14 })}>
+          <option value="Restauration">Restauration</option>
+          <option value="Supply">Supply</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Store">Store</option>
+          <option value="Service">Service</option>
+        </Select>
+      </div>
+      <Button
+        type="submit"
+        className="text-black bg-green-200 hover:bg-green-300"
+      >
+        Submit
+      </Button>
+    </form>
+  );
+};
+
+export const ShopUpdateForm: React.FC<IShop> = (shop: IShop) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IShopUpdatePayload>({
     defaultValues: {
       companyName: shop.companyName,
       address: shop.address,
@@ -130,175 +151,103 @@ export const ShopUpdateForm: React.FC <{shop: IShop}> = ({shop}) => {
       email: shop.email,
       siren: shop.siren,
       siret: shop.siret,
-    }
-  })
-
-  const [shops, setShops] = useState<IShop[]>([])
-
-  const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(async (data) => {
-    try {
-      await ShopService.updateShop(shop.id.toString(), data)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [shop.id])
-
-  const loadShops = useCallback(async () => {
-    try {
-      const { data } = await ShopService.getShops()
-      setShops(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    loadShops()
-  }, [loadShops])
-
-  
-  
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} data-cy='create-shop-form'>
-      <div className="submit-form">
-        <div>
-          <div className="form-group">
-            <input
-              {...register('companyName', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='companyName'
-            />
-            {errors.companyName && <span>This field is required</span>}
-          </div>
-          
-          <div className="form-group">
-        
-            {errors.address && <span>This field is required</span>}
-          </div>
-          
-          <div className="form-group">
-            <input
-              {...register('zipCode', { required: true, maxLength: 50 })}
-              type="text" 
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='zipCode'
-            />
-            {errors.zipCode && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('phone', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='phone'
-            />
-            {errors.phone && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('email', { required: true, maxLength: 50 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={50}
-              placeholder='email'
-            />
-            {errors.email && <span>This field is required</span>}
-          </div>
-          
-          <div className="form-group">
-            <input
-              {...register('siren', { required: true, maxLength: 9 })}
-              type=""
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={9}
-              placeholder='siren'
-            />
-            {errors.siren && <span>This field is required</span>}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('siret', { required: true, maxLength: 14 })}
-              type="text"
-              className="w-full max-w-xs input"
-              id="name"
-              maxLength={14}
-              placeholder='siret'
-            />
-            {errors.siret && <span>This field is required</span>}
-          </div>
-
-          
-          <button type="submit">
-            Submit
-          </button>
-        </div>
-      </div>
-    </form>
-  )
-}
-
-const PlacesAutocomplete = ({
-  onAddressSelect,
-}: {
-  onAddressSelect?: (address: string) => void;
-}) => {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: { componentRestrictions: { country: 'France' } },
-    debounce: 300,
-    cache: 86400,
+    },
   });
-  
-  const renderSuggestions = () => {
-    return data.map((suggestion) => {
-      const {
-        place_id,
-        structured_formatting: { main_text, secondary_text },
-        description,
-      } = suggestion;
-      return (
-        <li
-          key={place_id}
-          onClick={() => {
-            setValue(description, false);
-            clearSuggestions();
-            onAddressSelect && onAddressSelect(description);
-          }}
-        >
-          <strong>{main_text}</strong> <small>{secondary_text}</small>
-        </li>
-      );
-    });
-  };
+
+  const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
+    async (data) => {
+      try {
+        await fetch(`/api/shop/${shop.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [shop.id],
+  );
   return (
-    <div className="">
-      <input
-        value={value}
-        className=""
-        disabled={!ready}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="123 Stariway To Heaven"
-      />
-      {status === 'OK' && (
-        <ul className="">{renderSuggestions()}</ul>
-      )}
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">
+      <div className="">
+        <TextInput
+          {...register('companyName', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="companyName"
+        />
+        {errors.companyName && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        {errors.address && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <TextInput
+          {...register('zipCode', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="zipCode"
+        />
+        {errors.zipCode && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <TextInput
+          {...register('phone', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="phone"
+        />
+        {errors.phone && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <TextInput
+          {...register('email', { required: true, maxLength: 50 })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="email"
+        />
+        {errors.email && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <TextInput
+          {...register('siren', { required: true, maxLength: 9 })}
+          type=""
+          id="name"
+          maxLength={9}
+          placeholder="siren"
+        />
+        {errors.siren && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <TextInput
+          {...register('siret', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          maxLength={14}
+          placeholder="siret"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
+      </div>
+
+      <Button
+        className="text-black bg-green-200 hover:bg-green-300"
+        type="submit"
+      >
+        Submit
+      </Button>
+    </form>
   );
 };

@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
 export default function NoSideBarLayout({ children }: PropsWithChildren) {
-  return ({children})
+  return { children };
 }
