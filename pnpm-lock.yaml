@@ -18,8 +18,8 @@ dependencies:
     specifier: 13.4.9
     version: 13.4.9
   '@react-google-maps/api':
-    specifier: ^2.18.1
-    version: 2.18.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^2.19.0
+    version: 2.19.0(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
     specifier: 20.4.2
     version: 20.4.2
@@ -209,17 +209,17 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@googlemaps/js-api-loader@1.15.1:
-    resolution: {integrity: sha512-AsnEgNsB7S/VdrHGEQUaUM2e5tmjFGKBAfzR/AqO8O7TPq/jQGvoRw5liPBw4EMF38RDsHmKDV89q/X+qiUREQ==}
+  /@googlemaps/js-api-loader@1.16.2:
+    resolution: {integrity: sha512-psGw5u0QM6humao48Hn4lrChOM2/rA43ZCm3tKK9qQsEj1/VzqkCqnvGfEOshDbBQflydfaRovbKwZMF4AyqbA==}
     dependencies:
       fast-deep-equal: 3.1.3
     dev: false
 
-  /@googlemaps/markerclusterer@2.0.15:
-    resolution: {integrity: sha512-/I6Esi5FtyeVHsezN9Kut8zRJoqe7KkTIJXGVqpKFf6BjC7qQ1xRajLMkOz0s8XKgLevbr+KdYjuvmj+LohOGg==}
+  /@googlemaps/markerclusterer@2.3.2:
+    resolution: {integrity: sha512-zb9OQP8XscZp2Npt1uQUYnGKu1miuq4DPP28JyDuFd6HV17HCEcjV9MtBi4muG/iVRXXvuHW9bRCnHbao9ITfw==}
     dependencies:
       fast-deep-equal: 3.1.3
-      supercluster: 7.1.5
+      supercluster: 8.0.1
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
@@ -392,28 +392,28 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@react-google-maps/api@2.18.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-KVlUO/Shh+0g/3egWaKmY0sz6+0QOnYkBGvrBMJbz23519LauA+iJFc4NDCmWNHqD5Vhb/Bkg0kSJgq0Stz3Iw==}
+  /@react-google-maps/api@2.19.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NRfdrdHCDTSn+GMMZfE2FgoR2CzklZhAIz3X7SL2q6oeGN6PzL+2RhRt3YxSt/L10eUl31rzwlwo2XIgkiHrCQ==}
     peerDependencies:
       react: ^16.8 || ^17 || ^18
       react-dom: ^16.8 || ^17 || ^18
     dependencies:
-      '@googlemaps/js-api-loader': 1.15.1
-      '@googlemaps/markerclusterer': 2.0.15
-      '@react-google-maps/infobox': 2.16.0
-      '@react-google-maps/marker-clusterer': 2.16.1
-      '@types/google.maps': 3.50.5
+      '@googlemaps/js-api-loader': 1.16.2
+      '@googlemaps/markerclusterer': 2.3.2
+      '@react-google-maps/infobox': 2.19.1
+      '@react-google-maps/marker-clusterer': 2.19.1
+      '@types/google.maps': 3.53.4
       invariant: 2.2.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@react-google-maps/infobox@2.16.0:
-    resolution: {integrity: sha512-ZojiMS25388RcUHQPycUAerSqdHDom+3dHczVcXHdT/i8fka3O8InkHxXwMhvBoM143ips7mv2BPaYOAJ5f4Nw==}
+  /@react-google-maps/infobox@2.19.1:
+    resolution: {integrity: sha512-amdclymXFGxM/qQj9LjZ4kysDs3LKJnL2NeJfsexhrQulKadEChmNQ2SUwtX0MfvyBdB79QaKcr7wjaLcvPONQ==}
     dev: false
 
-  /@react-google-maps/marker-clusterer@2.16.1:
-    resolution: {integrity: sha512-jOuyqzWLeXvQcoAu6TCVWHAuko+sDt0JjawNHBGqUNLywMtTCvYP0L0PiqJZOUCUeRYGdUy0AKxQ+30vAkvwag==}
+  /@react-google-maps/marker-clusterer@2.19.1:
+    resolution: {integrity: sha512-zaW4UBiA6VkIegFaHcv0RNIV9ToAh6SfcBiZygvkhhT0hlHRYuB8S25pIKWJ15zYucmZwAPF1QVKdUhm9HsUDQ==}
     dev: false
 
   /@rushstack/eslint-patch@1.3.2:
@@ -426,13 +426,8 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@types/google.maps@3.50.5:
-    resolution: {integrity: sha512-RuZf1MJtctGlpW+Gd4a/eGtAufUDjMf+eyN1l+B3fbe2YLScJbg8KEljJfb+6vnSPFAeM1/48geVIEg3vqOkxw==}
-    dev: false
-
   /@types/google.maps@3.53.4:
     resolution: {integrity: sha512-IiDAYTONQEKCBssPtoM0XqWF8YIIk2leba4NOf9qVQ/d8l5gLuS3QT87TrX6/u8rMonQAXC9KEDmM4q7sT6MWg==}
-    dev: true
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -2350,8 +2345,8 @@ packages:
       object.values: 1.1.6
     dev: false
 
-  /kdbush@3.0.0:
-    resolution: {integrity: sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==}
+  /kdbush@4.0.2:
+    resolution: {integrity: sha512-WbCVYJ27Sz8zi9Q7Q0xHC+05iwkm3Znipc2XTlrnJbsHMYktW4hPhXUE8Ys1engBrvffoSCqbil1JQAa7clRpA==}
     dev: false
 
   /language-subtag-registry@0.3.22:
@@ -3234,10 +3229,10 @@ packages:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  /supercluster@7.1.5:
-    resolution: {integrity: sha512-EulshI3pGUM66o6ZdH3ReiFcvHpM3vAigyK+vcxdjpJyEbIIrtbmBdY23mGgnI24uXiGFvrGq9Gkum/8U7vJWg==}
+  /supercluster@8.0.1:
+    resolution: {integrity: sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==}
     dependencies:
-      kdbush: 3.0.0
+      kdbush: 4.0.2
     dev: false
 
   /supports-color@7.2.0:
