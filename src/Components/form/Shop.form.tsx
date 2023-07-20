@@ -1,15 +1,32 @@
-import React, { useCallback } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import React, { useCallback, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
+const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
+  return (
+    <div>
+      <GooglePlacesAutocomplete
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+        selectProps={{
+          ...field,
+          isClearable: true,
+        }}
+      />
+      {error && <div style={{ color: 'red' }}>{error.message}</div>}
+    </div>
+  );
+};
 export const ShopCreateForm: React.FC = () => {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IShopCreatePayload>();
+  } = useForm();
 
+  const [shop, setShop] = useState();
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -49,15 +66,21 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="phone" className="dark:text-white">
-          Adress
+        <Label htmlFor="address" className="dark:text-white">
+          Address
         </Label>
-        <TextInput
-          {...register('address', { required: true, maxLength: 50 })}
-          type="text"
-          id="adress"
-          maxLength={50}
-          placeholder="2 rue test"
+        <Controller
+          name="address"
+          rules={{
+            required: 'This is a required field',
+          }}
+          control={control}
+          render={({ field, fieldState }) => (
+            <GooglePlacesAutocompleteComponent
+              {...field}
+              error={fieldState.error}
+            />
+          )}
         />
       </div>
 
@@ -117,6 +140,19 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
+        <Label htmlFor="city" className="dark:text-white">
+          City
+        </Label>
+        <TextInput
+          {...register('city', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          placeholder="city"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
         <Label htmlFor="activity" className="dark:text-white">
           Type de magazin
         </Label>
@@ -128,6 +164,33 @@ export const ShopCreateForm: React.FC = () => {
           <option value="Service">Service</option>
         </Select>
       </div>
+
+      <div className="">
+        <Label htmlFor="zipCode" className="dark:text-white">
+          zipCode
+        </Label>
+        <TextInput
+          {...register('zipCode', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          placeholder="zipCode"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
+      </div>
+      <TextInput
+        {...register('lat', { required: true, maxLength: 14 })}
+        type="text"
+        id="name"
+        placeholder="lat"
+        hidden
+      />
+      <TextInput
+        {...register('long', { required: true, maxLength: 14 })}
+        type="text"
+        id="name"
+        placeholder="long"
+        hidden
+      />
       <Button
         type="submit"
         className="text-black bg-green-200 hover:bg-green-300"

@@ -1,4 +1,5 @@
 import { ICard } from './Card';
+import { IShop } from './Shop';
 export interface IUserAuthPayload {
   role: string;
   email: string;
@@ -22,6 +23,7 @@ export interface IUser {
   email: string;
   isActive: boolean;
   cards: ICard[];
+  shop: IShop[];
 }
 
 export interface jwttoken {

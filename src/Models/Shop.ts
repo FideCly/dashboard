@@ -9,6 +9,7 @@ export interface IShopCreatePayload {
   phone: string;
   address: string;
   activity: string;
+  city?: string;
 }
 
 export interface IShopUpdatePayload {
@@ -21,6 +22,7 @@ export interface IShopUpdatePayload {
   long?: string;
   phone?: string;
   address?: string;
+  city?: string;
 }
 
 export interface IShop {

@@ -46,7 +46,7 @@ export default function Home() {
     const getPromotionCheckoutCount = async (): Promise<void> => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/analytics/promotion-checkout-count/1`,
+          `http://localhost:3000/api/analytics/promotion-checkout-count/`,
           {
             method: 'GET',
             headers: {

@@ -3,42 +3,46 @@ import { IPromotions } from '@/Models/Promotions';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getSession, useSession } from 'next-auth/react';
+import { IUser } from '@/Models/User';
 
-export default function PromotionList() {
+export default async function PromotionList() {
+  const [user, setUser] = useState<IUser>();
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   useSession();
+  const session = await getSession();
   useEffect(() => {
-    const loadPromotions = async (): Promise<void> => {
-      try {
-        const session = await getSession();
-        const user = await fetch(`/api/user/${session?.user?.email}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await user.json();
-        const response = await fetch(`/api/shop/${data.shop.id}/promotion`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log(response);
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        const dataPromotion = await response.json();
-        setPromotions(dataPromotion);
-      } catch (error) {
+    const data = fetch(`/api/user/${session.user?.email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        res.json();
+      })
+      .then((res) =>{
+        setUser(res);
+      })
+      .catch((error) => {
         setError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    void loadPromotions();
+        console.log(error);
+      });
+    fetch(`/api/shop/${data.shop.id}/promotion`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        res.json();
+        setPromotions(res);
+      })
+      .catch((error) => {
+        setError(true);
+        console.log(error);
+      });
   }, []);
 
   if (isLoading) {

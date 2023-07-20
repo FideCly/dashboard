@@ -1,6 +1,7 @@
 import axios from 'axios';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { json } from 'node:stream/consumers';
 import { setCookie } from 'nookies';
 
 const nextAuthOptions = (req, res) => {
@@ -22,7 +23,8 @@ const nextAuthOptions = (req, res) => {
             })
             .then((response) => {
               const user = response.data;
-              const token = JSON.stringify(response.data.token);
+              const data = json(response.data);
+              const token = response.data.token;
               console.log('token:', token);
               setCookie({ res }, 'token', token, {
                 maxAge: 30 * 24 * 60 * 60,

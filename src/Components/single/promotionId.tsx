@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 export default function PromotionId(id: any) {
   const [promotion, setPromotion] = useState<IPromotions>();
   useEffect(() => {
-    fetch(`/api/promotion/${id}`, {
+    fetch(`/api/promotions/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
