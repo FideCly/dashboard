@@ -31,7 +31,7 @@
     "use-places-autocomplete": "^4.0.0"
   },
   "devDependencies": {
-    "@types/google.maps": "^3.53.4",
+    "@types/google.maps": "^3.53.5",
     "autoprefixer": "^10.4.14",
     "cypress": "^12.17.1",
     "cypress-axe": "^1.4.0",
