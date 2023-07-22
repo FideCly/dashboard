@@ -23,7 +23,9 @@ export interface IUser {
   email: string;
   isActive: boolean;
   cards: ICard[];
-  shop: IShop[];
+  shop: IShop;
+  birthday: Date;
+  sexe: string;
 }
 
 export interface jwttoken {

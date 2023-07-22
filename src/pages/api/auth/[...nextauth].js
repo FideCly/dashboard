@@ -23,9 +23,7 @@ const nextAuthOptions = (req, res) => {
             })
             .then((response) => {
               const user = response.data;
-              const data = json(response.data);
               const token = response.data.token;
-              console.log('token:', token);
               setCookie({ res }, 'token', token, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',

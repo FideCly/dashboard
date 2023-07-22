@@ -10,7 +10,7 @@ export const Profile = () => {
   useEffect(() => {
     const loadUser = async () => {
       const session = await getSession();
-      const endpoint = `/api/user/${session.user?.email}`;
+      const endpoint = `/api/user/${session.user.email}`;
       const options = {
         method: 'GET',
         headers: {
@@ -33,6 +33,7 @@ export const Profile = () => {
       <h1>Profile</h1>
       <p>{user?.username}</p>
       <p>{user?.email}</p>
+      <p>{user?.shop.id}</p>
     </div>
   );
 };

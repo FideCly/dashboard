@@ -6,7 +6,7 @@ import type {
 
 export default async function handler(req, res) {
   if (req.method === 'PUT') {
-    const { id } = req.query;
+    const id = req.query.id;
     const promotion = req.body;
     const response = await axios.put<IPromotionUpdatePayload>(
       process.env.NEXT_PUBLIC_API_URL + `promotion/${id}`,

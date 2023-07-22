@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react';
 import {
@@ -6,7 +6,10 @@ import {
   ICampaignUpdatePayload,
   ICampaign,
 } from '@/Models/Campaign';
-import { IShop } from '@/Models/Shop';
+import { getSession } from 'next-auth/react';
+import { IUser } from '@/Models/User';
+import { IPromotions } from '@/Models/Promotions';
+import { toast } from 'react-toastify';
 
 export const CampaignCreateForm: React.FC = () => {
   const {
@@ -14,33 +17,68 @@ export const CampaignCreateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ICampaignCreatePayload>();
-  // get all shops for the select
-  const [shops, setShops] = useState<IShop[]>([]);
-  useCallback(async () => {
-    try {
-      const response = await fetch('/api/shops', {
+  // get all shop's promotions
+  const [promotions, setPromotions] = useState<IPromotions[]>([]);
+  const loadUser = async (): Promise<IUser> => {
+    const session = await getSession();
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${session.user.email}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    const loadCampaigns = async (): Promise<void> => {
+      const options = {
         method: 'GET',
         headers: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
+      };
+      const user = await loadUser();
+      try {
+        const response = await fetch(
+          `/api/shop/${user.shop.id}/promotion`,
+          options,
+        );
+        const data = await response.json();
+        setPromotions(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadCampaigns();
   }, []);
 
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch('/api/campaign', {
+        const response = await fetch(`/api/campaign`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          // conserve the number type for the promotionId
+          body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
+        if (response.status >= 400) {
+          toast('Error', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Campaign created', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+        }
       } catch (error) {
         console.error(error);
       }
@@ -55,59 +93,44 @@ export const CampaignCreateForm: React.FC = () => {
       className="flex flex-col gap-4"
     >
       <div className="">
-        <Label htmlFor="libelle">Nom de la campagne</Label>
+        <Label htmlFor="subject">Nom de la campagne</Label>
         <TextInput
           {...register('subject', { required: true, maxLength: 50 })}
           type="text"
           className=""
-          id="libelle"
+          id="subject"
           maxLength={50}
-          placeholder="libelle"
+          placeholder="subject"
         />
         {errors.subject && <span>This field is required</span>}
       </div>
-
       <div className="">
-        <Label htmlFor="types">Type de campagne</Label>
+        <Label htmlFor="textData">Type de campagne</Label>
         <Textarea
-          {...register('message', { required: true, maxLength: 50 })}
+          {...register('textData', { required: true, maxLength: 50 })}
           className=""
-          id="types"
+          id="textData"
           maxLength={50}
-          placeholder="types"
+          placeholder="textData"
         />
-        {errors.message && <span>This field is required</span>}
+        {errors.textData && <span>This field is required</span>}
       </div>
-
       <div className="">
-        <Label htmlFor="startAt">Shop</Label>
+        <Label htmlFor="promotionId">promotions</Label>
         <Select
-          {...register('shop', { required: true, maxLength: 50 })}
+          {...register('promotionId', { required: true, maxLength: 50 })}
           className=""
-          id="startAt"
-          placeholder="startAt"
+          id="promotionId"
+          placeholder="promotionId"
         >
-          {shops.map((shop) => (
-            <option key={shop.id} value={shop.id}>
-              {shop.companyName}
+          {promotions?.map((promotion) => (
+            <option key={promotion.id} value={promotion.id}>
+              {promotion.name}
             </option>
           ))}
         </Select>
-        {errors.shop && <span>This field is required</span>}
+        {errors.promotionId && <span>This field is required</span>}
       </div>
-
-      <div className="">
-        <Label htmlFor="startAt">Date de début</Label>
-        <Select
-          {...register('targets', { required: true, maxLength: 50 })}
-          className=""
-          id="startAt"
-          placeholder="startAt"
-          multiple
-        />
-        {errors.targets && <span>This field is required</span>}
-      </div>
-
       <Button
         type="submit"
         className="text-black bg-green-200 hover:bg-green-300"
@@ -125,28 +148,42 @@ export const CampaignUpdateForm: React.FC<ICampaign> = (
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICampaignUpdatePayload>({
-    defaultValues: {
-      subject: campaign.subject,
-      message: campaign.message,
-      shop: campaign.shop,
-      targets: campaign.targets,
-    },
-  });
-  const [shops, setShops] = useState<IShop[]>([]);
-  const loadShops = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/shops`, {
+  } = useForm<ICampaignUpdatePayload>();
+  const [promotions, setPromotions] = useState<IPromotions[]>([]);
+  const loadUser = async (): Promise<IUser> => {
+    const session = await getSession();
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${session.user.email}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    const loadCampaigns = async (): Promise<void> => {
+      const options = {
         method: 'GET',
         headers: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await response.json();
-      setShops(data);
-    } catch (error) {
-      console.error(error);
-    }
+      };
+      const user = await loadUser();
+      try {
+        const response = await fetch(
+          `/api/shop/${user.shop.id}/promotion`,
+          options,
+        );
+        const data = await response.json();
+        setPromotions(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadCampaigns();
   }, []);
 
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(
@@ -166,10 +203,6 @@ export const CampaignUpdateForm: React.FC<ICampaign> = (
     [campaign.id],
   );
 
-  React.useEffect(() => {
-    loadShops();
-  }, [loadShops]);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -192,42 +225,30 @@ export const CampaignUpdateForm: React.FC<ICampaign> = (
       <div className="">
         <Label htmlFor="types">Type de campagne</Label>
         <Textarea
-          {...register('message', { required: true, maxLength: 50 })}
+          {...register('textData', { required: true, maxLength: 50 })}
           className=""
           id="types"
           maxLength={50}
           placeholder="types"
         />
-        {errors.message && <span>This field is required</span>}
+        {errors.textData && <span>This field is required</span>}
       </div>
 
       <div className="">
-        <Label htmlFor="startAt">Shop</Label>
+        <Label htmlFor="promotionId">Shop</Label>
         <Select
-          {...register('shop', { required: true, maxLength: 50 })}
+          {...register('promotionId', { required: true, maxLength: 50 })}
           className=""
-          id="startAt"
-          placeholder="startAt"
+          id="promotionId"
+          placeholder="promotionId"
         >
-          {shops.map((shop) => (
-            <option key={shop.id} value={shop.id}>
-              {shop.companyName}
+          {promotions.map((promotion) => (
+            <option key={promotion.id} value={promotion.id}>
+              {promotion.name}
             </option>
           ))}
         </Select>
-        {errors.shop && <span>This field is required</span>}
-      </div>
-
-      <div className="">
-        <Label htmlFor="startAt">User cible</Label>
-        <Select
-          {...register('targets', { required: true, maxLength: 50 })}
-          className=""
-          id="startAt"
-          placeholder="startAt"
-          multiple
-        />
-        {errors.targets && <span>This field is required</span>}
+        {errors.promotionId && <span>This field is required</span>}
       </div>
 
       <Button

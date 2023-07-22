@@ -3,7 +3,8 @@ export interface IPromotionCreatePayload {
   description?: string;
   checkoutLimit: number;
   startAt?: Date;
-  endAt: Date;
+  endAt?: Date;
+  isActive?: boolean;
 }
 
 export interface IPromotionUpdatePayload {

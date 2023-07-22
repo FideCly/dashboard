@@ -2,9 +2,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PromotionCreateForm } from '../../Components/form/Promotion.form';
 import { useState } from 'react';
-import PromotionList from '../../Components/List/PromotionList';
 import Sidebar from '@/Components/html/Sidebar';
 import Navbare from '@/Components/html/Navbar';
+import PromotionList from '@/Components/List/PromotionList';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);

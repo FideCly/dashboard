@@ -28,7 +28,7 @@ export default function PromotionEditById() {
     loadPromotion();
   }, [id]);
 
-  return <PromotionUpdateForm promotion={promotion} />;
+  return <PromotionUpdateForm {...promotion} />;
 }
 
 PromotionEditById.getLayout = function getLayout(page) {

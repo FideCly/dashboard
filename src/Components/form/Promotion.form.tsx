@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import type { IPromotionCreatePayload, IPromotions } from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
+import { toast } from 'react-toastify';
 
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
@@ -21,7 +22,11 @@ export const PromotionCreateForm: React.FC = () => {
           },
           body: JSON.stringify(data),
         });
-        console.log(response);
+        toast('Promotion created', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
       } catch (error) {
         console.error(error);
       }
@@ -137,7 +142,6 @@ export const PromotionUpdateForm: React.FC<IPromotions> = (
           },
           body: JSON.stringify(data),
         });
-        console.log(data);
       } catch (error) {
         console.error(error);
       }

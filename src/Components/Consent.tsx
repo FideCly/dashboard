@@ -10,12 +10,10 @@ function Consent() {
   const acceptCookie = () => {
     setConsent(true);
     setCookie('localConsent', 'true', { maxAge: 60 * 60 * 24 * 365 });
-    console.log('accepring cookies');
   };
   const denyCookie = () => {
     setConsent(true);
     setCookie('localConsent', 'false', { maxAge: 60 * 60 * 24 * 365 });
-    console.log('denying cookie');
   };
   if (consent === true) {
     return null;

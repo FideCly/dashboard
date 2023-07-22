@@ -8,6 +8,8 @@ config.autoAddCss = false;
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import Consent from '@/Components/Consent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //@typescript-eslint/no-empty-interface
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -18,7 +20,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function MyApp({
+export default function MyApp ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
@@ -33,6 +35,7 @@ export default function MyApp({
           <Consent />
         </ThemeProvider>
       </main>
+      <ToastContainer />
     </SessionProvider>,
   );
 }

@@ -1,8 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import React, { useCallback } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-google-places-autocomplete';
+import { toast } from "react-toastify";
 
 const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
   return (
@@ -21,12 +25,11 @@ const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
 export const ShopCreateForm: React.FC = () => {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  const [shop, setShop] = useState();
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -38,13 +41,24 @@ export const ShopCreateForm: React.FC = () => {
           body: JSON.stringify(data),
         });
         const shop = await response.json();
-        console.log(shop);
+        toast('Shop created', { hideProgressBar: true, autoClose: 2000, type: 'success' }) 
       } catch (error) {
         console.error(error);
       }
     },
     [],
   );
+
+  function setMetadata(e: any) {
+    setValue('address', e.label);
+    geocodeByAddress(e.label)
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        setValue('lat', lat);
+        setValue('long', lng);
+      })
+      .catch((error) => console.error('Error', error));
+  }
 
   return (
     <form
@@ -69,18 +83,12 @@ export const ShopCreateForm: React.FC = () => {
         <Label htmlFor="address" className="dark:text-white">
           Address
         </Label>
-        <Controller
-          name="address"
-          rules={{
-            required: 'This is a required field',
+        <GooglePlacesAutocompleteComponent
+          error={undefined}
+          {...register('address', { required: true, maxLength: 50 })}
+          onChange={(e) => {
+            setMetadata(e);
           }}
-          control={control}
-          render={({ field, fieldState }) => (
-            <GooglePlacesAutocompleteComponent
-              {...field}
-              error={fieldState.error}
-            />
-          )}
         />
       </div>
 
