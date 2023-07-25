@@ -4,17 +4,16 @@ export interface IPromotionCreatePayload {
   checkoutLimit: number;
   startAt?: Date;
   endAt?: Date;
-  isActive?: boolean;
 }
 
 export interface IPromotionUpdatePayload {
-  statusCode(statusCode: any): unknown;
-  name?: string;
-  description?: string;
-  checkoutLimit?: number;
-  startAt?: Date;
-  endAt?: Date;
-  isActive?: boolean;
+  id: number;
+
+  name: string;
+  description: string;
+  checkoutLimit: number;
+  startAt: Date;
+  endAt: Date;
 }
 
 export interface IPromotions {
@@ -22,8 +21,7 @@ export interface IPromotions {
   shopId: number;
   name: string;
   description?: string;
-  checkoutLimit: number;
   startAt?: Date;
   endAt: Date;
-  isActive?: boolean;
+  checkoutLimit: number;
 }

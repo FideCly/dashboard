@@ -1,4 +1,4 @@
-import { ShopUpdateForm } from '@/Components/form/Shop.form';
+import { CampaignUpdateForm } from '@/Components/form/Campaing.form';
 import Navbare from '@/Components/html/Navbar';
 import Sidebar from '@/Components/html/Sidebar';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ export default function ShopEditById() {
     <>
       {router.isReady ? (
         <div className="text-2xl font-bold text-white-900">
-          <ShopUpdateForm />
+          <CampaignUpdateForm />
         </div>
       ) : null}
     </>

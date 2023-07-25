@@ -8,33 +8,40 @@ import { useEffect, useState } from 'react';
 Chart.register(CategoryScale);
 
 export default function Home() {
-  const startDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    1,
-  ).toISOString();
-  const endDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1,
-    0,
-  ).toISOString();
-  const date = new URLSearchParams();
-  date.append('startDate', startDate);
-  date.append('endDate', endDate);
+  const date = new Date();
+  const startDate =
+    date.getFullYear() +
+    '-' +
+    (date.getMonth().length != 2 ? '0' + date.getMonth() : date.getMonth()) +
+    '-01';
+  const endDate =
+    date.getFullYear() +
+    '-' +
+    ((date.getMonth() + 1).length != 2
+      ? '0' + (date.getMonth() + 1)
+      : date.getMonth() + 1) +
+    '-31';
+  console.log('startdate' + startDate);
+  console.log('enddate' + endDate);
 
   const [affluence, setAffluence] = useState();
   const [promotionCheckoutCount, setPromotionCheckoutCount] = useState();
+  const [clientCount, setClientCount] = useState();
+  const [promotionRanking, setPromotionRanking] = useState();
   useEffect(() => {
     const getAffluence = async (): Promise<void> => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/analytics/affluence/`,
+          `http://localhost:3000/api/analytics/affluence?` +
+            new URLSearchParams({
+              start_date: startDate,
+              end_date: endDate,
+            }),
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: date,
           },
         );
         const data = await response.json(); // Extract JSON data from response
@@ -46,13 +53,16 @@ export default function Home() {
     const getPromotionCheckoutCount = async (): Promise<void> => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/analytics/promotion-checkout-count/`,
+          `http://localhost:3000/api/analytics/promotion-checkout-count?` +
+            new URLSearchParams({
+              start_date: startDate,
+              end_date: endDate,
+            }),
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: date,
           },
         );
         const data = await response.json(); // Extract JSON data from response
@@ -61,8 +71,52 @@ export default function Home() {
         console.log(error);
       }
     };
-    void getPromotionCheckoutCount();
-    void getAffluence();
+    const getPromotionRanking = async (): Promise<void> => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/analytics/promotion-ranking?` +
+            new URLSearchParams({
+              start_date: startDate,
+              end_date: endDate,
+            }),
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        const data = await response.json(); // Extract JSON data from response
+        setPromotionRanking(data); // Set state with extracted data
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getClientCount = async (): Promise<void> => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/analytics/client-count?` +
+            new URLSearchParams({
+              start_date: startDate,
+              end_date: endDate,
+            }),
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        const data = await response.json(); // Extract JSON data from response
+        setClientCount(data); // Set state with extracted data
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getClientCount();
+    getPromotionRanking();
+    getPromotionCheckoutCount();
+    getAffluence();
   }, []);
 
   const data = {
@@ -153,6 +207,14 @@ export default function Home() {
           nombre de client:
           {promotionCheckoutCount ? promotionCheckoutCount : 77} client
           possedant une carte
+        </p>
+        <p>
+          nombre de client:
+          {clientCount ? clientCount : 77} client possedant une carte
+        </p>
+        <p>
+          nombre de client:
+          {promotionRanking ? promotionRanking : 77} client possedant une carte
         </p>
       </div>
       <div className="flex flex-1">

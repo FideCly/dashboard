@@ -9,7 +9,6 @@ export default async function handler(req, res): Promise<IPromotions[]> {
   if (req.method === 'GET') {
     // get the id from the query
     const id = req.query.id;
-    console.log(id);
     const response = await axios.get<IPromotions>(
       process.env.NEXT_PUBLIC_API_URL + `shop/${id}/promotions`,
       {

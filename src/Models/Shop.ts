@@ -13,6 +13,7 @@ export interface IShopCreatePayload {
 }
 
 export interface IShopUpdatePayload {
+  id: any;
   companyName?: string;
   siren?: string;
   siret?: string;

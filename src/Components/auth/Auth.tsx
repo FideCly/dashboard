@@ -82,7 +82,8 @@ export const Register: React.FC = () => {
   const router = useRouter();
   const onSubmit: SubmitHandler<IUserAuthPayload> = useCallback(
     async (data) => {
-      const endpoint = '/api/auth/register';
+      data.role = 'Fider';
+      const endpoint = '/api/auth/signup';
       const options = {
         method: 'POST',
         headers: {
@@ -97,7 +98,7 @@ export const Register: React.FC = () => {
           }
           return await res.json();
         });
-        router.push('/auth/login');
+        router.push('/');
       } catch (error) {
         console.log(error);
       }

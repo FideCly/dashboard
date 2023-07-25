@@ -5,10 +5,12 @@ export interface ICampaignCreatePayload {
 }
 
 export interface ICampaignUpdatePayload {
+  id: number;
   promotionId: number;
-  id?: number;
+  shopId: number;
   subject: string;
   textData?: string;
+  isActivate: boolean;
 }
 
 export interface ICampaign {

@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
+import { IShopCreatePayload, IShopUpdatePayload } from '@/Models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-google-places-autocomplete';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
   return (
@@ -40,8 +41,12 @@ export const ShopCreateForm: React.FC = () => {
           },
           body: JSON.stringify(data),
         });
-        const shop = await response.json();
-        toast('Shop created', { hideProgressBar: true, autoClose: 2000, type: 'success' }) 
+        await response.json();
+        toast('Shop created', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
       } catch (error) {
         console.error(error);
       }
@@ -209,37 +214,67 @@ export const ShopCreateForm: React.FC = () => {
   );
 };
 
-export const ShopUpdateForm: React.FC<IShop> = (shop: IShop) => {
+export const ShopUpdateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IShopUpdatePayload>({
-    defaultValues: {
-      companyName: shop.companyName,
-      address: shop.address,
-      phone: shop.phone,
-      email: shop.email,
-      siren: shop.siren,
-      siret: shop.siret,
-    },
-  });
+    setValue,
+  } = useForm<IShopUpdatePayload>();
+
+  const router = useRouter();
+  const id = Number(router.query.id);
+
+  useEffect(() => {
+    if (id) {
+      const getShop = async (): Promise<void> => {
+        try {
+          const response = await fetch(`/api/shop/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const data = await response.json(); // Extract JSON data from response
+          for (const [key, value] of Object.entries(data)) {
+            setValue(key, value);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getShop();
+    }
+  }, [id]);
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch(`/api/shop/${shop.id}`, {
+        const res = await fetch(`/api/shop/${data.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
+        if (res.status >= 400) {
+          toast('Shop not updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Shop updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+        }
       } catch (error) {
         console.error(error);
       }
     },
-    [shop.id],
+    [],
   );
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">

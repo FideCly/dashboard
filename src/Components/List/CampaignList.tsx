@@ -90,7 +90,7 @@ export default function CampaignList() {
               <Table.Cell>{campaign.subject}</Table.Cell>
               <Table.Cell>{campaign.textData}</Table.Cell>
               <Table.Cell className="space-x-2">
-                <Link href={{ pathname: `/campaigns/${campaign.id}` }}>
+                <Link href={{ pathname: `/campagne/${campaign.id}/edit` }}>
                   <FontAwesomeIcon icon={faEdit} />
                 </Link>
                 <button onClick={() => deletecampaign(campaign.id)}>

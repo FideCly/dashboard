@@ -4,12 +4,12 @@ import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react';
 import {
   ICampaignCreatePayload,
   ICampaignUpdatePayload,
-  ICampaign,
 } from '@/Models/Campaign';
 import { getSession } from 'next-auth/react';
 import { IUser } from '@/Models/User';
 import { IPromotions } from '@/Models/Promotions';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export const CampaignCreateForm: React.FC = () => {
   const {
@@ -141,15 +141,17 @@ export const CampaignCreateForm: React.FC = () => {
   );
 };
 
-export const CampaignUpdateForm: React.FC<ICampaign> = (
-  campaign: ICampaign,
-) => {
+export const CampaignUpdateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<ICampaignUpdatePayload>();
+
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
+  const router = useRouter();
+  const id = Number(router.query.id);
   const loadUser = async (): Promise<IUser> => {
     const session = await getSession();
     const options = {
@@ -183,24 +185,56 @@ export const CampaignUpdateForm: React.FC<ICampaign> = (
         console.error(error);
       }
     };
+    const getCampaign = async (): Promise<void> => {
+      try {
+        const response = await fetch(`/api/campaign/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json(); // Extract JSON data from response
+        for (const [key, value] of Object.entries(data)) {
+          setValue(key, value);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (id) {
+      getCampaign();
+    }
     loadCampaigns();
   }, []);
 
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch(`/api/campaign/${campaign.id}`, {
+        const res = await fetch(`/api/campaign/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
+        if (res.status >= 400) {
+          toast('Error', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Campaign updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+        }
       } catch (error) {
         console.error(error);
       }
     },
-    [campaign.id],
+    [],
   );
 
   return (
