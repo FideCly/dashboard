@@ -877,8 +877,8 @@ packages:
       streamsearch: 1.1.0
     dev: false
 
-  /cachedir@2.3.0:
-    resolution: {integrity: sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==}
+  /cachedir@2.4.0:
+    resolution: {integrity: sha512-9EtFOZR8g22CL7BWjJ9BUx1+A/djkofnyW3aOXZORNW2kxoUpx2h+uN2cOqwPmFhnpVmxg+KW2OjOSgChTEvsQ==}
     engines: {node: '>=6'}
     dev: true
 
@@ -1061,7 +1061,7 @@ packages:
       blob-util: 2.0.2
       bluebird: 3.7.2
       buffer: 5.7.1
-      cachedir: 2.3.0
+      cachedir: 2.4.0
       chalk: 4.1.2
       check-more-types: 2.24.0
       cli-cursor: 3.1.0
