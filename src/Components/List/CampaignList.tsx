@@ -83,10 +83,7 @@ export default function CampaignList() {
         </Table.Head>
         <Table.Body className="divide-y">
           {campaigns.map((campaign) => (
-            <Table.Row
-              className=" dark:border-gray-700 dark:bg-gray-800"
-              key={campaign.id}
-            >
+            <Table.Row className="" key={campaign.id}>
               <Table.Cell>{campaign.subject}</Table.Cell>
               <Table.Cell>{campaign.textData}</Table.Cell>
               <Table.Cell className="space-x-2">

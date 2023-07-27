@@ -5,6 +5,7 @@ import { IUser } from '@/Models/User';
 import { getSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
+import { Button } from 'flowbite-react';
 
 export default function Scanner() {
   const [user, setUser] = useState<IUser>();
@@ -36,16 +37,19 @@ export default function Scanner() {
     <>
       <ScannerForm />
       <QRCode
+        id="canvas"
         value={user?.shop.id.toString()}
         className="p-4 bg-white rounded rounded-md"
+        size={290}
       />
+      <Button> Download Qrcode</Button>
     </>
   );
 }
 
 Scanner.getLayout = function getLayout(page) {
   return (
-    <div className="flex">
+    <div className="">
       <Sidebar />
       <div className="p-4 sm:ml-64">
         <Navbare />

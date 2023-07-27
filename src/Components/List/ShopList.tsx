@@ -81,10 +81,7 @@ export default function ShopList() {
         </Table.Head>
         <Table.Body className="divide-y">
           {shops.map((shop) => (
-            <Table.Row
-              className=" dark:border-gray-700 dark:bg-gray-800"
-              key={shop.id}
-            >
+            <Table.Row className="" key={shop.id}>
               <Table.Cell>{shop.companyName}</Table.Cell>
               <Table.Cell>{shop.address}</Table.Cell>
               <Table.Cell>{shop.zipCode}</Table.Cell>

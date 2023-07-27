@@ -6,16 +6,20 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { QrReader } from 'react-qr-reader';
 import { toast } from 'react-toastify';
+import { isMobile } from 'react-device-detect';
 
 export default function ScannerForm() {
   const [data, setData] = useState('No result');
   const [promotion, setPromotion] = useState<any>([]);
-  const { register, handleSubmit } = useForm<IScanner>();
+  const { register, handleSubmit, setValue } = useForm<IScanner>();
   //get promotion server side
   const handleConstraints = () => {
-    return {
-      facingMode: 'environment',
-    };
+    // if the device is mobile, use the rear camera
+    if (isMobile) {
+      return { facingMode: 'environment' };
+    }
+    // otherwise, use the facing camera
+    return { facingMode: 'user' };
   };
 
   React.useEffect(() => {
@@ -49,21 +53,29 @@ export default function ScannerForm() {
 
   const onSubmit: SubmitHandler<IScanner> = useCallback(async (data) => {
     try {
-      const response = await fetch(
-        `/api/balance/${data.promotionId}/checkout`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const response = await fetch(`/api/checkout`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
-      toast('Checkout done', {
-        hideProgressBar: true,
-        autoClose: 2000,
-        type: 'success',
+        // promotionId is a number in the body
+        body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
       });
+      if (response.status >= 400) {
+        toast('Checkout not done', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'error',
+        });
+        console.log(response);
+        throw new Error('Bad response from server');
+      } else {
+        toast('Checkout done', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -79,7 +91,7 @@ export default function ScannerForm() {
           className=""
           name="promotion"
           id="promotion"
-          {...register('userId', { required: true })}
+          {...register('promotionId', { required: true })}
         >
           {promotion.map((item: any) => {
             return (
@@ -92,16 +104,19 @@ export default function ScannerForm() {
       </div>
       <div className="flex flex-col items-center justify-center">
         <QrReader
-          {...register('promotionId', { required: true })}
           onResult={(result, error) => {
             if (result) {
               setData(result.getText());
+              setValue('uuid', result.getText());
             }
             if (error) {
               console.log(error);
             }
           }}
           constraints={handleConstraints()}
+          videoStyle={{ width: '100%' }}
+          className="w-1/2 rounded rounded-md"
+          scanDelay={300}
         />
         <p>{data}</p>
         <Button type="submit" className="btn btn-primary">

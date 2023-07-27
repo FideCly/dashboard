@@ -194,9 +194,11 @@ export const CampaignUpdateForm: React.FC = () => {
           },
         });
         const data = await response.json(); // Extract JSON data from response
-        for (const [key, value] of Object.entries(data)) {
-          setValue(key, value);
-        }
+        setValue('id', data.id);
+        setValue('shopId', data.shopId);
+        setValue('subject', data.subject);
+        setValue('textData', data.textData);
+        setValue('promotionId', data.promotionId);
       } catch (error) {
         console.log(error);
       }

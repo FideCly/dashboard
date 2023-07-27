@@ -4,7 +4,6 @@ import {
   faEnvelope,
   faGear,
   faRectangleAd,
-  faShop,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
@@ -17,7 +16,7 @@ export default function Sidebar() {
       className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-green-300 dark:bg-green-800 ">
+      <div className="h-full px-3 py-4 overflow-y-auto bg-green-300 ">
         <p className="flex items-center pl-2.5 mb-5 space-x-4">
           <Image
             src="/logo.png"
@@ -26,7 +25,7 @@ export default function Sidebar() {
             className="rounded"
             alt="logo"
           />
-          <span className="self-center flex-1 text-xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center flex-1 text-xl font-semibold whitespace-nowrap ">
             Fidecly
           </span>
         </p>
@@ -34,7 +33,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
             >
               <FontAwesomeIcon icon={faChartPie} />
               <span className="ml-3">Tableau de bord</span>
@@ -43,7 +42,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/scanner"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
             >
               <FontAwesomeIcon icon={faBarcode} />
               <span className="flex-1 ml-3 whitespace-nowrap">Scanner</span>
@@ -52,7 +51,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/campagne"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
             >
               <FontAwesomeIcon icon={faEnvelope} />
               <span className="flex-1 ml-3 whitespace-nowrap">
@@ -63,7 +62,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/promotion"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
             >
               <FontAwesomeIcon icon={faRectangleAd} />
               <span className="flex-1 ml-3 whitespace-nowrap">Promotions</span>
@@ -71,24 +70,15 @@ export default function Sidebar() {
           </li>
           <li>
             <Link
-              href="/shops"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <FontAwesomeIcon icon={faShop} />
-              <span className="flex-1 ml-3 whitespace-nowrap">Boutiques</span>
-            </Link>
-          </li>
-          <li>
-            <Link
               href="/settings"
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
             >
               <FontAwesomeIcon icon={faGear} />
               <span className="flex-1 ml-3 whitespace-nowrap">Réglages</span>
             </Link>
           </li>
           <li>
-            <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white"></div>
+            <div className="flex items-center p-2 text-gray-900 rounded-lg "></div>
           </li>
         </ul>
       </div>

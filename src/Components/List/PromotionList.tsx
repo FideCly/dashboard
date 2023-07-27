@@ -77,10 +77,7 @@ export default function PromotionList() {
       </Table.Head>
       <Table.Body className="divide-y">
         {promotions?.map((promotion) => (
-          <Table.Row
-            className=" dark:border-gray-700 dark:bg-gray-800"
-            key={promotion.name}
-          >
+          <Table.Row className="" key={promotion.name}>
             <Table.Cell>{promotion.name}</Table.Cell>
             <Table.Cell>{promotion.description}</Table.Cell>
             <Table.Cell>{promotion.checkoutLimit}</Table.Cell>

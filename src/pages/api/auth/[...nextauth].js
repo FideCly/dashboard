@@ -1,11 +1,14 @@
 import axios from 'axios';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { json } from 'node:stream/consumers';
 import { setCookie } from 'nookies';
 
 const nextAuthOptions = (req, res) => {
   return {
+    pages: {
+      signIn: '/auth/credentials-signin', // If set, new users will be directed here on first sign in
+      // New users will be directed here on first sign in (leave the property out if not of interest)
+    },
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
       CredentialsProvider({

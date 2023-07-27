@@ -22,7 +22,7 @@ export default function Navbare() {
       </Link>
       <button
         onClick={() => signOut()}
-        className="items-center p-4 bg-green-200 rounded-full bg dark:hover:bg-green-500 dark:bg-green-400 hover:bg-green-300"
+        className="items-center p-4 bg-green-200 rounded-full"
         id="logout"
       >
         <FontAwesomeIcon icon={faRightToBracket} />

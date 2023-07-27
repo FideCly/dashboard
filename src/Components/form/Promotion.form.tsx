@@ -19,7 +19,7 @@ export const PromotionCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       try {
-        const response = await fetch('/api/promotions', {
+        await fetch('/api/promotions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ export interface IShopCreatePayload {
 }
 
 export interface IShopUpdatePayload {
-  id: any;
+  id: number;
   companyName?: string;
   siren?: string;
   siret?: string;
@@ -24,6 +24,7 @@ export interface IShopUpdatePayload {
   phone?: string;
   address?: string;
   city?: string;
+  activity: string;
 }
 
 export interface IShop {
