@@ -18,8 +18,8 @@ dependencies:
     specifier: 13.4.12
     version: 13.4.12
   '@react-google-maps/api':
-    specifier: ^2.19.0
-    version: 2.19.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^2.19.2
+    version: 2.19.2(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
     specifier: 20.4.5
     version: 20.4.5
@@ -392,28 +392,28 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@react-google-maps/api@2.19.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NRfdrdHCDTSn+GMMZfE2FgoR2CzklZhAIz3X7SL2q6oeGN6PzL+2RhRt3YxSt/L10eUl31rzwlwo2XIgkiHrCQ==}
+  /@react-google-maps/api@2.19.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Vt57XWzCKfsUjKOmFUl2erVVfOePkPK5OigF/f+q7UuV/Nm9KDDy1PMFBx+wNahEqOd6a32BxfsykEhBnbU9wQ==}
     peerDependencies:
       react: ^16.8 || ^17 || ^18
       react-dom: ^16.8 || ^17 || ^18
     dependencies:
       '@googlemaps/js-api-loader': 1.16.2
       '@googlemaps/markerclusterer': 2.3.2
-      '@react-google-maps/infobox': 2.19.1
-      '@react-google-maps/marker-clusterer': 2.19.1
-      '@types/google.maps': 3.53.4
+      '@react-google-maps/infobox': 2.19.2
+      '@react-google-maps/marker-clusterer': 2.19.2
+      '@types/google.maps': 3.53.5
       invariant: 2.2.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@react-google-maps/infobox@2.19.1:
-    resolution: {integrity: sha512-amdclymXFGxM/qQj9LjZ4kysDs3LKJnL2NeJfsexhrQulKadEChmNQ2SUwtX0MfvyBdB79QaKcr7wjaLcvPONQ==}
+  /@react-google-maps/infobox@2.19.2:
+    resolution: {integrity: sha512-6wvBqeJsQ/eFSvoxg+9VoncQvNoVCdmxzxRpLvmjPD+nNC6mHM0vJH1xSqaKijkMrfLJT0nfkTGpovrF896jwg==}
     dev: false
 
-  /@react-google-maps/marker-clusterer@2.19.1:
-    resolution: {integrity: sha512-zaW4UBiA6VkIegFaHcv0RNIV9ToAh6SfcBiZygvkhhT0hlHRYuB8S25pIKWJ15zYucmZwAPF1QVKdUhm9HsUDQ==}
+  /@react-google-maps/marker-clusterer@2.19.2:
+    resolution: {integrity: sha512-x9ibmsP0ZVqzyCo1Pitbw+4b6iEXRw/r1TCy3vOUR3eKrzWLnHYZMR325BkZW2r8fnuWE/V3Fp4QZOP9qYORCw==}
     dev: false
 
   /@rushstack/eslint-patch@1.3.2:
@@ -426,13 +426,8 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@types/google.maps@3.53.4:
-    resolution: {integrity: sha512-IiDAYTONQEKCBssPtoM0XqWF8YIIk2leba4NOf9qVQ/d8l5gLuS3QT87TrX6/u8rMonQAXC9KEDmM4q7sT6MWg==}
-    dev: false
-
   /@types/google.maps@3.53.5:
     resolution: {integrity: sha512-HoRq4Te8J6krH7hj+TfdYepqegoKZCj3kkaK5gf+ySFSHLvyqYkDvkrtbcVJXQ6QBphQ0h1TF7p4J6sOh4r/zg==}
-    dev: true
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
