@@ -5,7 +5,6 @@ import axios from 'axios';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const campaign = req.body;
-    console.log(typeof campaign.promotionId);
     try {
       const response = await axios.post<ICampaignCreatePayload>(
         process.env.NEXT_PUBLIC_API_URL + `campaign`,

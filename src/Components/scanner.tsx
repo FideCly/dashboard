@@ -1,6 +1,6 @@
 import { IScanner } from '@/Models/scanner';
 import { Button, Select } from 'flowbite-react';
-import { getSession } from 'next-auth/react';
+
 import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -25,8 +25,8 @@ export default function ScannerForm() {
   React.useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
       try {
-        const session = await getSession();
-        const user = await fetch(`/api/user/${session?.user?.email}`, {
+        const userid = localStorage.getItem('userid');
+        const user = await fetch(`/api/user/${userid}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +67,6 @@ export default function ScannerForm() {
           autoClose: 2000,
           type: 'error',
         });
-        console.log(response);
         throw new Error('Bad response from server');
       } else {
         toast('Checkout done', {

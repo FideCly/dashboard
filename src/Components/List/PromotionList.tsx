@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { IPromotions } from '@/Models/Promotions';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getSession } from 'next-auth/react';
+
 import { IUser } from '@/Models/User';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
@@ -13,14 +13,14 @@ export default function PromotionList() {
   const [error, setError] = useState(false);
 
   const loadUser = async (): Promise<IUser> => {
-    const session = await getSession();
+    const userid = localStorage.getItem('userid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${session.user.email}`, options)
+    const user = fetch(`/api/user/${userid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;
@@ -42,7 +42,6 @@ export default function PromotionList() {
         );
         const data = await response.json();
         setPromotions(data);
-        console.log(data);
       } catch (error) {
         console.error(error);
         setError(true);

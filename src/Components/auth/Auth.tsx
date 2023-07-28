@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 export const Register: React.FC = () => {
   const {
@@ -106,12 +107,12 @@ export const Register: React.FC = () => {
               </button>
               <p className="text-sm font-light text-gray-500 ">
                 Already have a account?{' '}
-                <button
-                  onClick={() => signIn()}
+                <Link
+                  href="/auth/signin"
                   className="text-black bg-green-200 hover:bg-green-300"
                 >
                   Sign in
-                </button>
+                </Link>
               </p>
             </form>
           </div>

@@ -10,7 +10,7 @@ import { IUser } from '@/Models/User';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { Select } from 'flowbite-react';
-import { getSession } from 'next-auth/react';
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 Chart.register(CategoryScale);
@@ -38,14 +38,14 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     const loadUser = async (): Promise<IUser> => {
-      const session = await getSession();
+      const userid = localStorage.getItem('userid');
       const options = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`/api/user/${session.user.email}`, options);
+      const response = await fetch(`/api/user/${userid}`, options);
       const user: IUser = await response.json();
       return user;
     };

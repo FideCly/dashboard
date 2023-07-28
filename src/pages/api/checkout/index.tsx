@@ -16,7 +16,6 @@ export default async (req, res) => {
       },
     );
     if (response.status >= 400) {
-      console.log(response);
       throw new Error('Bad response from server');
     }
     return res.status(response.status).json(response.data);

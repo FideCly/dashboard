@@ -14,7 +14,6 @@ export default async function handler(req, res) {
     );
     // if status >= 400 it will throw an error and will be catched by the error handler middleware else it will return the data
     if (response.status >= 400) {
-      console.log(response);
       throw new Error('Bad response from server');
     }
     return res.status(200).json(response.data);

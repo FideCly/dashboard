@@ -47,7 +47,6 @@ export const ShopCreateForm: React.FC = () => {
             autoClose: 2000,
             type: 'error',
           });
-          console.log(response);
         } else {
           toast('Shop created', {
             hideProgressBar: true,
@@ -249,7 +248,6 @@ export const ShopUpdateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
-      console.log(data);
       try {
         const res = await fetch(`/api/shop/${data.id}`, {
           method: 'PUT',

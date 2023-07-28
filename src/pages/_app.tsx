@@ -5,7 +5,6 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 config.autoAddCss = false;
-import { SessionProvider } from 'next-auth/react';
 import Consent from '@/Components/Consent';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,18 +20,18 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { ...pageProps },
 }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <SessionProvider session={session}>
+    <>
       <main className="flex-1 p-8 bg-gray-50 ">
         <Component {...pageProps} />
         <Consent />
       </main>
       <ToastContainer />
-    </SessionProvider>,
+    </>,
   );
 }

@@ -5,21 +5,21 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
 import { IUser } from '@/Models/User';
-import { getSession } from 'next-auth/react';
 
 export default function ShopList() {
   const [shops, setShops] = useState<IShop[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const loadUser = async (): Promise<IUser> => {
-    const session = await getSession();
+    // get user id from localstorage
+    const userid = localStorage.getItem('userid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${session.user.email}`, options)
+    const user = fetch(`/api/user/${userid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;

@@ -132,7 +132,6 @@ export const PromotionUpdateForm: React.FC = () => {
   const id = Number(router.query.id);
 
   useEffect(() => {
-    console.log('id :' + id);
     if (!id) return;
     const loadPromotion = async (): Promise<void> => {
       const options = {
@@ -145,7 +144,6 @@ export const PromotionUpdateForm: React.FC = () => {
         const response = await fetch(`/api/promotions/${id}`, options);
         const data = await response.json();
         setPromotion(data);
-        console.log('promotion on page :' + data);
         const startAt = data.startAt.split('T')[0];
         const endAt = data.endAt.split('T')[0];
         setValue('name', data.name);

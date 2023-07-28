@@ -5,7 +5,7 @@ import {
   ICampaignCreatePayload,
   ICampaignUpdatePayload,
 } from '@/Models/Campaign';
-import { getSession } from 'next-auth/react';
+
 import { IUser } from '@/Models/User';
 import { IPromotions } from '@/Models/Promotions';
 import { toast } from 'react-toastify';
@@ -20,14 +20,14 @@ export const CampaignCreateForm: React.FC = () => {
   // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const loadUser = async (): Promise<IUser> => {
-    const session = await getSession();
+    const userid = localStorage.getItem('userid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${session.user.email}`, options)
+    const user = fetch(`/api/user/${userid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;
@@ -153,14 +153,14 @@ export const CampaignUpdateForm: React.FC = () => {
   const router = useRouter();
   const id = Number(router.query.id);
   const loadUser = async (): Promise<IUser> => {
-    const session = await getSession();
+    const userid = localStorage.getItem('userid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${session.user.email}`, options)
+    const user = fetch(`/api/user/${userid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ICampaign } from '@/Models/Campaign';
-import { getSession } from 'next-auth/react';
+
 import { IUser } from '@/Models/User';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
@@ -13,14 +13,14 @@ export default function CampaignList() {
   const [error, setError] = useState(false);
   // get campaigns by campaign id
   const loadUser = async (): Promise<IUser> => {
-    const session = await getSession();
+    const userid = localStorage.getItem('userid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${session.user.email}`, options)
+    const user = fetch(`/api/user/${userid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;
