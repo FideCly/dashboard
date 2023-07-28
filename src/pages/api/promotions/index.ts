@@ -16,10 +16,7 @@ export default async function handler(req, res) {
         },
       },
     );
-    res
-      .status(response.status)
-      .json(response.data ? response.data : null)
-      .end();
+    res.status(response.status).json(response.data ? response.data : null);
   } else if (req.method === 'POST') {
     // get the id from the query
     const promotion = req.body;

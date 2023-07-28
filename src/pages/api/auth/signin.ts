@@ -10,10 +10,7 @@ export default async function handler(req, res) {
       user,
     );
     if (response.data) {
-      res
-        .status(response.status)
-        .json(response.data ? response.data : null)
-        .end();
+      res.status(response.status).json(response.data ? response.data : null);
     } else {
       throw new Error('Error');
     }

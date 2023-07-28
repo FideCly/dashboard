@@ -8,9 +8,6 @@ export default async function handler(req, res) {
       process.env.NEXT_PUBLIC_API_URL + `auth/register`,
       user,
     );
-    res
-      .status(response.status)
-      .json(response.data ? response.data : null)
-      .end();
+    res.status(response.status).json(response.data ? response.data : null);
   }
 }
