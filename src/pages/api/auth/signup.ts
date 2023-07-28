@@ -13,6 +13,7 @@ export default async function handler(req, res) {
       .json(response.data ? response.data : null)
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .end();
   }
 }
