@@ -19,9 +19,7 @@ export default async function handler(req, res) {
     res
       .status(response.status)
       .json(response.data ? response.data : null)
-      .catch((err) => {
-        console.log(err);
-      });
+      .end();
   } else if (req.method === 'POST') {
     // get the id from the query
     const promotion = req.body;
