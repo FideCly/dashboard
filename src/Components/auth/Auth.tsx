@@ -4,7 +4,6 @@ import { IUserAuthPayload } from '@/Models/User';
 import { useRouter } from 'next/router';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
 export const Register: React.FC = () => {
@@ -30,11 +29,7 @@ export const Register: React.FC = () => {
         if (response.status >= 400) {
           throw new Error('Bad response from server');
         } else {
-          await signIn('credentials', {
-            email: data.email,
-            password: data.password,
-            callbackUrl: `/`,
-          });
+          router.push('/auth/signin');
         }
       } catch (error) {
         console.log(error);
