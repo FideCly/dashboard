@@ -25,7 +25,7 @@ export default function Navbare() {
       <button
         onClick={() => {
           // delete user id from localstorage
-          localStorage.removeItem('userid');
+          localStorage.removeItem('userUuid');
           // delete cookie
           deleteCookie('token');
           // return to signin page

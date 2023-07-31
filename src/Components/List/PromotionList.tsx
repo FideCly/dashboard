@@ -13,14 +13,14 @@ export default function PromotionList() {
   const [error, setError] = useState(false);
 
   const loadUser = async (): Promise<IUser> => {
-    const userid = localStorage.getItem('userid');
+    const userUuid = localStorage.getItem('userUuid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${userid}`, options)
+    const user = fetch(`/api/user/${userUuid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;

@@ -25,8 +25,8 @@ export default function ScannerForm() {
   React.useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
       try {
-        const userid = localStorage.getItem('userid');
-        const user = await fetch(`/api/user/${userid}`, {
+        const userUuid = localStorage.getItem('userUuid');
+        const user = await fetch(`/api/user/${userUuid}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ export default function SignIn() {
         throw new Error('Bad response from server');
       } else {
         const user: jwttoken = await response.json();
-        localStorage.setItem('userid', user.userUuid);
+        localStorage.setItem('userUuid', user.userUuid);
         // create a cookie
         setCookie('token', user.token, {
           maxAge: 30 * 24 * 60 * 60,

@@ -20,14 +20,14 @@ export const CampaignCreateForm: React.FC = () => {
   // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const loadUser = async (): Promise<IUser> => {
-    const userid = localStorage.getItem('userid');
+    const userUuid = localStorage.getItem('userUuid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${userid}`, options)
+    const user = fetch(`/api/user/${userUuid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;
@@ -153,14 +153,14 @@ export const CampaignUpdateForm: React.FC = () => {
   const router = useRouter();
   const id = Number(router.query.id);
   const loadUser = async (): Promise<IUser> => {
-    const userid = localStorage.getItem('userid');
+    const userUuid = localStorage.getItem('userUuid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${userid}`, options)
+    const user = fetch(`/api/user/${userUuid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;

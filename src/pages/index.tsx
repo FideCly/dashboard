@@ -38,14 +38,14 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     const loadUser = async (): Promise<IUser> => {
-      const userid = localStorage.getItem('userid');
+      const userUuid = localStorage.getItem('userUuid');
       const options = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       };
-      const response = await fetch(`/api/user/${userid}`, options);
+      const response = await fetch(`/api/user/${userUuid}`, options);
       const user: IUser = await response.json();
       return user;
     };

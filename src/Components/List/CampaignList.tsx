@@ -13,14 +13,14 @@ export default function CampaignList() {
   const [error, setError] = useState(false);
   // get campaigns by campaign id
   const loadUser = async (): Promise<IUser> => {
-    const userid = localStorage.getItem('userid');
+    const userUuid = localStorage.getItem('userUuid');
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${userid}`, options)
+    const user = fetch(`/api/user/${userUuid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;

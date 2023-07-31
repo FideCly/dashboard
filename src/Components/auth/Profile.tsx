@@ -8,8 +8,8 @@ export const Profile = () => {
 
   useEffect(() => {
     const loadUser = async () => {
-      const userid = localStorage.getItem('userid');
-      const endpoint = `/api/user/${userid}`;
+      const userUuid = localStorage.getItem('userUuid');
+      const endpoint = `/api/user/${userUuid}`;
       const options = {
         method: 'GET',
         headers: {
