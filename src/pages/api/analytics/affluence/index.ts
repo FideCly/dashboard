@@ -4,9 +4,9 @@ import { IAnalytics } from '../../../../Models/Analytics';
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const response = await axios.get<IAnalytics[]>(
-      process.env.NEXT_PUBLIC_API_URL + `analytics/affluence`,
+      process.env.NEXT_PUBLIC_API_URL +
+        `analytics/affluence?start_date=${req.query.start_date}&end_date=${req.query.end_date}`,
       {
-        params: req.body,
         headers: {
           Authorization: `Bearer ${req.cookies.token}`,
         },
@@ -16,6 +16,6 @@ export default async function handler(req, res) {
     if (response.status >= 400) {
       throw new Error('Bad response from server');
     }
-    return res.status(200).json(response.data ? response.data : []);
+    return res.status(200).json(response.data);
   }
 }

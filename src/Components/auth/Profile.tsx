@@ -1,6 +1,5 @@
 import { IUser } from '@/Models/User';
 
-import { getSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 export const Profile = () => {
@@ -9,8 +8,8 @@ export const Profile = () => {
 
   useEffect(() => {
     const loadUser = async () => {
-      const session = await getSession();
-      const endpoint = `/api/user/${session.user?.email}`;
+      const userUuid = localStorage.getItem('userUuid');
+      const endpoint = `/api/user/${userUuid}`;
       const options = {
         method: 'GET',
         headers: {
@@ -33,6 +32,7 @@ export const Profile = () => {
       <h1>Profile</h1>
       <p>{user?.username}</p>
       <p>{user?.email}</p>
+      <p>{user?.shop.id}</p>
     </div>
   );
 };

@@ -21,7 +21,7 @@ export default function Campaign() {
           id="add-promotion"
           type="button"
           onClick={handleClick}
-          className="inline-flex items-center font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300 dark:hover:bg-green-500 dark:bg-green-400"
+          className="inline-flex items-center font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300"
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>

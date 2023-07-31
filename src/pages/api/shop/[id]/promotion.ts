@@ -5,19 +5,19 @@ import {
 } from '@/Models/Promotions';
 import axios from 'axios';
 
-export default async function handler(req, res) {
+export default async function handler(req, res): Promise<IPromotions[]> {
   if (req.method === 'GET') {
     // get the id from the query
-    const { id } = req.query;
+    const id = req.query.id;
     const response = await axios.get<IPromotions>(
-      process.env.NEXT_PUBLIC_API_URL + `shop/${id}/promotion`,
+      process.env.NEXT_PUBLIC_API_URL + `shop/${id}/promotions`,
       {
         headers: {
           Authorization: `Bearer ${req.cookies.token}`,
         },
       },
     );
-    res.status(response.status).json(response.data);
+    return res.status(response.status).json(response.data);
   } else if (req.method === 'POST') {
     // get the id from the query
     const promotion = req.body;
@@ -30,7 +30,9 @@ export default async function handler(req, res) {
         },
       },
     );
-    res.status(response.status).json(response.data ? response.data : null);
+    return res
+      .status(response.status)
+      .json(response.data ? response.data : null);
   } else if (req.method === 'PUT') {
     // get the id from the query
     const { id } = req.query;
@@ -44,7 +46,9 @@ export default async function handler(req, res) {
         },
       },
     );
-    res.status(response.status).json(response.data ? response.data : null);
+    return res
+      .status(response.status)
+      .json(response.data ? response.data : null);
   } else if (req.method === 'DELETE') {
     // get the id from the query
     const { id } = req.query;
@@ -56,6 +60,6 @@ export default async function handler(req, res) {
         },
       },
     );
-    res.status(response.status).json(response.data);
+    return res.status(response.status).json(response.data);
   }
 }

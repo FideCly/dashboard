@@ -1,29 +1,21 @@
-import { IShop } from './Shop';
-import { IUser } from './User';
-
 export interface ICampaignCreatePayload {
+  promotionId: number;
   subject: string;
-  message: string;
-  shop: IShop;
-  targets?: IUser[];
+  textData: string;
 }
 
 export interface ICampaignUpdatePayload {
   id: number;
+  promotionId: number;
+  shopId: number;
   subject: string;
-  message: string;
-  shop: IShop;
-  targets?: IUser[];
+  textData?: string;
+  isActivate: boolean;
 }
 
 export interface ICampaign {
-  id: number;
+  id?: number;
+  promotionId: number;
   subject: string;
-  message: string;
-  shop: IShop;
-  targets?: IUser[];
-  isActive: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  textData?: string;
 }

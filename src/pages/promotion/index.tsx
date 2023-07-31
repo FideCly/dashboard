@@ -2,9 +2,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PromotionCreateForm } from '../../Components/form/Promotion.form';
 import { useState } from 'react';
-import PromotionList from '../../Components/List/PromotionList';
 import Sidebar from '@/Components/html/Sidebar';
 import Navbare from '@/Components/html/Navbar';
+import PromotionList from '@/Components/List/PromotionList';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
@@ -21,7 +21,7 @@ export default function Promotion() {
           id="add-promotion"
           type="button"
           onClick={handleClick}
-          className="inline-flex items-center p-4 font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300 dark:hover:bg-green-500 dark:bg-green-400"
+          className="inline-flex items-center p-4 font-medium text-center bg-green-200 rounded-full tet-sm hover:bg-green-300"
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>

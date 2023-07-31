@@ -1,8 +1,13 @@
-import React, { useCallback } from 'react';
-import type { IPromotionCreatePayload, IPromotions } from '@/Models/Promotions';
+import React, { useCallback, useEffect, useState } from 'react';
+import type {
+  IPromotionCreatePayload,
+  IPromotionUpdatePayload,
+  IPromotions,
+} from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
-
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
   const {
@@ -14,14 +19,18 @@ export const PromotionCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       try {
-        const response = await fetch('/api/promotion', {
+        await fetch('/api/promotions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
-        console.log(response);
+        toast('Promotion created', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
       } catch (error) {
         console.error(error);
       }
@@ -110,39 +119,73 @@ export const PromotionCreateForm: React.FC = () => {
   );
 };
 
-export const PromotionUpdateForm: React.FC<IPromotions> = (
-  promotion: IPromotions,
-) => {
+export const PromotionUpdateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPromotionCreatePayload>({
-    defaultValues: {
-      name: promotion.name,
-      description: promotion.description,
-      startAt: promotion.startAt,
-      endAt: promotion.endAt,
-      checkoutLimit: promotion.checkoutLimit,
-    },
-  });
+    setValue,
+  } = useForm<IPromotionUpdatePayload>();
 
-  const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
+  const [promotion, setPromotion] = useState<IPromotions>();
+  const router = useRouter();
+  const id = Number(router.query.id);
+
+  useEffect(() => {
+    if (!id) return;
+    const loadPromotion = async (): Promise<void> => {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      try {
+        const response = await fetch(`/api/promotions/${id}`, options);
+        const data = await response.json();
+        setPromotion(data);
+        const startAt = data.startAt.split('T')[0];
+        const endAt = data.endAt.split('T')[0];
+        setValue('name', data.name);
+        setValue('description', data.description);
+        setValue('startAt', startAt);
+        setValue('endAt', endAt);
+        setValue('checkoutLimit', data.checkoutLimit);
+        setValue('id', data.id);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadPromotion();
+  }, [id]);
+  const onSubmit: SubmitHandler<IPromotionUpdatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch(`/api/promotion/${promotion.id}`, {
+        const res = await fetch(`/api/promotions/${data.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
-        console.log(data);
+        if (res.status >= 400) {
+          toast('Promotion not updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Promotion updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+        }
       } catch (error) {
         console.error(error);
       }
     },
-    [promotion.id],
+    [promotion?.id],
   );
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

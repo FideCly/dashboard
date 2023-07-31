@@ -1,15 +1,36 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IShopCreatePayload, IShopUpdatePayload, IShop } from '@/Models/Shop';
+import { IShopCreatePayload, IShopUpdatePayload } from '@/Models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-google-places-autocomplete';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
+const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
+  return (
+    <div>
+      <GooglePlacesAutocomplete
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+        selectProps={{
+          ...field,
+          isClearable: true,
+        }}
+      />
+      {error && <div style={{ color: 'red' }}>{error.message}</div>}
+    </div>
+  );
+};
 export const ShopCreateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IShopCreatePayload>();
-
+    setValue,
+  } = useForm();
+  const router = useRouter();
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -20,8 +41,20 @@ export const ShopCreateForm: React.FC = () => {
           },
           body: JSON.stringify(data),
         });
-        const shop = await response.json();
-        console.log(shop);
+        if (response.status >= 400) {
+          toast('Shop not created', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Shop created', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+          router.push('/');
+        }
       } catch (error) {
         console.error(error);
       }
@@ -29,13 +62,21 @@ export const ShopCreateForm: React.FC = () => {
     [],
   );
 
+  function setMetadata(e: any) {
+    setValue('address', e.label);
+    geocodeByAddress(e.label)
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        setValue('lat', lat);
+        setValue('long', lng);
+      })
+      .catch((error) => console.error('Error', error));
+  }
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 dark:text-white"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 ">
       <div className="">
-        <Label htmlFor="companyName" className="dark:text-white">
+        <Label htmlFor="companyName" className="">
           Company Name
         </Label>
         <TextInput
@@ -49,20 +90,20 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="phone" className="dark:text-white">
-          Adress
+        <Label htmlFor="address" className="">
+          Address
         </Label>
-        <TextInput
+        <GooglePlacesAutocompleteComponent
+          error={undefined}
           {...register('address', { required: true, maxLength: 50 })}
-          type="text"
-          id="adress"
-          maxLength={50}
-          placeholder="2 rue test"
+          onChange={(e) => {
+            setMetadata(e);
+          }}
         />
       </div>
 
       <div className="">
-        <Label htmlFor="phone" className="dark:text-white">
+        <Label htmlFor="phone" className="">
           Numero de telephone
         </Label>
         <TextInput
@@ -76,7 +117,7 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="email" className="dark:text-white">
+        <Label htmlFor="email" className="">
           Email
         </Label>
         <TextInput
@@ -90,7 +131,7 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="siren" className="dark:text-white">
+        <Label htmlFor="siren" className="">
           Siren
         </Label>
         <TextInput
@@ -104,7 +145,7 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="siret" className="dark:text-white">
+        <Label htmlFor="siret" className="">
           Siret
         </Label>
         <TextInput
@@ -117,7 +158,20 @@ export const ShopCreateForm: React.FC = () => {
       </div>
 
       <div className="">
-        <Label htmlFor="activity" className="dark:text-white">
+        <Label htmlFor="city" className="">
+          City
+        </Label>
+        <TextInput
+          {...register('city', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          placeholder="city"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
+      </div>
+
+      <div className="">
+        <Label htmlFor="activity" className="">
           Type de magazin
         </Label>
         <Select {...register('activity', { required: true, maxLength: 14 })}>
@@ -127,6 +181,19 @@ export const ShopCreateForm: React.FC = () => {
           <option value="Store">Store</option>
           <option value="Service">Service</option>
         </Select>
+      </div>
+
+      <div className="">
+        <Label htmlFor="zipCode" className="">
+          zipCode
+        </Label>
+        <TextInput
+          {...register('zipCode', { required: true, maxLength: 14 })}
+          type="text"
+          id="name"
+          placeholder="zipCode"
+        />
+        {errors.siret && <span>Ce champ est requis</span>}
       </div>
       <Button
         type="submit"
@@ -138,37 +205,75 @@ export const ShopCreateForm: React.FC = () => {
   );
 };
 
-export const ShopUpdateForm: React.FC<IShop> = (shop: IShop) => {
+export const ShopUpdateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IShopUpdatePayload>({
-    defaultValues: {
-      companyName: shop.companyName,
-      address: shop.address,
-      phone: shop.phone,
-      email: shop.email,
-      siren: shop.siren,
-      siret: shop.siret,
-    },
-  });
+    setValue,
+  } = useForm<IShopUpdatePayload>();
+
+  const router = useRouter();
+  const id = Number(router.query.id);
+
+  useEffect(() => {
+    if (id) {
+      const getShop = async (): Promise<void> => {
+        try {
+          const response = await fetch(`/api/shop/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const data = await response.json(); // Extract JSON data from response
+          setValue('id', data.id);
+          setValue('companyName', data.companyName);
+          setValue('address', data.address);
+          setValue('phone', data.phone);
+          setValue('email', data.email);
+          setValue('siren', data.siren);
+          setValue('siret', data.siret);
+          setValue('city', data.city);
+          setValue('zipCode', data.zipCode);
+          setValue('lat', data.lat);
+          setValue('long', data.long);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getShop();
+    }
+  }, [id]);
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
       try {
-        await fetch(`/api/shop/${shop.id}`, {
+        const res = await fetch(`/api/shop/${data.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
+        if (res.status >= 400) {
+          toast('Shop not updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else {
+          toast('Shop updated', {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'success',
+          });
+        }
       } catch (error) {
         console.error(error);
       }
     },
-    [shop.id],
+    [],
   );
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">
@@ -238,6 +343,7 @@ export const ShopUpdateForm: React.FC<IShop> = (shop: IShop) => {
           id="name"
           maxLength={14}
           placeholder="siret"
+          hidden
         />
         {errors.siret && <span>Ce champ est requis</span>}
       </div>

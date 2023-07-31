@@ -19,16 +19,18 @@ export default async function handler(req, res) {
   }
   if (req.method === 'POST') {
     const payload: IShopCreatePayload = req.body;
-    const response = await axios.post<IShop>(
-      process.env.NEXT_PUBLIC_API_URL + `shop`,
-      payload,
-      {
+    await axios
+      .post<IShop>(process.env.NEXT_PUBLIC_API_URL + `shop`, payload, {
         headers: {
           Authorization: `Bearer ${req.cookies.token}`,
         },
-      },
-    );
-    res.status(response.status).json(response.data);
+      })
+      .then((response) => {
+        res.status(response.status).json(response.data);
+      })
+      .catch((error) => {
+        res.status(error.response.status).json(error);
+      });
   }
   if (req.method === 'PUT') {
     const payload: IShopUpdatePayload = req.body;

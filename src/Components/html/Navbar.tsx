@@ -1,10 +1,12 @@
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { deleteCookie } from 'cookies-next';
 import { Avatar, TextInput } from 'flowbite-react';
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Navbare() {
+  const router = useRouter();
   return (
     <nav className="flex content-center w-full space-x-2 ">
       <TextInput
@@ -21,8 +23,15 @@ export default function Navbare() {
         />
       </Link>
       <button
-        onClick={() => signOut()}
-        className="items-center p-4 bg-green-200 rounded-full bg dark:hover:bg-green-500 dark:bg-green-400 hover:bg-green-300"
+        onClick={() => {
+          // delete user id from localstorage
+          localStorage.removeItem('userUuid');
+          // delete cookie
+          deleteCookie('token');
+          // return to signin page
+          router.push('/auth/signin');
+        }}
+        className="items-center p-4 bg-green-200 rounded-full"
         id="logout"
       >
         <FontAwesomeIcon icon={faRightToBracket} />

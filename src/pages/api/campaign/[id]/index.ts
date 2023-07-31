@@ -1,10 +1,10 @@
-import type { ICampaignUpdatePayload } from '../../../Models/Campaign';
+import type { ICampaignUpdatePayload } from '../../../../Models/Campaign';
 
 export default async function handler(req, res) {
   if (req.method === 'PUT') {
     const campaign = req.body as ICampaignUpdatePayload;
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + `campaigns/${req.query.id}`,
+      process.env.NEXT_PUBLIC_API_URL + `campaign/${req.query.id}`,
       {
         method: 'PUT',
         headers: {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     res.status(response.status).json(response);
   } else if (req.method === 'DELETE') {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + `campaigns/${req.query.id}`,
+      process.env.NEXT_PUBLIC_API_URL + `campaign/${req.query.id}`,
       {
         method: 'DELETE',
         headers: {
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     res.status(response.status).json(response);
   } else if (req.method === 'GET') {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + `campaigns/${req.query.id}`,
+      process.env.NEXT_PUBLIC_API_URL + `campaign/${req.query.id}`,
       {
         method: 'GET',
         headers: {

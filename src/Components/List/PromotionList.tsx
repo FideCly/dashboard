@@ -2,43 +2,53 @@ import { useEffect, useState } from 'react';
 import { IPromotions } from '@/Models/Promotions';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getSession, useSession } from 'next-auth/react';
+
+import { IUser } from '@/Models/User';
+import { Table } from 'flowbite-react';
+import Link from 'next/link';
 
 export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotions[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  useSession();
+
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
   useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
+      setIsLoading(true);
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const user = await loadUser();
       try {
-        const session = await getSession();
-        const user = await fetch(`/api/user/${session?.user?.email}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await user.json();
-        const response = await fetch(`/api/shop/${data.shop.id}/promotion`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log(response);
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        const dataPromotion = await response.json();
-        setPromotions(dataPromotion);
+        const response = await fetch(
+          `/api/shop/${user.shop.id}/promotion`,
+          options,
+        );
+        const data = await response.json();
+        setPromotions(data);
       } catch (error) {
+        console.error(error);
         setError(true);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
-    void loadPromotions();
+    loadPromotions();
   }, []);
 
   if (isLoading) {
@@ -54,38 +64,36 @@ export default function PromotionList() {
   }
 
   return (
-    <table className="table w-full" id="PromotionList" data-cy="PromotionList">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Checkout Limit</th>
-          <th>Shop Id</th>
-          <th>Start At</th>
-          <th>End At</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table striped className="table w-full ">
+      <Table.Head>
+        <Table.HeadCell>Name</Table.HeadCell>
+        <Table.HeadCell>Description</Table.HeadCell>
+        <Table.HeadCell>Checkout Limit</Table.HeadCell>
+        <Table.HeadCell>Shop Id</Table.HeadCell>
+        <Table.HeadCell>Start At</Table.HeadCell>
+        <Table.HeadCell>End At</Table.HeadCell>
+        <Table.HeadCell>Actions</Table.HeadCell>
+      </Table.Head>
+      <Table.Body className="divide-y">
         {promotions?.map((promotion) => (
-          <tr key={promotion.name}>
-            <td>{promotion.name}</td>
-            <td>{promotion.description}</td>
-            <td>{promotion.checkoutLimit}</td>
-            <td>{promotion.shopId}</td>
-            <td>{promotion.startAt?.toString()}</td>
-            <td>{promotion.endAt.toString()}</td>
-            <td className="space-x-2">
-              <a href={`/promotion/${promotion.id}/edit`}>
+          <Table.Row className="" key={promotion.name}>
+            <Table.Cell>{promotion.name}</Table.Cell>
+            <Table.Cell>{promotion.description}</Table.Cell>
+            <Table.Cell>{promotion.checkoutLimit}</Table.Cell>
+            <Table.Cell>{promotion.shopId}</Table.Cell>
+            <Table.Cell>{promotion.startAt?.toString()}</Table.Cell>
+            <Table.Cell>{promotion.endAt.toString()}</Table.Cell>
+            <Table.Cell className="space-x-2">
+              <Link href={`/promotion/${promotion.id}/edit`}>
                 <FontAwesomeIcon icon={faEdit} />
-              </a>
-              <a href="">
+              </Link>
+              <Link href="">
                 <FontAwesomeIcon icon={faTrash} />
-              </a>
-            </td>
-          </tr>
+              </Link>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </tbody>
-    </table>
+      </Table.Body>
+    </Table>
   );
 }

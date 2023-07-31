@@ -6,7 +6,7 @@ import type {
 
 export default async function handler(req, res) {
   if (req.method === 'PUT') {
-    const { id } = req.query;
+    const id = req.query.id;
     const promotion = req.body;
     const response = await axios.put<IPromotionUpdatePayload>(
       process.env.NEXT_PUBLIC_API_URL + `promotion/${id}`,
@@ -17,9 +17,7 @@ export default async function handler(req, res) {
         },
       },
     );
-    res
-      .status(response.data.statusCode)
-      .json(response.data ? response.data : null);
+    res.status(response.status).json(response.data ? response.data : null);
   } else if (req.method === 'DELETE') {
     const { id } = req.query;
     const response = await axios.delete<IPromotionUpdatePayload>(
@@ -33,7 +31,7 @@ export default async function handler(req, res) {
 
     res.status(response.status).json(response.data ? response.data : null);
   } else if (req.method === 'GET') {
-    const { id } = req.query;
+    const id = req.query.id;
     const response = await axios.get<IPromotions>(
       process.env.NEXT_PUBLIC_API_URL + `promotion/${id}`,
       {

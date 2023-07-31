@@ -4,31 +4,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
+import { IUser } from '@/Models/User';
 
 export default function ShopList() {
   const [shops, setShops] = useState<IShop[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const loadUser = async (): Promise<IUser> => {
+    // get user id from localstorage
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
   useEffect(() => {
     const loadShops = async (): Promise<void> => {
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/shop`, {
+        const user = await loadUser();
+        const response = await fetch(`/api/shop/${user.shop.id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         });
-        const data = await response.json(); // Extract JSON data from response
-        setShops(data); // Set state with extracted data
+        const data = await response.json();
+        setShops(data);
       } catch (error) {
         setError(true);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
-    void loadShops();
+    loadShops();
   }, []);
 
   if (isLoading) {
@@ -67,10 +81,7 @@ export default function ShopList() {
         </Table.Head>
         <Table.Body className="divide-y">
           {shops.map((shop) => (
-            <Table.Row
-              className=" dark:border-gray-700 dark:bg-gray-800"
-              key={shop.id}
-            >
+            <Table.Row className="" key={shop.id}>
               <Table.Cell>{shop.companyName}</Table.Cell>
               <Table.Cell>{shop.address}</Table.Cell>
               <Table.Cell>{shop.zipCode}</Table.Cell>
