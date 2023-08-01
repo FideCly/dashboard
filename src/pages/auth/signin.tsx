@@ -1,4 +1,4 @@
-import { IAuthPayload, jwttoken } from '@/Models/User';
+import { IAuthPayload, IUser, jwttoken } from '@/Models/User';
 import { setCookie } from 'cookies-next';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
@@ -15,6 +15,19 @@ export default function SignIn() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
   const onSubmit: SubmitHandler<IAuthPayload> = useCallback(async (data) => {
     try {
       const response = await fetch(`/api/auth/signin`, {
@@ -34,13 +47,18 @@ export default function SignIn() {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
         });
-
         toast('user connected', {
           hideProgressBar: true,
           autoClose: 2000,
           type: 'success',
         });
-        router.push('/');
+        // if user is has a shop, redirect home
+        const userShop = await loadUser();
+        if (userShop.shop) {
+          router.push('/');
+        } else {
+          router.push('/shops/create');
+        }
       }
     } catch (error) {
       toast('user not connected', {
