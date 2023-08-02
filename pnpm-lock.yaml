@@ -71,11 +71,11 @@ devDependencies:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.27)
   cypress:
-    specifier: ^12.17.2
-    version: 12.17.2
+    specifier: ^12.17.3
+    version: 12.17.3
   cypress-axe:
     specifier: ^1.4.0
-    version: 1.4.0(axe-core@4.7.2)(cypress@12.17.2)
+    version: 1.4.0(axe-core@4.7.2)(cypress@12.17.3)
   eslint-plugin-cypress:
     specifier: ^2.13.3
     version: 2.13.3(eslint@8.46.0)
@@ -433,8 +433,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
 
-  /@types/node@14.18.46:
-    resolution: {integrity: sha512-n4yVT5FuY5NCcGHCosQSGvvCT74HhowymPN2OEcsHPw6U1NuxV9dvxWbrM2dnBukWjdMYzig1WfIkWdTTQJqng==}
+  /@types/node@16.18.39:
+    resolution: {integrity: sha512-8q9ZexmdYYyc5/cfujaXb4YOucpQxAV4RMG0himLyDUOEr8Mr79VrqsFI+cQ2M2h89YIuy95lbxuYjxT4Hk4kQ==}
     dev: true
 
   /@types/node@20.4.5:
@@ -1041,7 +1041,7 @@ packages:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
     dev: false
 
-  /cypress-axe@1.4.0(axe-core@4.7.2)(cypress@12.17.2):
+  /cypress-axe@1.4.0(axe-core@4.7.2)(cypress@12.17.3):
     resolution: {integrity: sha512-Ut7NKfzjyKm0BEbt2WxuKtLkIXmx6FD2j0RwdvO/Ykl7GmB/qRQkwbKLk3VP35+83hiIr8GKD04PDdrTK5BnyA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -1049,18 +1049,18 @@ packages:
       cypress: ^10 || ^11 || ^12
     dependencies:
       axe-core: 4.7.2
-      cypress: 12.17.2
+      cypress: 12.17.3
     dev: true
 
-  /cypress@12.17.2:
-    resolution: {integrity: sha512-hxWAaWbqQBzzMuadSGSuQg5PDvIGOovm6xm0hIfpCVcORsCAj/gF2p0EvfnJ4f+jK2PCiDgP6D2eeE9/FK4Mjg==}
+  /cypress@12.17.3:
+    resolution: {integrity: sha512-/R4+xdIDjUSLYkiQfwJd630S81KIgicmQOLXotFxVXkl+eTeVO+3bHXxdi5KBh/OgC33HWN33kHX+0tQR/ZWpg==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@cypress/request': 2.88.11
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
-      '@types/node': 14.18.46
+      '@types/node': 16.18.39
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.3
       arch: 2.2.0
