@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { PromotionUpdateForm } from '@/Components/form/Promotion.form';
-import Navbare from '@/Components/html/Navbar';
+import Navbar from '@/Components/html/Navbar';
 import Sidebar from '@/Components/html/Sidebar';
 import { ReactNode } from 'react';
 
@@ -9,7 +9,7 @@ export default function PromotionEditById() {
   return (
     <>
       {router.isReady ? (
-        <div className="text-2xl font-bold text-white-900">
+        <div className="text-2xl font-bold bg-white text-white-900">
           <PromotionUpdateForm />
         </div>
       ) : null}
@@ -19,11 +19,13 @@ export default function PromotionEditById() {
 
 PromotionEditById.getLayout = function getLayout(page: ReactNode) {
   return (
-    <div className="">
+    <div className="relative z-50 flex">
       <Sidebar />
-      <div className="p-2 sm:ml-64">
-        <Navbare />
-        {page}
+      <div className="w-full">
+        <Navbar />
+        <main className="py-10 h-screen">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        </main>
       </div>
     </div>
   );
