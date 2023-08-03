@@ -88,7 +88,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="companyName"
           maxLength={50}
           placeholder="Nom du shop"
         />
@@ -131,7 +131,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="email"
           maxLength={50}
           placeholder="hello@fidelcly.com"
         />
@@ -152,7 +152,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="phone"
           maxLength={50}
           placeholder="0XXXXXXXXX"
         />
@@ -173,7 +173,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 9,
           })}
           type="text"
-          id="name"
+          id="phone"
           maxLength={9}
           placeholder="XXXXXXXXX"
         />
@@ -194,7 +194,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 14,
           })}
           type="text"
-          id="name"
+          id="siret"
           maxLength={14}
           placeholder="XXXXXXXXXXXXXX"
         />
@@ -236,7 +236,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 20,
           })}
           type="text"
-          id="name"
+          id="city"
           placeholder="Paris"
         />
         {errors.city && (
@@ -256,7 +256,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength: 14,
           })}
           type="text"
-          id="name"
+          id="zipCode"
           placeholder="XXXXX"
         />
         {errors.zipCode && (
@@ -518,7 +518,7 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 20,
           })}
           type="text"
-          id="address"
+          id="city"
           placeholder="Paris"
         />
         {errors.city && (
