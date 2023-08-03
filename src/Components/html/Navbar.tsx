@@ -1,23 +1,20 @@
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteCookie } from 'cookies-next';
-import { Avatar, TextInput } from 'flowbite-react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
-export default function Navbar(props) {
+export default function Navbar() {
   const router = useRouter();
   return (
-    <div className="sticky top-0 z-40 lg:mx-auto w-full lg:px-8">
-      <div className="flex h-16 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
-        <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+    <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8">
+      <div className="flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+        <div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
           <form className="relative flex flex-1" action="#" method="GET">
             <label htmlFor="search-field" className="sr-only">
               Search
             </label>
             <svg
-              className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
+              className="absolute inset-y-0 left-0 w-5 h-full text-gray-400 pointer-events-none"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -29,7 +26,7 @@ export default function Navbar(props) {
             </svg>
             <input
               id="search-field"
-              className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+              className="block w-full h-full py-0 pl-8 pr-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
               placeholder="Search..."
               type="search"
               name="search"
@@ -40,7 +37,7 @@ export default function Navbar(props) {
 
             <div className="relative">
               {/* <Image
-                className="h-8 w-8 rounded-full bg-gray-50"
+                className="w-8 h-8 rounded-full bg-gray-50"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
                 width={10}
