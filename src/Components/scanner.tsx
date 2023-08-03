@@ -88,7 +88,7 @@ export default function ScannerForm() {
       className="flex flex-row bg-white h-2/3 gap-x-8"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="basis-1/2 w-full h-full shadow-md bg-fidbg flex flex-col p-4 justify-center rounded-xl">
+      <div className="basis-1/2 w-full h-full border bg-fidbg flex flex-col p-4 justify-center rounded-xl">
         <h1 className="text-xl text-left font-medium leading-6 text-gray-900">
           1. Scanner
         </h1>
@@ -112,7 +112,7 @@ export default function ScannerForm() {
           <p className="text-center mt-2 text-sm text-gray-700">{data}</p>
         </div>
       </div>
-      <div className="w-full h-full basis-1/2 shadow-md bg-fidbg flex flex-col rounded-xl p-4">
+      <div className="w-full h-full basis-1/2 border bg-fidbg flex flex-col rounded-xl p-4">
         <h1 className="text-xl font-medium leading-6 text-gray-900">
           2. Sélectionner la promotion à appliquer
         </h1>
