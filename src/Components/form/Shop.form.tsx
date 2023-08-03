@@ -93,7 +93,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="Nom du shop"
         />
         {errors.companyName && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.companyName.message.toString()}
           </span>
         )}
@@ -115,7 +115,7 @@ export const ShopCreateForm: React.FC = () => {
           <option value="Service">Service</option>
         </Select>
         {errors.activity && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.activity.message.toString()}
           </span>
         )}
@@ -136,7 +136,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="hello@fidelcly.com"
         />
         {errors.email && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.email.message.toString()}
           </span>
         )}
@@ -157,7 +157,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="0XXXXXXXXX"
         />
         {errors.phone && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.phone.message.toString()}
           </span>
         )}
@@ -178,7 +178,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="XXXXXXXXX"
         />
         {errors.siren && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.siren.message.toString()}
           </span>
         )}
@@ -199,7 +199,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="XXXXXXXXXXXXXX"
         />
         {errors.siret && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.siret.message.toString()}
           </span>
         )}
@@ -220,7 +220,7 @@ export const ShopCreateForm: React.FC = () => {
           }}
         />
         {errors.address && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.address.message.toString()}
           </span>
         )}
@@ -240,7 +240,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="Paris"
         />
         {errors.city && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.city.message.toString()}
           </span>
         )}
@@ -260,7 +260,7 @@ export const ShopCreateForm: React.FC = () => {
           placeholder="XXXXX"
         />
         {errors.zipCode && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.zipCode.message.toString()}
           </span>
         )}
@@ -370,12 +370,12 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="companyName"
           maxLength={50}
           placeholder="Nom du shop"
         />
         {errors.companyName && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.companyName.message.toString()}
           </span>
         )}
@@ -397,7 +397,7 @@ export const ShopUpdateForm: React.FC = () => {
           <option value="Service">Service</option>
         </Select>
         {errors.activity && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.activity.message.toString()}
           </span>
         )}
@@ -413,12 +413,12 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="email"
           maxLength={50}
           placeholder="hello@fidelcly.com"
         />
         {errors.email && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.email.message.toString()}
           </span>
         )}
@@ -434,12 +434,12 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 50,
           })}
           type="text"
-          id="name"
+          id="phone"
           maxLength={50}
           placeholder="0XXXXXXXXX"
         />
         {errors.phone && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.phone.message.toString()}
           </span>
         )}
@@ -455,12 +455,12 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 9,
           })}
           type="text"
-          id="name"
+          id="siren"
           maxLength={9}
           placeholder="XXXXXXXXX"
         />
         {errors.siren && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.siren.message.toString()}
           </span>
         )}
@@ -476,12 +476,12 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 14,
           })}
           type="text"
-          id="name"
+          id="siret"
           maxLength={14}
           placeholder="XXXXXXXXXXXXXX"
         />
         {errors.siret && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.siret.message.toString()}
           </span>
         )}
@@ -502,7 +502,7 @@ export const ShopUpdateForm: React.FC = () => {
           }}
         />
         {errors.address && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.address.message.toString()}
           </span>
         )}
@@ -518,11 +518,11 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 20,
           })}
           type="text"
-          id="name"
+          id="address"
           placeholder="Paris"
         />
         {errors.city && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.city.message.toString()}
           </span>
         )}
@@ -538,11 +538,11 @@ export const ShopUpdateForm: React.FC = () => {
             maxLength: 14,
           })}
           type="text"
-          id="name"
+          id="zipCode"
           placeholder="XXXXX"
         />
         {errors.zipCode && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.zipCode.message.toString()}
           </span>
         )}

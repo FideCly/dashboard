@@ -46,7 +46,7 @@ export default function ShopList() {
   }, []);
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>Chargement....</div>;
   }
 
   if (error) {
