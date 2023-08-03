@@ -1,14 +1,15 @@
 import React from 'react';
 import { PromotionCreateForm } from '@/Components/form/Promotion.form';
-import { IPromotions } from '@/Models/Promotions';
+import { IPromotion } from '@/Models/Promotions';
 
 describe('<PromotionCreateForm />', () => {
-  const promotion: IPromotions = {
+  const promotion: IPromotion = {
     name: 'test',
     id: 0,
     shopId: 0,
     checkoutLimit: 0,
     endAt: new Date(),
+    isActive: true,
   };
   it('renders', () => {
     cy.mount(<PromotionCreateForm />);
