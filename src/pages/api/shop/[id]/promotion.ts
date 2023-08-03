@@ -1,15 +1,15 @@
 import {
-  IPromotions,
+  IPromotion,
   IPromotionCreatePayload,
   IPromotionUpdatePayload,
 } from '@/Models/Promotions';
 import axios from 'axios';
 
-export default async function handler(req, res): Promise<IPromotions[]> {
+export default async function handler(req, res): Promise<IPromotion[]> {
   if (req.method === 'GET') {
     // get the id from the query
     const id = req.query.id;
-    const response = await axios.get<IPromotions>(
+    const response = await axios.get<IPromotion>(
       process.env.NEXT_PUBLIC_API_URL + `shop/${id}/promotions`,
       {
         headers: {
@@ -52,7 +52,7 @@ export default async function handler(req, res): Promise<IPromotions[]> {
   } else if (req.method === 'DELETE') {
     // get the id from the query
     const { id } = req.query;
-    const response = await axios.delete<IPromotions>(
+    const response = await axios.delete<IPromotion>(
       process.env.NEXT_PUBLIC_API_URL + `promotion/${id}`,
       {
         headers: {

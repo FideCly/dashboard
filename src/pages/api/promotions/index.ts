@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type {
-  IPromotions,
+  IPromotion,
   IPromotionUpdatePayload,
 } from '../../../Models/Promotions';
 
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     // get the id from the query
     // get token from cookies
-    const response = await axios.get<IPromotions>(
+    const response = await axios.get<IPromotion>(
       process.env.NEXT_PUBLIC_API_URL + `promotion`,
       {
         headers: {

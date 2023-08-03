@@ -2,7 +2,6 @@ import Sidebar from '@/Components/html/Sidebar';
 import Navbar from '@/Components/html/Navbar';
 import QRCode from 'qrcode.react';
 import { IUser } from '@/Models/User';
-import { Button } from 'flowbite-react';
 import { useState, useEffect } from 'react';
 
 export default function GeneralSettings() {
@@ -32,9 +31,9 @@ export default function GeneralSettings() {
   }, []);
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 bg-white flex flex-col gap-y-8 h-screen">
+    <div className="flex flex-col h-screen px-4 bg-white sm:px-6 lg:px-8 gap-y-8">
       <div className="flex items-center gap-y-4">
-        <div className="sm:flex-auto p-4 rounded-xl">
+        <div className="p-4 sm:flex-auto rounded-xl">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
             Réglages
           </h1>
@@ -44,10 +43,10 @@ export default function GeneralSettings() {
       <QRCode
         id="canvas"
         value={user?.shop.id.toString()}
-        className="p-8 shadow-md mx-auto rounded-md bg-fidbg"
+        className="p-8 mx-auto rounded-md shadow-md bg-fidbg"
         size={500}
       />
-      <button className="block rounded-md mx-auto bg-fidgreen px-3 w-1/2 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen">
+      <button className="block w-1/2 px-3 py-2 mx-auto text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen">
         Télécharger le Qrcode
       </button>
     </div>
@@ -60,8 +59,8 @@ GeneralSettings.getLayout = function getLayout(page) {
       <Sidebar />
       <div className="w-full">
         <Navbar />
-        <main className="py-10 h-screen">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        <main className="h-screen py-10">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
         </main>
       </div>
     </div>
