@@ -48,7 +48,7 @@ export default function PromotionList() {
   }, []);
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>Chargement....</div>;
   }
 
   return (

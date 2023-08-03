@@ -48,7 +48,7 @@ export default function CampaignList() {
   }, []);
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return <div>Chargement....</div>;
   }
 
   function deletecampaign(id: number): void {
@@ -63,7 +63,7 @@ export default function CampaignList() {
   }
 
   return (
-    <div className="mt-8 flow-root">
+    <div className="flow-root mt-8">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table className="min-w-full">
@@ -100,14 +100,14 @@ export default function CampaignList() {
               )}
               {!error &&
                 campaigns.map((campaign) => (
-                  <tr key={campaign.id} className="border-gray-300 border-t">
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                  <tr key={campaign.id} className="border-t border-gray-300">
+                    <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
                       {campaign.subject}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {campaign.promotionId}
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                    <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <Link
                         href={`/campaign/${campaign.id}/send`}
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
@@ -115,7 +115,7 @@ export default function CampaignList() {
                         Envoyer
                       </Link>
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                    <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <Link
                         href={`/campaign/${campaign.id}/edit`}
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
@@ -123,7 +123,7 @@ export default function CampaignList() {
                         Modifier
                       </Link>
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                    <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
                         onClick={() => deletecampaign(campaign.id)}
