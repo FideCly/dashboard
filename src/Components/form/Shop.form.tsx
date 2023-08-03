@@ -149,11 +149,11 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
-            maxLength: 50,
+            maxLength: 10,
           })}
           type="text"
           id="phone"
-          maxLength={50}
+          maxLength={10}
           placeholder="0XXXXXXXXX"
         />
         {errors.phone && (
