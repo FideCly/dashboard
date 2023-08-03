@@ -27,7 +27,7 @@ export default function MyApp({
 
   return getLayout(
     <>
-      <main className="flex-1 p-8 bg-gray-50 ">
+      <main className="bg-fidbg">
         <Component {...pageProps} />
         <Consent />
       </main>

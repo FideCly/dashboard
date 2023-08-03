@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ICampaign } from '@/Models/Campaign';
-
 import { IUser } from '@/Models/User';
-import { Table } from 'flowbite-react';
 import Link from 'next/link';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
@@ -55,13 +51,6 @@ export default function CampaignList() {
     return <div>loading....</div>;
   }
 
-  if (error) {
-    return (
-      <div>
-        <span>Erreur lors du chargement de Campaigns</span>
-      </div>
-    );
-  }
   function deletecampaign(id: number): void {
     fetch(`/api/campaign/${id}`, {
       method: 'DELETE',
@@ -74,30 +63,80 @@ export default function CampaignList() {
   }
 
   return (
-    <main className="p-4">
-      <Table striped className="table w-full ">
-        <Table.Head>
-          <Table.HeadCell>subject</Table.HeadCell>
-          <Table.HeadCell>message</Table.HeadCell>
-          <Table.HeadCell></Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          {campaigns.map((campaign) => (
-            <Table.Row className="" key={campaign.id}>
-              <Table.Cell>{campaign.subject}</Table.Cell>
-              <Table.Cell>{campaign.textData}</Table.Cell>
-              <Table.Cell className="space-x-2">
-                <Link href={{ pathname: `/campagne/${campaign.id}/edit` }}>
-                  <FontAwesomeIcon icon={faEdit} />
-                </Link>
-                <button onClick={() => deletecampaign(campaign.id)}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
-    </main>
+    <div className="mt-8 flow-root">
+      <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table className="min-w-full">
+            <thead className="bg-white">
+              <tr>
+                <th
+                  scope="col"
+                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                >
+                  Sujet
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Promotion
+                </th>
+                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                  <span className="sr-only">Send</span>
+                </th>
+                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                  <span className="sr-only">Edit</span>
+                </th>
+                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                  <span className="sr-only">Delete</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {error && (
+                <div>
+                  <span>Erreur lors du chargement des campagnes</span>
+                </div>
+              )}
+              {!error &&
+                campaigns.map((campaign) => (
+                  <tr key={campaign.id} className="border-gray-300 border-t">
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                      {campaign.subject}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {campaign.promotionId}
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                      <Link
+                        href={`/campaign/${campaign.id}/send`}
+                        className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                      >
+                        Envoyer
+                      </Link>
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                      <Link
+                        href={`/campaign/${campaign.id}/edit`}
+                        className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                      >
+                        Modifier
+                      </Link>
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                      <button
+                        className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                        onClick={() => deletecampaign(campaign.id)}
+                      >
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 }

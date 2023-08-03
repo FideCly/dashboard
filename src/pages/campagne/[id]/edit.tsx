@@ -1,4 +1,4 @@
-import { CampaignUpdateForm } from '@/Components/form/Campaing.form';
+import { CampaignUpdateForm } from '@/Components/form/Campaign.form';
 import Navbare from '@/Components/html/Navbar';
 import Sidebar from '@/Components/html/Sidebar';
 import { useRouter } from 'next/router';

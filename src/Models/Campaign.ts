@@ -14,6 +14,8 @@ export interface ICampaignUpdatePayload {
 }
 
 export interface ICampaign {
+  startAt: any;
+  endAt: any;
   id?: number;
   promotionId: number;
   subject: string;

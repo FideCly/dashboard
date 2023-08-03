@@ -8,7 +8,6 @@ export interface IPromotionCreatePayload {
 
 export interface IPromotionUpdatePayload {
   id: number;
-
   name: string;
   description: string;
   checkoutLimit: number;
@@ -16,7 +15,7 @@ export interface IPromotionUpdatePayload {
   endAt: Date;
 }
 
-export interface IPromotions {
+export interface IPromotion {
   id: number;
   shopId: number;
   name: string;
@@ -24,4 +23,5 @@ export interface IPromotions {
   startAt?: Date;
   endAt: Date;
   checkoutLimit: number;
+  isActive: boolean;
 }

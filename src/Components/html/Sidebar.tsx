@@ -1,9 +1,10 @@
 import {
-  faBarcode,
-  faChartPie,
+  faChartLine,
+  faChevronRight,
   faEnvelope,
   faGear,
-  faRectangleAd,
+  faQrcode,
+  faTags,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
@@ -11,77 +12,79 @@ import Image from 'next/image';
 
 export default function Sidebar() {
   return (
-    <aside
-      id="logo-sidebar"
-      className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-      aria-label="Sidebar"
-    >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-green-300 ">
-        <p className="flex items-center pl-2.5 mb-5 space-x-4">
-          <Image
-            src="/logo.png"
-            width={60}
-            height={40}
-            className="rounded"
-            alt="logo"
-          />
-          <span className="self-center flex-1 text-xl font-semibold whitespace-nowrap ">
-            Fidecly
-          </span>
-        </p>
-        <ul className="flex flex-col space-y-2 font-bold">
-          <li>
-            <Link
-              href="/"
-              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-            >
-              <FontAwesomeIcon icon={faChartPie} />
-              <span className="ml-3">Tableau de bord</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/scanner"
-              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
-            >
-              <FontAwesomeIcon icon={faBarcode} />
-              <span className="flex-1 ml-3 whitespace-nowrap">Scanner</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/campagne"
-              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
-            >
+    <div className="py-4 bg-fidgreen sticky inset-y-0 z-50">
+      <Image
+        src="/logo_vertical.svg"
+        width={150}
+        height={100}
+        className="rounded m-auto"
+        alt="logo"
+      />
+      <ul className="flex flex-col space-y-4 pt-10">
+        <li className="hover:bg-fidyellow px-6 py-1">
+          <Link
+            href="/scanner"
+            className="flex items-center justify-between p-2 gap-x-4 text-white"
+          >
+            <div className="flex gap-x-6 items-center">
+              <FontAwesomeIcon icon={faQrcode} />
+              <span className="whitespace-nowrap">Scanner</span>
+            </div>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </li>
+        <li className="hover:bg-fidyellow px-6 py-1">
+          <Link
+            href="/"
+            className="flex items-center p-2 justify-between gap-x-4 text-white"
+          >
+            <div className="flex gap-x-6 items-center">
+              <FontAwesomeIcon icon={faChartLine} />
+              <span className="whitespace-nowrap">Tableau de bord</span>
+            </div>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </li>
+        <li className="hover:bg-fidyellow px-6 py-1">
+          <Link
+            href="/promotion"
+            className="flex items-center p-2 gap-x-4 justify-between text-white"
+          >
+            <div className="flex gap-x-6 items-center">
+              <FontAwesomeIcon icon={faTags} />
+              <span className="whitespace-nowrap">Promotions</span>
+            </div>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </li>
+        <li className="hover:bg-fidyellow px-6 py-1">
+          <Link
+            href="/campagne"
+            className="flex items-center p-2 gap-x-10 justify-between text-white"
+          >
+            <div className="flex gap-x-6 items-center">
               <FontAwesomeIcon icon={faEnvelope} />
-              <span className="flex-1 ml-3 whitespace-nowrap">
-                Campagnes emails
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/promotion"
-              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
-            >
-              <FontAwesomeIcon icon={faRectangleAd} />
-              <span className="flex-1 ml-3 whitespace-nowrap">Promotions</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/settings"
-              className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 "
-            >
+              <span className="whitespace-nowrap">Campagnes marketing</span>
+            </div>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </li>
+        <li className="hover:bg-fidyellow px-6 py-1">
+          <Link
+            href="/settings"
+            className="flex items-center p-2 gap-x-4 justify-between text-white"
+          >
+            <div className="flex gap-x-6 items-center">
               <FontAwesomeIcon icon={faGear} />
-              <span className="flex-1 ml-3 whitespace-nowrap">Réglages</span>
-            </Link>
-          </li>
-          <li>
-            <div className="flex items-center p-2 text-gray-900 rounded-lg "></div>
-          </li>
-        </ul>
-      </div>
-    </aside>
+              <span className="whitespace-nowrap">Réglages</span>
+            </div>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </li>
+        <li>
+          <div className="flex items-center p-2 gap-x-4 justify-between text-white"></div>
+        </li>
+      </ul>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Profile } from '@/Components/auth/Profile';
-import Navbare from '@/Components/html/Navbar';
+import Navbar from '@/Components/html/Navbar';
 import Sidebar from '@/Components/html/Sidebar';
 
 export default function Me() {
@@ -12,12 +12,13 @@ export default function Me() {
 
 Me.getLayout = function getLayout(page) {
   return (
-    <div className="">
+    <div className="relative z-50 flex">
       <Sidebar />
-
-      <div className="p-2 sm:ml-64">
-        <Navbare />
-        {page}
+      <div className="w-full">
+        <Navbar />
+        <main className="py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        </main>
       </div>
     </div>
   );
