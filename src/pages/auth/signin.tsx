@@ -1,4 +1,4 @@
-import { IAuthPayload, IUser, jwttoken } from '@/Models/User';
+import { IAuthPayload, IUser, IUserAuthPayload, jwttoken } from '@/Models/User';
 import { setCookie } from 'cookies-next';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
@@ -9,12 +9,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 export default function SignIn() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const router = useRouter();
+  } = useForm<IUserAuthPayload>({ mode: 'onChange' });
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -23,11 +24,13 @@ export default function SignIn() {
         'Content-Type': 'application/json',
       },
     };
+
     const user = fetch(`/api/user/${userUuid}`, options)
       .then((response) => response.json())
       .catch((error) => console.error(error));
     return user;
   };
+
   const onSubmit: SubmitHandler<IAuthPayload> = useCallback(async (data) => {
     try {
       const response = await fetch(`/api/auth/signin`, {
@@ -38,7 +41,8 @@ export default function SignIn() {
         body: JSON.stringify(data),
       });
       if (response.status >= 400) {
-        throw new Error('Bad response from server');
+        const res = await response.json();
+        throw new Error(res);
       } else {
         const user: jwttoken = await response.json();
         localStorage.setItem('userUuid', user.userUuid);
@@ -72,67 +76,63 @@ export default function SignIn() {
 
   return (
     <section>
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 space-x-4 text-2xl font-semibold "
-        >
-          <Image
-            src="/logo.png"
-            width={60}
-            height={40}
-            className="rounded"
-            alt="logo"
-          />
-          Fidecly
-        </a>
+      <div className="flex flex-col items-center justify-center px-6 mx-auto gap-y-10 md:h-screen lg:py-0">
+        <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
-              Sign in to your account
+              Se connecter
             </h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col space-y-4"
             >
-              <Label>Email address</Label>
+              <Label>Email</Label>
               <input
-                {...register('email', { required: true })}
+                {...register('email', { required: "L'email est requis" })}
                 name="email"
-                type="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                type="email"
+                placeholder="hello@fidelcly.com"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.email && (
-                <span className="text-sm text-red-600">
-                  This field is required
+                <span className="text-red-600 text-sm">
+                  {errors.email.message.toString()}
                 </span>
               )}
 
-              <Label>Password</Label>
+              <Label>Mot de passe</Label>
               <input
-                {...register('password', { required: true })}
+                {...register('password', {
+                  required: 'Le mot de passe est requis',
+                  minLength: 8,
+                })}
                 name="password"
                 type="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="********"
+                minLength={8}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.password && (
-                <span className="text-sm text-red-600">
-                  This field is required
+                <span className="text-red-600 text-sm">
+                  {errors.password.message.toString()}
                 </span>
               )}
+
               <button
                 type="submit"
-                className="text-black bg-green-200 hover:bg-green-300"
+                className="p-2 w-full m-auto text-gray-50 font-medium rounded-lg bg-fidgreen hover:bg-fidgreen/80"
               >
-                Sign in
+                Se connecter
               </button>
-              <p className="text-sm font-light text-gray-500 ">
-                Don't have an account yet?{' '}
+
+              <p className="text-sm font-light text-gray-500 text-right">
+                Pas encore inscrit ?{' '}
                 <Link
                   href="/auth/signup"
-                  className="font-medium text-primary-600 hover:underline 500"
+                  className="font-medium text-gray-600 hover:text-fidgreen hover:underline"
                 >
-                  Sign up
+                  S'inscire
                 </Link>
               </p>
             </form>

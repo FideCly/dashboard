@@ -23,14 +23,17 @@ const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
     </div>
   );
 };
+
 export const ShopCreateForm: React.FC = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm();
-  const router = useRouter();
+  } = useForm<IShopCreatePayload>({ mode: 'onChange' });
+
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
       try {
@@ -67,53 +70,55 @@ export const ShopCreateForm: React.FC = () => {
     geocodeByAddress(e.label)
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-        setValue('lat', lat);
-        setValue('long', lng);
+        setValue('lat', lat.toString());
+        setValue('long', lng.toString());
       })
       .catch((error) => console.error('Error', error));
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 ">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <div className="">
         <Label htmlFor="companyName" className="">
-          Company Name
+          Nom du shop
         </Label>
         <TextInput
-          {...register('companyName', { required: true, maxLength: 50 })}
+          {...register('companyName', {
+            required: 'Le nom du shop est requis',
+            maxLength: 50,
+          })}
           type="text"
           id="name"
           maxLength={50}
-          placeholder="companyName"
+          placeholder="Nom du shop"
         />
-        {errors.companyName && <span>Ce champ est requis</span>}
+        {errors.companyName && (
+          <span className="text-red-600 text-sm">
+            {errors.companyName.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
-        <Label htmlFor="address" className="">
-          Address
+        <Label htmlFor="activity" className="">
+          Activité du shop
         </Label>
-        <GooglePlacesAutocompleteComponent
-          error={undefined}
-          {...register('address', { required: true, maxLength: 50 })}
-          onChange={(e) => {
-            setMetadata(e);
-          }}
-        />
-      </div>
-
-      <div className="">
-        <Label htmlFor="phone" className="">
-          Numero de telephone
-        </Label>
-        <TextInput
-          {...register('phone', { required: true, maxLength: 50 })}
-          type="text"
-          id="name"
-          maxLength={50}
-          placeholder="phone"
-        />
-        {errors.phone && <span>Ce champ est requis</span>}
+        <Select
+          {...register('activity', {
+            required: "L'activité du shop est requise",
+          })}
+        >
+          <option value="Restauration">Restauration</option>
+          <option value="Supply">Alimentation</option>
+          <option value="Entertainment">Divertissement</option>
+          <option value="Store">Magasin</option>
+          <option value="Service">Service</option>
+        </Select>
+        {errors.activity && (
+          <span className="text-red-600 text-sm">
+            {errors.activity.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
@@ -121,13 +126,41 @@ export const ShopCreateForm: React.FC = () => {
           Email
         </Label>
         <TextInput
-          {...register('email', { required: true, maxLength: 50 })}
+          {...register('email', {
+            required: "L'email est requis",
+            maxLength: 50,
+          })}
           type="text"
           id="name"
           maxLength={50}
-          placeholder="email"
+          placeholder="hello@fidelcly.com"
         />
-        {errors.email && <span>Ce champ est requis</span>}
+        {errors.email && (
+          <span className="text-red-600 text-sm">
+            {errors.email.message.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="phone" className="">
+          Numéro de téléphone
+        </Label>
+        <TextInput
+          {...register('phone', {
+            required: 'Le numéro de téléphone est requis',
+            maxLength: 50,
+          })}
+          type="text"
+          id="name"
+          maxLength={50}
+          placeholder="0XXXXXXXXX"
+        />
+        {errors.phone && (
+          <span className="text-red-600 text-sm">
+            {errors.phone.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
@@ -135,13 +168,20 @@ export const ShopCreateForm: React.FC = () => {
           Siren
         </Label>
         <TextInput
-          {...register('siren', { required: true, maxLength: 9 })}
+          {...register('siren', {
+            required: 'Le siren est requis',
+            maxLength: 9,
+          })}
           type="text"
           id="name"
           maxLength={9}
-          placeholder="siren"
+          placeholder="XXXXXXXXX"
         />
-        {errors.siren && <span>Ce champ est requis</span>}
+        {errors.siren && (
+          <span className="text-red-600 text-sm">
+            {errors.siren.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
@@ -149,72 +189,103 @@ export const ShopCreateForm: React.FC = () => {
           Siret
         </Label>
         <TextInput
-          {...register('siret', { required: true, maxLength: 14 })}
+          {...register('siret', {
+            required: 'Le siret est requis',
+            maxLength: 14,
+          })}
           type="text"
           id="name"
-          placeholder="siret"
+          maxLength={14}
+          placeholder="XXXXXXXXXXXXXX"
         />
-        {errors.siret && <span>Ce champ est requis</span>}
+        {errors.siret && (
+          <span className="text-red-600 text-sm">
+            {errors.siret.message.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="address" className="">
+          Adresse
+        </Label>
+        <GooglePlacesAutocompleteComponent
+          error={undefined}
+          {...register('address', {
+            required: "L'adresse est requise",
+            maxLength: 50,
+          })}
+          onChange={(e) => {
+            setMetadata(e);
+          }}
+        />
+        {errors.address && (
+          <span className="text-red-600 text-sm">
+            {errors.address.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
         <Label htmlFor="city" className="">
-          City
+          Ville
         </Label>
         <TextInput
-          {...register('city', { required: true, maxLength: 14 })}
+          {...register('city', {
+            required: 'La ville est requise',
+            maxLength: 20,
+          })}
           type="text"
           id="name"
-          placeholder="city"
+          placeholder="Paris"
         />
-        {errors.siret && <span>Ce champ est requis</span>}
-      </div>
-
-      <div className="">
-        <Label htmlFor="activity" className="">
-          Type de magazin
-        </Label>
-        <Select {...register('activity', { required: true, maxLength: 14 })}>
-          <option value="Restauration">Restauration</option>
-          <option value="Supply">Supply</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Store">Store</option>
-          <option value="Service">Service</option>
-        </Select>
+        {errors.city && (
+          <span className="text-red-600 text-sm">
+            {errors.city.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
         <Label htmlFor="zipCode" className="">
-          zipCode
+          Code Postal
         </Label>
         <TextInput
-          {...register('zipCode', { required: true, maxLength: 14 })}
+          {...register('zipCode', {
+            required: 'Le code postal est requis',
+            maxLength: 14,
+          })}
           type="text"
           id="name"
-          placeholder="zipCode"
+          placeholder="XXXXX"
         />
-        {errors.siret && <span>Ce champ est requis</span>}
+        {errors.zipCode && (
+          <span className="text-red-600 text-sm">
+            {errors.zipCode.message.toString()}
+          </span>
+        )}
       </div>
+
       <Button
         type="submit"
-        className="text-black bg-green-200 hover:bg-green-300"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );
 };
 
 export const ShopUpdateForm: React.FC = () => {
+  const router = useRouter();
+  const id = Number(router.query.id);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<IShopUpdatePayload>();
-
-  const router = useRouter();
-  const id = Number(router.query.id);
+  } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
 
   useEffect(() => {
     if (id) {
@@ -275,84 +346,213 @@ export const ShopUpdateForm: React.FC = () => {
     },
     [],
   );
+
+  function setMetadata(e: any) {
+    setValue('address', e.label);
+    geocodeByAddress(e.label)
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        setValue('lat', lat.toString());
+        setValue('long', lng.toString());
+      })
+      .catch((error) => console.error('Error', error));
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">
       <div className="">
+        <Label htmlFor="companyName" className="">
+          Nom du shop
+        </Label>
         <TextInput
-          {...register('companyName', { required: true, maxLength: 50 })}
+          {...register('companyName', {
+            required: 'Le nom du shop est requis',
+            maxLength: 50,
+          })}
           type="text"
           id="name"
           maxLength={50}
-          placeholder="companyName"
+          placeholder="Nom du shop"
         />
-        {errors.companyName && <span>Ce champ est requis</span>}
+        {errors.companyName && (
+          <span className="text-red-600 text-sm">
+            {errors.companyName.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
-        {errors.address && <span>Ce champ est requis</span>}
+        <Label htmlFor="activity" className="">
+          Activité du shop
+        </Label>
+        <Select
+          {...register('activity', {
+            required: "L'activité du shop est requise",
+          })}
+        >
+          <option value="Restauration">Restauration</option>
+          <option value="Supply">Alimentation</option>
+          <option value="Entertainment">Divertissement</option>
+          <option value="Store">Magasin</option>
+          <option value="Service">Service</option>
+        </Select>
+        {errors.activity && (
+          <span className="text-red-600 text-sm">
+            {errors.activity.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
+        <Label htmlFor="email" className="">
+          Email
+        </Label>
         <TextInput
-          {...register('zipCode', { required: true, maxLength: 50 })}
+          {...register('email', {
+            required: "L'email est requis",
+            maxLength: 50,
+          })}
           type="text"
           id="name"
           maxLength={50}
-          placeholder="zipCode"
+          placeholder="hello@fidelcly.com"
         />
-        {errors.zipCode && <span>Ce champ est requis</span>}
+        {errors.email && (
+          <span className="text-red-600 text-sm">
+            {errors.email.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
+        <Label htmlFor="phone" className="">
+          Numéro de téléphone
+        </Label>
         <TextInput
-          {...register('phone', { required: true, maxLength: 50 })}
+          {...register('phone', {
+            required: 'Le numéro de téléphone est requis',
+            maxLength: 50,
+          })}
           type="text"
           id="name"
           maxLength={50}
-          placeholder="phone"
+          placeholder="0XXXXXXXXX"
         />
-        {errors.phone && <span>Ce champ est requis</span>}
+        {errors.phone && (
+          <span className="text-red-600 text-sm">
+            {errors.phone.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
+        <Label htmlFor="siren" className="">
+          Siren
+        </Label>
         <TextInput
-          {...register('email', { required: true, maxLength: 50 })}
+          {...register('siren', {
+            required: 'Le siren est requis',
+            maxLength: 9,
+          })}
           type="text"
-          id="name"
-          maxLength={50}
-          placeholder="email"
-        />
-        {errors.email && <span>Ce champ est requis</span>}
-      </div>
-
-      <div className="">
-        <TextInput
-          {...register('siren', { required: true, maxLength: 9 })}
-          type=""
           id="name"
           maxLength={9}
-          placeholder="siren"
+          placeholder="XXXXXXXXX"
         />
-        {errors.siren && <span>Ce champ est requis</span>}
+        {errors.siren && (
+          <span className="text-red-600 text-sm">
+            {errors.siren.message.toString()}
+          </span>
+        )}
       </div>
 
       <div className="">
+        <Label htmlFor="siret" className="">
+          Siret
+        </Label>
         <TextInput
-          {...register('siret', { required: true, maxLength: 14 })}
+          {...register('siret', {
+            required: 'Le siret est requis',
+            maxLength: 14,
+          })}
           type="text"
           id="name"
           maxLength={14}
-          placeholder="siret"
-          hidden
+          placeholder="XXXXXXXXXXXXXX"
         />
-        {errors.siret && <span>Ce champ est requis</span>}
+        {errors.siret && (
+          <span className="text-red-600 text-sm">
+            {errors.siret.message.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="address" className="">
+          Adresse
+        </Label>
+        <GooglePlacesAutocompleteComponent
+          error={undefined}
+          {...register('address', {
+            required: "L'adresse est requise",
+            maxLength: 50,
+          })}
+          onChange={(e) => {
+            setMetadata(e);
+          }}
+        />
+        {errors.address && (
+          <span className="text-red-600 text-sm">
+            {errors.address.message.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="city" className="">
+          Ville
+        </Label>
+        <TextInput
+          {...register('city', {
+            required: 'La ville est requise',
+            maxLength: 20,
+          })}
+          type="text"
+          id="name"
+          placeholder="Paris"
+        />
+        {errors.city && (
+          <span className="text-red-600 text-sm">
+            {errors.city.message.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="zipCode" className="">
+          Code Postal
+        </Label>
+        <TextInput
+          {...register('zipCode', {
+            required: 'Le code postal est requis',
+            maxLength: 14,
+          })}
+          type="text"
+          id="name"
+          placeholder="XXXXX"
+        />
+        {errors.zipCode && (
+          <span className="text-red-600 text-sm">
+            {errors.zipCode.message.toString()}
+          </span>
+        )}
       </div>
 
       <Button
-        className="text-black bg-green-200 hover:bg-green-300"
         type="submit"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );

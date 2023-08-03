@@ -1,4 +1,4 @@
-import Navbare from '@/Components/html/Navbar';
+import Navbar from '@/Components/html/Navbar';
 import Sidebar from '@/Components/html/Sidebar';
 import { BarChart } from '@/Components/statistics/chart';
 import {
@@ -10,7 +10,6 @@ import { IUser } from '@/Models/User';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { Select } from 'flowbite-react';
-
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 Chart.register(CategoryScale);
@@ -151,7 +150,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center flex-1 p-4 text-center bg-white rounded rounded-md">
+      <div className="flex flex-col justify-center flex-1 p-4 text-center bg-white rounded-md">
         <div className="flex">
           <h1 className="flex-1 text-stone-950">
             Nombre de passage de carte par heure de la journée
@@ -197,11 +196,13 @@ export default function Home() {
 
 Home.getLayout = function getLayout(page) {
   return (
-    <div className="">
+    <div className="relative z-50 flex">
       <Sidebar />
-      <div className="p-2 sm:ml-64">
-        <Navbare />
-        {page}
+      <div className="w-full">
+        <Navbar />
+        <main className="py-10 h-screen">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        </main>
       </div>
     </div>
   );

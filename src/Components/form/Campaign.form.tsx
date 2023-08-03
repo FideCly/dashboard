@@ -7,7 +7,7 @@ import {
 } from '@/Models/Campaign';
 
 import { IUser } from '@/Models/User';
-import { IPromotions } from '@/Models/Promotions';
+import { IPromotion } from '@/Models/Promotions';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
@@ -16,9 +16,9 @@ export const CampaignCreateForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICampaignCreatePayload>();
+  } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
   // get all shop's promotions
-  const [promotions, setPromotions] = useState<IPromotions[]>([]);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -90,35 +90,52 @@ export const CampaignCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
     >
       <div className="">
-        <Label htmlFor="subject">Nom de la campagne</Label>
+        <Label htmlFor="subject">Nom</Label>
         <TextInput
-          {...register('subject', { required: true, maxLength: 50 })}
+          {...register('subject', {
+            required: 'Le nom de la campagne est requise',
+            maxLength: 50,
+          })}
           type="text"
           className=""
           id="subject"
           maxLength={50}
           placeholder="subject"
         />
-        {errors.subject && <span>This field is required</span>}
+        {errors.subject && (
+          <span className="text-red-600 text-sm">
+            {errors.subject.message.toString()}
+          </span>
+        )}
       </div>
       <div className="">
-        <Label htmlFor="textData">Type de campagne</Label>
+        <Label htmlFor="textData">Message</Label>
         <Textarea
-          {...register('textData', { required: true, maxLength: 50 })}
+          {...register('textData', {
+            required: 'Le message est requis',
+            maxLength: 50,
+          })}
           className=""
           id="textData"
           maxLength={50}
           placeholder="textData"
         />
-        {errors.textData && <span>This field is required</span>}
+        {errors.textData && (
+          <span className="text-red-600 text-sm">
+            {errors.textData.message.toString()}
+          </span>
+        )}
       </div>
       <div className="">
-        <Label htmlFor="promotionId">promotions</Label>
+        <Label htmlFor="promotionId">Promotion liée</Label>
         <Select
-          {...register('promotionId', { required: true, maxLength: 50 })}
+          {...register('promotionId', {
+            required: 'La promotion liée est requise',
+            maxLength: 50,
+          })}
           className=""
           id="promotionId"
           placeholder="promotionId"
@@ -129,13 +146,17 @@ export const CampaignCreateForm: React.FC = () => {
             </option>
           ))}
         </Select>
-        {errors.promotionId && <span>This field is required</span>}
+        {errors.promotionId && (
+          <span className="text-red-600 text-sm">
+            {errors.promotionId.message.toString()}
+          </span>
+        )}
       </div>
       <Button
         type="submit"
-        className="text-black bg-green-200 hover:bg-green-300"
+        className="text-gray-50 w-fit bg-fidgreen hover:bg-fidgreen/80"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );
@@ -147,9 +168,9 @@ export const CampaignUpdateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<ICampaignUpdatePayload>();
+  } = useForm<ICampaignUpdatePayload>({ mode: 'onChange' });
 
-  const [promotions, setPromotions] = useState<IPromotions[]>([]);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const router = useRouter();
   const id = Number(router.query.id);
   const loadUser = async (): Promise<IUser> => {
@@ -243,53 +264,71 @@ export const CampaignUpdateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
     >
       <div className="">
-        <Label htmlFor="libelle">Nom de la campagne</Label>
+        <Label htmlFor="subject">Nom</Label>
         <TextInput
-          {...register('subject', { required: true, maxLength: 50 })}
+          {...register('subject', {
+            required: 'Le nom de la campagne est requise',
+            maxLength: 50,
+          })}
           type="text"
           className=""
-          id="libelle"
+          id="subject"
           maxLength={50}
-          placeholder="libelle"
+          placeholder="subject"
         />
-        {errors.subject && <span>This field is required</span>}
+        {errors.subject && (
+          <span className="text-red-600 text-sm">
+            {errors.subject.message.toString()}
+          </span>
+        )}
       </div>
-
       <div className="">
-        <Label htmlFor="types">Type de campagne</Label>
+        <Label htmlFor="textData">Message</Label>
         <Textarea
-          {...register('textData', { required: true, maxLength: 50 })}
+          {...register('textData', {
+            required: 'Le message est requis',
+            maxLength: 50,
+          })}
           className=""
-          id="types"
+          id="textData"
           maxLength={50}
-          placeholder="types"
+          placeholder="textData"
         />
-        {errors.textData && <span>This field is required</span>}
+        {errors.textData && (
+          <span className="text-red-600 text-sm">
+            {errors.textData.message.toString()}
+          </span>
+        )}
       </div>
-
       <div className="">
-        <Label htmlFor="promotionId">Shop</Label>
+        <Label htmlFor="promotionId">Promotion liée</Label>
         <Select
-          {...register('promotionId', { required: true, maxLength: 50 })}
+          {...register('promotionId', {
+            required: 'La promotion liée est requise',
+            maxLength: 50,
+          })}
           className=""
           id="promotionId"
           placeholder="promotionId"
         >
-          {promotions.map((promotion) => (
+          {promotions?.map((promotion) => (
             <option key={promotion.id} value={promotion.id}>
               {promotion.name}
             </option>
           ))}
         </Select>
-        {errors.promotionId && <span>This field is required</span>}
+        {errors.promotionId && (
+          <span className="text-red-600 text-sm">
+            {errors.promotionId.message.toString()}
+          </span>
+        )}
       </div>
-
       <Button
         type="submit"
-        className="text-black bg-green-200 hover:bg-green-300"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
         Submit
       </Button>

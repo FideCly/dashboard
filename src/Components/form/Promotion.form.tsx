@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import type {
   IPromotionCreatePayload,
   IPromotionUpdatePayload,
-  IPromotions,
+  IPromotion,
 } from '@/Models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
@@ -14,7 +14,7 @@ export const PromotionCreateForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPromotionCreatePayload>();
+  } = useForm<IPromotionCreatePayload>({ mode: 'onChange' });
 
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
@@ -41,79 +41,108 @@ export const PromotionCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="promotion-form"
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
     >
       <div className="">
-        <Label htmlFor="name">Promotion name</Label>
+        <Label htmlFor="name">Nom</Label>
         <TextInput
-          {...register('name', { required: true, maxLength: 50 })}
+          {...register('name', {
+            required: 'Le nom de la promotion est requis',
+            maxLength: 50,
+          })}
           type="text"
           className=""
           id="name"
           maxLength={50}
-          placeholder="name"
+          placeholder="Ma promotion"
         />
-        {errors.name && <span>This field is required</span>}
+        {errors.name && (
+          <span className="text-red-600 text-sm">
+            {errors.name.message.toString()}
+          </span>
+        )}
       </div>
       <div className="">
-        <Label htmlFor="description">Promotion description</Label>
+        <Label htmlFor="description">Description</Label>
         <TextInput
-          {...register('description', { required: true, maxLength: 50 })}
+          {...register('description', {
+            required: 'La description est requise',
+            maxLength: 50,
+          })}
           type="text"
           className=""
           id="description"
           maxLength={50}
-          placeholder="description"
+          placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
-        {errors.description && <span>This field is required</span>}
+        {errors.description && (
+          <span className="text-red-600 text-sm">
+            {errors.description.message.toString()}
+          </span>
+        )}
       </div>
       <div className="flex justify-center space-x-4">
         <div className="flex-1">
-          <Label htmlFor="startAt">Promotion start date</Label>
+          <Label htmlFor="startAt">Date de début</Label>
           <TextInput
-            {...register('startAt', { required: true, maxLength: 50 })}
+            {...register('startAt', { maxLength: 50 })}
             type="date"
             className=""
             id="startAt"
             maxLength={50}
-            placeholder="startAt"
+            placeholder={new Date().toDateString()}
           />
-          {errors.startAt && <span>This field is required</span>}
+          {errors.startAt && (
+            <span className="text-red-600 text-sm">
+              {errors.startAt.message.toString()}
+            </span>
+          )}
         </div>
         <div className="flex-1">
-          <Label htmlFor="endAt">Promotion end date</Label>
+          <Label htmlFor="endAt">Date de fin</Label>
           <TextInput
-            {...register('endAt', { required: true, maxLength: 50 })}
+            {...register('endAt', {
+              required: 'La date de fin est requise',
+              maxLength: 50,
+            })}
             type="date"
             className=""
             id="endAt"
             maxLength={50}
             placeholder="endAt"
           />
-          {errors.endAt && <span>This field is required</span>}
+          {errors.endAt && (
+            <span className="text-red-600 text-sm">
+              {errors.endAt.message.toString()}
+            </span>
+          )}
         </div>
       </div>
       <div className="">
-        <Label htmlFor="checkoutLimit">Promotion checkout limit</Label>
+        <Label htmlFor="checkoutLimit">Limite de passage</Label>
         <TextInput
           {...register('checkoutLimit', {
-            required: true,
+            required: 'La limite de passage est requise',
             valueAsNumber: true,
           })}
           type="number"
           className=""
           id="checkoutLimit"
           maxLength={50}
-          placeholder="checkoutLimit"
+          placeholder="10"
         />
-        {errors.checkoutLimit && <span>This field is required</span>}
+        {errors.checkoutLimit && (
+          <span className="text-red-600 text-sm">
+            {errors.checkoutLimit.message.toString()}
+          </span>
+        )}
       </div>
       <Button
-        className="text-black bg-green-200 hover:bg-green-300"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
         type="submit"
         data-cy="submit"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );
@@ -127,7 +156,7 @@ export const PromotionUpdateForm: React.FC = () => {
     setValue,
   } = useForm<IPromotionUpdatePayload>();
 
-  const [promotion, setPromotion] = useState<IPromotions>();
+  const [promotion, setPromotion] = useState<IPromotion>();
   const router = useRouter();
   const id = Number(router.query.id);
 
@@ -188,63 +217,113 @@ export const PromotionUpdateForm: React.FC = () => {
     [promotion?.id],
   );
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
+    >
       <div className="">
+        <Label htmlFor="name">Nom</Label>
         <TextInput
-          {...register('name', { required: true, maxLength: 50 })}
+          {...register('name', {
+            required: 'Le nom de la promotion est requis',
+            maxLength: 50,
+          })}
           type="text"
           className=""
           id="name"
           maxLength={50}
-          placeholder="name"
+          placeholder="Ma promotion"
         />
-        {errors.name && <span>This field is required</span>}
+        {errors.name && (
+          <span className="text-red-600 text-sm">
+            {errors.name.message.toString()}
+          </span>
+        )}
       </div>
       <div className="">
+        <Label htmlFor="description">Description</Label>
         <TextInput
-          {...register('description', { required: true, maxLength: 50 })}
+          {...register('description', {
+            required: 'La description est requise',
+            maxLength: 50,
+          })}
           type="text"
           className=""
           id="description"
           maxLength={50}
-          placeholder="description"
+          placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
-        {errors.description && <span>This field is required</span>}
+        {errors.description && (
+          <span className="text-red-600 text-sm">
+            {errors.description.message.toString()}
+          </span>
+        )}
+      </div>
+      <div className="flex justify-center space-x-4">
+        <div className="flex-1">
+          <Label htmlFor="startAt">Date de début</Label>
+          <TextInput
+            {...register('startAt', {
+              required: 'La date de début est requise',
+              maxLength: 50,
+            })}
+            type="date"
+            className=""
+            id="startAt"
+            maxLength={50}
+            placeholder={new Date().toDateString()}
+          />
+          {errors.startAt && (
+            <span className="text-red-600 text-sm">
+              {errors.startAt.message.toString()}
+            </span>
+          )}
+        </div>
+        <div className="flex-1">
+          <Label htmlFor="endAt">Date de fin</Label>
+          <TextInput
+            {...register('endAt', {
+              required: 'La date de fin est requise',
+              maxLength: 50,
+            })}
+            type="date"
+            className=""
+            id="endAt"
+            maxLength={50}
+            placeholder="endAt"
+          />
+          {errors.endAt && (
+            <span className="text-red-600 text-sm">
+              {errors.endAt.message.toString()}
+            </span>
+          )}
+        </div>
       </div>
       <div className="">
+        <Label htmlFor="checkoutLimit">Limite de passage</Label>
         <TextInput
-          {...register('startAt', { required: true, maxLength: 50 })}
-          type="date"
-          className=""
-          id="startAt"
-          maxLength={50}
-          placeholder="startAt"
-        />
-        {errors.startAt && <span>This field is required</span>}
-      </div>
-      <div className="">
-        <TextInput
-          {...register('endAt', { required: true, maxLength: 50 })}
-          type="date"
-          className=""
-          id="endAt"
-          maxLength={50}
-          placeholder="endAt"
-        />
-        {errors.endAt && <span>This field is required</span>}
-      </div>
-      <div className="">
-        <TextInput
-          {...register('checkoutLimit', { required: true })}
+          {...register('checkoutLimit', {
+            required: 'La limite de passage est requise',
+            valueAsNumber: true,
+          })}
           type="number"
           className=""
           id="checkoutLimit"
-          placeholder="checkoutLimit"
+          maxLength={50}
+          placeholder="10"
         />
-        {errors.checkoutLimit && <span>This field is required</span>}
+        {errors.checkoutLimit && (
+          <span className="text-red-600 text-sm">
+            {errors.checkoutLimit.message.toString()}
+          </span>
+        )}
       </div>
-      <Button className="btn btn-primary" type="submit">
-        Submit
+      <Button
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
+        type="submit"
+        data-cy="submit"
+      >
+        Enregistrer
       </Button>
     </form>
   );
