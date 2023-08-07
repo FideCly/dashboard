@@ -62,6 +62,18 @@ export default function CampaignList() {
     });
   }
 
+  function sendCampaign(campaigns: ICampaign): void {
+    fetch(`/api/campaign/send`, {
+      method: 'POST',
+      body: JSON.stringify(campaigns),
+    }).then((res) => {
+      if (res.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      return res.json();
+    });
+  }
+
   return (
     <div className="flow-root mt-8">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

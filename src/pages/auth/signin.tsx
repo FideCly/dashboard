@@ -32,45 +32,44 @@ export default function SignIn() {
   };
 
   const onSubmit: SubmitHandler<IAuthPayload> = useCallback(async (data) => {
-    try {
-      const response = await fetch(`/api/auth/signin`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.status >= 400) {
-        const res = await response.json();
-        throw new Error(res);
-      } else {
-        const user: jwttoken = await response.json();
-        localStorage.setItem('userUuid', user.userUuid);
-        // create a cookie
-        setCookie('token', user.token, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: '/',
-        });
-        toast('user connected', {
-          hideProgressBar: true,
-          autoClose: 2000,
-          type: 'success',
-        });
-        // if user is has a shop, redirect home
-        const userShop = await loadUser();
-        if (userShop.shop) {
-          router.push('/');
-        } else {
-          router.push('/shops/create');
-        }
-      }
-    } catch (error) {
-      toast('user not connected', {
-        hideProgressBar: true,
-        autoClose: 2000,
+    const toastid = toast.loading('connecting user...');
+    const response = await fetch(`/api/auth/signin`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.status >= 400) {
+      // read the response body
+      const body = await response.json();
+      toast.update(toastid, {
+        render: body.message,
         type: 'error',
+        autoClose: 2000,
+        isLoading: false,
       });
-      console.error(error);
+    } else {
+      const user: jwttoken = await response.json();
+      localStorage.setItem('userUuid', user.userUuid);
+      // create a cookie
+      setCookie('token', user.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      toast.update(toastid, {
+        render: 'user connected',
+        type: 'success',
+        autoClose: 2000,
+        isLoading: false,
+      });
+      // if user is has a shop, redirect home
+      const userShop = await loadUser();
+      if (userShop.shop) {
+        router.push('/');
+      } else {
+        router.push('/shops/create');
+      }
     }
   }, []);
 
@@ -96,7 +95,7 @@ export default function SignIn() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.email && (
-                <span className="text-red-600 text-sm">
+                <span className="text-sm text-red-600">
                   {errors.email.message.toString()}
                 </span>
               )}
@@ -114,19 +113,19 @@ export default function SignIn() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.password && (
-                <span className="text-red-600 text-sm">
+                <span className="text-sm text-red-600">
                   {errors.password.message.toString()}
                 </span>
               )}
 
               <button
                 type="submit"
-                className="p-2 w-full m-auto text-gray-50 font-medium rounded-lg bg-fidgreen hover:bg-fidgreen/80"
+                className="w-full p-2 m-auto font-medium rounded-lg text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
               >
                 Se connecter
               </button>
 
-              <p className="text-sm font-light text-gray-500 text-right">
+              <p className="text-sm font-light text-right text-gray-500">
                 Pas encore inscrit ?{' '}
                 <Link
                   href="/auth/signup"

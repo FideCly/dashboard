@@ -7,9 +7,10 @@ import {
   IPromotionRanking,
 } from '@/Models/Analytics';
 import { IUser } from '@/Models/User';
+import { faCircleCheck, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
-import { Select } from 'flowbite-react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 Chart.register(CategoryScale);
@@ -117,7 +118,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
       }
-    };
+    };    
     checkShop();
     getClientCount();
     getPromotionRanking();
@@ -125,69 +126,100 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-white rounded ronded-md text-stone-950">
-      <div className="flex flex-col flex-1">
-        <h1 className="flex-1 text-2xl">Global Statistiques</h1>
-        <p>
-          nombre d'affluence: {affluence ? affluence.value : 50} passage sur ce
-          mois
-        </p>
-        <p>
-          nombre de client:
-          {clientCount ? clientCount.value : 77} client possedant une carte
-        </p>
-      </div>
-      <div className="flex flex-1">
-        <div className="flex flex-col content-center justify-center flex-1 p-4 text-center">
-          <div className="flex">
-            <h1 className="flex-1 ">stat</h1>
-            <Select>
-              <option value="1">année en cours</option>
-              <option value="2">mois en cours</option>
-              <option value="3">7 dernier jour</option>
-              <option value="4">jour de la veille</option>
-            </Select>
+    <main className="flex flex-col">
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <div className="min-w-0 overflow-hidden bg-white rounded-lg shadow-xs ">
+          <div className="flex items-center p-4">
+            <div className="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+              <FontAwesomeIcon icon={faUserGroup} className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                Total clients
+              </p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                {clientCount ? clientCount.value : 77}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="min-w-0 overflow-hidden bg-white rounded-lg shadow-xs dark:bg-gray-800">
+          <div className="flex items-center p-4">
+            <div className="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
+              <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                Passage sur ce mois
+              </p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                {affluence ? affluence.value : 50}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="min-w-0 overflow-hidden bg-white rounded-lg shadow-xs dark:bg-gray-800">
+          <div className="flex items-center p-4">
+            <div className="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
+              <FontAwesomeIcon icon={faUserGroup} className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                Nombre de validation aujourd'hui
+              </p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+               234
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="min-w-0 overflow-hidden bg-white rounded-lg shadow-xs dark:bg-gray-800">
+          <div className="flex items-center p-4">
+            <div className="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+              <FontAwesomeIcon icon={faUserGroup} className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                Pending contacts
+              </p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                35
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center flex-1 p-4 text-center bg-white rounded-md">
-        <div className="flex">
-          <h1 className="flex-1 text-stone-950">
-            Nombre de passage de carte par heure de la journée
-          </h1>
-          <Select>
-            <option value="1">année en cours</option>
-            <option value="2">mois en cours</option>
-            <option value="3">7 dernier jour</option>
-            <option value="4">jour de la veille</option>
-            <option value="4">jour de la veille</option>
-          </Select>
-        </div>
-        <div>
-          {promotionRanking ? (
-            <BarChart
-              chartData={{
-                labels: promotionRanking.promotionNames,
-                datasets: [
-                  {
-                    label: 'Sales for 2020 (M)',
-                    data: promotionRanking.values,
-                    borderColor: ['rgba(0,0,0,1)'],
-                    backgroundColor: [
-                      '#55dde0',
-                      '#33658A',
-                      '#2F4858',
-                      '#F6AE2D',
-                      '#F26419',
-                      '#14BDEB',
-                      '#949D6A',
-                    ],
-                    borderWidth: 4,
-                  },
-                ],
-              }}
-            />
-          ) : null}
+      <div className="w-full px-5 py-5 text-gray-500 bg-white rounded shadow-xl">
+        <h3 className="text-lg font-semibold leading-tight">
+          Classement Promotion
+        </h3>
+        <div className="">
+          <div className="">
+            {promotionRanking ? (
+              <BarChart
+                chartData={{
+                  labels: promotionRanking.promotionNames,
+                  datasets: [
+                    {
+                      label: 'Sales for 2020 (M)',
+                      data: promotionRanking.values,
+                      borderColor: ['rgba(0,0,0,1)'],
+                      backgroundColor: [
+                        '#55dde0',
+                        '#33658A',
+                        '#2F4858',
+                        '#F6AE2D',
+                        '#F26419',
+                        '#14BDEB',
+                        '#949D6A',
+                      ],
+                      borderWidth: 4,
+                    },
+                  ],
+                }}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
     </main>
@@ -196,12 +228,12 @@ export default function Home() {
 
 Home.getLayout = function getLayout(page) {
   return (
-    <div className="relative z-50 flex">
+    <div className="relative flex bg-gray-50">
       <Sidebar />
       <div className="w-full">
         <Navbar />
-        <main className="py-10 h-screen">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        <main className="h-screen py-10 ">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
         </main>
       </div>
     </div>

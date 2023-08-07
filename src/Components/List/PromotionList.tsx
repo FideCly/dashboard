@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { IPromotion } from '@/Models/Promotions';
 import { IUser } from '@/Models/User';
 import Link from 'next/link';
+import moment from 'moment';
 
 export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
@@ -52,7 +53,7 @@ export default function PromotionList() {
   }
 
   return (
-    <div className="mt-8 flow-root">
+    <div className="flow-root mt-8">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table className="min-w-full">
@@ -109,7 +110,7 @@ export default function PromotionList() {
                       <th
                         colSpan={7}
                         scope="colgroup"
-                        className="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                        className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-gray-50 sm:pl-3"
                       >
                         Actives
                       </th>
@@ -119,24 +120,24 @@ export default function PromotionList() {
                       .map((promotion) => (
                         <tr
                           key={promotion.id}
-                          className="border-gray-300 border-t"
+                          className="border-t border-gray-300"
                         >
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
                             {promotion.name}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.description}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.checkoutLimit}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {promotion.startAt.toString()}
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {moment(promotion.startAt).format('DD/MM/YYYY')}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {promotion.endAt.toString()}
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {moment(promotion.endAt).format('DD/MM/YYYY')}
                           </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
                               href={`/promotion/${promotion.id}/edit`}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"
@@ -145,7 +146,7 @@ export default function PromotionList() {
                               <span className="sr-only">{promotion.name}</span>
                             </Link>
                           </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
                               href={`/promotion/${promotion.id}/edit`}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"
@@ -162,7 +163,7 @@ export default function PromotionList() {
                       <th
                         colSpan={7}
                         scope="colgroup"
-                        className="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                        className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-gray-50 sm:pl-3"
                       >
                         Inactives
                       </th>
@@ -172,24 +173,24 @@ export default function PromotionList() {
                       .map((promotion) => (
                         <tr
                           key={promotion.id}
-                          className="border-gray-300 border-t"
+                          className="border-t border-gray-300"
                         >
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
                             {promotion.name}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.description}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.checkoutLimit}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.startAt.toString()}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.endAt.toString()}
                           </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
                               href={`/promotion/${promotion.id}/edit`}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"
@@ -198,7 +199,7 @@ export default function PromotionList() {
                               <span className="sr-only">{promotion.name}</span>
                             </Link>
                           </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
                               href={`/promotion/${promotion.id}/edit`}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"

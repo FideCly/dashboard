@@ -6,18 +6,19 @@ export default async (req, res) => {
   } else {
     // get body from request
     const body = req.body;
-    const response = await axios.put(
-      process.env.NEXT_PUBLIC_API_URL + 'checkout',
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${req.cookies.token}`,
+    try {
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_API_URL + 'checkout',
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+          },
         },
-      },
-    );
-    if (response.status >= 400) {
-      throw new Error('Bad response from server');
+      );
+      return res.status(response.status).json(response.data);
+    } catch (error) {
+      return res.status(error.response.status).json(error.response.data);
     }
-    return res.status(response.status).json(response.data);
   }
 };

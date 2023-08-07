@@ -4,21 +4,20 @@ import { IUser } from '../../../Models/User';
 export default async function handler(req, res): Promise<IUser> {
   if (req.method === 'GET') {
     const uuid = req.query.uuid;
-    const response = await axios.get<IUser>(
-      process.env.NEXT_PUBLIC_API_URL + `user/${uuid}`,
-      {
-        headers: {
-          Authorization: `Bearer ${req.cookies.token}`,
-          'Content-Type': 'application/json',
+    try {
+      const response = await axios.get<IUser>(
+        process.env.NEXT_PUBLIC_API_URL + `user/${uuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+            'Content-Type': 'application/json',
+          },
         },
-      },
-    );
+      );
 
-    return res.status(response.status).json(response.data);
+      return res.status(response.status).json(response.data);
+    } catch (error) {
+      return res.status(error.response.status).send(error.response.data);
+    }
   }
 }
-export const config = {
-  api: {
-    externalResolver: true,
-  },
-};

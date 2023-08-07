@@ -1,13 +1,33 @@
+import { IUser } from '@/Models/User';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
+  const [user, setUser] = useState<IUser>(null);
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
   const router = useRouter();
   return (
     <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8">
-      <div className="flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+      <div className="flex items-center h-16 px-4 border-b border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
         <div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
           <form className="relative flex flex-1" action="#" method="GET">
             <label htmlFor="search-field" className="sr-only">
@@ -33,18 +53,11 @@ export default function Navbar() {
             />
           </form>
           <div className="flex items-center gap-x-4 lg:gap-x-6">
-            <div className="lg:block lg:h-6 lg:w-px lg:bg-gray-200"></div>
+            <div className="lg:block lg:h-6 lg:w-px"></div>
 
             <div className="relative">
-              {/* <Image
-                className="w-8 h-8 rounded-full bg-gray-50"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-                width={10}
-                height={10}
-              /> */}
               <span className="ml-4 text-sm font-semibold leading-6 text-gray-900">
-                Tim Cook
+                {user?.username}
               </span>
             </div>
             <button

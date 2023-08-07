@@ -27,7 +27,7 @@ export default function MyApp({
 
   return getLayout(
     <>
-      <main className="bg-fidbg">
+      <main className="">
         <Component {...pageProps} />
         <Consent />
       </main>

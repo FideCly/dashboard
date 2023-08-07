@@ -58,6 +58,7 @@ export const CampaignCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
+        const toastid = toast.loading('creating campaign...');
         const response = await fetch(`/api/campaign`, {
           method: 'POST',
           headers: {
@@ -67,17 +68,22 @@ export const CampaignCreateForm: React.FC = () => {
           body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
         if (response.status >= 400) {
-          toast('Error', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          const body = await response.json();
+          toast.update(toastid, {
+            render: `Campaign not created: ${body.message}`,
             type: 'error',
+            autoClose: 2000,
+            isLoading: false,
           });
         } else {
-          toast('Campaign created', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          toast.update(toastid, {
+            render: 'Campaign created',
             type: 'success',
+            autoClose: 2000,
+            isLoading: false,
           });
+          // reload the page to get the new campaign
+          window.location.reload();
         }
       } catch (error) {
         console.error(error);
@@ -233,6 +239,7 @@ export const CampaignUpdateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(
     async (data) => {
       try {
+        const toastid = toast.loading('updating campaign...');
         const res = await fetch(`/api/campaign/${id}`, {
           method: 'PUT',
           headers: {
@@ -241,17 +248,23 @@ export const CampaignUpdateForm: React.FC = () => {
           body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
         if (res.status >= 400) {
-          toast('Error', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          // read the response body
+          const body = await res.json();
+          toast.update(toastid, {
+            render: `Campaign not updated: ${body.message}`,
             type: 'error',
+            autoClose: 2000,
+            isLoading: false,
           });
         } else {
-          toast('Campaign updated', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          toast.update(toastid, {
+            render: 'Campaign updated',
             type: 'success',
+            autoClose: 2000,
+            isLoading: false,
           });
+          // reload actual page
+          router.push('/campagne');
         }
       } catch (error) {
         console.error(error);

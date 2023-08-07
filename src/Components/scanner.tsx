@@ -67,6 +67,7 @@ export default function ScannerForm() {
         toast('Checkout not done', {
           hideProgressBar: true,
           autoClose: 2000,
+isLoading: false,
           type: 'error',
         });
         const res = await response.json();
@@ -75,6 +76,7 @@ export default function ScannerForm() {
         toast('Checkout done', {
           hideProgressBar: true,
           autoClose: 2000,
+isLoading: false,
           type: 'success',
         });
       }
