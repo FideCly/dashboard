@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ICampaign } from '@/Models/Campaign';
 import { IUser } from '@/Models/User';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
@@ -62,16 +63,33 @@ export default function CampaignList() {
     });
   }
 
-  function sendCampaign(campaigns: ICampaign): void {
-    fetch(`/api/campaign/send`, {
+  async function sendCampaign(campaigns: ICampaign): Promise<void> {
+    const toastid = toast.loading('Envoi en cours');
+    const response = await fetch(`/api/campaign/${campaigns.id}/send`, {
       method: 'POST',
       body: JSON.stringify(campaigns),
-    }).then((res) => {
-      if (res.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return res.json();
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+    if (response.status >= 400) {
+      const res = await response.json();
+      toast.update(toastid, {
+        render: `Erreur lors de l\'envoi: ${res.message}`,
+        hideProgressBar: true,
+        autoClose: 2000,
+        isLoading: false,
+        type: 'error',
+      });
+    } else {
+      toast.update(toastid, {
+        render: 'Envoi réussi',
+        hideProgressBar: true,
+        autoClose: 2000,
+        isLoading: false,
+        type: 'success',
+      });
+    }
   }
 
   return (
@@ -120,12 +138,12 @@ export default function CampaignList() {
                       {campaign.promotionId}
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                      <Link
-                        href={`/campaign/${campaign.id}/send`}
+                      <button
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                        onClick={() => sendCampaign(campaign)}
                       >
                         Envoyer
-                      </Link>
+                      </button>
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <Link
