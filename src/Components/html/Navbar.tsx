@@ -6,6 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
+  const [user, setUser] = useState<IUser>(null);
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
   const router = useRouter();
   const [user, setUser] = useState<IUser>(null);
   const loadUser = async (): Promise<IUser> => {
