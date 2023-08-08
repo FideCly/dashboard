@@ -36,30 +36,31 @@ export const ShopCreateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
-      try {
-        const response = await fetch(`/api/shop`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const toastid = toast.loading('creating shop...');
+      const response = await fetch(`/api/shop`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.status >= 400) {
+        // read the response body
+        const body = await response.json();
+        toast.update(toastid, {
+          render: `Shop not created: ${body.message}`,
+          type: 'error',
+          autoClose: 2000,
+          isLoading: false,
         });
-        if (response.status >= 400) {
-          toast('Shop not created', {
-            hideProgressBar: true,
-            autoClose: 2000,
-            type: 'error',
-          });
-        } else {
-          toast('Shop created', {
-            hideProgressBar: true,
-            autoClose: 2000,
-            type: 'success',
-          });
-          router.push('/');
-        }
-      } catch (error) {
-        console.error(error);
+      } else {
+        toast.update(toastid, {
+          render: 'Shop created',
+          type: 'success',
+          autoClose: 2000,
+          isLoading: false,
+        });
+        router.push('/');
       }
     },
     [],
@@ -319,29 +320,31 @@ export const ShopUpdateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
-      try {
-        const res = await fetch(`/api/shop/${data.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const toastid = toast.loading('creating shop...');
+      const res = await fetch(`/api/shop/${data.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.status >= 400) {
+        // read the response body
+        const body = await res.json();
+        toast.update(toastid, {
+          render: `Shop not updated: ${body.message}`,
+          type: 'error',
+          autoClose: 2000,
+          isLoading: false,
         });
-        if (res.status >= 400) {
-          toast('Shop not updated', {
-            hideProgressBar: true,
-            autoClose: 2000,
-            type: 'error',
-          });
-        } else {
-          toast('Shop updated', {
-            hideProgressBar: true,
-            autoClose: 2000,
-            type: 'success',
-          });
-        }
-      } catch (error) {
-        console.error(error);
+      } else {
+        toast.update(toastid, {
+          render: 'Shop updated',
+          type: 'success',
+          autoClose: 2000,
+          isLoading: false,
+        });
+        router.push('/');
       }
     },
     [],

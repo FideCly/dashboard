@@ -67,6 +67,7 @@ export default function ScannerForm() {
         toast('Checkout not done', {
           hideProgressBar: true,
           autoClose: 2000,
+          isLoading: false,
           type: 'error',
         });
         const res = await response.json();
@@ -75,6 +76,7 @@ export default function ScannerForm() {
         toast('Checkout done', {
           hideProgressBar: true,
           autoClose: 2000,
+          isLoading: false,
           type: 'success',
         });
       }
@@ -88,8 +90,8 @@ export default function ScannerForm() {
       className="flex flex-row bg-white h-2/3 gap-x-8"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="basis-1/2 w-full h-full border bg-fidbg flex flex-col p-4 justify-center rounded-xl">
-        <h1 className="text-xl text-left font-medium leading-6 text-gray-900">
+      <div className="flex flex-col justify-center w-full h-full p-4 border basis-1/2 bg-fidbg rounded-xl">
+        <h1 className="text-xl font-medium leading-6 text-left text-gray-900">
           1. Scanner
         </h1>
 
@@ -109,15 +111,15 @@ export default function ScannerForm() {
             className="w-full rounded-xl"
             scanDelay={300}
           />
-          <p className="text-center mt-2 text-sm text-gray-700">{data}</p>
+          <p className="mt-2 text-sm text-center text-gray-700">{data}</p>
         </div>
       </div>
-      <div className="w-full h-full basis-1/2 border bg-fidbg flex flex-col rounded-xl p-4">
+      <div className="flex flex-col w-full h-full p-4 border basis-1/2 bg-fidbg rounded-xl">
         <h1 className="text-xl font-medium leading-6 text-gray-900">
           2. Sélectionner la promotion à appliquer
         </h1>
 
-        <div className="self-center items-center h-full grid gap-8 content-center w-full">
+        <div className="grid items-center content-center self-center w-full h-full gap-8">
           <Select
             className=""
             name="promotion"
@@ -134,7 +136,7 @@ export default function ScannerForm() {
           </Select>
           <Button
             type="submit"
-            className="p-2 w-full m-auto text-gray-50 font-medium rounded-lg bg-fidgreen hover:bg-fidgreen/80"
+            className="w-full p-2 m-auto font-medium rounded-lg text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
           >
             Valider
           </Button>

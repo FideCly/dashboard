@@ -20,3 +20,8 @@ export interface IPromotionRanking {
   values: Array<number>;
   promotionNames: Array<string>;
 }
+
+export interface IPromotionCheckoutCount {
+  status: number;
+  values: number;
+}

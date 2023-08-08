@@ -15,24 +15,35 @@ export const PromotionCreateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IPromotionCreatePayload>({ mode: 'onChange' });
-
+  const router = useRouter();
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
-      try {
-        await fetch('/api/promotions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-        toast('Promotion created', {
-          hideProgressBar: true,
+      const toastid = toast.loading('creating promotion...');
+      const response = await fetch('/api/promotions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.status >= 400) {
+        // read the response body
+        const body = await response.json();
+        toast.update(toastid, {
+          render: `Promotion not created: ${body.message}`,
+          type: 'error',
           autoClose: 2000,
-          type: 'success',
+          isLoading: false,
         });
-      } catch (error) {
-        console.error(error);
+      } else {
+        toast.update(toastid, {
+          render: 'Promotion created',
+          type: 'success',
+          autoClose: 2000,
+          isLoading: false,
+        });
+        // reload actual page
+        router.reload();
       }
     },
     [],
@@ -41,7 +52,7 @@ export const PromotionCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="promotion-form"
-      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
@@ -57,7 +68,7 @@ export const PromotionCreateForm: React.FC = () => {
           placeholder="Ma promotion"
         />
         {errors.name && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.name.message.toString()}
           </span>
         )}
@@ -76,7 +87,7 @@ export const PromotionCreateForm: React.FC = () => {
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
         {errors.description && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.description.message.toString()}
           </span>
         )}
@@ -93,7 +104,7 @@ export const PromotionCreateForm: React.FC = () => {
             placeholder={new Date().toDateString()}
           />
           {errors.startAt && (
-            <span className="text-red-600 text-sm">
+            <span className="text-sm text-red-600">
               {errors.startAt.message.toString()}
             </span>
           )}
@@ -112,7 +123,7 @@ export const PromotionCreateForm: React.FC = () => {
             placeholder="endAt"
           />
           {errors.endAt && (
-            <span className="text-red-600 text-sm">
+            <span className="text-sm text-red-600">
               {errors.endAt.message.toString()}
             </span>
           )}
@@ -132,7 +143,7 @@ export const PromotionCreateForm: React.FC = () => {
           placeholder="10"
         />
         {errors.checkoutLimit && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.checkoutLimit.message.toString()}
           </span>
         )}
@@ -189,6 +200,7 @@ export const PromotionUpdateForm: React.FC = () => {
   }, [id]);
   const onSubmit: SubmitHandler<IPromotionUpdatePayload> = useCallback(
     async (data) => {
+      const id = toast.loading('Please wait...');
       try {
         const res = await fetch(`/api/promotions/${data.id}`, {
           method: 'PUT',
@@ -198,17 +210,23 @@ export const PromotionUpdateForm: React.FC = () => {
           body: JSON.stringify(data),
         });
         if (res.status >= 400) {
-          toast('Promotion not updated', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          // read the response body
+          const body = await res.json();
+          toast.update(id, {
+            render: body.message,
             type: 'error',
+            autoClose: 2000,
+            isLoading: false,
           });
         } else {
-          toast('Promotion updated', {
-            hideProgressBar: true,
-            autoClose: 2000,
+          toast.update(id, {
+            render: 'Promotion updated',
             type: 'success',
+            autoClose: 2000,
+            isLoading: false,
           });
+          // reload actual page
+          router.push('/promotions');
         }
       } catch (error) {
         console.error(error);
@@ -219,7 +237,7 @@ export const PromotionUpdateForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
@@ -235,7 +253,7 @@ export const PromotionUpdateForm: React.FC = () => {
           placeholder="Ma promotion"
         />
         {errors.name && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.name.message.toString()}
           </span>
         )}
@@ -254,7 +272,7 @@ export const PromotionUpdateForm: React.FC = () => {
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
         {errors.description && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.description.message.toString()}
           </span>
         )}
@@ -274,7 +292,7 @@ export const PromotionUpdateForm: React.FC = () => {
             placeholder={new Date().toDateString()}
           />
           {errors.startAt && (
-            <span className="text-red-600 text-sm">
+            <span className="text-sm text-red-600">
               {errors.startAt.message.toString()}
             </span>
           )}
@@ -293,7 +311,7 @@ export const PromotionUpdateForm: React.FC = () => {
             placeholder="endAt"
           />
           {errors.endAt && (
-            <span className="text-red-600 text-sm">
+            <span className="text-sm text-red-600">
               {errors.endAt.message.toString()}
             </span>
           )}
@@ -313,7 +331,7 @@ export const PromotionUpdateForm: React.FC = () => {
           placeholder="10"
         />
         {errors.checkoutLimit && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.checkoutLimit.message.toString()}
           </span>
         )}

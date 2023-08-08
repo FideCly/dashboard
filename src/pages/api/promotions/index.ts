@@ -20,15 +20,19 @@ export default async function handler(req, res) {
   } else if (req.method === 'POST') {
     // get the id from the query
     const promotion = req.body;
-    const response = await axios.post<IPromotionUpdatePayload>(
-      process.env.NEXT_PUBLIC_API_URL + `promotion`,
-      promotion,
-      {
-        headers: {
-          Authorization: `Bearer ${req.cookies.token}`,
+    try {
+      const response = await axios.post<IPromotionUpdatePayload>(
+        process.env.NEXT_PUBLIC_API_URL + `promotion`,
+        promotion,
+        {
+          headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+          },
         },
-      },
-    );
-    res.status(response.status).json(response.data ? response.data : null);
+      );
+      res.status(response.status).json(response.data ? response.data : null);
+    } catch (error) {
+      res.status(error.response.status).send(error.response.data);
+    }
   }
 }

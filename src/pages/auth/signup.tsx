@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function signup() {
   const router = useRouter();
@@ -25,15 +26,25 @@ export default function signup() {
         },
         body: JSON.stringify(data),
       };
-      try {
-        const response = await fetch(endpoint, options);
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        } else {
-          router.push('/auth/signin');
-        }
-      } catch (error) {
-        console.log(error);
+      const toastid = toast.loading('creating user...');
+      const response = await fetch(endpoint, options);
+      if (response.status >= 400) {
+        // read the response body
+        const body = await response.json();
+        toast.update(toastid, {
+          render: `User not created: ${body.message}`,
+          type: 'error',
+          autoClose: 2000,
+          isLoading: false,
+        });
+      } else {
+        toast.update(toastid, {
+          render: 'User created',
+          type: 'success',
+          autoClose: 2000,
+          isLoading: false,
+        });
+        router.push('/auth/signin');
       }
     },
     [router],
