@@ -59,7 +59,10 @@ export const PromotionCreateForm: React.FC = () => {
         <TextInput
           {...register('name', {
             required: 'Le nom de la promotion est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le nom ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -78,7 +81,10 @@ export const PromotionCreateForm: React.FC = () => {
         <TextInput
           {...register('description', {
             required: 'La description est requise',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'La description ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -96,7 +102,12 @@ export const PromotionCreateForm: React.FC = () => {
         <div className="flex-1">
           <Label htmlFor="startAt">Date de début</Label>
           <TextInput
-            {...register('startAt', { maxLength: 50 })}
+            {...register('startAt', {
+              maxLength: {
+                value: 50,
+                message: 'La date de début ne doit pas dépasser 50 caractères',
+              },
+            })}
             type="date"
             className=""
             id="startAt"
@@ -114,7 +125,10 @@ export const PromotionCreateForm: React.FC = () => {
           <TextInput
             {...register('endAt', {
               required: 'La date de fin est requise',
-              maxLength: 50,
+              maxLength: {
+                value: 50,
+                message: 'La date de fin ne doit pas dépasser 50 caractères',
+              },
             })}
             type="date"
             className=""
@@ -244,7 +258,10 @@ export const PromotionUpdateForm: React.FC = () => {
         <TextInput
           {...register('name', {
             required: 'Le nom de la promotion est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le nom ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -263,7 +280,10 @@ export const PromotionUpdateForm: React.FC = () => {
         <TextInput
           {...register('description', {
             required: 'La description est requise',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'La description ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -283,7 +303,10 @@ export const PromotionUpdateForm: React.FC = () => {
           <TextInput
             {...register('startAt', {
               required: 'La date de début est requise',
-              maxLength: 50,
+              maxLength: {
+                value: 50,
+                message: 'La date de début ne doit pas dépasser 50 caractères',
+              },
             })}
             type="date"
             className=""
@@ -301,8 +324,10 @@ export const PromotionUpdateForm: React.FC = () => {
           <Label htmlFor="endAt">Date de fin</Label>
           <TextInput
             {...register('endAt', {
-              required: 'La date de fin est requise',
-              maxLength: 50,
+              maxLength: {
+                value: 50,
+                message: 'La date de fin ne doit pas dépasser 50 caractères',
+              },
             })}
             type="date"
             className=""

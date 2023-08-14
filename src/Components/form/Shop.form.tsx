@@ -86,7 +86,10 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('companyName', {
             required: 'Le nom du shop est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le nom ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           id="companyName"
@@ -129,7 +132,10 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('email', {
             required: "L'email est requis",
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: "L'email ne doit pas dépasser 50 caractères",
+            },
           })}
           type="text"
           id="email"
@@ -150,9 +156,12 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
-            maxLength: 10,
+            maxLength: {
+              value: 10,
+              message: 'Le numéro de téléphone doit contenir 10 caractères',
+            },
           })}
-          type="text"
+          type="number"
           id="phone"
           maxLength={10}
           placeholder="0XXXXXXXXX"
@@ -171,11 +180,19 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('siren', {
             required: 'Le siren est requis',
-            maxLength: 9,
+            maxLength: {
+              value: 9,
+              message: 'Le siren doit contenir 9 caractères',
+            },
+            minLength: {
+              value: 9,
+              message: 'Le siren doit contenir 9 caractères',
+            },
           })}
-          type="text"
+          type="number"
           id="phone"
           maxLength={9}
+          minLength={9}
           placeholder="XXXXXXXXX"
         />
         {errors.siren && (
@@ -192,11 +209,19 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('siret', {
             required: 'Le siret est requis',
-            maxLength: 14,
+            maxLength: {
+              value: 14,
+              message: 'Le siren doit contenir 14 caractères',
+            },
+            minLength: {
+              value: 14,
+              message: 'Le siren doit contenir 14 caractères',
+            },
           })}
           type="text"
           id="siret"
           maxLength={14}
+          minLength={14}
           placeholder="XXXXXXXXXXXXXX"
         />
         {errors.siret && (
@@ -214,7 +239,10 @@ export const ShopCreateForm: React.FC = () => {
           error={undefined}
           {...register('address', {
             required: "L'adresse est requise",
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: "L'adresse ne doit pas dépasser 50 caractères",
+            },
           })}
           onChange={(e) => {
             setMetadata(e);
@@ -234,7 +262,10 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('city', {
             required: 'La ville est requise',
-            maxLength: 20,
+            maxLength: {
+              value: 20,
+              message: 'La ville ne doit pas dépasser 20 caractères',
+            },
           })}
           type="text"
           id="city"
@@ -254,10 +285,20 @@ export const ShopCreateForm: React.FC = () => {
         <TextInput
           {...register('zipCode', {
             required: 'Le code postal est requis',
-            maxLength: 14,
+            maxLength: {
+              value: 5,
+              message: 'Le code postal doit contenir 5 caractères',
+            },
+            minLength: {
+              value: 5,
+              message: 'Le code postal doit contenir 5 caractères',
+            },
           })}
-          type="text"
+          type="number"
           id="zipCode"
+          maxLength={5}
+          minLength={5}
+          max={99999}
           placeholder="XXXXX"
         />
         {errors.zipCode && (
@@ -370,7 +411,10 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('companyName', {
             required: 'Le nom du shop est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le nom du shop ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           id="companyName"
@@ -413,7 +457,10 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('email', {
             required: "L'email est requis",
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: "L'email ne doit pas dépasser 50 caractères",
+            },
           })}
           type="text"
           id="email"
@@ -434,9 +481,12 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 10,
+              message: 'Le numéro de téléphone doit contenir 10 caractères',
+            },
           })}
-          type="text"
+          type="number"
           id="phone"
           maxLength={50}
           placeholder="0XXXXXXXXX"
@@ -455,11 +505,19 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('siren', {
             required: 'Le siren est requis',
-            maxLength: 9,
+            maxLength: {
+              value: 9,
+              message: 'Le siren doit contenir 9 caractères',
+            },
+            minLength: {
+              value: 9,
+              message: 'Le siren doit contenir 9 caractères',
+            },
           })}
           type="text"
           id="siren"
           maxLength={9}
+          minLength={9}
           placeholder="XXXXXXXXX"
         />
         {errors.siren && (
@@ -476,11 +534,19 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('siret', {
             required: 'Le siret est requis',
-            maxLength: 14,
+            maxLength: {
+              value: 14,
+              message: 'Le siren doit contenir 14 caractères',
+            },
+            minLength: {
+              value: 14,
+              message: 'Le siren doit contenir 14 caractères',
+            },
           })}
           type="text"
           id="siret"
           maxLength={14}
+          minLength={14}
           placeholder="XXXXXXXXXXXXXX"
         />
         {errors.siret && (
@@ -498,7 +564,10 @@ export const ShopUpdateForm: React.FC = () => {
           error={undefined}
           {...register('address', {
             required: "L'adresse est requise",
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: "L'adresse ne doit pas dépasser 50 caractères",
+            },
           })}
           onChange={(e) => {
             setMetadata(e);
@@ -518,7 +587,10 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('city', {
             required: 'La ville est requise',
-            maxLength: 20,
+            maxLength: {
+              value: 20,
+              message: 'La ville ne doit pas dépasser 20 caractères',
+            },
           })}
           type="text"
           id="city"
@@ -538,10 +610,20 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('zipCode', {
             required: 'Le code postal est requis',
-            maxLength: 14,
+            maxLength: {
+              value: 5,
+              message: 'Le code postal doit contenir 5 caractères',
+            },
+            minLength: {
+              value: 5,
+              message: 'Le code postal doit contenir 5 caractères',
+            },
           })}
-          type="text"
+          type="number"
           id="zipCode"
+          maxLength={5}
+          minLength={5}
+          max={99999}
           placeholder="XXXXX"
         />
         {errors.zipCode && (
