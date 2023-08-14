@@ -65,7 +65,14 @@ export default function signup() {
             >
               <Label>Email</Label>
               <input
-                {...register('email', { required: "L'email est requis" })}
+                {...register('email', {
+                  required: "L'email est requis",
+                  pattern: {
+                    value:
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: 'Ce champ doit contenir un email valide',
+                  },
+                })}
                 name="email"
                 type="email"
                 placeholder="hello@fidelcly.com"
@@ -81,7 +88,11 @@ export default function signup() {
               <input
                 {...register('password', {
                   required: 'Le mot de passe est requis',
-                  minLength: 8,
+                  minLength: {
+                    value: 8,
+                    message:
+                      'Le mot de passe doit contenir minimum 8 caractères',
+                  },
                 })}
                 name="password"
                 type="password"

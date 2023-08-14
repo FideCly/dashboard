@@ -103,7 +103,11 @@ export const CampaignCreateForm: React.FC = () => {
         <TextInput
           {...register('subject', {
             required: 'Le nom de la campagne est requise',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message:
+                'Le nom de la campagne ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -122,7 +126,10 @@ export const CampaignCreateForm: React.FC = () => {
         <Textarea
           {...register('textData', {
             required: 'Le message est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le message ne doit pas dépasser 50 caractères',
+            },
           })}
           className=""
           id="textData"
@@ -140,7 +147,6 @@ export const CampaignCreateForm: React.FC = () => {
         <Select
           {...register('promotionId', {
             required: 'La promotion liée est requise',
-            maxLength: 50,
           })}
           className=""
           id="promotionId"
@@ -284,7 +290,11 @@ export const CampaignUpdateForm: React.FC = () => {
         <TextInput
           {...register('subject', {
             required: 'Le nom de la campagne est requise',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message:
+                'Le nom de la campagne ne doit pas dépasser 50 caractères',
+            },
           })}
           type="text"
           className=""
@@ -303,7 +313,10 @@ export const CampaignUpdateForm: React.FC = () => {
         <Textarea
           {...register('textData', {
             required: 'Le message est requis',
-            maxLength: 50,
+            maxLength: {
+              value: 50,
+              message: 'Le message ne doit pas dépasser 50 caractères',
+            },
           })}
           className=""
           id="textData"
@@ -321,7 +334,6 @@ export const CampaignUpdateForm: React.FC = () => {
         <Select
           {...register('promotionId', {
             required: 'La promotion liée est requise',
-            maxLength: 50,
           })}
           className=""
           id="promotionId"
