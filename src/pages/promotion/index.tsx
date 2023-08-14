@@ -11,7 +11,7 @@ export default function Promotion() {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 bg-white">
+    <div className="px-4 bg-white sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
@@ -27,7 +27,7 @@ export default function Promotion() {
             id="add-promotion"
             type="button"
             onClick={handleClick}
-            className="block rounded-md bg-fidgreen px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+            className="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
           >
             Ajouter une promotion
           </button>
@@ -49,8 +49,8 @@ Promotion.getLayout = function getLayout(page) {
       <Sidebar />
       <div className="w-full">
         <Navbar />
-        <main className="py-10 h-screen">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{page}</div>
+        <main className="h-screen py-10">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
         </main>
       </div>
     </div>
