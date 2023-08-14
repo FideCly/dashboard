@@ -3,11 +3,14 @@ import { IPromotion } from '@/Models/Promotions';
 import { IUser } from '@/Models/User';
 import Link from 'next/link';
 import moment from 'moment';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -47,6 +50,33 @@ export default function PromotionList() {
     };
     loadPromotions();
   }, []);
+
+  const deletePromotion = async (id: number): Promise<void> => {
+    const toastid = toast.loading('Suppression en cours');
+    const response = await fetch(`/api/promotions/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const res = await response.json();
+    if (res.status >= 400) {
+      toast.update(toastid, {
+        render: `Promotion non supprimée: ${res.message}`,
+        type: 'error',
+        autoClose: 2000,
+        isLoading: false,
+      });
+    } else {
+      toast.update(toastid, {
+        render: 'Promotion supprimée',
+        type: 'success',
+        autoClose: 2000,
+        isLoading: false,
+      });
+      router.reload();
+    }
+  };
 
   if (isLoading) {
     return <div>Chargement....</div>;
@@ -147,13 +177,12 @@ export default function PromotionList() {
                             </Link>
                           </td>
                           <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <Link
-                              href={`/promotion/${promotion.id}/edit`}
+                            <button
+                              onClick={() => deletePromotion(promotion.id)}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"
                             >
                               Supprimer
-                              <span className="sr-only">{promotion.name}</span>
-                            </Link>
+                            </button>
                           </td>
                         </tr>
                       ))}
