@@ -54,34 +54,30 @@ export default function ScannerForm() {
   }, []);
 
   const onSubmit: SubmitHandler<IScanner> = useCallback(async (data) => {
-    try {
-      const response = await fetch(`/api/checkout`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // promotionId is a number in the body
-        body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
+    const toastId = toast.loading('Checking...');
+    const response = await fetch(`/api/checkout`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // promotionId is a number in the body
+      body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
+    });
+    const res = await response.json();
+    if (response.status >= 400) {
+      toast.update(toastId, {
+        render: `Error while checkout: ${res.message}`,
+        type: 'error',
+        isLoading: false,
+        autoClose: 2000,
       });
-      if (response.status >= 400) {
-        toast('Checkout not done', {
-          hideProgressBar: true,
-          autoClose: 2000,
-          isLoading: false,
-          type: 'error',
-        });
-        const res = await response.json();
-        throw new Error(res.message);
-      } else {
-        toast('Checkout done', {
-          hideProgressBar: true,
-          autoClose: 2000,
-          isLoading: false,
-          type: 'success',
-        });
-      }
-    } catch (error) {
-      console.error(error);
+    } else {
+      toast.update(toastId, {
+        render: `Checkout done: ${res.message}`,
+        type: 'success',
+        isLoading: false,
+        autoClose: 2000,
+      });
     }
   }, []);
 
