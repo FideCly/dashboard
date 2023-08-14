@@ -13,7 +13,6 @@ export const UserUpdateForm: React.FC = () => {
     formState: { errors },
     setValue,
   } = useForm<IUserUpdatePayload>({ mode: 'onChange' });
-  const [user, setUser] = useState<IUser>();
 
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -32,13 +31,12 @@ export const UserUpdateForm: React.FC = () => {
   useEffect(() => {
     const loadUserShop = async (): Promise<void> => {
       const user = await loadUser();
-      setUser(user);
+      setValue('id', user?.id);
+      setValue('username', user?.username);
+      setValue('birthday', user?.birthday);
+      setValue('sexe', user?.sexe);
     };
     loadUserShop();
-    setValue('id', user?.id);
-    setValue('username', user?.username);
-    setValue('birthday', user?.birthday);
-    setValue('sexe', user?.sexe);
   }, []);
 
   const onSubmit: SubmitHandler<IUserUpdatePayload> = useCallback(
@@ -51,7 +49,7 @@ export const UserUpdateForm: React.FC = () => {
         body: JSON.stringify(data),
       };
       const toastId = toast.loading('updating user...');
-      const response = await fetch(`/api/auth/${user.id}/update`, options);
+      const response = await fetch(`/api/auth/${data.id}/update`, options);
       const body = await response.json();
       if (response.status >= 400) {
         toast.update(toastId, {
