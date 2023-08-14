@@ -12,13 +12,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.10",
-<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-=======
-    "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
->>>>>>> 550be45 (fix: user form)
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "13.4.13",
     "@react-google-maps/api": "^2.19.2",
@@ -61,21 +56,12 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.13",
     "@types/google.maps": "^3.53.6",
-<<<<<<< HEAD
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.4.0",
     "autoprefixer": "^10.4.15",
     "cypress": "^12.17.2",
     "cypress-axe": "^1.4.0",
     "eslint-config-prettier": "^9.0.0",
-=======
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^6.3.0",
-    "autoprefixer": "^10.4.15",
-    "cypress": "^12.17.3",
-    "cypress-axe": "^1.4.0",
-    "eslint-config-prettier": "^8.10.0",
->>>>>>> 550be45 (fix: user form)
     "eslint-plugin-cypress": "^2.14.0",
     "eslint-plugin-prettier": "^4.2.1",
     "next-themes": "^0.2.1",

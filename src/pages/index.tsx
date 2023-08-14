@@ -118,7 +118,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
       }
-    };    
+    };
     checkShop();
     getClientCount();
     getPromotionRanking();
@@ -168,11 +168,7 @@ export default function Home() {
                 Nombre de validation aujourd'hui
               </p>
               <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-<<<<<<< HEAD
                 234
-=======
-               234
->>>>>>> 007b188 (fix: error handling)
               </p>
             </div>
           </div>

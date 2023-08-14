@@ -340,6 +340,7 @@ export const ShopUpdateForm: React.FC = () => {
     formState: { errors },
     setValue,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
+  const [shop, setShop] = React.useState<IShopUpdatePayload>();
 
   useEffect(() => {
     const getShop = async (): Promise<void> => {
@@ -352,6 +353,7 @@ export const ShopUpdateForm: React.FC = () => {
           },
         });
         const data = await response.json(); // Extract JSON data from response
+        setShop(data);
         setValue('id', data.id);
         setValue('companyName', data.companyName);
         setValue('address', data.address);
