@@ -4,13 +4,37 @@ import {
   faEnvelope,
   faGear,
   faQrcode,
+  faRightToBracket,
   faTags,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { IUser } from '@/Models/User';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 export default function Sidebar() {
+  const router = useRouter();
+  const [user, setUser] = useState<IUser>(null);
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
   return (
     <div className="sticky inset-y-0 z-50 py-4 bg-fidgreen">
       <Image
