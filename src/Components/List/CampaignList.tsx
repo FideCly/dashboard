@@ -3,11 +3,13 @@ import { ICampaign } from '@/Models/Campaign';
 import { IUser } from '@/Models/User';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
   // get campaigns by campaign id
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -52,20 +54,38 @@ export default function CampaignList() {
     return <div>Chargement....</div>;
   }
 
-  function deletecampaign(id: number): void {
-    fetch(`/api/campaign/${id}`, {
+  async function deletecampaign(id: number): Promise<void> {
+    const toastid = toast.loading('Suppression en cours');
+    const response = await fetch(`/api/campaign/${id}`, {
       method: 'DELETE',
-    }).then((res) => {
-      if (res.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return res.json();
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+    const res = await response.json();
+    if (response.status >= 400) {
+      toast.update(toastid, {
+        render: `Erreur lors de la suppression: ${res.message}`,
+        hideProgressBar: true,
+        autoClose: 2000,
+        isLoading: false,
+        type: 'error',
+      });
+    } else {
+      toast.update(toastid, {
+        render: 'Suppression réussie',
+        hideProgressBar: true,
+        autoClose: 2000,
+        isLoading: false,
+        type: 'success',
+      });
+      router.reload();
+    }
   }
 
   async function sendCampaign(campaigns: ICampaign): Promise<void> {
-    const toastid = toast.loading('Envoi en cours');
-    const response = await fetch(`/api/campaign/${campaigns.id}/send`, {
+    const toastid = toast.loading('Envoi en cours....');
+    const response = await fetch(`/api/campaign/send`, {
       method: 'POST',
       body: JSON.stringify(campaigns),
       headers: {
@@ -147,7 +167,7 @@ export default function CampaignList() {
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <Link
-                        href={`/campaign/${campaign.id}/edit`}
+                        href={`/campagne/${campaign.id}/edit`}
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
                       >
                         Modifier

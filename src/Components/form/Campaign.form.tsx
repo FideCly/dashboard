@@ -96,7 +96,7 @@ export const CampaignCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>
@@ -112,7 +112,7 @@ export const CampaignCreateForm: React.FC = () => {
           placeholder="subject"
         />
         {errors.subject && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.subject.message.toString()}
           </span>
         )}
@@ -130,7 +130,7 @@ export const CampaignCreateForm: React.FC = () => {
           placeholder="textData"
         />
         {errors.textData && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.textData.message.toString()}
           </span>
         )}
@@ -153,7 +153,7 @@ export const CampaignCreateForm: React.FC = () => {
           ))}
         </Select>
         {errors.promotionId && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.promotionId.message.toString()}
           </span>
         )}
@@ -277,7 +277,7 @@ export const CampaignUpdateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 border rounded-lg p-4 m-4 bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>
@@ -293,7 +293,7 @@ export const CampaignUpdateForm: React.FC = () => {
           placeholder="subject"
         />
         {errors.subject && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.subject.message.toString()}
           </span>
         )}
@@ -311,7 +311,7 @@ export const CampaignUpdateForm: React.FC = () => {
           placeholder="textData"
         />
         {errors.textData && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.textData.message.toString()}
           </span>
         )}
@@ -334,7 +334,7 @@ export const CampaignUpdateForm: React.FC = () => {
           ))}
         </Select>
         {errors.promotionId && (
-          <span className="text-red-600 text-sm">
+          <span className="text-sm text-red-600">
             {errors.promotionId.message.toString()}
           </span>
         )}
