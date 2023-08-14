@@ -2,7 +2,7 @@
 // use react-hook-form
 import { IUser, IUserUpdatePayload } from '@/Models/User';
 import { Button, Label } from 'flowbite-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
