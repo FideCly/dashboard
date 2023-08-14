@@ -9,15 +9,14 @@ export const Profile = () => {
   useEffect(() => {
     const loadUser = async () => {
       const userUuid = localStorage.getItem('userUuid');
-      const endpoint = `/api/user/${userUuid}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
+
       try {
-        const response = await fetch(endpoint, options);
+        const response = await fetch(`api/user/${userUuid}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
         const data = await response.json();
         setUser(data);
       } catch (error) {
