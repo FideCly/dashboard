@@ -8,6 +8,7 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { IUser } from '@/Models/User';
 
 const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
   return (
@@ -279,44 +280,56 @@ export const ShopCreateForm: React.FC = () => {
 
 export const ShopUpdateForm: React.FC = () => {
   const router = useRouter();
-  const id = Number(router.query.id);
-
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
+  const [shop, setShop] = React.useState<IShopUpdatePayload>();
 
   useEffect(() => {
-    if (id) {
-      const getShop = async (): Promise<void> => {
-        try {
-          const response = await fetch(`/api/shop/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          const data = await response.json(); // Extract JSON data from response
-          setValue('id', data.id);
-          setValue('companyName', data.companyName);
-          setValue('address', data.address);
-          setValue('phone', data.phone);
-          setValue('email', data.email);
-          setValue('siren', data.siren);
-          setValue('siret', data.siret);
-          setValue('city', data.city);
-          setValue('zipCode', data.zipCode);
-          setValue('lat', data.lat);
-          setValue('long', data.long);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getShop();
-    }
-  }, [id]);
+    const getShop = async (): Promise<void> => {
+      const user = await loadUser();
+      try {
+        const response = await fetch(`/api/shop/${user?.shop.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json(); // Extract JSON data from response
+        setShop(data);
+        setValue('id', data.id);
+        setValue('companyName', data.companyName);
+        setValue('address', data.address);
+        setValue('phone', data.phone);
+        setValue('email', data.email);
+        setValue('siren', data.siren);
+        setValue('siret', data.siret);
+        setValue('city', data.city);
+        setValue('zipCode', data.zipCode);
+        setValue('lat', data.lat);
+        setValue('long', data.long);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getShop();
+  }, []);
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
@@ -362,7 +375,7 @@ export const ShopUpdateForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} data-cy="create-shop-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="">
         <Label htmlFor="companyName" className="">
           Nom du shop
@@ -374,7 +387,6 @@ export const ShopUpdateForm: React.FC = () => {
           })}
           type="text"
           id="companyName"
-          maxLength={50}
           placeholder="Nom du shop"
         />
         {errors.companyName && (
@@ -553,7 +565,7 @@ export const ShopUpdateForm: React.FC = () => {
 
       <Button
         type="submit"
-        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
+        className="flex-1 text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
         Enregistrer
       </Button>

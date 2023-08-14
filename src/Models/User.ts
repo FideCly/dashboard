@@ -12,8 +12,11 @@ export interface IAuthPayload {
 }
 
 export interface IUserUpdatePayload {
-  email?: string;
-  isActive?: boolean;
+  id: number;
+  uuid: string;
+  username?: string;
+  birthday?: Date;
+  sexe?: string;
 }
 
 export interface IUser {

@@ -1,5 +1,5 @@
+import { IUser } from '@/Models/User';
 import axios from 'axios';
-import { IUser } from '../../../Models/User';
 
 export default async function handler(req, res): Promise<IUser> {
   if (req.method === 'GET') {
