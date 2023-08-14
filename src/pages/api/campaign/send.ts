@@ -1,15 +1,12 @@
 import type { ICampaignCreatePayload } from '../../../Models/Campaign';
 import axios from 'axios';
 
-export default async function handler(
-  req,
-  res,
-): Promise<ICampaignCreatePayload> {
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const campaign = req.body;
+    const campaign: ICampaignCreatePayload = req.body;
     try {
       const response = await axios.post<ICampaignCreatePayload>(
-        process.env.NEXT_PUBLIC_API_URL + `campaign`,
+        process.env.NEXT_PUBLIC_API_URL + `campaign/send`,
         campaign,
         {
           headers: {
@@ -17,9 +14,9 @@ export default async function handler(
           },
         },
       );
-      return res.status(response.status).json(response.data);
+      res.status(response.status).json(response.data);
     } catch (error) {
-      return res.status(error.response.status).send(error.response.data);
+      res.status(error.response.status).send(error.response.data);
     }
   }
 }
