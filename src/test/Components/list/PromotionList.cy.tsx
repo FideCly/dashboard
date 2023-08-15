@@ -1,5 +1,5 @@
 import React from 'react';
-import PromotionList from '@/Components/List/PromotionList';
+import PromotionList from '@/components/List/PromotionList';
 
 describe('<PromotionList />', () => {
   it('renders', () => {

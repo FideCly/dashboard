@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IUserAuthPayload } from '@/Models/User';
+import { IUserAuthPayload } from '@/models/User';
 import { useRouter } from 'next/router';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { errorCode } from '@/translation';
 
 export default function signup() {
   const router = useRouter();
@@ -26,22 +27,22 @@ export default function signup() {
         },
         body: JSON.stringify(data),
       };
-      const toastid = toast.loading('creating user...');
+      const toastid = toast.loading('Vérification en cours...');
       const response = await fetch(endpoint, options);
+      const body = await response.json();
       if (response.status >= 400) {
         // read the response body
-        const body = await response.json();
         toast.update(toastid, {
-          render: `User not created: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'error',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: 'User created',
+          render: `${errorCode[response.status][body.message]}`,
           type: 'success',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
         router.push('/auth/signin');

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Sidebar from '@/Components/html/Sidebar';
-import { CampaignCreateForm } from '@/Components/form/Campaign.form';
-import CampaignList from '@/Components/List/CampaignList';
-import Navbar from '@/Components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
+import { CampaignCreateForm } from '@/components/form/Campaign.form';
+import CampaignList from '@/components/List/CampaignList';
+import Navbar from '@/components/html/Navbar';
 
 export default function Campaign() {
   const [isShown, setIsShown] = useState(false);

@@ -1,4 +1,4 @@
-import { IScanner } from '@/Models/scanner';
+import { IScanner } from '@/models/scanner';
 import { Button, Select } from 'flowbite-react';
 
 import React, { useCallback } from 'react';
@@ -7,13 +7,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { QrReader } from 'react-qr-reader';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import { errorCode } from '@/translation';
 
 export default function ScannerForm() {
   const [data, setData] = useState(
     'Scanner un QR Code pour voir apparaître son contenu',
   );
   const [promotion, setPromotion] = useState<any>([]);
-  const { register, handleSubmit, setValue } = useForm<IScanner>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IScanner>();
   //get promotion server side
   const handleConstraints = () => {
     // if the device is mobile, use the rear camera
@@ -54,7 +60,7 @@ export default function ScannerForm() {
   }, []);
 
   const onSubmit: SubmitHandler<IScanner> = useCallback(async (data) => {
-    const toastId = toast.loading('Checking...');
+    const toastId = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/checkout`, {
       method: 'PUT',
       headers: {
@@ -63,20 +69,24 @@ export default function ScannerForm() {
       // promotionId is a number in the body
       body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
     });
-    const res = await response.json();
+    const body = await response.json();
+    console.debug(body);
     if (response.status >= 400) {
       toast.update(toastId, {
-        render: `Error while checkout: ${res.message}`,
+        render: `${
+          errorCode[response.status][body.message] ??
+          errorCode[response.status][response.statusText]
+        }`,
         type: 'error',
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
       });
     } else {
       toast.update(toastId, {
-        render: `Checkout done: ${res.message}`,
+        render: `${errorCode[response.status][body.message]}`,
         type: 'success',
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 4000,
       });
     }
   }, []);
@@ -100,6 +110,7 @@ export default function ScannerForm() {
               }
               if (error) {
                 console.log(error);
+                setData('Veuillez scanner un QR code valide pour continuer');
               }
             }}
             constraints={handleConstraints()}
@@ -120,7 +131,9 @@ export default function ScannerForm() {
             className=""
             name="promotion"
             id="promotion"
-            {...register('promotionId', { required: true })}
+            {...register('promotionId', {
+              required: 'Une promotion est requise',
+            })}
           >
             {promotion.map((item: any) => {
               return (
@@ -130,6 +143,12 @@ export default function ScannerForm() {
               );
             })}
           </Select>
+          {errors.promotionId && (
+            <span className="text-red-600 text-sm">
+              {errors.promotionId.message.toString()}
+            </span>
+          )}
+
           <Button
             type="submit"
             className="w-full p-2 m-auto font-medium rounded-lg text-gray-50 bg-fidgreen hover:bg-fidgreen/80"

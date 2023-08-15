@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { PromotionUpdateForm } from '@/Components/form/Promotion.form';
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
+import { PromotionUpdateForm } from '@/components/form/Promotion.form';
+import Navbar from '@/components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
 import { ReactNode } from 'react';
 
 export default function PromotionEditById() {

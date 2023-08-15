@@ -1,4 +1,4 @@
-import { IShop } from '@/Models/Shop';
+import { IShop } from '@/models/Shop';
 import { useEffect, useState } from 'react';
 
 export default function ShopId({ id }) {

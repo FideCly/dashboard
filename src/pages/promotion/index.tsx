@@ -1,8 +1,8 @@
-import { PromotionCreateForm } from '../../Components/form/Promotion.form';
+import { PromotionCreateForm } from '../../components/form/Promotion.form';
 import { useState } from 'react';
-import Sidebar from '@/Components/html/Sidebar';
-import PromotionList from '@/Components/List/PromotionList';
-import Navbar from '@/Components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
+import PromotionList from '@/components/List/PromotionList';
+import Navbar from '@/components/html/Navbar';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);

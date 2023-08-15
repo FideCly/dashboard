@@ -1,4 +1,4 @@
-import { ShopCreateForm } from '@/Components/form/Shop.form';
+import { ShopCreateForm } from '@/components/form/Shop.form';
 import Image from 'next/image';
 
 export default function Shops() {

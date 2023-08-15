@@ -1,6 +1,6 @@
-import Sidebar from '@/Components/html/Sidebar';
-import ScannerForm from '@/Components/scanner';
-import Navbar from '@/Components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
+import ScannerForm from '@/components/scanner';
+import Navbar from '@/components/html/Navbar';
 
 export default function Scanner() {
   return (

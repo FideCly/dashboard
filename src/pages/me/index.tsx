@@ -1,6 +1,6 @@
-import { Profile } from '@/Components/auth/Profile';
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
+import { Profile } from '@/components/auth/Profile';
+import Navbar from '@/components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
 
 export default function Me() {
   return (

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IShopCreatePayload, IShopUpdatePayload } from '@/Models/Shop';
+import { IShopCreatePayload, IShopUpdatePayload } from '@/models/Shop';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
@@ -8,7 +8,8 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
+import { errorCode } from '@/translation';
 
 const GooglePlacesAutocompleteComponent = ({ error, ...field }) => {
   return (
@@ -37,7 +38,7 @@ export const ShopCreateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopCreatePayload> = useCallback(
     async (data) => {
-      const toastid = toast.loading('creating shop...');
+      const toastid = toast.loading('Vérification en cours...');
       const response = await fetch(`/api/shop`, {
         method: 'POST',
         headers: {
@@ -45,20 +46,20 @@ export const ShopCreateForm: React.FC = () => {
         },
         body: JSON.stringify(data),
       });
+      // read the response body
+      const body = await response.json();
       if (response.status >= 400) {
-        // read the response body
-        const body = await response.json();
         toast.update(toastid, {
-          render: `Shop not created: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'error',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: 'Shop created',
+          render: `${errorCode[response.status]['Shop created']}`,
           type: 'success',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
         router.push('/');
@@ -374,28 +375,28 @@ export const ShopUpdateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
-      const toastid = toast.loading('updating shop...');
-      const res = await fetch(`/api/shop/${data.id}`, {
+      const toastid = toast.loading('Vérification en cours...');
+      const response = await fetch(`/api/shop/${data.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
-      if (res.status >= 400) {
-        // read the response body
-        const body = await res.json();
+      // read the response body
+      const body = await response.json();
+      if (response.status >= 400) {
         toast.update(toastid, {
-          render: `Shop not updated: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'error',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: 'Shop updated',
+          render: `${errorCode[response.status][body.message]}`,
           type: 'success',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
         router.push('/');

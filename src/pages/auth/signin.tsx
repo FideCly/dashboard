@@ -1,4 +1,5 @@
-import { IAuthPayload, IUser, IUserAuthPayload, jwttoken } from '@/Models/User';
+import { IAuthPayload, IUser, IUserAuthPayload } from '@/models/User';
+import { errorCode } from '@/translation';
 import { setCookie } from 'cookies-next';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
@@ -32,7 +33,7 @@ export default function SignIn() {
   };
 
   const onSubmit: SubmitHandler<IAuthPayload> = useCallback(async (data) => {
-    const toastid = toast.loading('connecting user...');
+    const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/auth/signin`, {
       method: 'PUT',
       headers: {
@@ -40,27 +41,26 @@ export default function SignIn() {
       },
       body: JSON.stringify(data),
     });
+    const body = await response.json();
     if (response.status >= 400) {
       // read the response body
-      const body = await response.json();
       toast.update(toastid, {
-        render: body.message,
+        render: `${errorCode[response.status][body.message]}`,
         type: 'error',
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
       });
     } else {
-      const user: jwttoken = await response.json();
-      localStorage.setItem('userUuid', user.userUuid);
+      localStorage.setItem('userUuid', body.userUuid);
       // create a cookie
-      setCookie('token', user.token, {
+      setCookie('token', body.token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });
       toast.update(toastid, {
-        render: 'user connected',
+        render: `Connexion réussie`,
         type: 'success',
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
       });
       // if user is has a shop, redirect home

@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import Sidebar from '@/Components/html/Sidebar';
+=======
+import Sidebar from '@/components/html/Sidebar';
+import Navbar from '@/components/html/Navbar';
+>>>>>>> 1042aa2 (fix: translate toast messages)
 import QRCode from 'qrcode.react';
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';

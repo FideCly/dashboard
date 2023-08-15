@@ -1,12 +1,12 @@
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
-import { BarChart } from '@/Components/statistics/chart';
+import Navbar from '@/components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
+import { BarChart } from '@/components/statistics/chart';
 import {
   IAffluence,
   IClientCount,
   IPromotionRanking,
-} from '@/Models/Analytics';
-import { IUser } from '@/Models/User';
+} from '@/models/Analytics';
+import { IUser } from '@/models/User';
 import { faCircleCheck, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CategoryScale } from 'chart.js';

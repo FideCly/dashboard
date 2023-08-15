@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from 'react';
-import { IPromotion } from '@/Models/Promotions';
-import { IUser } from '@/Models/User';
+import { IPromotion } from '@/models/Promotions';
+import { IUser } from '@/models/User';
 import Link from 'next/link';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { errorCode } from '@/translation';
 
 export default function PromotionList() {
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
@@ -52,29 +53,29 @@ export default function PromotionList() {
   }, []);
 
   const deletePromotion = async (id: number): Promise<void> => {
-    const toastid = toast.loading('Suppression en cours');
+    const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/promotions/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    const res = await response.json();
-    if (res.status >= 400) {
+    const body = await response.json();
+    if (response.status >= 400) {
       toast.update(toastid, {
-        render: `Promotion non supprimée: ${res.message}`,
+        render: `${errorCode[response.status][body.message]}`,
         type: 'error',
         autoClose: 2000,
         isLoading: false,
       });
     } else {
+      router.reload();
       toast.update(toastid, {
-        render: 'Promotion supprimée',
+        render: `${errorCode[response.status][body.message]}`,
         type: 'success',
         autoClose: 2000,
         isLoading: false,
       });
-      router.reload();
     }
   };
 

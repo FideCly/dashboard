@@ -1,6 +1,6 @@
-import { ShopUpdateForm } from '@/Components/form/Shop.form';
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
+import { ShopUpdateForm } from '@/components/form/Shop.form';
+import Navbar from '@/components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import type { IShop } from '../../Models/Shop';
+import type { IShop } from '../../models/Shop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
 
 export default function ShopList() {
   const [shops, setShops] = useState<IShop[]>([]);

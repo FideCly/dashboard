@@ -1,4 +1,4 @@
-import { IUser, IUserUpdatePayload } from '@/Models/User';
+import { IUser, IUserUpdatePayload } from '@/models/User';
 import { Button, Label } from 'flowbite-react';
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

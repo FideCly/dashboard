@@ -5,7 +5,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 config.autoAddCss = false;
-import Consent from '@/Components/Consent';
+import Consent from '@/components/Consent';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,4 +1,4 @@
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
 import axios from 'axios';
 
 export default async function handler(req, res): Promise<IUser> {

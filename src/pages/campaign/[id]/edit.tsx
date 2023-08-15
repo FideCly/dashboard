@@ -1,6 +1,6 @@
-import { CampaignUpdateForm } from '@/Components/form/Campaign.form';
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
+import { CampaignUpdateForm } from '@/components/form/Campaign.form';
+import Navbar from '@/components/html/Navbar';
+import Sidebar from '@/components/html/Sidebar';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 

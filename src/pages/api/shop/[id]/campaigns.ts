@@ -1,4 +1,4 @@
-import { ICampaign } from '@/Models/Campaign';
+import { ICampaign } from '@/models/Campaign';
 import axios from 'axios';
 
 export default async function handler(req, res): Promise<ICampaign[]> {

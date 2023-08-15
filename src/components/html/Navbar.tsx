@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
 

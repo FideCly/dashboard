@@ -83,8 +83,8 @@ export default function Sidebar() {
         </li>
         <li className="px-6 py-1 hover:bg-fidyellow">
           <Link
-            href="/campagne"
-            className="flex items-center justify-between p-2 text-white gap-x-10"
+            href="/campaign"
+            className="flex items-center p-2 gap-x-10 justify-between text-white"
           >
             <div className="flex items-center gap-x-6">
               <FontAwesomeIcon icon={faEnvelope} />
