@@ -161,8 +161,9 @@ GeneralSettings.getLayout = function getLayout(page) {
         <Sidebar />
       </div>
       <div className="w-full">
-        <main className="h-screen py-10">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
+        <Navbar />
+        <main className="">
+          <div className="mx-auto">{page}</div>
         </main>
       </div>
     </div>
