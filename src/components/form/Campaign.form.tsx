@@ -168,7 +168,7 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <Button
         type="submit"
-        className="text-gray-50 w-fit bg-fidgreen hover:bg-fidgreen/80 w-full"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80 w-full"
       >
         Enregistrer
       </Button>
@@ -358,7 +358,7 @@ export const CampaignUpdateForm: React.FC = () => {
         type="submit"
         className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );
