@@ -9,7 +9,7 @@ export default function ShopEditById() {
   return (
     <>
       {router.isReady ? (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-xl font-semibold leading-6 text-gray-900">
