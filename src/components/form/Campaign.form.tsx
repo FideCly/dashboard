@@ -168,7 +168,7 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <Button
         type="submit"
-        className="text-gray-50 w-fit bg-fidgreen hover:bg-fidgreen/80"
+        className="text-gray-50 w-fit bg-fidgreen hover:bg-fidgreen/80 w-full"
       >
         Enregistrer
       </Button>
