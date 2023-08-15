@@ -15,7 +15,7 @@ export interface IUserUpdatePayload {
   id: number;
   uuid: string;
   username?: string;
-  birthday?: Date;
+  birthday?: string;
   sexe?: string;
 }
 
@@ -27,7 +27,7 @@ export interface IUser {
   isActive: boolean;
   cards: ICard[];
   shop: IShop;
-  birthday: Date;
+  birthday: string;
   sexe: string;
 }
 

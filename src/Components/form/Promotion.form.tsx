@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
   const {
@@ -184,8 +185,8 @@ export const PromotionUpdateForm: React.FC = () => {
         const response = await fetch(`/api/promotions/${id}`, options);
         const data = await response.json();
         setPromotion(data);
-        const startAt = data.startAt.split('T')[0];
-        const endAt = data.endAt.split('T')[0];
+        const startAt = moment(data.startAt).format('YYYY-MM-DD');
+        const endAt = moment(data.endAt).format('YYYY-MM-DD');
         setValue('name', data.name);
         setValue('description', data.description);
         setValue('startAt', startAt);

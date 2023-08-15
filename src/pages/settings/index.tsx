@@ -7,6 +7,7 @@ import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { ShopUpdateForm } from '@/Components/form/Shop.form';
 import { UserUpdateForm } from '@/Components/form/User.form';
 import html2canvas from 'html2canvas';
+import Navbar from '@/Components/html/Navbar';
 
 export default function GeneralSettings() {
   const [user, setUser] = useState<IUser>();
@@ -153,6 +154,7 @@ GeneralSettings.getLayout = function getLayout(page) {
     <div className="relative z-50 flex">
       <Sidebar />
       <div className="w-full">
+        <Navbar />
         <main className="h-screen py-10">
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
         </main>

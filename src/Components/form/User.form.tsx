@@ -1,10 +1,9 @@
-// make a update form for user
-// use react-hook-form
 import { IUser, IUserUpdatePayload } from '@/Models/User';
 import { Button, Label } from 'flowbite-react';
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 export const UserUpdateForm: React.FC = () => {
   const {
@@ -33,9 +32,10 @@ export const UserUpdateForm: React.FC = () => {
       const user = await loadUser();
       setValue('id', user?.id);
       setValue('username', user?.username);
-      setValue('birthday', user?.birthday);
+      setValue('birthday', moment(user?.birthday).format('YYYY-MM-DD'));
       setValue('sexe', user?.sexe);
     };
+
     loadUserShop();
   }, []);
 

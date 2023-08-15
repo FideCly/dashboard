@@ -299,7 +299,6 @@ export const ShopUpdateForm: React.FC = () => {
     formState: { errors },
     setValue,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
-  const [shop, setShop] = React.useState<IShopUpdatePayload>();
 
   useEffect(() => {
     const getShop = async (): Promise<void> => {
@@ -312,7 +311,6 @@ export const ShopUpdateForm: React.FC = () => {
           },
         });
         const data = await response.json(); // Extract JSON data from response
-        setShop(data);
         setValue('id', data.id);
         setValue('companyName', data.companyName);
         setValue('address', data.address);
@@ -333,7 +331,7 @@ export const ShopUpdateForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<IShopUpdatePayload> = useCallback(
     async (data) => {
-      const toastid = toast.loading('creating shop...');
+      const toastid = toast.loading('updating shop...');
       const res = await fetch(`/api/shop/${data.id}`, {
         method: 'PUT',
         headers: {
