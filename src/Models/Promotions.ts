@@ -11,8 +11,8 @@ export interface IPromotionUpdatePayload {
   name: string;
   description: string;
   checkoutLimit: number;
-  startAt: Date;
-  endAt: Date;
+  startAt: string;
+  endAt: string;
 }
 
 export interface IPromotion {
