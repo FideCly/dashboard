@@ -6,7 +6,6 @@ import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 
 export default function Navbar() {
-
   const router = useRouter();
   const [user, setUser] = useState<IUser>(null);
   const loadUser = async (): Promise<IUser> => {

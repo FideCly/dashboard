@@ -73,7 +73,7 @@ export default function Home() {
   const dayEnd = new Date();
   dayEnd.setHours(23, 59, 59, 999);
 
-  const [user, setUser] = useState<IUser>();
+  const [, setUser] = useState<IUser>();
   const [affluence, setAffluence] = useState<IAffluence>();
   const [affluenceToday, setAffluenceToday] = useState<IAffluence>();
   const [affluenceThisMonth, setAffluenceThisMonth] = useState<IAffluence>();

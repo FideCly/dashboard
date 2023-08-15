@@ -341,7 +341,7 @@ export const ShopUpdateForm: React.FC = () => {
     formState: { errors },
     setValue,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
-  const [shop, setShop] = React.useState<IShopUpdatePayload>();
+  const [, setShop] = React.useState<IShopUpdatePayload>();
 
   useEffect(() => {
     const getShop = async (): Promise<void> => {
