@@ -99,7 +99,7 @@ export default function SignIn() {
                 name="email"
                 type="email"
                 placeholder="hello@fidelcly.com"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.email && (
                 <span className="text-sm text-red-600">
@@ -121,7 +121,7 @@ export default function SignIn() {
                 type="password"
                 placeholder="********"
                 minLength={8}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.password && (
                 <span className="text-sm text-red-600">

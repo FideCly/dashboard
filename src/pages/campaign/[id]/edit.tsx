@@ -1,6 +1,6 @@
 import { CampaignUpdateForm } from '@/components/form/Campaign.form';
-import Navbar from '@/components/html/Navbar';
-import Sidebar from '@/components/html/Sidebar';
+import Navbar from '@/components/layout/Navbar';
+import Sidebar from '@/components/layout/Sidebar';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 
@@ -9,7 +9,17 @@ export default function ShopEditById() {
   return (
     <>
       {router.isReady ? (
-        <div className="text-2xl font-bold bg-white text-white-900">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-xl font-semibold leading-6 text-gray-900">
+                Modifier la campagne marketing
+              </h1>
+              <p className="mt-2 text-sm text-gray-700">
+                Apportez des changements à votre campagne.
+              </p>
+            </div>
+          </div>
           <CampaignUpdateForm />
         </div>
       ) : null}
@@ -19,12 +29,14 @@ export default function ShopEditById() {
 
 ShopEditById.getLayout = function getLayout(page: ReactNode) {
   return (
-    <div className="relative z-50 flex">
-      <Sidebar />
+    <div className="w-full bg-fidbg flex">
+      <div className=" inset-y-0 z-50 bg-fidgreen">
+        <Sidebar />
+      </div>
       <div className="w-full">
         <Navbar />
-        <main className="h-screen py-10">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
+        <main className="">
+          <div className="mx-auto">{page}</div>
         </main>
       </div>
     </div>

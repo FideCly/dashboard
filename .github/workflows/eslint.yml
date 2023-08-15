@@ -2,7 +2,7 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
-# ESLint is a tool for identifying and reporting on patterns
+# ESLint is a tool htmlFor identifying and reporting on patterns
 # found in ECMAScript/JavaScript code.
 # More details at https://github.com/eslint/eslint
 # and https://eslint.org
@@ -11,10 +11,10 @@ name: ESLint
 
 on:
   push:
-    branches: [ "main","dev"]
+    branches: ['main', 'dev']
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main","dev"]
+    branches: ['main', 'dev']
   schedule:
     - cron: '20 11 * * 4'
 
@@ -60,7 +60,7 @@ jobs:
           --config .eslintrc.js
           --ignore-path .eslintignore
           --ext .js,.ts,.tsx
-          --format @microsoft/eslint-formatter-sarif 
+          --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
         continue-on-error: false
 
@@ -68,4 +68,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: eslint-results.sarif
-          wait-for-processing: true
+          wait-htmlFor-processing: true

@@ -66,7 +66,7 @@ export const CampaignCreateForm: React.FC = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          // conserve the number type for the promotionId
+          // conserve the number type htmlFor the promotionId
           body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
         const body = await response.json();
@@ -98,7 +98,7 @@ export const CampaignCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg font-normal"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>
@@ -286,7 +286,7 @@ export const CampaignUpdateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg font-normal"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>

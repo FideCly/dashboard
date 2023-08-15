@@ -52,7 +52,7 @@ export default function signup() {
   );
 
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-fidbg ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto gap-y-10 md:h-screen lg:py-0">
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
@@ -77,7 +77,7 @@ export default function signup() {
                 name="email"
                 type="email"
                 placeholder="hello@fidelcly.com"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.email && (
                 <span className="text-red-600 text-sm">
@@ -99,7 +99,7 @@ export default function signup() {
                 type="password"
                 minLength={8}
                 placeholder="********"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.password && (
                 <span className="text-red-600 text-sm">

@@ -51,10 +51,6 @@ export default function CampaignList() {
     loadCampaigns();
   }, []);
 
-  if (isLoading) {
-    return <div>Chargement....</div>;
-  }
-
   async function deletecampaign(id: number): Promise<void> {
     const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/campaign/${id}`, {
@@ -94,6 +90,7 @@ export default function CampaignList() {
       },
     });
     const body = await response.json();
+    console.log(body);
     if (response.status >= 400) {
       toast.update(toastid, {
         render: `${errorCode[response.status][body.message]}`,
@@ -104,7 +101,7 @@ export default function CampaignList() {
       });
     } else {
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `Campagne marketing envoyée`,
         hideProgressBar: true,
         autoClose: 3000,
         isLoading: false,
@@ -126,11 +123,11 @@ export default function CampaignList() {
   }
 
   return (
-    <div className="flow-root mt-8">
+    <div className="flow-root mt-8 bg-fidbg rounded-lg">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table className="min-w-full">
-            <thead className="bg-white">
+            <thead className="bg-fidbg">
               <tr>
                 <th
                   scope="col"
@@ -155,10 +152,25 @@ export default function CampaignList() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-fidbg">
+              {isLoading && (
+                <div>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Chargement des campagnes
+                  </td>
+                </div>
+              )}
               {error && (
                 <div>
-                  <span>Erreur lors du chargement des campagnes</span>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Error lors du chargement des campagnes
+                  </td>
                 </div>
               )}
               {!error &&

@@ -54,7 +54,7 @@ export const PromotionCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="promotion-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
@@ -253,7 +253,7 @@ export const PromotionUpdateForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg font-normal"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>

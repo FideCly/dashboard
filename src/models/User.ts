@@ -29,6 +29,7 @@ export interface IUser {
   shop: IShop;
   birthday: string;
   sexe: string;
+  pictureUrl: string;
 }
 
 export interface jwttoken {

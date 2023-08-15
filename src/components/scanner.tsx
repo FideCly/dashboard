@@ -93,12 +93,13 @@ export default function ScannerForm() {
 
   return (
     <form
-      className="flex flex-row bg-white h-2/3 gap-x-8"
+      className="grid grid-cols-2 h-full divide-x border-b"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col justify-center w-full h-full p-4 border basis-1/2 bg-fidbg rounded-xl">
-        <h1 className="text-xl font-medium leading-6 text-left text-gray-900">
-          1. Scanner
+      <div className="flex flex-col justify-center w-full h-full basis-1/2 p-14">
+        <h1 className="flex justify-start gap-x-6 items-center text-lg leading-6 font-medium text-gray-600">
+          <span className="">1.</span>
+          <span className="">Scanner</span>
         </h1>
 
         <div className="grid content-center gap-4">
@@ -121,9 +122,10 @@ export default function ScannerForm() {
           <p className="mt-2 text-sm text-center text-gray-700">{data}</p>
         </div>
       </div>
-      <div className="flex flex-col w-full h-full p-4 border basis-1/2 bg-fidbg rounded-xl">
-        <h1 className="text-xl font-medium leading-6 text-gray-900">
-          2. Sélectionner la promotion à appliquer
+      <div className="flex flex-col w-full h-full basis-1/2 p-14">
+        <h1 className="flex justify-start gap-x-6 items-center text-lg leading-6 font-medium text-gray-600">
+          <span className="">2.</span>
+          <span className="">Sélectionner la promotion à appliquer</span>
         </h1>
 
         <div className="grid items-center content-center self-center w-full h-full gap-8">

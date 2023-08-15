@@ -63,7 +63,7 @@ export const errorCode = {
     'Promotion not found': 'Promotion introuvable',
     'Campaign not found': 'Campagne introuvable',
     'Card not found': 'Carte introuvable',
-    'Shop not found for this user.':
+    'Shop not found htmlFor this user.':
       'Boutique introuvable pour cet utilisateur',
     'Balance not found': 'Solde introuvable',
     'User not found': 'Utilisateur introuvable',

@@ -417,7 +417,10 @@ export const ShopUpdateForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col md:col-span-2 gap-y-4"
+    >
       <div className="">
         <Label htmlFor="companyName" className="">
           Nom du shop
