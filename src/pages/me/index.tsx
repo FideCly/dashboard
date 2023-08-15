@@ -1,6 +1,6 @@
-import { Profile } from '@/Components/auth/Profile';
-import Navbar from '@/Components/html/Navbar';
-import Sidebar from '@/Components/html/Sidebar';
+import { Profile } from '@/components/auth/Profile';
+import Navbar from '@/components/layout/Navbar';
+import Sidebar from '@/components/layout/Sidebar';
 
 export default function Me() {
   return (
@@ -12,12 +12,14 @@ export default function Me() {
 
 Me.getLayout = function getLayout(page) {
   return (
-    <div className="relative z-50 flex">
-      <Sidebar />
+    <div className="w-full bg-fidbg flex">
+      <div className=" inset-y-0 z-50 bg-fidgreen">
+        <Sidebar />
+      </div>
       <div className="w-full">
         <Navbar />
-        <main className="h-screen py-10">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
+        <main className="">
+          <div className="mx-auto">{page}</div>
         </main>
       </div>
     </div>

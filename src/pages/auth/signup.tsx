@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IUserAuthPayload } from '@/Models/User';
+import { IUserAuthPayload } from '@/models/User';
 import { useRouter } from 'next/router';
 import { Label } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { errorCode } from '@/translation';
 
 export default function signup() {
   const router = useRouter();
@@ -26,22 +27,22 @@ export default function signup() {
         },
         body: JSON.stringify(data),
       };
-      const toastid = toast.loading('creating user...');
+      const toastid = toast.loading('Vérification en cours...');
       const response = await fetch(endpoint, options);
+      const body = await response.json();
       if (response.status >= 400) {
         // read the response body
-        const body = await response.json();
         toast.update(toastid, {
-          render: `User not created: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'error',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: 'User created',
+          render: `${errorCode[response.status][body.message]}`,
           type: 'success',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
         router.push('/auth/signin');
@@ -51,7 +52,7 @@ export default function signup() {
   );
 
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-fidbg ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto gap-y-10 md:h-screen lg:py-0">
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
@@ -76,7 +77,7 @@ export default function signup() {
                 name="email"
                 type="email"
                 placeholder="hello@fidelcly.com"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.email && (
                 <span className="text-red-600 text-sm">
@@ -98,7 +99,7 @@ export default function signup() {
                 type="password"
                 minLength={8}
                 placeholder="********"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+                className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
               />
               {errors.password && (
                 <span className="text-red-600 text-sm">

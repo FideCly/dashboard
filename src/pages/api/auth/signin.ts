@@ -1,4 +1,4 @@
-import { jwttoken } from '@/Models/User';
+import { jwttoken } from '@/models/User';
 import axios from 'axios';
 
 export default async function handler(req, res) {
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         process.env.NEXT_PUBLIC_API_URL + `auth/login`,
         user,
       );
-      res.status(response.status).json(response.data ? response.data : null);
+      res.status(response.status).json(response.data);
     } catch (error) {
       res.status(error.response.status).send(error.response.data);
     }

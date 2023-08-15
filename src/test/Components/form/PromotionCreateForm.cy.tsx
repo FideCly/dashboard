@@ -1,6 +1,6 @@
 import React from 'react';
-import { PromotionCreateForm } from '@/Components/form/Promotion.form';
-import { IPromotion } from '@/Models/Promotions';
+import { PromotionCreateForm } from '@/components/form/Promotion.form';
+import { IPromotion } from '@/models/Promotions';
 
 describe('<PromotionCreateForm />', () => {
   const promotion: IPromotion = {

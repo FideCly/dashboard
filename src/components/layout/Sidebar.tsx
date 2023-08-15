@@ -9,8 +9,28 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { IUser } from '@/models/User';
 
 export default function Sidebar() {
+  const [user, setUser] = useState<IUser>(null);
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error(error));
+    return user;
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
   return (
     <div className="sticky inset-y-0 z-50 py-4 bg-fidgreen">
       <Image
@@ -59,8 +79,8 @@ export default function Sidebar() {
         </li>
         <li className="px-6 py-1 hover:bg-fidyellow">
           <Link
-            href="/campagne"
-            className="flex items-center justify-between p-2 text-white gap-x-10"
+            href="/campaign"
+            className="flex items-center p-2 gap-x-10 justify-between text-white"
           >
             <div className="flex items-center gap-x-6">
               <FontAwesomeIcon icon={faEnvelope} />

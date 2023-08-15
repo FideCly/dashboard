@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ICampaign } from '@/Models/Campaign';
-import { IUser } from '@/Models/User';
+import { ICampaign } from '@/models/Campaign';
+import { IUser } from '@/models/User';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { errorCode } from '@/translation';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
@@ -50,32 +51,28 @@ export default function CampaignList() {
     loadCampaigns();
   }, []);
 
-  if (isLoading) {
-    return <div>Chargement....</div>;
-  }
-
   async function deletecampaign(id: number): Promise<void> {
-    const toastid = toast.loading('Suppression en cours');
+    const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/campaign/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    const res = await response.json();
+    const body = await response.json();
     if (response.status >= 400) {
       toast.update(toastid, {
-        render: `Erreur lors de la suppression: ${res.message}`,
+        render: `${errorCode[response.status][body.message]}`,
         hideProgressBar: true,
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
         type: 'error',
       });
     } else {
       toast.update(toastid, {
-        render: 'Suppression réussie',
+        render: `${errorCode[response.status][body.message]}`,
         hideProgressBar: true,
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
         type: 'success',
       });
@@ -84,7 +81,7 @@ export default function CampaignList() {
   }
 
   async function sendCampaign(campaigns: ICampaign): Promise<void> {
-    const toastid = toast.loading('Envoi en cours....');
+    const toastid = toast.loading('Vérification en cours....');
     const response = await fetch(`/api/campaign/send`, {
       method: 'POST',
       body: JSON.stringify(campaigns),
@@ -92,20 +89,21 @@ export default function CampaignList() {
         'Content-Type': 'application/json',
       },
     });
+    const body = await response.json();
+    console.log(body);
     if (response.status >= 400) {
-      const res = await response.json();
       toast.update(toastid, {
-        render: `Erreur lors de l\'envoi: ${res.message}`,
+        render: `${errorCode[response.status][body.message]}`,
         hideProgressBar: true,
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
         type: 'error',
       });
     } else {
       toast.update(toastid, {
-        render: 'Envoi réussi',
+        render: `Campagne marketing envoyée`,
         hideProgressBar: true,
-        autoClose: 2000,
+        autoClose: 3000,
         isLoading: false,
         type: 'success',
       });
@@ -113,11 +111,11 @@ export default function CampaignList() {
   }
 
   return (
-    <div className="flow-root mt-8">
+    <div className="flow-root mt-8 bg-fidbg rounded-lg">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table className="min-w-full">
-            <thead className="bg-white">
+            <thead className="bg-fidbg">
               <tr>
                 <th
                   scope="col"
@@ -142,10 +140,25 @@ export default function CampaignList() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-fidbg">
+              {isLoading && (
+                <div>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Chargement des campagnes
+                  </td>
+                </div>
+              )}
               {error && (
                 <div>
-                  <span>Erreur lors du chargement des campagnes</span>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Error lors du chargement des campagnes
+                  </td>
                 </div>
               )}
               {!error &&
@@ -167,7 +180,7 @@ export default function CampaignList() {
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <Link
-                        href={`/campagne/${campaign.id}/edit`}
+                        href={`/campaign/${campaign.id}/edit`}
                         className="text-fidgreen hover:text-fidgreen/80 hover:underline"
                       >
                         Modifier

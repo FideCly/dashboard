@@ -4,12 +4,13 @@ import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react';
 import {
   ICampaignCreatePayload,
   ICampaignUpdatePayload,
-} from '@/Models/Campaign';
+} from '@/models/Campaign';
 
-import { IUser } from '@/Models/User';
-import { IPromotion } from '@/Models/Promotions';
+import { IUser } from '@/models/User';
+import { IPromotion } from '@/models/Promotions';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { errorCode } from '@/translation';
 
 export const CampaignCreateForm: React.FC = () => {
   const {
@@ -19,6 +20,7 @@ export const CampaignCreateForm: React.FC = () => {
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
   // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const router = useRouter();
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -58,32 +60,32 @@ export const CampaignCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
-        const toastid = toast.loading('creating campaign...');
+        const toastid = toast.loading('Vérification en cours...');
         const response = await fetch(`/api/campaign`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          // conserve the number type for the promotionId
+          // conserve the number type htmlFor the promotionId
           body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
+        const body = await response.json();
         if (response.status >= 400) {
-          const body = await response.json();
           toast.update(toastid, {
-            render: `Campaign not created: ${body.message}`,
+            render: `${errorCode[response.status][body.message]}`,
             type: 'error',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
         } else {
+          // reload the page to get the new campaign
+          router.reload();
           toast.update(toastid, {
-            render: 'Campaign created',
+            render: `${errorCode[response.status]['Campaign created']}`,
             type: 'success',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
-          // reload the page to get the new campaign
-          window.location.reload();
         }
       } catch (error) {
         console.error(error);
@@ -96,7 +98,7 @@ export const CampaignCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>
@@ -166,7 +168,7 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <Button
         type="submit"
-        className="text-gray-50 w-fit bg-fidgreen hover:bg-fidgreen/80"
+        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80 w-full"
       >
         Enregistrer
       </Button>
@@ -245,32 +247,33 @@ export const CampaignUpdateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(
     async (data) => {
       try {
-        const toastid = toast.loading('updating campaign...');
-        const res = await fetch(`/api/campaign/${id}`, {
+        const toastid = toast.loading('Vérification en cours...');
+        const response = await fetch(`/api/campaign/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
         });
-        if (res.status >= 400) {
-          // read the response body
-          const body = await res.json();
+        // read the response body
+        const body = await response.json();
+        console.log(body.data);
+        if (response.status >= 400) {
           toast.update(toastid, {
-            render: `Campaign not updated: ${body.message}`,
+            render: `${errorCode[response.status][body.message]}`,
             type: 'error',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
         } else {
           toast.update(toastid, {
-            render: 'Campaign updated',
+            render: `${errorCode[response.status][body.message]}`,
             type: 'success',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
           // reload actual page
-          router.push('/campagne');
+          router.push('/campaign');
         }
       } catch (error) {
         console.error(error);
@@ -283,7 +286,7 @@ export const CampaignUpdateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="campaign-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="subject">Nom</Label>
@@ -355,7 +358,7 @@ export const CampaignUpdateForm: React.FC = () => {
         type="submit"
         className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
-        Submit
+        Enregistrer
       </Button>
     </form>
   );

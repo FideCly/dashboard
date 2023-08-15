@@ -1,4 +1,4 @@
-import type { ICampaignCreatePayload } from '../../../Models/Campaign';
+import type { ICampaignCreatePayload } from '../../../models/Campaign';
 import axios from 'axios';
 
 export default async function handler(

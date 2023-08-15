@@ -1,4 +1,4 @@
-import { IUser, IUserUpdatePayload } from '@/Models/User';
+import { IUser, IUserUpdatePayload } from '@/models/User';
 import { Button, Label } from 'flowbite-react';
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -71,7 +71,10 @@ export const UserUpdateForm: React.FC = () => {
   );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col md:col-span-2 gap-y-4"
+    >
       <div className="flex flex-col">
         <Label htmlFor="username" className="text-sm font-medium">
           Nom d'utilisateur

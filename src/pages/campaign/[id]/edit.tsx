@@ -1,4 +1,4 @@
-import { ShopUpdateForm } from '@/components/form/Shop.form';
+import { CampaignUpdateForm } from '@/components/form/Campaign.form';
 import Navbar from '@/components/layout/Navbar';
 import Sidebar from '@/components/layout/Sidebar';
 import { useRouter } from 'next/router';
@@ -9,8 +9,18 @@ export default function ShopEditById() {
   return (
     <>
       {router.isReady ? (
-        <div className="text-2xl font-bold text-white-900">
-          <ShopUpdateForm />
+        <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-xl font-semibold leading-6 text-gray-900">
+                Modifier la campagne marketing
+              </h1>
+              <p className="mt-2 text-sm text-gray-700">
+                Apportez des changements à votre campagne.
+              </p>
+            </div>
+          </div>
+          <CampaignUpdateForm />
         </div>
       ) : null}
     </>

@@ -3,7 +3,7 @@ import {
   IShop,
   IShopCreatePayload,
   IShopUpdatePayload,
-} from '../../../Models/Shop';
+} from '../../../models/Shop';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {

@@ -1,19 +1,14 @@
-import Sidebar from '@/Components/html/Sidebar';
+import Sidebar from '@/components/layout/Sidebar';
+import Navbar from '@/components/layout/Navbar';
 import QRCode from 'qrcode.react';
-import { IUser } from '@/Models/User';
+import { IUser } from '@/models/User';
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { ShopUpdateForm } from '@/Components/form/Shop.form';
-import { UserUpdateForm } from '@/Components/form/User.form';
+import { ShopUpdateForm } from '@/components/form/Shop.form';
+import { UserUpdateForm } from '@/components/form/User.form';
 import html2canvas from 'html2canvas';
-import Navbar from '@/Components/html/Navbar';
 
 export default function GeneralSettings() {
   const [user, setUser] = useState<IUser>();
-  const [isShown, setIsShown] = useState(true);
-  const [isShown2, setIsShown2] = useState(false);
-  const [isShown3, setIsShown3] = useState(false);
   //get shop id from user
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -36,18 +31,6 @@ export default function GeneralSettings() {
     };
     loadUserShop();
   }, []);
-  const handleClick = (): void => {
-    setIsShown((current) => !current);
-  };
-
-  const handleClick2 = (): void => {
-    setIsShown2((current) => !current);
-  };
-
-  const handleClick3 = (): void => {
-    setIsShown3((current) => !current);
-  };
-
   const getCanvas = () => {
     const qr = document.getElementById('fancy-qr-code');
     if (!qr) return;
@@ -56,7 +39,7 @@ export default function GeneralSettings() {
       onclone: (snapshot) => {
         const qrElement = snapshot.getElementById('fancy-qr-code');
         if (!qrElement) return;
-        // Make element visible for cloning
+        // Make element visible htmlFor cloning
         qrElement.style.display = 'block';
       },
     });
@@ -78,85 +61,109 @@ export default function GeneralSettings() {
   };
 
   return (
-    <main className="flex flex-col flex-1 h-screen px-4 bg-white sm:px-6 lg:px-8 gap-y-8">
-      <h1 className="text-xl font-semibold leading-6 text-gray-900">
+    <main className="w-full h-full">
+      <h1 className="pb-12 text-xl font-semibold leading-6 text-gray-900 border-b p-12">
         Réglages
       </h1>
-      <span className="flex mt-2 text-sm text-gray">
-        <h2 className="flex-1">Shop QrCode</h2>
-        <button
-          data-cy="add-promotion"
-          id="add-promotion"
-          type="button"
-          onClick={handleClick}
-          className="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
-        >
-          <FontAwesomeIcon icon={faCircleChevronDown} />
-        </button>
-      </span>
-      {isShown && (
-        <>
-          <QRCode
-            id="fancy-qr-code"
-            value={user?.shop.id.toString()}
-            className="p-8 mx-auto rounded-md shadow-md bg-fidbg"
-            size={500}
-          />
-          <button
-            className="block w-1/2 px-3 py-2 mx-auto text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
-            onClick={downloadQRCode}
+      <header className="border-b border-white/5 bg-gray-50">
+        <nav className="flex py-4 border-b px-12">
+          <ul
+            role="list"
+            className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
           >
-            Télécharger le Qrcode
-          </button>
-        </>
-      )}
+            <li>
+              <a href="#qrcode" className="hover:text-fidgreen">
+                QR code
+              </a>
+            </li>
+            <li>
+              <a href="#shop" className="hover:text-fidgreen">
+                Boutique
+              </a>
+            </li>
+            <li>
+              <a href="#profile" className="hover:text-fidgreen">
+                Profile
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div className="divide-y" id="qrcode">
+        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              QR code de votre boutique
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-400">
+              Présentez ce QR code à vos clients afin qu'ils puissent
+              enregistrer votre boutique sur leurs applications.
+            </p>
+          </div>
 
-      <span className="flex mt-2 text-sm text-gray">
-        <h2 className="flex-1">Edit shop</h2>
-        <button
-          data-cy="add-promotion"
-          id="add-promotion"
-          type="button"
-          onClick={handleClick2}
-          className="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+          <div className="grid md:col-span-2 gap-4">
+            <QRCode
+              id="fancy-qr-code"
+              value={user?.shop.id.toString()}
+              className="p-8 mx-auto rounded-md shadow-md bg-fidbg"
+              size={500}
+            />
+            <button
+              className="block w-1/2 px-3 py-2 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+              onClick={downloadQRCode}
+            >
+              Télécharger le QR code
+            </button>
+          </div>
+        </div>
+
+        <div
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          id="shop"
         >
-          <FontAwesomeIcon icon={faCircleChevronDown} />
-        </button>
-      </span>
-      {isShown2 && (
-        <>
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Modifier votre boutique
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-400">
+              Apportez des changements à votre boutique. Ces changements seront
+              visibles par les utilisateurs de l'application mobile.
+            </p>
+          </div>
           <ShopUpdateForm />
-        </>
-      )}
-      <span className="flex mt-2 text-sm text-gray">
-        <h2 className="flex-1">Edit profile</h2>
-        <button
-          data-cy="add-promotion"
-          id="add-promotion"
-          type="button"
-          onClick={handleClick3}
-          className="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+        </div>
+
+        <div
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          id="profile"
         >
-          <FontAwesomeIcon icon={faCircleChevronDown} />
-        </button>
-      </span>
-      {isShown3 && (
-        <>
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Modifier votre profil
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-400">
+              Apportez des changements à votre profile utilisateur. Ces
+              changements ne seront visibles que par vous.
+            </p>
+          </div>
+
           <UserUpdateForm />
-        </>
-      )}
+        </div>
+      </div>
     </main>
   );
 }
 
 GeneralSettings.getLayout = function getLayout(page) {
   return (
-    <div className="relative z-50 flex">
-      <Sidebar />
+    <div className="w-full bg-fidbg flex">
+      <div className=" inset-y-0 z-50 bg-fidgreen">
+        <Sidebar />
+      </div>
       <div className="w-full">
         <Navbar />
-        <main className="h-screen py-10">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
+        <main className="">
+          <div className="mx-auto">{page}</div>
         </main>
       </div>
     </div>

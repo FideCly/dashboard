@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Sidebar from '@/Components/html/Sidebar';
-import { CampaignCreateForm } from '@/Components/form/Campaign.form';
-import CampaignList from '@/Components/List/CampaignList';
-import Navbar from '@/Components/html/Navbar';
+import Sidebar from '@/components/layout/Sidebar';
+import { CampaignCreateForm } from '@/components/form/Campaign.form';
+import CampaignList from '@/components/list/CampaignList';
+import Navbar from '@/components/layout/Navbar';
 
 export default function Campaign() {
   const [isShown, setIsShown] = useState(false);
@@ -11,7 +11,7 @@ export default function Campaign() {
   };
 
   return (
-    <div className="px-4 bg-white sm:px-6 lg:px-8">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
@@ -45,12 +45,14 @@ export default function Campaign() {
 
 Campaign.getLayout = function getLayout(page) {
   return (
-    <div className="relative z-50 flex">
-      <Sidebar />
+    <div className="w-full bg-fidbg flex">
+      <div className=" inset-y-0 z-50 bg-fidgreen">
+        <Sidebar />
+      </div>
       <div className="w-full">
         <Navbar />
-        <main className="h-screen py-10">
-          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">{page}</div>
+        <main className="">
+          <div className="mx-auto">{page}</div>
         </main>
       </div>
     </div>

@@ -20,7 +20,7 @@ export const config = {
   matcher: [
     '/',
     '/shops/:path*',
-    '/campagne/:path*',
+    '/campaign/:path*',
     '/scanner',
     '/promotion/:path*',
   ],

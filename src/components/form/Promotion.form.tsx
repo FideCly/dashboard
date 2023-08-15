@@ -3,12 +3,13 @@ import type {
   IPromotionCreatePayload,
   IPromotionUpdatePayload,
   IPromotion,
-} from '@/Models/Promotions';
+} from '@/models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Label, TextInput } from 'flowbite-react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { errorCode } from '@/translation';
 // react fc with a promotion variable
 export const PromotionCreateForm: React.FC = () => {
   const {
@@ -19,7 +20,7 @@ export const PromotionCreateForm: React.FC = () => {
   const router = useRouter();
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
-      const toastid = toast.loading('creating promotion...');
+      const toastid = toast.loading('Vérification en cours...');
       const response = await fetch('/api/promotions', {
         method: 'POST',
         headers: {
@@ -27,20 +28,20 @@ export const PromotionCreateForm: React.FC = () => {
         },
         body: JSON.stringify(data),
       });
+      // read the response body
+      const body = await response.json();
       if (response.status >= 400) {
-        // read the response body
-        const body = await response.json();
         toast.update(toastid, {
-          render: `Promotion not created: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'error',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: 'Promotion created',
+          render: `${errorCode[response.status]['Promotion created']}`,
           type: 'success',
-          autoClose: 2000,
+          autoClose: 3000,
           isLoading: false,
         });
         // reload actual page
@@ -53,7 +54,7 @@ export const PromotionCreateForm: React.FC = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-cy="promotion-form"
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
@@ -215,33 +216,33 @@ export const PromotionUpdateForm: React.FC = () => {
   }, [id]);
   const onSubmit: SubmitHandler<IPromotionUpdatePayload> = useCallback(
     async (data) => {
-      const id = toast.loading('Please wait...');
+      const id = toast.loading('Vérification en cours...');
       try {
-        const res = await fetch(`/api/promotions/${data.id}`, {
+        const response = await fetch(`/api/promotions/${data.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
-        if (res.status >= 400) {
-          // read the response body
-          const body = await res.json();
+        // read the response body
+        const body = await response.json();
+        if (response.status >= 400) {
           toast.update(id, {
-            render: body.message,
+            render: `${errorCode[response.status][body.message]}`,
             type: 'error',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
         } else {
+          // reload actual page
+          router.push('/promotion');
           toast.update(id, {
-            render: 'Promotion updated',
+            render: `${errorCode[response.status][body.message]}`,
             type: 'success',
-            autoClose: 2000,
+            autoClose: 3000,
             isLoading: false,
           });
-          // reload actual page
-          router.push('/promotions');
         }
       } catch (error) {
         console.error(error);
@@ -252,7 +253,7 @@ export const PromotionUpdateForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 p-4 m-4 border rounded-lg bg-fidbg"
+      className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>

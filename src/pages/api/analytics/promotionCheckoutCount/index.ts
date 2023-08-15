@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IAnalytics } from '../../../../Models/Analytics';
+import { IAnalytics } from '../../../../models/Analytics';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {

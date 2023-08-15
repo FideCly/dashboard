@@ -1,13 +1,18 @@
 import { Fragment, useEffect, useState } from 'react';
-import { IPromotion } from '@/Models/Promotions';
-import { IUser } from '@/Models/User';
+import { IPromotion } from '@/models/Promotions';
+import { IUser } from '@/models/User';
 import Link from 'next/link';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { errorCode } from '@/translation';
 
 export default function PromotionList() {
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [, setPromotions] = useState<IPromotion[]>([]);
+  const [activePromotions, setActivePromotions] = useState<IPromotion[]>([]);
+  const [inactivesPromotions, setInactivesPromotions] = useState<IPromotion[]>(
+    [],
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
@@ -28,6 +33,7 @@ export default function PromotionList() {
   useEffect(() => {
     const loadPromotions = async (): Promise<void> => {
       setIsLoading(true);
+
       const options = {
         method: 'GET',
         headers: {
@@ -42,52 +48,51 @@ export default function PromotionList() {
         );
         const data = await response.json();
         setPromotions(data);
+        setActivePromotions(data.filter((p) => p.isActive));
+        setInactivesPromotions(data.filter((p) => p.isActive === false));
       } catch (error) {
         console.error(error);
         setError(true);
       }
+
       setIsLoading(false);
     };
     loadPromotions();
   }, []);
 
   const deletePromotion = async (id: number): Promise<void> => {
-    const toastid = toast.loading('Suppression en cours');
+    const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/promotions/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    const res = await response.json();
-    if (res.status >= 400) {
+    const body = await response.json();
+    if (response.status >= 400) {
       toast.update(toastid, {
-        render: `Promotion non supprimée: ${res.message}`,
+        render: `${errorCode[response.status][body.message]}`,
         type: 'error',
         autoClose: 2000,
         isLoading: false,
       });
     } else {
+      router.reload();
       toast.update(toastid, {
-        render: 'Promotion supprimée',
+        render: `${errorCode[response.status][body.message]}`,
         type: 'success',
         autoClose: 2000,
         isLoading: false,
       });
-      router.reload();
     }
   };
 
-  if (isLoading) {
-    return <div>Chargement....</div>;
-  }
-
   return (
-    <div className="flow-root mt-8">
+    <div className="flow-root mt-8 rounded-lg bg-fidbg">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <table className="min-w-full">
-            <thead className="bg-white">
+            <thead className="bg-fidbg">
               <tr>
                 <th
                   scope="col"
@@ -127,27 +132,41 @@ export default function PromotionList() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-fidbg">
+              {isLoading && (
+                <div>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={7}
+                  >
+                    Chargement des promotions
+                  </td>
+                </div>
+              )}
               {error && (
                 <div>
-                  <span>Erreur lors du chargement des promotions</span>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={7}
+                  >
+                    Error lors du chargement des promotions
+                  </td>
                 </div>
               )}
               {!error && (
                 <>
-                  <Fragment key="Actives">
-                    <tr className="border-t border-gray-200">
-                      <th
-                        colSpan={7}
-                        scope="colgroup"
-                        className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-gray-50 sm:pl-3"
-                      >
-                        Actives
-                      </th>
-                    </tr>
-                    {promotions
-                      .filter((p) => p.isActive)
-                      .map((promotion) => (
+                  {activePromotions.length > 0 && (
+                    <Fragment key="Actives">
+                      <tr className="border-t border-gray-200">
+                        <th
+                          colSpan={7}
+                          scope="colgroup"
+                          className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-white sm:pl-3"
+                        >
+                          Actives
+                        </th>
+                      </tr>
+                      {activePromotions.map((promotion) => (
                         <tr
                           key={promotion.id}
                           className="border-t border-gray-300"
@@ -186,20 +205,20 @@ export default function PromotionList() {
                           </td>
                         </tr>
                       ))}
-                  </Fragment>
-                  <Fragment key="Inactives">
-                    <tr className="border-t border-gray-200">
-                      <th
-                        colSpan={7}
-                        scope="colgroup"
-                        className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-gray-50 sm:pl-3"
-                      >
-                        Inactives
-                      </th>
-                    </tr>
-                    {promotions
-                      .filter((p) => !p.isActive)
-                      .map((promotion) => (
+                    </Fragment>
+                  )}
+                  {inactivesPromotions.length > 0 && (
+                    <Fragment key="Inactives">
+                      <tr className="border-t border-gray-200">
+                        <th
+                          colSpan={7}
+                          scope="colgroup"
+                          className="py-2 pl-4 pr-3 text-sm font-semibold text-left text-gray-900 bg-white sm:pl-3"
+                        >
+                          Inactives
+                        </th>
+                      </tr>
+                      {inactivesPromotions.map((promotion) => (
                         <tr
                           key={promotion.id}
                           className="border-t border-gray-300"
@@ -239,7 +258,8 @@ export default function PromotionList() {
                           </td>
                         </tr>
                       ))}
-                  </Fragment>
+                    </Fragment>
+                  )}
                 </>
               )}
             </tbody>

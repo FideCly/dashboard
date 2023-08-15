@@ -2,7 +2,7 @@ import {
   IPromotion,
   IPromotionCreatePayload,
   IPromotionUpdatePayload,
-} from '@/Models/Promotions';
+} from '@/models/Promotions';
 import axios from 'axios';
 
 export default async function handler(req, res): Promise<IPromotion[]> {

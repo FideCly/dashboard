@@ -45,7 +45,7 @@ export default async function handler(req, res) {
         },
       );
 
-      res.status(response.status).json(response.data ? response.data : null);
+      res.status(response.status).json(response.data);
     } catch (error) {
       res.status(error.response.status).send(error.response.data);
     }

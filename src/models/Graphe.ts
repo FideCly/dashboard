@@ -2,7 +2,7 @@ export interface Sales {
   labels: Array<string>;
   datasets: [
     {
-      label: 'Sales for 2020 (M)';
+      label: 'Sales htmlFor 2020 (M)';
       data: Array<number>;
       borderColor: ['rgba(0,0,0,1)'];
       backgroundColor: [
