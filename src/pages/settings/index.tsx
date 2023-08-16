@@ -146,7 +146,6 @@ export default function GeneralSettings() {
               changements ne seront visibles que par vous.
             </p>
           </div>
-
           <UserUpdateForm />
         </div>
       </div>

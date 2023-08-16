@@ -14,6 +14,7 @@ export interface IAuthPayload {
 export interface IUserUpdatePayload {
   id: number;
   uuid: string;
+  email?: string;
   username?: string;
   birthday?: string;
   sexe?: string;

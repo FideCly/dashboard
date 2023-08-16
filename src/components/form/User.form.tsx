@@ -31,6 +31,7 @@ export const UserUpdateForm: React.FC = () => {
     const loadUserShop = async (): Promise<void> => {
       const user = await loadUser();
       setValue('id', user?.id);
+      setValue('email', user?.email);
       setValue('username', user?.username);
       setValue('birthday', moment(user?.birthday).format('YYYY-MM-DD'));
       setValue('sexe', user?.sexe);
@@ -75,6 +76,19 @@ export const UserUpdateForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col md:col-span-2 gap-y-4"
     >
+      <div className="flex flex-col">
+        <Label htmlFor="username" className="text-sm font-medium">
+          Email
+        </Label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          disabled
+          className="p-2 border bg-gray-100 border-gray-300 rounded-md"
+          {...register('email')}
+        />
+      </div>
       <div className="flex flex-col">
         <Label htmlFor="username" className="text-sm font-medium">
           Nom d'utilisateur
