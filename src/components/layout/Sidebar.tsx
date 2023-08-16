@@ -16,7 +16,7 @@ import Link from 'next/link';
 function NavLink({ icon, label, href }) {
   const router = useRouter();
   return (
-    <li
+    <div
       className={
         'px-6 py-1 hover:bg-fidyellow ' +
         (router.pathname == href ? 'bg-fidyellow ' : '')
@@ -32,7 +32,7 @@ function NavLink({ icon, label, href }) {
         </div>
         <FontAwesomeIcon icon={faChevronRight} />
       </Link>
-    </li>
+    </div>
   );
 }
 
