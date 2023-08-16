@@ -30,6 +30,7 @@ export default function signup() {
       const toastid = toast.loading('Vérification en cours...');
       const response = await fetch(endpoint, options);
       const body = await response.json();
+      console.log(body);
       if (response.status >= 400) {
         // read the response body
         toast.update(toastid, {
@@ -40,7 +41,7 @@ export default function signup() {
         });
       } else {
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${errorCode[response.status]['Account created']}`,
           type: 'success',
           autoClose: 3000,
           isLoading: false,
@@ -52,14 +53,19 @@ export default function signup() {
   );
 
   return (
-    <section className="bg-fidbg ">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto gap-y-10 md:h-screen lg:py-0">
+    <section className="relative z-10">
+      <div className="flex flex-col items-center justify-center h-screen px-6 mx-auto gap-y-10 lg:py-0">
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-              S'inscrire
-            </h1>
+            <div>
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                S'inscrire
+              </h1>
+              <p className="mt-2 text-sm text-gray-700">
+                Inscris-toi et commence à gérer ta boutique.
+              </p>
+            </div>
             <form
               className="flex flex-col space-y-4"
               onSubmit={handleSubmit(onSubmit)}
@@ -130,3 +136,29 @@ export default function signup() {
     </section>
   );
 }
+
+signup.getLayout = function getLayout(page) {
+  return (
+    <div className="relative bg-fidbg h-full min-h-screen">
+      <div className="z-10">{page}</div>
+      <div className="z-1 absolute h-fit w-full bottom-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#5DB075"
+            fill-opacity="1"
+            d="M0,160L80,165.3C160,171,320,181,480,208C640,235,800,277,960,282.7C1120,288,1280,256,1360,240L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+      <div className="z-2 absolute h-fit w-full bottom-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#224957"
+            fill-opacity="0.8"
+            d="M0,192L60,213.3C120,235,240,277,360,277.3C480,277,600,235,720,202.7C840,171,960,149,1080,160C1200,171,1320,213,1380,234.7L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+          ></path>
+        </svg>{' '}
+      </div>
+    </div>
+  );
+};

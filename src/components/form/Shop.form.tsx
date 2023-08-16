@@ -80,235 +80,246 @@ export const ShopCreateForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <div className="">
-        <Label htmlFor="companyName" className="">
-          Nom du shop
-        </Label>
-        <TextInput
-          {...register('companyName', {
-            required: 'Le nom du shop est requis',
-            maxLength: {
-              value: 50,
-              message: 'Le nom ne doit pas dépasser 50 caractères',
-            },
-          })}
-          type="text"
-          id="companyName"
-          maxLength={50}
-          placeholder="Nom du shop"
-        />
-        {errors.companyName && (
-          <span className="text-sm text-red-600">
-            {errors.companyName.message.toString()}
-          </span>
-        )}
-      </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-white flex flex-col z-10 w-full gap-4"
+    >
+      <div className="z-10 grid grid-cols-2 gap-6">
+        <div className="z-10">
+          <Label htmlFor="companyName" className="">
+            Nom du shop
+          </Label>
+          <TextInput
+            {...register('companyName', {
+              required: 'Le nom du shop est requis',
+            })}
+            type="text"
+            id="companyName"
+            placeholder="Nom du shop"
+          />
+          {errors.companyName && (
+            <span className="text-sm text-red-600">
+              {errors.companyName.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="activity" className="">
-          Activité du shop
-        </Label>
-        <Select
-          {...register('activity', {
-            required: "L'activité du shop est requise",
-          })}
-        >
-          <option value="Restauration">Restauration</option>
-          <option value="Supply">Alimentation</option>
-          <option value="Entertainment">Divertissement</option>
-          <option value="Store">Magasin</option>
-          <option value="Service">Service</option>
-        </Select>
-        {errors.activity && (
-          <span className="text-sm text-red-600">
-            {errors.activity.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="activity" className="">
+            Activité du shop
+          </Label>
+          <Select
+            {...register('activity', {
+              required: "L'activité du shop est requise",
+            })}
+          >
+            <option value="Restauration">Restauration</option>
+            <option value="Supply">Alimentation</option>
+            <option value="Entertainment">Divertissement</option>
+            <option value="Store">Magasin</option>
+            <option value="Service">Service</option>
+          </Select>
+          {errors.activity && (
+            <span className="text-sm text-red-600">
+              {errors.activity.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="email" className="">
-          Email
-        </Label>
-        <TextInput
-          {...register('email', {
-            required: "L'email est requis",
-            maxLength: {
-              value: 50,
-              message: "L'email ne doit pas dépasser 50 caractères",
-            },
-          })}
-          type="text"
-          id="email"
-          maxLength={50}
-          placeholder="hello@fidelcly.com"
-        />
-        {errors.email && (
-          <span className="text-sm text-red-600">
-            {errors.email.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="email" className="">
+            Email
+          </Label>
+          <TextInput
+            {...register('email', {
+              required: "L'email est requis",
+              pattern: {
+                value:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Ce champ doit contenir un email valide',
+              },
+            })}
+            type="text"
+            id="email"
+            placeholder="hello@fidelcly.com"
+          />
+          {errors.email && (
+            <span className="text-sm text-red-600">
+              {errors.email.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="phone" className="">
-          Numéro de téléphone
-        </Label>
-        <TextInput
-          {...register('phone', {
-            required: 'Le numéro de téléphone est requis',
-            maxLength: {
-              value: 10,
-              message: 'Le numéro de téléphone doit contenir 10 caractères',
-            },
-          })}
-          type="number"
-          id="phone"
-          maxLength={10}
-          placeholder="0XXXXXXXXX"
-        />
-        {errors.phone && (
-          <span className="text-sm text-red-600">
-            {errors.phone.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="phone" className="">
+            Numéro de téléphone
+          </Label>
+          <TextInput
+            {...register('phone', {
+              required: 'Le numéro de téléphone est requis',
+              pattern: {
+                value: /^(0|[1-9][0-9]*)$/,
+                message: 'Le numéro de téléphone doit être un nombre',
+              },
+              maxLength: {
+                value: 10,
+                message: 'Le numéro de téléphone doit contenir 10 chiffres',
+              },
+              minLength: {
+                value: 10,
+                message: 'Le numéro de téléphone doit contenir 10 chiffres',
+              },
+            })}
+            type="text"
+            id="phone"
+            maxLength={10}
+            placeholder="0XXXXXXXXX"
+          />
+          {errors.phone && (
+            <span className="text-sm text-red-600">
+              {errors.phone.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="siren" className="">
-          Siren
-        </Label>
-        <TextInput
-          {...register('siren', {
-            required: 'Le siren est requis',
-            maxLength: {
-              value: 9,
-              message: 'Le siren doit contenir 9 caractères',
-            },
-            minLength: {
-              value: 9,
-              message: 'Le siren doit contenir 9 caractères',
-            },
-          })}
-          type="number"
-          id="phone"
-          maxLength={9}
-          minLength={9}
-          placeholder="XXXXXXXXX"
-        />
-        {errors.siren && (
-          <span className="text-sm text-red-600">
-            {errors.siren.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="siren" className="">
+            Siren
+          </Label>
+          <TextInput
+            {...register('siren', {
+              required: 'Le siren est requis',
+              pattern: {
+                value: /^(0|[1-9][0-9]*)$/,
+                message: 'Le siren doit être un nombre',
+              },
+              minLength: {
+                value: 9,
+                message: 'Le siren doit contenir 9 chiffres',
+              },
+              maxLength: {
+                value: 9,
+                message: 'Le siren doit contenir 9 chiffres',
+              },
+            })}
+            type="text"
+            id="siren"
+            maxLength={9}
+            minLength={9}
+            placeholder="XXXXXXXXX"
+          />
+          {errors.siren && (
+            <span className="text-sm text-red-600">
+              {errors.siren.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="siret" className="">
-          Siret
-        </Label>
-        <TextInput
-          {...register('siret', {
-            required: 'Le siret est requis',
-            maxLength: {
-              value: 14,
-              message: 'Le siren doit contenir 14 caractères',
-            },
-            minLength: {
-              value: 14,
-              message: 'Le siren doit contenir 14 caractères',
-            },
-          })}
-          type="text"
-          id="siret"
-          maxLength={14}
-          minLength={14}
-          placeholder="XXXXXXXXXXXXXX"
-        />
-        {errors.siret && (
-          <span className="text-sm text-red-600">
-            {errors.siret.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="siret" className="">
+            Siret
+          </Label>
+          <TextInput
+            {...register('siret', {
+              required: 'Le siret est requis',
+              maxLength: {
+                value: 14,
+                message: 'Le siret doit contenir 14 caractères',
+              },
+              minLength: {
+                value: 14,
+                message: 'Le siret doit contenir 14 caractères',
+              },
+            })}
+            type="text"
+            id="siret"
+            maxLength={14}
+            minLength={14}
+            placeholder="XXXXXXXXXXXXXX"
+          />
+          {errors.siret && (
+            <span className="text-sm text-red-600">
+              {errors.siret.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="address" className="">
-          Adresse
-        </Label>
-        <GooglePlacesAutocompleteComponent
-          error={undefined}
-          {...register('address', {
-            required: "L'adresse est requise",
-          })}
-          onChange={(e) => {
-            setMetadata(e);
-          }}
-        />
-        {errors.address && (
-          <span className="text-sm text-red-600">
-            {errors.address.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="address" className="">
+            Adresse
+          </Label>
+          <GooglePlacesAutocompleteComponent
+            error={undefined}
+            {...register('address', {
+              required: "L'adresse est requise",
+            })}
+            onChange={(e) => {
+              setMetadata(e);
+            }}
+          />
+          {errors.address && (
+            <span className="text-sm text-red-600">
+              {errors.address.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="city" className="">
-          Ville
-        </Label>
-        <TextInput
-          {...register('city', {
-            required: 'La ville est requise',
-            maxLength: {
-              value: 20,
-              message: 'La ville ne doit pas dépasser 20 caractères',
-            },
-          })}
-          type="text"
-          id="city"
-          placeholder="Paris"
-        />
-        {errors.city && (
-          <span className="text-sm text-red-600">
-            {errors.city.message.toString()}
-          </span>
-        )}
-      </div>
+        <div className="">
+          <Label htmlFor="city" className="">
+            Ville
+          </Label>
+          <TextInput
+            {...register('city', {
+              required: 'La ville est requise',
+            })}
+            type="text"
+            id="city"
+            placeholder="Paris"
+          />
+          {errors.city && (
+            <span className="text-sm text-red-600">
+              {errors.city.message.toString()}
+            </span>
+          )}
+        </div>
 
-      <div className="">
-        <Label htmlFor="zipCode" className="">
-          Code Postal
-        </Label>
-        <TextInput
-          {...register('zipCode', {
-            required: 'Le code postal est requis',
-            maxLength: {
-              value: 5,
-              message: 'Le code postal doit contenir 5 caractères',
-            },
-            minLength: {
-              value: 5,
-              message: 'Le code postal doit contenir 5 caractères',
-            },
-          })}
-          type="number"
-          id="zipCode"
-          maxLength={5}
-          minLength={5}
-          max={99999}
-          placeholder="XXXXX"
-        />
-        {errors.zipCode && (
-          <span className="text-sm text-red-600">
-            {errors.zipCode.message.toString()}
-          </span>
-        )}
+        <div className="">
+          <Label htmlFor="zipCode" className="">
+            Code Postal
+          </Label>
+          <TextInput
+            {...register('zipCode', {
+              required: 'Le code postal est requis',
+              pattern: {
+                value: /^(0|[1-9][0-9]*)$/,
+                message: 'Le code postal doit être un nombre',
+              },
+              maxLength: {
+                value: 5,
+                message: 'Le code postal doit contenir 5 chiffres',
+              },
+              minLength: {
+                value: 5,
+                message: 'Le code postal doit contenir 5 chiffres',
+              },
+            })}
+            type="text"
+            id="zipCode"
+            maxLength={5}
+            minLength={5}
+            max={99999}
+            placeholder="XXXXX"
+          />
+          {errors.zipCode && (
+            <span className="text-sm text-red-600">
+              {errors.zipCode.message.toString()}
+            </span>
+          )}
+        </div>
       </div>
-
       <Button
         type="submit"
-        className="text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
+        className="z-10 text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
       >
         Enregistrer
       </Button>
@@ -424,10 +435,6 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('companyName', {
             required: 'Le nom du shop est requis',
-            maxLength: {
-              value: 50,
-              message: 'Le nom du shop ne doit pas dépasser 50 caractères',
-            },
           })}
           type="text"
           id="companyName"
@@ -469,14 +476,14 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('email', {
             required: "L'email est requis",
-            maxLength: {
-              value: 50,
-              message: "L'email ne doit pas dépasser 50 caractères",
+            pattern: {
+              value:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: 'Ce champ doit contenir un email valide',
             },
           })}
           type="text"
           id="email"
-          maxLength={50}
           placeholder="hello@fidelcly.com"
         />
         {errors.email && (
@@ -493,12 +500,20 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
+            pattern: {
+              value: /^(0|[1-9][0-9]*)$/,
+              message: 'Le numéro de téléphone doit être un nombre',
+            },
             maxLength: {
               value: 10,
-              message: 'Le numéro de téléphone doit contenir 10 caractères',
+              message: 'Le numéro de téléphone doit contenir 10 chiffres',
+            },
+            minLength: {
+              value: 10,
+              message: 'Le numéro de téléphone doit contenir 10 chiffres',
             },
           })}
-          type="number"
+          type="text"
           id="phone"
           maxLength={50}
           placeholder="0XXXXXXXXX"
@@ -517,6 +532,10 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('siren', {
             required: 'Le siren est requis',
+            pattern: {
+              value: /^(0|[1-9][0-9]*)$/,
+              message: 'Le siren doit être un nombre',
+            },
             maxLength: {
               value: 9,
               message: 'Le siren doit contenir 9 caractères',
@@ -548,11 +567,11 @@ export const ShopUpdateForm: React.FC = () => {
             required: 'Le siret est requis',
             maxLength: {
               value: 14,
-              message: 'Le siren doit contenir 14 caractères',
+              message: 'Le siret doit contenir 14 caractères',
             },
             minLength: {
               value: 14,
-              message: 'Le siren doit contenir 14 caractères',
+              message: 'Le siret doit contenir 14 caractères',
             },
           })}
           type="text"
@@ -595,10 +614,6 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('city', {
             required: 'La ville est requise',
-            maxLength: {
-              value: 20,
-              message: 'La ville ne doit pas dépasser 20 caractères',
-            },
           })}
           type="text"
           id="city"
@@ -618,16 +633,20 @@ export const ShopUpdateForm: React.FC = () => {
         <TextInput
           {...register('zipCode', {
             required: 'Le code postal est requis',
+            pattern: {
+              value: /^(0|[1-9][0-9]*)$/,
+              message: 'Le code postal doit être un nombre',
+            },
             maxLength: {
               value: 5,
-              message: 'Le code postal doit contenir 5 caractères',
+              message: 'Le code postal doit contenir 5 chiffres',
             },
             minLength: {
               value: 5,
-              message: 'Le code postal doit contenir 5 caractères',
+              message: 'Le code postal doit contenir 5 chiffres',
             },
           })}
-          type="number"
+          type="text"
           id="zipCode"
           maxLength={5}
           minLength={5}
