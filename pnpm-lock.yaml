@@ -125,8 +125,8 @@ dependencies:
 
 devDependencies:
   '@next/eslint-plugin-next':
-    specifier: ^13.4.13
-    version: 13.4.13
+    specifier: ^13.4.16
+    version: 13.4.16
   '@types/google.maps':
     specifier: ^3.53.6
     version: 3.53.6
@@ -529,6 +529,13 @@ packages:
     resolution: {integrity: sha512-RpZeXlPxQ9FLeYN84XHDqRN20XxmVNclYCraLYdifRsmibtcWUWdwE/ANp2C8kgesFRsvwfsw6eOkYNl9sLJ3A==}
     dependencies:
       glob: 7.1.7
+    dev: false
+
+  /@next/eslint-plugin-next@13.4.16:
+    resolution: {integrity: sha512-QuFtQl+oSEEQb0HMYBdvBoUaTiMxbY3go/MFkF3zOnfY0t84+IbAX78cw8ZCfr6cA6UcTq3nMIlCrHwDC/moxg==}
+    dependencies:
+      glob: 7.1.7
+    dev: true
 
   /@next/font@13.4.13:
     resolution: {integrity: sha512-jzjUvjO967E2XWku5aImWRVApGwsTJZPp3lY5yFNWZHMkoNNKU9fsTEAhWVcKxCOYmHmSX1n2E09VkzuFdF48Q==}
