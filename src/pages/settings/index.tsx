@@ -109,7 +109,7 @@ export default function GeneralSettings() {
               size={500}
             />
             <button
-              className="block w-1/2 px-3 py-2 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+              className="w-1/2 px-3 py-2 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
               onClick={downloadQRCode}
             >
               Télécharger le QR code

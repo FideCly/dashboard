@@ -18,6 +18,7 @@ export interface IUserUpdatePayload {
   username?: string;
   birthday?: string;
   sexe?: string;
+  pictureUrl?: string;
 }
 
 export interface IUser {
