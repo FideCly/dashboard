@@ -58,9 +58,14 @@ export default function signup() {
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-              S'inscrire
-            </h1>
+            <div>
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                S'inscrire
+              </h1>
+              <p className="mt-2 text-sm text-gray-700">
+                Inscris-toi et commence à gérer ta boutique.
+              </p>
+            </div>
             <form
               className="flex flex-col space-y-4"
               onSubmit={handleSubmit(onSubmit)}
