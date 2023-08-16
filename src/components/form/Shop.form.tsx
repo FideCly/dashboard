@@ -161,7 +161,7 @@ export const ShopCreateForm: React.FC = () => {
             {...register('phone', {
               required: 'Le numéro de téléphone est requis',
               pattern: {
-                value: /^(0|[1-9][0-9]*)$/,
+                value: /^\d*$/,
                 message: 'Le numéro de téléphone doit être un nombre',
               },
               maxLength: {
@@ -193,7 +193,7 @@ export const ShopCreateForm: React.FC = () => {
             {...register('siren', {
               required: 'Le siren est requis',
               pattern: {
-                value: /^(0|[1-9][0-9]*)$/,
+                value: /^\d*$/,
                 message: 'Le siren doit être un nombre',
               },
               minLength: {
@@ -294,7 +294,7 @@ export const ShopCreateForm: React.FC = () => {
             {...register('zipCode', {
               required: 'Le code postal est requis',
               pattern: {
-                value: /^(0|[1-9][0-9]*)$/,
+                value: /^\d*$/,
                 message: 'Le code postal doit être un nombre',
               },
               maxLength: {
@@ -318,6 +318,17 @@ export const ShopCreateForm: React.FC = () => {
               {errors.zipCode.message.toString()}
             </span>
           )}
+        </div>
+        <div className="">
+          <Label htmlFor="zipCode" className="">
+            Logo (optionnel)
+          </Label>
+          <TextInput
+            {...register('pictureUrl')}
+            type="text"
+            id="pictureUrl"
+            placeholder="https://example.com/picture"
+          />
         </div>
       </div>
       <Button
@@ -350,6 +361,7 @@ export const ShopUpdateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
   const [, setShop] = React.useState<IShopUpdatePayload>();
 
@@ -376,6 +388,7 @@ export const ShopUpdateForm: React.FC = () => {
         setValue('zipCode', data.zipCode);
         setValue('lat', data.lat);
         setValue('long', data.long);
+        setValue('pictureUrl', data.pictureUrl || '');
       } catch (error) {
         console.log(error);
       }
@@ -415,7 +428,7 @@ export const ShopUpdateForm: React.FC = () => {
           autoClose: 3000,
           isLoading: false,
         });
-        router.push('/');
+        router.reload();
       }
     },
     [],
@@ -437,6 +450,27 @@ export const ShopUpdateForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col md:col-span-2 gap-y-4"
     >
+      <div className="col-span-full flex items-center gap-x-8">
+        {getValues('pictureUrl') && (
+          <img
+            src={getValues('pictureUrl')}
+            alt=""
+            className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"
+          />
+        )}
+        <div className="w-full">
+          <Label htmlFor="zipCode" className="">
+            Logo (optionnel)
+          </Label>
+          <TextInput
+            {...register('pictureUrl')}
+            type="text"
+            id="pictureUrl"
+            placeholder="https://example.com/picture"
+          />
+        </div>
+      </div>
+
       <div className="">
         <Label htmlFor="companyName" className="">
           Nom du shop
@@ -510,7 +544,7 @@ export const ShopUpdateForm: React.FC = () => {
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
             pattern: {
-              value: /^(0|[1-9][0-9]*)$/,
+              value: /^\d*$/,
               message: 'Le numéro de téléphone doit être un nombre',
             },
             maxLength: {
@@ -524,7 +558,7 @@ export const ShopUpdateForm: React.FC = () => {
           })}
           type="text"
           id="phone"
-          maxLength={50}
+          maxLength={10}
           placeholder="0XXXXXXXXX"
         />
         {errors.phone && (
@@ -542,7 +576,7 @@ export const ShopUpdateForm: React.FC = () => {
           {...register('siren', {
             required: 'Le siren est requis',
             pattern: {
-              value: /^(0|[1-9][0-9]*)$/,
+              value: /^\d*$/,
               message: 'Le siren doit être un nombre',
             },
             maxLength: {
@@ -643,7 +677,7 @@ export const ShopUpdateForm: React.FC = () => {
           {...register('zipCode', {
             required: 'Le code postal est requis',
             pattern: {
-              value: /^(0|[1-9][0-9]*)$/,
+              value: /^\d*$/,
               message: 'Le code postal doit être un nombre',
             },
             maxLength: {

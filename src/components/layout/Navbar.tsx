@@ -4,7 +4,6 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Navbar() {
@@ -28,28 +27,38 @@ export default function Navbar() {
     loadUser();
   }, []);
   return (
-    <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8 bg-white border-b">
-      <div className="flex items-center w-full h-16 px-4 border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
-        <div className=" w-full justify-start ">
+    <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8 py-2 bg-white border-b">
+      <div className="flex items-center w-full h-fit px-4 border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+        <Link
+          className=" w-full justify-start items-center flex"
+          href="/settings#shop"
+        >
+          {user?.shop.pictureUrl && (
+            <img
+              className="inline-block h-10 w-10 rounded-full"
+              src={user?.shop.pictureUrl}
+              alt=""
+            ></img>
+          )}
           <span className="flex-1 ml-4 text-2xl font-medium leading-6 text-gray-900 w-fit">
             {user?.shop.companyName}
           </span>
-        </div>
+        </Link>
         <Link href="/settings#profile">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-800 bg-fidbg">
-            {user?.pictureUrl && (
-              <Image
-                className="h-10 w-10 rounded-full"
-                src={user?.pictureUrl}
-                alt=""
-              />
-            )}
-            {!user?.pictureUrl && (
-              <span className="font-medium leading-none text-gray-800">
+          {user?.pictureUrl && (
+            <img
+              className="inline-block h-10 w-10 rounded-full"
+              src={user?.pictureUrl}
+              alt=""
+            ></img>
+          )}
+          {!user?.pictureUrl && (
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-500">
+              <span className="font-medium leading-none text-white">
                 {user?.username[0]}
               </span>
-            )}
-          </span>
+            </span>
+          )}
         </Link>
         <button
           onClick={() => {
