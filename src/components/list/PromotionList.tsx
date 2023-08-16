@@ -47,6 +47,7 @@ export default function PromotionList() {
           options,
         );
         const data = await response.json();
+        console.log(data);
         setPromotions(data);
         setActivePromotions(data.filter((p) => p.isActive));
         setInactivesPromotions(data.filter((p) => p.isActive === false));
@@ -233,10 +234,10 @@ export default function PromotionList() {
                             {promotion.checkoutLimit}
                           </td>
                           <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.startAt.toString()}
+                            {moment(promotion.startAt).format('DD/MM/YYYY')}
                           </td>
                           <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.endAt.toString()}
+                            {moment(promotion.endAt).format('DD/MM/YYYY')}
                           </td>
                           <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
@@ -248,13 +249,12 @@ export default function PromotionList() {
                             </Link>
                           </td>
                           <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <Link
-                              href={`/promotion/${promotion.id}/edit`}
+                            <button
+                              onClick={() => deletePromotion(promotion.id)}
                               className="text-fidgreen hover:text-fidgreen/80 hover:underline"
                             >
                               Supprimer
-                              <span className="sr-only">{promotion.name}</span>
-                            </Link>
+                            </button>
                           </td>
                         </tr>
                       ))}
