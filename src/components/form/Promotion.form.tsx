@@ -21,12 +21,15 @@ export const PromotionCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       const toastid = toast.loading('Vérification en cours...');
+      const isActive: boolean =
+        data.startAt <= new Date() && data.endAt >= new Date();
+
       const response = await fetch('/api/promotions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, isActive: isActive }),
       });
       // read the response body
       const body = await response.json();
@@ -218,12 +221,16 @@ export const PromotionUpdateForm: React.FC = () => {
     async (data) => {
       const id = toast.loading('Vérification en cours...');
       try {
+        const isActive: boolean =
+          new Date(data.startAt) <= new Date() &&
+          new Date(data.endAt) >= new Date();
+
         const response = await fetch(`/api/promotions/${data.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, isActive: isActive }),
         });
         // read the response body
         const body = await response.json();
