@@ -74,8 +74,8 @@ export default function SignIn() {
   }, []);
 
   return (
-    <section className="bg-fidbg ">
-      <div className="z-20 flex flex-col items-center justify-center px-6 mx-auto gap-y-10 md:h-screen lg:py-0">
+    <section className="relative z-10">
+      <div className="flex flex-col items-center justify-center h-screen px-6 mx-auto gap-y-10 lg:py-0">
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -149,7 +149,15 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-      <div className="sticky bottom-0 z-0">
+    </section>
+  );
+}
+
+SignIn.getLayout = function getLayout(page) {
+  return (
+    <div className="relative bg-fidbg h-full min-h-screen">
+      <div className="z-10">{page}</div>
+      <div className="z-1 absolute h-fit w-full bottom-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#5DB075"
@@ -158,15 +166,15 @@ export default function SignIn() {
           ></path>
         </svg>
       </div>
-      <div className="sticky bottom-0 z-10">
+      <div className="z-2 absolute h-fit w-full bottom-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#224957"
             fill-opacity="0.8"
-            d="M0,256L80,245.3C160,235,320,213,480,202.7C640,192,800,192,960,208C1120,224,1280,256,1360,272L1440,288L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+            d="M0,192L60,213.3C120,235,240,277,360,277.3C480,277,600,235,720,202.7C840,171,960,149,1080,160C1200,171,1320,213,1380,234.7L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
           ></path>
-        </svg>
+        </svg>{' '}
       </div>
-    </section>
+    </div>
   );
-}
+};
