@@ -705,7 +705,7 @@ export const ShopUpdateForm: React.FC = () => {
 
       <Button
         type="submit"
-        className="flex-1 text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
+        className="w-1/2 px-3 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
       >
         Enregistrer
       </Button>

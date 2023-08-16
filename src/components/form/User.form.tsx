@@ -1,5 +1,5 @@
 import { IUser, IUserUpdatePayload } from '@/models/User';
-import { Button, Label } from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ export const UserUpdateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<IUserUpdatePayload>({ mode: 'onChange' });
 
   const loadUser = async (): Promise<IUser> => {
@@ -36,6 +37,7 @@ export const UserUpdateForm: React.FC = () => {
       setValue('username', user?.username);
       setValue('birthday', moment(user?.birthday).format('YYYY-MM-DD'));
       setValue('sexe', user?.sexe);
+      setValue('pictureUrl', user?.pictureUrl ?? '');
     };
 
     loadUserShop();
@@ -80,6 +82,27 @@ export const UserUpdateForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col md:col-span-2 gap-y-4"
     >
+      <div className="col-span-full flex items-center gap-x-8">
+        {getValues('pictureUrl') && (
+          <img
+            src={getValues('pictureUrl')}
+            alt=""
+            className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"
+          />
+        )}
+        <div className="w-full">
+          <Label htmlFor="zipCode" className="">
+            Photo (optionnel)
+          </Label>
+          <TextInput
+            {...register('pictureUrl')}
+            type="text"
+            id="pictureUrl"
+            placeholder="https://example.com/picture"
+          />
+        </div>
+      </div>
+
       <div className="flex flex-col">
         <Label htmlFor="username" className="text-sm font-medium">
           Email
@@ -142,9 +165,9 @@ export const UserUpdateForm: React.FC = () => {
       </div>
       <Button
         type="submit"
-        className="flex-1 text-gray-50 bg-fidgreen hover:bg-fidgreen/80"
+        className="w-1/2 px-3 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
       >
-        Modifier
+        Enregistrer
       </Button>
     </form>
   );
