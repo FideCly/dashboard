@@ -41,17 +41,20 @@ export default function ScannerForm() {
           },
         });
         const data = await user.json();
-        const response = await fetch(`/api/shop/${data.shop.id}/promotion`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `/api/shop/${data.shop.id}/promotion?isActive=true`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
           },
-        });
+        );
         if (response.status >= 400) {
           throw new Error('Bad response from server');
         }
         const dataPromotion = await response.json();
-        setPromotion(dataPromotion);
+        setPromotion(dataPromotion.filter((p) => p.isActive));
       } catch (error) {
         console.error(error);
       }
