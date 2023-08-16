@@ -86,15 +86,10 @@ export const PromotionCreateForm: React.FC = () => {
         <TextInput
           {...register('description', {
             required: 'La description est requise',
-            maxLength: {
-              value: 50,
-              message: 'La description ne doit pas dépasser 50 caractères',
-            },
           })}
           type="text"
           className=""
           id="description"
-          maxLength={50}
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
         {errors.description && (
@@ -154,11 +149,16 @@ export const PromotionCreateForm: React.FC = () => {
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
             valueAsNumber: true,
+            min: {
+              value: 1,
+              message: 'La limite de passage doit être supérieure à 0',
+            },
           })}
-          type="number"
+          type="text"
           className=""
           id="checkoutLimit"
           maxLength={50}
+          min={1}
           placeholder="10"
         />
         {errors.checkoutLimit && (
@@ -184,7 +184,7 @@ export const PromotionUpdateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<IPromotionUpdatePayload>();
+  } = useForm<IPromotionUpdatePayload>({ mode: 'onChange' });
 
   const [promotion, setPromotion] = useState<IPromotion>();
   const router = useRouter();
@@ -289,15 +289,10 @@ export const PromotionUpdateForm: React.FC = () => {
         <TextInput
           {...register('description', {
             required: 'La description est requise',
-            maxLength: {
-              value: 50,
-              message: 'La description ne doit pas dépasser 50 caractères',
-            },
           })}
           type="text"
           className=""
           id="description"
-          maxLength={50}
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
         {errors.description && (
@@ -357,11 +352,16 @@ export const PromotionUpdateForm: React.FC = () => {
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
             valueAsNumber: true,
+            min: {
+              value: 1,
+              message: 'La limite de passage doit être supérieure à 0',
+            },
           })}
-          type="number"
+          type="text"
           className=""
           id="checkoutLimit"
           maxLength={50}
+          min={1}
           placeholder="10"
         />
         {errors.checkoutLimit && (
