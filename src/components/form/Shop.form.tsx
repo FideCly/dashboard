@@ -50,7 +50,10 @@ export const ShopCreateForm: React.FC = () => {
       const body = await response.json();
       if (response.status >= 400) {
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][body.error]
+          }`,
           type: 'error',
           autoClose: 3000,
           isLoading: false,
@@ -394,14 +397,20 @@ export const ShopUpdateForm: React.FC = () => {
       const body = await response.json();
       if (response.status >= 400) {
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][body.error]
+          }`,
           type: 'error',
           autoClose: 3000,
           isLoading: false,
         });
       } else {
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][response.statusText]
+          }`,
           type: 'success',
           autoClose: 3000,
           isLoading: false,

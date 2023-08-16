@@ -72,7 +72,10 @@ export const CampaignCreateForm: React.FC = () => {
         const body = await response.json();
         if (response.status >= 400) {
           toast.update(toastid, {
-            render: `${errorCode[response.status][body.message]}`,
+            render: `${
+              errorCode[response.status][body.message] ||
+              errorCode[response.status][body.error]
+            }`,
             type: 'error',
             autoClose: 3000,
             isLoading: false,
@@ -81,7 +84,10 @@ export const CampaignCreateForm: React.FC = () => {
           // reload the page to get the new campaign
           router.reload();
           toast.update(toastid, {
-            render: `${errorCode[response.status]['Campaign created']}`,
+            render: `${
+              errorCode[response.status]['Campaign created'] ||
+              errorCode[response.status][response.statusText]
+            }`,
             type: 'success',
             autoClose: 3000,
             isLoading: false,
@@ -253,17 +259,22 @@ export const CampaignUpdateForm: React.FC = () => {
         });
         // read the response body
         const body = await response.json();
-        console.log(body.data);
         if (response.status >= 400) {
           toast.update(toastid, {
-            render: `${errorCode[response.status][body.message]}`,
+            render: `${
+              errorCode[response.status][body.message] ||
+              errorCode[response.status][body.error]
+            }`,
             type: 'error',
             autoClose: 3000,
             isLoading: false,
           });
         } else {
           toast.update(toastid, {
-            render: `${errorCode[response.status][body.message]}`,
+            render: `${
+              errorCode[response.status][body.message] ||
+              errorCode[response.status][response.statusText]
+            }`,
             type: 'success',
             autoClose: 3000,
             isLoading: false,

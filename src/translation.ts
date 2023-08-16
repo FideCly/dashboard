@@ -18,6 +18,8 @@ export const errorCode = {
     'Campaign updated': 'Campagne mise à jour',
     'Campaign deleted': 'Campagne supprimée',
     'Promotion limit reached': 'Limite de promotions atteinte',
+    'Connexion successful': 'Connexion réussie',
+    'Campaign sent': 'Campagne envoyée',
   },
   201: {
     Created: 'Créé',

@@ -32,7 +32,10 @@ export const PromotionCreateForm: React.FC = () => {
       const body = await response.json();
       if (response.status >= 400) {
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][body.error]
+          }`,
           type: 'error',
           autoClose: 3000,
           isLoading: false,
@@ -229,7 +232,10 @@ export const PromotionUpdateForm: React.FC = () => {
         const body = await response.json();
         if (response.status >= 400) {
           toast.update(id, {
-            render: `${errorCode[response.status][body.message]}`,
+            render: `${
+              errorCode[response.status][body.message] ||
+              errorCode[response.status][body.error]
+            }`,
             type: 'error',
             autoClose: 3000,
             isLoading: false,
@@ -238,7 +244,10 @@ export const PromotionUpdateForm: React.FC = () => {
           // reload actual page
           router.push('/promotion');
           toast.update(id, {
-            render: `${errorCode[response.status][body.message]}`,
+            render: `${
+              errorCode[response.status][body.message] ||
+              errorCode[response.status][response.statusText]
+            }`,
             type: 'success',
             autoClose: 3000,
             isLoading: false,
