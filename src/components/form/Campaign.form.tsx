@@ -312,15 +312,11 @@ export const CampaignUpdateForm: React.FC = () => {
         <Textarea
           {...register('textData', {
             required: 'Le message est requis',
-            maxLength: {
-              value: 50,
-              message: 'Le message ne doit pas dépasser 50 caractères',
-            },
           })}
           className=""
           id="textData"
-          maxLength={50}
           placeholder="textData"
+          rows={10}
         />
         {errors.textData && (
           <span className="text-sm text-red-600">
