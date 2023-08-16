@@ -74,8 +74,8 @@ export default function SignIn() {
   }, []);
 
   return (
-    <section>
-      <div className="flex flex-col items-center justify-center px-6 mx-auto gap-y-10 md:h-screen lg:py-0">
+    <section className="bg-fidbg ">
+      <div className="z-20 flex flex-col items-center justify-center px-6 mx-auto gap-y-10 md:h-screen lg:py-0">
         <Image src="/logo.svg" width={400} height={100} alt="logo" />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -148,6 +148,24 @@ export default function SignIn() {
             </form>
           </div>
         </div>
+      </div>
+      <div className="sticky bottom-0 z-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#5DB075"
+            fill-opacity="1"
+            d="M0,160L80,165.3C160,171,320,181,480,208C640,235,800,277,960,282.7C1120,288,1280,256,1360,240L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+      <div className="sticky bottom-0 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#224957"
+            fill-opacity="0.8"
+            d="M0,256L80,245.3C160,235,320,213,480,202.7C640,192,800,192,960,208C1120,224,1280,256,1360,272L1440,288L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          ></path>
+        </svg>
       </div>
     </section>
   );
