@@ -27,6 +27,7 @@ export const errorCode = {
     'Campaign created': 'Campagne créée',
     'Promotion created': 'Promotion créée',
     'Balance created': 'Solde créé',
+    'Account created': 'Compte créé',
   },
   202: { Accepted: 'Accepté' },
   203: { 'Non authoritative Information': 'Information non fiable' },
