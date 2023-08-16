@@ -62,7 +62,10 @@ export default function CampaignList() {
     const body = await response.json();
     if (response.status >= 400) {
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][body.error]
+        }`,
         hideProgressBar: true,
         autoClose: 3000,
         isLoading: false,
@@ -70,7 +73,10 @@ export default function CampaignList() {
       });
     } else {
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][response.statusText]
+        }`,
         hideProgressBar: true,
         autoClose: 3000,
         isLoading: false,
@@ -90,10 +96,12 @@ export default function CampaignList() {
       },
     });
     const body = await response.json();
-    console.log(body);
     if (response.status >= 400) {
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][body.error]
+        }`,
         hideProgressBar: true,
         autoClose: 3000,
         isLoading: false,
@@ -101,7 +109,7 @@ export default function CampaignList() {
       });
     } else {
       toast.update(toastid, {
-        render: `Campagne marketing envoyée`,
+        render: `${errorCode[response.status]['Campaign sent']}`,
         hideProgressBar: true,
         autoClose: 3000,
         isLoading: false,

@@ -30,11 +30,13 @@ export default function signup() {
       const toastid = toast.loading('Vérification en cours...');
       const response = await fetch(endpoint, options);
       const body = await response.json();
-      console.log(body);
       if (response.status >= 400) {
         // read the response body
         toast.update(toastid, {
-          render: `${errorCode[response.status][body.message]}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][body.error]
+          }`,
           type: 'error',
           autoClose: 3000,
           isLoading: false,

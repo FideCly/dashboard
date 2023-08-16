@@ -70,7 +70,6 @@ export default function ScannerForm() {
       body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
     });
     const body = await response.json();
-    console.debug(body);
     if (response.status >= 400) {
       toast.update(toastId, {
         render: `${
@@ -83,7 +82,10 @@ export default function ScannerForm() {
       });
     } else {
       toast.update(toastId, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][response.statusText]
+        }`,
         type: 'success',
         isLoading: false,
         autoClose: 4000,

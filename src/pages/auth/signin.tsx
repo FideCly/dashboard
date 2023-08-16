@@ -45,7 +45,10 @@ export default function SignIn() {
     if (response.status >= 400) {
       // read the response body
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][body.error]
+        }`,
         type: 'error',
         autoClose: 3000,
         isLoading: false,
@@ -58,7 +61,7 @@ export default function SignIn() {
         path: '/',
       });
       toast.update(toastid, {
-        render: `Connexion réussie`,
+        render: `${errorCode[response.status]['Connexion successful']}`,
         type: 'success',
         autoClose: 3000,
         isLoading: false,

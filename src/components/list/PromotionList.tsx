@@ -72,7 +72,10 @@ export default function PromotionList() {
     const body = await response.json();
     if (response.status >= 400) {
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][body.error]
+        }`,
         type: 'error',
         autoClose: 2000,
         isLoading: false,
@@ -80,7 +83,10 @@ export default function PromotionList() {
     } else {
       router.reload();
       toast.update(toastid, {
-        render: `${errorCode[response.status][body.message]}`,
+        render: `${
+          errorCode[response.status][body.message] ||
+          errorCode[response.status][response.statusText]
+        }`,
         type: 'success',
         autoClose: 2000,
         isLoading: false,

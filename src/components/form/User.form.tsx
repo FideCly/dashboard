@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import { errorCode } from '@/translation';
 
 export const UserUpdateForm: React.FC = () => {
   const {
@@ -49,19 +50,22 @@ export const UserUpdateForm: React.FC = () => {
         },
         body: JSON.stringify(data),
       };
-      const toastId = toast.loading('updating user...');
+      const toastId = toast.loading('Vérification en cours...');
       const response = await fetch(`/api/auth/${data.id}/update`, options);
       const body = await response.json();
       if (response.status >= 400) {
         toast.update(toastId, {
-          render: `error updating user: ${body.message}`,
+          render: `${
+            errorCode[response.status][body.message] ||
+            errorCode[response.status][body.error]
+          }`,
           type: 'error',
           autoClose: 2000,
           isLoading: false,
         });
       } else {
         toast.update(toastId, {
-          render: `user updated: ${body.message}`,
+          render: `${errorCode[response.status][body.message]}`,
           type: 'success',
           autoClose: 2000,
           isLoading: false,
