@@ -241,10 +241,6 @@ export const ShopCreateForm: React.FC = () => {
           error={undefined}
           {...register('address', {
             required: "L'adresse est requise",
-            maxLength: {
-              value: 50,
-              message: "L'adresse ne doit pas dépasser 50 caractères",
-            },
           })}
           onChange={(e) => {
             setMetadata(e);
@@ -580,10 +576,6 @@ export const ShopUpdateForm: React.FC = () => {
           error={undefined}
           {...register('address', {
             required: "L'adresse est requise",
-            maxLength: {
-              value: 50,
-              message: "L'adresse ne doit pas dépasser 50 caractères",
-            },
           })}
           onChange={(e) => {
             setMetadata(e);
