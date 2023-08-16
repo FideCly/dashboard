@@ -1,9 +1,31 @@
 import { ShopCreateForm } from '@/components/form/Shop.form';
 import Image from 'next/image';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Shops() {
+  const router = useRouter();
+
   return (
     <section className="z-10 p-10 w-full">
+      <button
+        className="w-full mx-auto flex justify-end items-center gap-2 font-medium hover:text-fidgreen"
+        onClick={() => {
+          // delete user id from localstorage
+          localStorage.removeItem('userUuid');
+          // delete cookie
+          deleteCookie('token');
+          // return to signin page
+          router.push('/auth/signin');
+        }}
+        id="logout"
+      >
+        <span>Déconnexion</span>
+        <FontAwesomeIcon icon={faRightToBracket} />
+      </button>
+
       <div className="z-10 m-10 flex flex-col items-center justify-center px-6 mx-auto gap-10 md:h-full w-full lg:py-0">
         <Image src="/logo.svg" width={300} height={100} alt="logo" />
         <div className="z-10 bg-white rounded-lg shadow md:mt-0 xl:p-0 ">
