@@ -389,6 +389,7 @@ export const ShopUpdateForm: React.FC = () => {
         setValue('lat', data.lat);
         setValue('long', data.long);
         setValue('pictureUrl', data.pictureUrl || '');
+        setValue('description', data.description || '');
       } catch (error) {
         console.log(error);
       }
@@ -488,6 +489,18 @@ export const ShopUpdateForm: React.FC = () => {
             {errors.companyName.message.toString()}
           </span>
         )}
+      </div>
+
+      <div className="">
+        <Label htmlFor="description" className="">
+          Description (optionnel)
+        </Label>
+        <TextInput
+          {...register('description')}
+          type="text"
+          id="description"
+          placeholder="Description"
+        />
       </div>
 
       <div className="">

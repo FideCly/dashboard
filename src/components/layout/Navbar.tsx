@@ -70,6 +70,7 @@ export default function Navbar() {
             router.push('/auth/signin');
           }}
           id="logout"
+          className="hover:text-fidgreen"
         >
           <FontAwesomeIcon icon={faRightToBracket} />
         </button>

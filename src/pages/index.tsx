@@ -276,7 +276,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      <div className="border-b p-12">
+      <div className="p-12">
         <h1 className="text-xl font-semibold leading-6 text-gray-900">
           Données analytiques
         </h1>
@@ -284,8 +284,8 @@ export default function Home() {
           Statistiques et tendances de votre boutique.
         </p>
       </div>
-      <header className="border-b border-white/5 bg-gray-50">
-        <nav className="flex py-4 border-b px-12">
+      <header className=" bg-gray-50 shadow">
+        <nav className="flex py-4 px-12">
           <ul
             role="list"
             className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
@@ -297,7 +297,7 @@ export default function Home() {
             </li>
             <li>
               <a href="#charts" className="hover:text-fidgreen">
-                Graphes
+                Graphiques
               </a>
             </li>
             <li>
@@ -309,51 +309,66 @@ export default function Home() {
         </nav>
       </header>
 
-      <div
-        id="stats"
-        className="my-16 grid border-b md:grid-cols-2 xl:grid-cols-3 divide-x bg-gray-50"
-      >
-        {/* Affluence today */}
-        <StatCard
-          label="Nombre De Fréquentations Aujourd'hui"
-          stat={affluenceToday ? affluenceToday.value : 0}
-          total={affluence ? affluence.value : 0}
-        />
-        {/* Affluence this month */}
-        <StatCard
-          label="Nombre De Fréquentations Sur Ce Mois"
-          stat={affluenceThisMonth ? affluenceThisMonth.value : 0}
-          total={affluence ? affluence.value : 0}
-        />
-        {/* Affluence this year */}
-        <StatCard
-          label="Nombre De Fréquentations Sur Cette Année"
-          stat={affluence ? affluence.value : 0}
-          total={null}
-        />
-        {/* Clients count */}
-        <StatCard
-          label="Nombre Total De Clients"
-          stat={clientCount ? clientCount.value : 0}
-          total={null}
-        />
+      <div id="stats" className="py-16">
+        <div className="sm:flex-auto px-12 pb-8">
+          <h1 className="text-xl font-semibold leading-6 text-gray-900">
+            Chiffres clés
+          </h1>
+          <p className="mt-2 text-sm text-gray-700">
+            Données et analytiques représentées en chiffres.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 divide-x bg-gray-50 shadow">
+          {/* Affluence today */}
+          <StatCard
+            label="Nombre de fréquentations aujourd'hui"
+            stat={affluenceToday ? affluenceToday.value : 0}
+            total={affluence ? affluence.value : 0}
+          />
+          {/* Affluence this month */}
+          <StatCard
+            label="Nombre de fréquentations sur ce mois"
+            stat={affluenceThisMonth ? affluenceThisMonth.value : 0}
+            total={affluence ? affluence.value : 0}
+          />
+          {/* Affluence this year */}
+          <StatCard
+            label="Nombre de fréquentations sur cette année"
+            stat={affluence ? affluence.value : 0}
+            total={null}
+          />
+          {/* Clients count */}
+          <StatCard
+            label="Nombre total de clients"
+            stat={clientCount ? clientCount.value : 0}
+            total={null}
+          />
 
-        {/* Clients count this month */}
-        <StatCard
-          label="Nouveaux Clients Ce Mois"
-          stat={clientCountThisMonth ? clientCountThisMonth.value : 0}
-          total={clientCount ? clientCount.value : 0}
-        />
-        {/* Clients count this year */}
-        <StatCard
-          label="Nouveaux Clients Cette Année"
-          stat={clientCountThisYear ? clientCountThisYear.value : 0}
-          total={clientCount ? clientCount.value : 0}
-        />
+          {/* Clients count this month */}
+          <StatCard
+            label="Nouveaux clients ce mois"
+            stat={clientCountThisMonth ? clientCountThisMonth.value : 0}
+            total={clientCount ? clientCount.value : 0}
+          />
+          {/* Clients count this year */}
+          <StatCard
+            label="Nouveaux clients cette année"
+            stat={clientCountThisYear ? clientCountThisYear.value : 0}
+            total={clientCount ? clientCount.value : 0}
+          />
+        </div>
       </div>
-      <div id="charts">
+      <div id="charts" className="">
+        <div className="sm:flex-auto px-12 pb-8">
+          <h1 className="text-xl font-semibold leading-6 text-gray-900">
+            Graphiques
+          </h1>
+          <p className="mt-2 text-sm text-gray-700">
+            Représentation schématique de vos données analytiques.
+          </p>
+        </div>
         {promotionRanking ? (
-          <div className="w-2/3 p-8 justify-center mx-auto text-gray-600 ">
+          <div className="w-2/3 justify-center mx-auto text-gray-600 ">
             <h3 className="text-lg font-normal text-gray-900">
               Classement Des Promotions Par Popularité
             </h3>
@@ -386,7 +401,7 @@ export default function Home() {
           </div>
         ) : null}
       </div>
-      <div id="activity" className="p-8">
+      <div id="activity" className="py-16 p-8">
         <CardsList />
       </div>
     </main>
