@@ -126,7 +126,6 @@ export default function Home() {
       );
       const data = await response.json(); // Extract JSON data from response
       setAffluence(data); // Set state with extracted data
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
