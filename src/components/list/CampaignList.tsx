@@ -3,7 +3,6 @@ import { ICampaign } from '@/models/Campaign';
 import { IUser } from '@/models/User';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
 import moment from 'moment';
 
@@ -11,7 +10,6 @@ export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const router = useRouter();
 
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -84,7 +82,7 @@ export default function CampaignList() {
         isLoading: false,
         type: 'success',
       });
-      router.reload();
+      setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
     }
   }
 
