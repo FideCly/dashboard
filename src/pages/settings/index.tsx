@@ -62,7 +62,7 @@ export default function GeneralSettings() {
 
   return (
     <main className="w-full h-full">
-      <h1 className="pb-12 text-xl font-semibold leading-6 text-gray-900 border-b p-12">
+      <h1 className="text-xl font-semibold leading-6 text-gray-900 border-b p-12">
         Réglages
       </h1>
       <header className="border-b border-white/5 bg-gray-50">

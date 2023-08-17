@@ -38,14 +38,15 @@ export default function CardsList() {
           options,
         );
         const data = await response.json();
-        const finalList = [];
+        const list = [];
         data.forEach((c) => {
           c.balances.forEach((b) => {
-            finalList.push({ ...b, username: c.user.username });
+            list.push({ ...b, username: c.user.username });
           });
         });
-        console.log(finalList);
-        setBalances(finalList);
+
+        list.sort((a, b) => a.updatedAt - b.updatedAt);
+        setBalances(list);
       } catch (error) {
         console.error(error);
         setError(true);
@@ -146,7 +147,9 @@ export default function CardsList() {
                           : errorCode[200]['Balance updated']}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {moment(balance.updatedAt).format('DD/MM/YYYY')}
+                        {moment(balance.updatedAt).format(
+                          'dddd, MMMM Do YYYY, h:mm:ss a',
+                        )}
                       </td>
                     </tr>
                   ))}
