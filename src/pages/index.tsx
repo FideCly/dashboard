@@ -1,5 +1,6 @@
 import Navbar from '@/components/layout/Navbar';
 import Sidebar from '@/components/layout/Sidebar';
+import CardsList from '@/components/list/CardsList';
 import { BarChart } from '@/components/statistics/chart';
 import {
   IAffluence,
@@ -25,7 +26,7 @@ function StatCard({ label, stat, total }) {
           {stat}
           {total != null && (
             <span className="ml-2 text-sm font-medium text-gray-500">
-              de {total}
+              sur {total}
             </span>
           )}
         </div>
@@ -354,6 +355,7 @@ export default function Home() {
           </div>
         </div>
       ) : null}
+      <CardsList />
     </main>
   );
 }

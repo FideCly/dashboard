@@ -1,3 +1,6 @@
+import { IBalance } from './Balance';
+import { IUser } from './User';
+
 export interface ICardCreatePayload {
   shopId: number;
   userId: number;
@@ -19,4 +22,7 @@ export interface ICard {
   isActive: boolean;
   shopId: number;
   userId: number;
+  user: IUser;
+  balances: IBalance[];
+  updatedAt: Date;
 }

@@ -107,7 +107,7 @@ export const CampaignCreateForm: React.FC = () => {
       className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
-        <Label htmlFor="subject">Nom</Label>
+        <Label htmlFor="subject">Sujet</Label>
         <TextInput
           {...register('subject', {
             required: 'Le nom de la campagne est requise',
@@ -296,7 +296,7 @@ export const CampaignUpdateForm: React.FC = () => {
       className="flex flex-col gap-4 p-4 m-4 rounded-lg bg-fidbg font-normal"
     >
       <div className="">
-        <Label htmlFor="subject">Nom</Label>
+        <Label htmlFor="subject">Sujet</Label>
         <TextInput
           {...register('subject', {
             required: 'Le nom de la campagne est requise',

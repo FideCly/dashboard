@@ -47,7 +47,6 @@ export default function PromotionList() {
           options,
         );
         const data = await response.json();
-        console.log(data);
         setPromotions(data);
         setActivePromotions(data.filter((p) => p.isActive));
         setInactivesPromotions(data.filter((p) => p.isActive === false));
