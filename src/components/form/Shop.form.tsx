@@ -389,6 +389,7 @@ export const ShopUpdateForm: React.FC = () => {
         setValue('lat', data.lat);
         setValue('long', data.long);
         setValue('pictureUrl', data.pictureUrl || '');
+        setValue('description', data.description || '');
       } catch (error) {
         console.log(error);
       }
