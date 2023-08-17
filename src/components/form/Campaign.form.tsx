@@ -11,6 +11,7 @@ import { IPromotion } from '@/models/Promotions';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
+import { Editor } from '@tinymce/tinymce-react';
 
 export const CampaignCreateForm: React.FC = () => {
   const {
@@ -20,6 +21,10 @@ export const CampaignCreateForm: React.FC = () => {
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
   // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [value, setValue] = useState(
+    '<p>The quick brown fox jumps over the lazy dog</p>',
+  );
+
   const router = useRouter();
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -60,6 +65,7 @@ export const CampaignCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
+        data.htmlData = value;
         const toastid = toast.loading('Vérification en cours...');
         const response = await fetch(`/api/campaign`, {
           method: 'POST',
@@ -131,7 +137,17 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="textData">Message</Label>
-        <Textarea
+        <Editor
+          {...register('htmlData', {
+            required: 'Le message est requis',
+          })}
+          apiKey={'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc'}
+          value={value}
+          onEditorChange={(newValue) => {
+            setValue(newValue);
+          }}
+        />
+        {/* <Textarea
           {...register('textData', {
             required: 'Le message est requis',
           })}
@@ -144,7 +160,7 @@ export const CampaignCreateForm: React.FC = () => {
           <span className="text-sm text-red-600">
             {errors.textData.message.toString()}
           </span>
-        )}
+        )} */}
       </div>
       <div className="">
         <Label htmlFor="promotionId">Promotion liée</Label>

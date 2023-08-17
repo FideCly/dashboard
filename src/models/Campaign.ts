@@ -1,7 +1,8 @@
 export interface ICampaignCreatePayload {
   promotionId: number;
   subject: string;
-  textData: string;
+  textData?: string;
+  htmlData?: string;
 }
 
 export interface ICampaignUpdatePayload {
