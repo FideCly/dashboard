@@ -5,13 +5,15 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
+import { IPromotion } from '@/models/Promotions';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  // get campaigns by campaign id
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -20,36 +22,60 @@ export default function CampaignList() {
         'Content-Type': 'application/json',
       },
     };
-    const user = fetch(`/api/user/${userUuid}`, options)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-    return user;
+
+    try {
+      const response = await fetch(`/api/user/${userUuid}`, options);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      setError(true);
+    }
   };
 
-  useEffect(() => {
-    const loadCampaigns = async (): Promise<void> => {
-      setIsLoading(true);
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/campaigns`,
-          options,
-        );
-        const data = await response.json();
-        setCampaigns(data);
-      } catch (error) {
-        setError(true);
-      }
-      setIsLoading(false);
+  const loadPromotions = async (): Promise<void> => {
+    const user = await loadUser();
+    setIsLoading(true);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-    loadCampaigns();
-  }, []);
+
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+  };
+
+  const loadCampaigns = async (): Promise<void> => {
+    const user = await loadUser();
+    setIsLoading(true);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/campaigns`,
+        options,
+      );
+      const data = await response.json();
+      setCampaigns(data);
+    } catch (error) {
+      setError(true);
+    }
+    setIsLoading(false);
+  };
 
   async function deletecampaign(id: number): Promise<void> {
     const toastid = toast.loading('Vérification en cours...');
@@ -118,6 +144,13 @@ export default function CampaignList() {
     }
   }
 
+  useEffect(() => {
+    loadUser();
+    loadPromotions();
+    loadCampaigns();
+    console.log(promotions);
+  }, []);
+
   return (
     <div className="flow-root mt-8 bg-fidbg rounded-lg">
       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -150,24 +183,20 @@ export default function CampaignList() {
             </thead>
             <tbody className="bg-fidbg">
               {isLoading && (
-                <div>
-                  <td
-                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
-                    colSpan={5}
-                  >
-                    Chargement des campagnes
-                  </td>
-                </div>
+                <td
+                  className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                  colSpan={5}
+                >
+                  Chargement des campagnes
+                </td>
               )}
               {error && (
-                <div>
-                  <td
-                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
-                    colSpan={5}
-                  >
-                    Error lors du chargement des campagnes
-                  </td>
-                </div>
+                <td
+                  className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                  colSpan={5}
+                >
+                  Error lors du chargement des campagnes
+                </td>
               )}
               {!error &&
                 campaigns.map((campaign) => (
@@ -176,7 +205,9 @@ export default function CampaignList() {
                       {campaign.subject}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {campaign.promotionId}
+                      {promotions &&
+                        promotions.find((p) => p.id == campaign.promotionId)
+                          .name}
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button

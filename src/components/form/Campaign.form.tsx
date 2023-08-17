@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react';
+import { Button, Label, Select, TextInput } from 'flowbite-react';
 import {
   ICampaignCreatePayload,
   ICampaignUpdatePayload,
@@ -11,6 +11,7 @@ import { IPromotion } from '@/models/Promotions';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
+import { Editor } from '@tinymce/tinymce-react';
 
 export const CampaignCreateForm: React.FC = () => {
   const {
@@ -18,9 +19,10 @@ export const CampaignCreateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
-  // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [value, setValue] = useState('');
   const router = useRouter();
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -34,32 +36,31 @@ export const CampaignCreateForm: React.FC = () => {
       .catch((error) => console.error(error));
     return user;
   };
-  useEffect(() => {
-    const loadCampaigns = async (): Promise<void> => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/promotion`,
-          options,
-        );
-        const data = await response.json();
-        setPromotions(data);
-      } catch (error) {
-        console.error(error);
-      }
+
+  const loadCampaigns = async (): Promise<void> => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-    loadCampaigns();
-  }, []);
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
+        data.htmlData = value;
         const toastid = toast.loading('Vérification en cours...');
         const response = await fetch(`/api/campaign`, {
           method: 'POST',
@@ -100,6 +101,10 @@ export const CampaignCreateForm: React.FC = () => {
     [],
   );
 
+  useEffect(() => {
+    loadCampaigns();
+  }, []);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -131,20 +136,13 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="textData">Message</Label>
-        <Textarea
-          {...register('textData', {
-            required: 'Le message est requis',
-          })}
-          className=""
-          id="textData"
-          placeholder="textData"
-          rows={10}
+        <Editor
+          apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
+          value={value}
+          onEditorChange={(newValue) => {
+            setValue(newValue);
+          }}
         />
-        {errors.textData && (
-          <span className="text-sm text-red-600">
-            {errors.textData.message.toString()}
-          </span>
-        )}
       </div>
       <div className="">
         <Label htmlFor="promotionId">Promotion liée</Label>
@@ -187,6 +185,7 @@ export const CampaignUpdateForm: React.FC = () => {
   } = useForm<ICampaignUpdatePayload>({ mode: 'onChange' });
 
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [message, setMessage] = useState('');
   const router = useRouter();
   const id = Number(router.query.id);
   const loadUser = async (): Promise<IUser> => {
@@ -236,6 +235,7 @@ export const CampaignUpdateForm: React.FC = () => {
         setValue('subject', data.subject);
         setValue('textData', data.textData);
         setValue('promotionId', data.promotionId);
+        setMessage(data.htmlData);
       } catch (error) {
         console.log(error);
       }
@@ -320,20 +320,13 @@ export const CampaignUpdateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="textData">Message</Label>
-        <Textarea
-          {...register('textData', {
-            required: 'Le message est requis',
-          })}
-          className=""
-          id="textData"
-          placeholder="textData"
-          rows={10}
+        <Editor
+          apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
+          value={message}
+          onEditorChange={(newValue) => {
+            setMessage(newValue);
+          }}
         />
-        {errors.textData && (
-          <span className="text-sm text-red-600">
-            {errors.textData.message.toString()}
-          </span>
-        )}
       </div>
       <div className="">
         <Label htmlFor="promotionId">Promotion liée</Label>

@@ -30,35 +30,33 @@ export default function PromotionList() {
       .catch((error) => console.error(error));
     return user;
   };
-  useEffect(() => {
-    const loadPromotions = async (): Promise<void> => {
-      setIsLoading(true);
 
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/promotion`,
-          options,
-        );
-        const data = await response.json();
-        setPromotions(data);
-        setActivePromotions(data.filter((p) => p.isActive));
-        setInactivesPromotions(data.filter((p) => p.isActive === false));
-      } catch (error) {
-        console.error(error);
-        setError(true);
-      }
+  const loadPromotions = async (): Promise<void> => {
+    setIsLoading(true);
 
-      setIsLoading(false);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-    loadPromotions();
-  }, []);
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+      setActivePromotions(data.filter((p) => p.isActive));
+      setInactivesPromotions(data.filter((p) => p.isActive === false));
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+
+    setIsLoading(false);
+  };
 
   const deletePromotion = async (id: number): Promise<void> => {
     const toastid = toast.loading('Vérification en cours...');
@@ -92,6 +90,10 @@ export default function PromotionList() {
       });
     }
   };
+
+  useEffect(() => {
+    loadPromotions();
+  }, []);
 
   return (
     <div className="flow-root mt-8 rounded-lg bg-fidbg">
