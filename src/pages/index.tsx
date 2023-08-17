@@ -12,7 +12,6 @@ import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-Chart.register(CategoryScale);
 
 function StatCard({ label, stat, total }) {
   let percentage = 0;
@@ -50,9 +49,9 @@ function StatCard({ label, stat, total }) {
               aria-hidden="true"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
             <span className="sr-only"> A augmenté de </span>
@@ -264,6 +263,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    Chart.register(CategoryScale);
     checkShop();
     getClientCount();
     getClientCountThisMonth();
@@ -373,30 +373,28 @@ export default function Home() {
               Classement Des Promotions Par Popularité
             </h3>
             <div className="">
-              <div className="">
-                <BarChart
-                  chartData={{
-                    labels: promotionRanking.promotionNames,
-                    datasets: [
-                      {
-                        label: 'Nombre de fréquentations',
-                        data: promotionRanking.values,
-                        borderColor: ['rgba(0,0,0,1)'],
-                        backgroundColor: [
-                          '#55dde0',
-                          '#33658A',
-                          '#2F4858',
-                          '#F6AE2D',
-                          '#F26419',
-                          '#14BDEB',
-                          '#949D6A',
-                        ],
-                        borderWidth: 1,
-                      },
-                    ],
-                  }}
-                />
-              </div>
+              <BarChart
+                chartData={{
+                  labels: promotionRanking.promotionNames,
+                  datasets: [
+                    {
+                      label: 'Nombre de fréquentations',
+                      data: promotionRanking.values,
+                      borderColor: ['rgba(0,0,0,1)'],
+                      backgroundColor: [
+                        '#55dde0',
+                        '#33658A',
+                        '#2F4858',
+                        '#F6AE2D',
+                        '#F26419',
+                        '#14BDEB',
+                        '#949D6A',
+                      ],
+                      borderWidth: 1,
+                    },
+                  ],
+                }}
+              />
             </div>
           </div>
         ) : null}

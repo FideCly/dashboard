@@ -107,24 +107,24 @@ export default function CardsList() {
               </thead>
               <tbody className="bg-fidbg">
                 {isLoading && (
-                  <div>
+                  <tr>
                     <td
                       className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
                       colSpan={7}
                     >
                       Chargement de l'activité
                     </td>
-                  </div>
+                  </tr>
                 )}
                 {error && (
-                  <div>
+                  <tr>
                     <td
                       className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
                       colSpan={7}
                     >
                       Error lors du chargement de l'activité
                     </td>
-                  </div>
+                  </tr>
                 )}
                 {!error &&
                   balances.map((balance) => (

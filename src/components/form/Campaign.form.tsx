@@ -17,10 +17,11 @@ export const CampaignCreateForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
-  const [value, setValue] = useState('');
+  const [editorContent, setEditorContent] = useState('');
   const router = useRouter();
 
   const loadUser = async (): Promise<IUser> => {
@@ -60,7 +61,6 @@ export const CampaignCreateForm: React.FC = () => {
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
-        data.htmlData = value;
         const toastid = toast.loading('Vérification en cours...');
         const response = await fetch(`/api/campaign`, {
           method: 'POST',
@@ -68,7 +68,10 @@ export const CampaignCreateForm: React.FC = () => {
             'Content-Type': 'application/json',
           },
           // conserve the number type htmlFor the promotionId
-          body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
+          body: JSON.stringify({
+            ...data,
+            promotionId: +data.promotionId,
+          }),
         });
         const body = await response.json();
         if (response.status >= 400) {
@@ -83,7 +86,6 @@ export const CampaignCreateForm: React.FC = () => {
           });
         } else {
           // reload the page to get the new campaign
-          router.reload();
           toast.update(toastid, {
             render: `${
               errorCode[response.status]['Campaign created'] ||
@@ -93,6 +95,7 @@ export const CampaignCreateForm: React.FC = () => {
             autoClose: 3000,
             isLoading: false,
           });
+          router.reload();
         }
       } catch (error) {
         console.error(error);
@@ -117,15 +120,14 @@ export const CampaignCreateForm: React.FC = () => {
           {...register('subject', {
             required: 'Le nom de la campagne est requise',
             maxLength: {
-              value: 50,
+              value: 200,
               message:
-                'Le nom de la campagne ne doit pas dépasser 50 caractères',
+                'Le sujet de la campagne ne doit pas dépasser 200 caractères',
             },
           })}
           type="text"
-          className=""
           id="subject"
-          maxLength={50}
+          maxLength={200}
           placeholder="subject"
         />
         {errors.subject && (
@@ -134,23 +136,23 @@ export const CampaignCreateForm: React.FC = () => {
           </span>
         )}
       </div>
-      <div className="">
-        <Label htmlFor="textData">Message</Label>
+      <div>
+        <Label htmlFor="htmlData">Message</Label>
         <Editor
           apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
-          value={value}
+          value={editorContent}
           onEditorChange={(newValue) => {
-            setValue(newValue);
+            setEditorContent(newValue);
+            setValue('htmlData', newValue);
           }}
         />
       </div>
-      <div className="">
+      <div>
         <Label htmlFor="promotionId">Promotion liée</Label>
         <Select
           {...register('promotionId', {
             required: 'La promotion liée est requise',
           })}
-          className=""
           id="promotionId"
           placeholder="promotionId"
         >
@@ -235,7 +237,8 @@ export const CampaignUpdateForm: React.FC = () => {
         setValue('subject', data.subject);
         setValue('textData', data.textData);
         setValue('promotionId', data.promotionId);
-        setMessage(data.htmlData);
+        setValue('htmlData', data.htmlData || '');
+        setMessage(data.htmlData || '');
       } catch (error) {
         console.log(error);
       }
@@ -299,17 +302,17 @@ export const CampaignUpdateForm: React.FC = () => {
         <Label htmlFor="subject">Sujet</Label>
         <TextInput
           {...register('subject', {
-            required: 'Le nom de la campagne est requise',
+            required: 'Le sujet de la campagne est requise',
             maxLength: {
-              value: 50,
+              value: 200,
               message:
-                'Le nom de la campagne ne doit pas dépasser 50 caractères',
+                'Le nom de la campagne ne doit pas dépasser 200 caractères',
             },
           })}
           type="text"
           className=""
           id="subject"
-          maxLength={50}
+          maxLength={200}
           placeholder="subject"
         />
         {errors.subject && (
@@ -319,12 +322,13 @@ export const CampaignUpdateForm: React.FC = () => {
         )}
       </div>
       <div className="">
-        <Label htmlFor="textData">Message</Label>
+        <Label htmlFor="textHtml">Message</Label>
         <Editor
           apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
           value={message}
           onEditorChange={(newValue) => {
             setMessage(newValue);
+            setValue('htmlData', newValue);
           }}
         />
       </div>

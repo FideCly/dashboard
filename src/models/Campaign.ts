@@ -22,4 +22,6 @@ export interface ICampaign {
   promotionId: number;
   subject: string;
   textData?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

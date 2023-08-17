@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
-import { IPromotion } from '@/models/Promotions';
+import moment from 'moment';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
@@ -28,29 +27,6 @@ export default function CampaignList() {
       const data = await response.json();
       return data;
     } catch (error) {
-      setError(true);
-    }
-  };
-
-  const loadPromotions = async (): Promise<void> => {
-    const user = await loadUser();
-    setIsLoading(true);
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    try {
-      const response = await fetch(
-        `/api/shop/${user.shop.id}/promotion`,
-        options,
-      );
-      const data = await response.json();
-      setPromotions(data);
-    } catch (error) {
-      console.error(error);
       setError(true);
     }
   };
@@ -146,9 +122,7 @@ export default function CampaignList() {
 
   useEffect(() => {
     loadUser();
-    loadPromotions();
     loadCampaigns();
-    console.log(promotions);
   }, []);
 
   return (
@@ -166,10 +140,17 @@ export default function CampaignList() {
                 </th>
                 <th
                   scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
                 >
-                  Promotion
+                  Date de dernière édition
                 </th>
+                <th
+                  scope="col"
+                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                >
+                  Date de création
+                </th>
+
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-3">
                   <span className="sr-only">Send</span>
                 </th>
@@ -183,20 +164,24 @@ export default function CampaignList() {
             </thead>
             <tbody className="bg-fidbg">
               {isLoading && (
-                <td
-                  className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
-                  colSpan={5}
-                >
-                  Chargement des campagnes
-                </td>
+                <tr>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Chargement des campagnes
+                  </td>
+                </tr>
               )}
               {error && (
-                <td
-                  className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
-                  colSpan={5}
-                >
-                  Error lors du chargement des campagnes
-                </td>
+                <tr>
+                  <td
+                    className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
+                    colSpan={5}
+                  >
+                    Error lors du chargement des campagnes
+                  </td>
+                </tr>
               )}
               {!error &&
                 campaigns.map((campaign) => (
@@ -204,10 +189,15 @@ export default function CampaignList() {
                     <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
                       {campaign.subject}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {promotions &&
-                        promotions.find((p) => p.id == campaign.promotionId)
-                          .name}
+                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
+                      {moment(campaign.updatedAt).format(
+                        'dddd, MMMM Do YYYY, h:mm:ss a',
+                      )}
+                    </td>
+                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
+                      {moment(campaign.createdAt).format(
+                        'dddd, MMMM Do YYYY, h:mm:ss a',
+                      )}
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button
