@@ -64,7 +64,7 @@ export default function CardsList() {
           Activité récente
         </h1>
         <p className="mt-2 text-sm text-gray-700">
-          Liste des promotions de votre commerce.
+          Dernières activités de votre boutique.
         </p>
       </div>
       <div className="flow-root mt-8 rounded-lg bg-fidbg">
@@ -129,7 +129,7 @@ export default function CardsList() {
                 {!error &&
                   balances.map((balance) => (
                     <tr
-                      key={balance.username}
+                      key={balance.username + balance.updatedAt}
                       className="border-t border-gray-300"
                     >
                       <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
@@ -141,11 +141,19 @@ export default function CardsList() {
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {balance.counter}
                       </td>
-                      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {balance.counter == balance.promotion.checkoutLimit
-                          ? errorCode[200]['Promotion limit reached']
-                          : errorCode[200]['Balance updated']}
-                      </td>
+                      {balance.counter == balance.promotion.checkoutLimit ? (
+                        <td className="whitespace-nowrap px-3 py-4">
+                          <span className='className="whitespace-nowrap inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                            {errorCode[200]['Promotion limit reached']}
+                          </span>
+                        </td>
+                      ) : (
+                        <td className="whitespace-nowrap px-3 py-4">
+                          <span className="whitespace-nowrap inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/20">
+                            {errorCode[200]['Balance updated']}
+                          </span>
+                        </td>
+                      )}
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {moment(balance.updatedAt).format(
                           'dddd, MMMM Do YYYY, h:mm:ss a',

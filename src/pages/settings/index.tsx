@@ -62,11 +62,11 @@ export default function GeneralSettings() {
 
   return (
     <main className="w-full h-full">
-      <h1 className="text-xl font-semibold leading-6 text-gray-900 border-b p-12">
+      <h1 className="text-xl font-semibold leading-6 text-gray-900 p-12">
         Réglages
       </h1>
-      <header className="border-b border-white/5 bg-gray-50">
-        <nav className="flex py-4 border-b px-12">
+      <header className="shadow bg-gray-50">
+        <nav className="flex py-4 px-12">
           <ul
             role="list"
             className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
@@ -89,8 +89,11 @@ export default function GeneralSettings() {
           </ul>
         </nav>
       </header>
-      <div className="divide-y" id="qrcode">
-        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20">
+      <div className="divide-y">
+        <div
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          id="qrcode"
+        >
           <div>
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               QR code de votre boutique

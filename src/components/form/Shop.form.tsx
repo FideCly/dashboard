@@ -491,6 +491,18 @@ export const ShopUpdateForm: React.FC = () => {
       </div>
 
       <div className="">
+        <Label htmlFor="description" className="">
+          Description (optionnel)
+        </Label>
+        <TextInput
+          {...register('description')}
+          type="text"
+          id="description"
+          placeholder="Description"
+        />
+      </div>
+
+      <div className="">
         <Label htmlFor="activity" className="">
           Activité du shop
         </Label>

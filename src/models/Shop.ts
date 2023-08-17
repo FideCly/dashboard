@@ -16,6 +16,7 @@ export interface IShopCreatePayload {
 export interface IShopUpdatePayload {
   id: number;
   companyName?: string;
+  description?: string;
   siren?: string;
   siret?: string;
   email?: string;
