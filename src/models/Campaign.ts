@@ -11,6 +11,7 @@ export interface ICampaignUpdatePayload {
   shopId: number;
   subject: string;
   textData?: string;
+  htmlData?: string;
   isActivate: boolean;
 }
 
