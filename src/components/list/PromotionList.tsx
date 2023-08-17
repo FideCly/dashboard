@@ -4,18 +4,12 @@ import { IUser } from '@/models/User';
 import Link from 'next/link';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
 
 export default function PromotionList() {
-  const [, setPromotions] = useState<IPromotion[]>([]);
-  const [activePromotions, setActivePromotions] = useState<IPromotion[]>([]);
-  const [inactivesPromotions, setInactivesPromotions] = useState<IPromotion[]>(
-    [],
-  );
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const router = useRouter();
 
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
@@ -48,8 +42,6 @@ export default function PromotionList() {
       );
       const data = await response.json();
       setPromotions(data);
-      setActivePromotions(data.filter((p) => p.isActive));
-      setInactivesPromotions(data.filter((p) => p.isActive === false));
     } catch (error) {
       console.error(error);
       setError(true);
@@ -78,7 +70,6 @@ export default function PromotionList() {
         isLoading: false,
       });
     } else {
-      router.reload();
       toast.update(toastid, {
         render: `${
           errorCode[response.status][body.message] ||
@@ -88,6 +79,7 @@ export default function PromotionList() {
         autoClose: 2000,
         isLoading: false,
       });
+      setPromotions(promotions.filter((promotion) => promotion.id !== id));
     }
   };
 
@@ -163,7 +155,7 @@ export default function PromotionList() {
               )}
               {!error && (
                 <>
-                  {activePromotions.length > 0 && (
+                  {promotions.length > 0 && (
                     <Fragment key="Actives">
                       <tr className="border-t border-gray-200">
                         <th
@@ -174,48 +166,52 @@ export default function PromotionList() {
                           Actives
                         </th>
                       </tr>
-                      {activePromotions.map((promotion) => (
-                        <tr
-                          key={promotion.id}
-                          className="border-t border-gray-300"
-                        >
-                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
-                            {promotion.name}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.description}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.checkoutLimit}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.startAt).format('DD/MM/YYYY')}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.endAt).format('DD/MM/YYYY')}
-                          </td>
-                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <Link
-                              href={`/promotion/${promotion.id}/edit`}
-                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                            >
-                              Modifier
-                              <span className="sr-only">{promotion.name}</span>
-                            </Link>
-                          </td>
-                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <button
-                              onClick={() => deletePromotion(promotion.id)}
-                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                            >
-                              Supprimer
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                      {promotions
+                        .filter((p) => p.isActive)
+                        .map((promotion) => (
+                          <tr
+                            key={promotion.id}
+                            className="border-t border-gray-300"
+                          >
+                            <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
+                              {promotion.name}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {promotion.description}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {promotion.checkoutLimit}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {moment(promotion.startAt).format('DD/MM/YYYY')}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {moment(promotion.endAt).format('DD/MM/YYYY')}
+                            </td>
+                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                              <Link
+                                href={`/promotion/${promotion.id}/edit`}
+                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                              >
+                                Modifier
+                                <span className="sr-only">
+                                  {promotion.name}
+                                </span>
+                              </Link>
+                            </td>
+                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                              <button
+                                onClick={() => deletePromotion(promotion.id)}
+                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                              >
+                                Supprimer
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                     </Fragment>
                   )}
-                  {inactivesPromotions.length > 0 && (
+                  {promotions.length > 0 && (
                     <Fragment key="Inactives">
                       <tr className="border-t border-gray-200">
                         <th
@@ -226,45 +222,49 @@ export default function PromotionList() {
                           Inactives
                         </th>
                       </tr>
-                      {inactivesPromotions.map((promotion) => (
-                        <tr
-                          key={promotion.id}
-                          className="border-t border-gray-300"
-                        >
-                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
-                            {promotion.name}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.description}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {promotion.checkoutLimit}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.startAt).format('DD/MM/YYYY')}
-                          </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.endAt).format('DD/MM/YYYY')}
-                          </td>
-                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <Link
-                              href={`/promotion/${promotion.id}/edit`}
-                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                            >
-                              Modifier
-                              <span className="sr-only">{promotion.name}</span>
-                            </Link>
-                          </td>
-                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                            <button
-                              onClick={() => deletePromotion(promotion.id)}
-                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                            >
-                              Supprimer
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                      {promotions
+                        .filter((p) => p.isActive === false)
+                        .map((promotion) => (
+                          <tr
+                            key={promotion.id}
+                            className="border-t border-gray-300"
+                          >
+                            <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
+                              {promotion.name}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {promotion.description}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {promotion.checkoutLimit}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {moment(promotion.startAt).format('DD/MM/YYYY')}
+                            </td>
+                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {moment(promotion.endAt).format('DD/MM/YYYY')}
+                            </td>
+                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                              <Link
+                                href={`/promotion/${promotion.id}/edit`}
+                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                              >
+                                Modifier
+                                <span className="sr-only">
+                                  {promotion.name}
+                                </span>
+                              </Link>
+                            </td>
+                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                              <button
+                                onClick={() => deletePromotion(promotion.id)}
+                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                              >
+                                Supprimer
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                     </Fragment>
                   )}
                 </>
