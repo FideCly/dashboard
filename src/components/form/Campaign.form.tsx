@@ -137,7 +137,7 @@ export const CampaignCreateForm: React.FC = () => {
       <div className="">
         <Label htmlFor="textData">Message</Label>
         <Editor
-          apiKey={'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc'}
+          apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
           value={value}
           onEditorChange={(newValue) => {
             setValue(newValue);
@@ -321,7 +321,7 @@ export const CampaignUpdateForm: React.FC = () => {
       <div className="">
         <Label htmlFor="textData">Message</Label>
         <Editor
-          apiKey={'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc'}
+          apiKey={'f6gaiisqnyo4xdvg0gfrc4ty0fjt4dbbthdrsafugqg44jgc'}
           value={message}
           onEditorChange={(newValue) => {
             setMessage(newValue);

@@ -148,6 +148,7 @@ export default function CampaignList() {
     loadUser();
     loadPromotions();
     loadCampaigns();
+    console.log(promotions);
   }, []);
 
   return (
@@ -204,10 +205,9 @@ export default function CampaignList() {
                       {campaign.subject}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {
+                      {promotions &&
                         promotions.find((p) => p.id == campaign.promotionId)
-                          .name
-                      }
+                          .name}
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button
