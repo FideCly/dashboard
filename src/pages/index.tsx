@@ -364,7 +364,7 @@ export default function Home() {
             Graphiques
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            Dernières activités de votre boutique.
+            Représentation schématique de vos données analytiques.
           </p>
         </div>
         {promotionRanking ? (
