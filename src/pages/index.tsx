@@ -1,5 +1,6 @@
 import Navbar from '@/components/layout/Navbar';
 import Sidebar from '@/components/layout/Sidebar';
+import CardsList from '@/components/list/CardsList';
 import { BarChart } from '@/components/statistics/chart';
 import {
   IAffluence,
@@ -15,7 +16,8 @@ Chart.register(CategoryScale);
 
 function StatCard({ label, stat, total }) {
   let percentage = 0;
-  if (total && total != 0 && stat != 0) percentage = (stat * 100) / total;
+  if (total && total != 0 && stat != 0)
+    percentage = Math.round((stat * 100) / total);
 
   return (
     <div className="px-4 py-5 sm:p-6 border-t">
@@ -25,7 +27,7 @@ function StatCard({ label, stat, total }) {
           {stat}
           {total != null && (
             <span className="ml-2 text-sm font-medium text-gray-500">
-              de {total}
+              sur {total}
             </span>
           )}
         </div>
@@ -274,7 +276,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      <div className="p-8 ">
+      <div className="border-b p-12">
         <h1 className="text-xl font-semibold leading-6 text-gray-900">
           Données analytiques
         </h1>
@@ -282,7 +284,35 @@ export default function Home() {
           Statistiques et tendances de votre boutique.
         </p>
       </div>
-      <div className="grid border-b md:grid-cols-2 xl:grid-cols-3 divide-x bg-gray-50">
+      <header className="border-b border-white/5 bg-gray-50">
+        <nav className="flex py-4 border-b px-12">
+          <ul
+            role="list"
+            className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
+          >
+            <li>
+              <a href="#stats" className="hover:text-fidgreen">
+                Chiffres clés
+              </a>
+            </li>
+            <li>
+              <a href="#charts" className="hover:text-fidgreen">
+                Graphes
+              </a>
+            </li>
+            <li>
+              <a href="#activity" className="hover:text-fidgreen">
+                Activité Récente
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div
+        id="stats"
+        className="my-16 grid border-b md:grid-cols-2 xl:grid-cols-3 divide-x bg-gray-50"
+      >
         {/* Affluence today */}
         <StatCard
           label="Nombre De Fréquentations Aujourd'hui"
@@ -321,39 +351,44 @@ export default function Home() {
           total={clientCount ? clientCount.value : 0}
         />
       </div>
-      {promotionRanking ? (
-        <div className="w-2/3 p-8 justify-center mx-auto text-gray-600 ">
-          <h3 className="text-lg font-normal text-gray-900">
-            Classement Des Promotions Par Popularité
-          </h3>
-          <div className="">
+      <div id="charts">
+        {promotionRanking ? (
+          <div className="w-2/3 p-8 justify-center mx-auto text-gray-600 ">
+            <h3 className="text-lg font-normal text-gray-900">
+              Classement Des Promotions Par Popularité
+            </h3>
             <div className="">
-              <BarChart
-                chartData={{
-                  labels: promotionRanking.promotionNames,
-                  datasets: [
-                    {
-                      label: 'Nombre de fréquentations',
-                      data: promotionRanking.values,
-                      borderColor: ['rgba(0,0,0,1)'],
-                      backgroundColor: [
-                        '#55dde0',
-                        '#33658A',
-                        '#2F4858',
-                        '#F6AE2D',
-                        '#F26419',
-                        '#14BDEB',
-                        '#949D6A',
-                      ],
-                      borderWidth: 1,
-                    },
-                  ],
-                }}
-              />
+              <div className="">
+                <BarChart
+                  chartData={{
+                    labels: promotionRanking.promotionNames,
+                    datasets: [
+                      {
+                        label: 'Nombre de fréquentations',
+                        data: promotionRanking.values,
+                        borderColor: ['rgba(0,0,0,1)'],
+                        backgroundColor: [
+                          '#55dde0',
+                          '#33658A',
+                          '#2F4858',
+                          '#F6AE2D',
+                          '#F26419',
+                          '#14BDEB',
+                          '#949D6A',
+                        ],
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
+      <div id="activity" className="p-8">
+        <CardsList />
+      </div>
     </main>
   );
 }

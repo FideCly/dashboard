@@ -1,3 +1,5 @@
+import { IPromotion } from './Promotions';
+
 export interface IBalanceCreatePayload {
   promotionId: number;
   cardId: number;
@@ -16,4 +18,6 @@ export interface IBalance {
   cardId: number;
   counter?: number;
   isActive?: boolean;
+  promotion: IPromotion;
+  updatedAt: Date;
 }
