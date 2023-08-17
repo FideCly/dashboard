@@ -19,13 +19,10 @@ export const CampaignCreateForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
-  // get all shop's promotions
   const [promotions, setPromotions] = useState<IPromotion[]>([]);
-  const [value, setValue] = useState(
-    '<p>The quick brown fox jumps over the lazy dog</p>',
-  );
-
+  const [value, setValue] = useState('');
   const router = useRouter();
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -39,32 +36,31 @@ export const CampaignCreateForm: React.FC = () => {
       .catch((error) => console.error(error));
     return user;
   };
-  useEffect(() => {
-    const loadCampaigns = async (): Promise<void> => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/promotion`,
-          options,
-        );
-        const data = await response.json();
-        setPromotions(data);
-      } catch (error) {
-        console.error(error);
-      }
+
+  const loadCampaigns = async (): Promise<void> => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-    loadCampaigns();
-  }, []);
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
       try {
+        console.log(data);
         data.htmlData = value;
         const toastid = toast.loading('Vérification en cours...');
         const response = await fetch(`/api/campaign`, {
@@ -86,6 +82,7 @@ export const CampaignCreateForm: React.FC = () => {
             autoClose: 3000,
             isLoading: false,
           });
+          console.log(response);
         } else {
           // reload the page to get the new campaign
           router.reload();
@@ -105,6 +102,10 @@ export const CampaignCreateForm: React.FC = () => {
     },
     [],
   );
+
+  useEffect(() => {
+    loadCampaigns();
+  }, []);
 
   return (
     <form

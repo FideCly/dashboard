@@ -5,13 +5,15 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
+import { IPromotion } from '@/models/Promotions';
 
 export default function CampaignList() {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  // get campaigns by campaign id
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -26,28 +28,50 @@ export default function CampaignList() {
     return user;
   };
 
-  useEffect(() => {
-    const loadCampaigns = async (): Promise<void> => {
-      setIsLoading(true);
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/campaigns`,
-          options,
-        );
-        const data = await response.json();
-        setCampaigns(data);
-      } catch (error) {
-        setError(true);
-      }
-      setIsLoading(false);
+  const loadPromotions = async (): Promise<void> => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadCampaigns = async (): Promise<void> => {
+    setIsLoading(true);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/campaigns`,
+        options,
+      );
+      const data = await response.json();
+      setCampaigns(data);
+    } catch (error) {
+      setError(true);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    loadPromotions();
     loadCampaigns();
   }, []);
 
@@ -176,7 +200,10 @@ export default function CampaignList() {
                       {campaign.subject}
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {campaign.promotionId}
+                      {
+                        promotions.find((p) => p.id == campaign.promotionId)
+                          .name
+                      }
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button
