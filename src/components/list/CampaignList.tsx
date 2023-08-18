@@ -2,7 +2,7 @@ import { ICampaign } from '@/models/Campaign';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default function CampaignList({
   campaigns,
@@ -161,17 +161,17 @@ export default function CampaignList({
                     <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
                       {campaign.subject}
                     </td>
-                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
+                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3 capitalize">
                       {campaign.updatedAt
-                        ? moment(campaign.updatedAt).format(
-                            'dddd, MMMM Do YYYY, h:mm:ss a',
-                          )
+                        ? DateTime.fromISO(campaign.updatedAt)
+                            .setLocale('fr')
+                            .toFormat('DDDD t')
                         : ''}
                     </td>
-                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
-                      {moment(campaign.createdAt).format(
-                        'dddd, MMMM Do YYYY, h:mm:ss a',
-                      )}
+                    <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3 capitalize">
+                      {DateTime.fromISO(campaign.createdAt)
+                        .setLocale('fr')
+                        .toFormat('DDDD t')}
                     </td>
                     <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                       <button

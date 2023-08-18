@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IUser } from '@/models/User';
-import moment from 'moment';
 import { errorCode } from '@/translation';
+import { DateTime } from 'luxon';
 
 export default function CardsList() {
   const [balances, setBalances] = useState<any[]>([]);
@@ -180,10 +180,10 @@ export default function CardsList() {
                           </span>
                         </td>
                       )}
-                      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {moment(balance.updatedAt).format(
-                          'dddd, MMMM Do YYYY, h:mm:ss a',
-                        )}
+                      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                        {DateTime.fromISO(balance.updatedAt)
+                          .setLocale('fr')
+                          .toFormat('DDDD t')}
                       </td>
                     </tr>
                   ))}

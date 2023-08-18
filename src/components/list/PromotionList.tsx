@@ -1,8 +1,8 @@
 import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
-import moment from 'moment';
 import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
+import { DateTime } from 'luxon';
 
 export default function PromotionList({
   promotions,
@@ -170,11 +170,15 @@ export default function PromotionList({
                           <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {promotion.checkoutLimit}
                           </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.startAt).format('DD/MM/YYYY')}
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                            {DateTime.fromISO(promotion.startAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
                           </td>
-                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.endAt).format('DD/MM/YYYY')}
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                            {DateTime.fromISO(promotion.endAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
                           </td>
                           <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
@@ -223,10 +227,14 @@ export default function PromotionList({
                             {promotion.checkoutLimit}
                           </td>
                           <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.startAt).format('DD/MM/YYYY')}
+                            {DateTime.fromISO(promotion.startAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
                           </td>
                           <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            {moment(promotion.endAt).format('DD/MM/YYYY')}
+                            {DateTime.fromISO(promotion.endAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
                           </td>
                           <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
                             <Link
