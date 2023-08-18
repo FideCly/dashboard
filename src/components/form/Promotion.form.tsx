@@ -34,7 +34,11 @@ export const PromotionCreateForm = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...data, isActive: isActive }),
+        body: JSON.stringify({
+          ...data,
+          checkoutLimit: +data.checkoutLimit,
+          isActive: isActive,
+        }),
       });
       // read the response body
       const body = await response.json();
@@ -156,7 +160,10 @@ export const PromotionCreateForm = ({
         <input
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
-            valueAsNumber: true,
+            pattern: {
+              value: /^\d*$/,
+              message: 'La limite de passage doit être un nombre',
+            },
             min: {
               value: 1,
               message: 'La limite de passage doit être supérieure à 0',
@@ -241,7 +248,11 @@ export const PromotionUpdateForm: React.FC = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...data, isActive: isActive }),
+          body: JSON.stringify({
+            ...data,
+            checkoutLimit: +data.checkoutLimit,
+            isActive: isActive,
+          }),
         });
         // read the response body
         const body = await response.json();
@@ -368,10 +379,13 @@ export const PromotionUpdateForm: React.FC = () => {
         <input
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
-            valueAsNumber: true,
             min: {
               value: 1,
               message: 'La limite de passage doit être supérieure à 0',
+            },
+            pattern: {
+              value: /^\d*$/,
+              message: 'La limite de passage doit être un nombre',
             },
           })}
           type="text"
