@@ -73,11 +73,13 @@ export default function ScannerForm() {
       body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
     });
     const body = await response.json();
+    console.log(response);
     if (response.status >= 400) {
       toast.update(toastId, {
         render: `${
           errorCode[response.status][body.message] ??
-          errorCode[response.status][response.statusText]
+          (errorCode[response.status][response.statusText] ||
+            'Une erreur est survenue')
         }`,
         type: 'error',
         isLoading: false,
