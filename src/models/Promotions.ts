@@ -16,8 +16,8 @@ export interface IPromotionUpdatePayload {
 }
 
 export interface IPromotion {
-  id: number;
-  shopId: number;
+  id?: number;
+  shopId?: number;
   name: string;
   description?: string;
   startAt?: Date;

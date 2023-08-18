@@ -13,50 +13,19 @@ import { useRouter } from 'next/router';
 import { errorCode } from '@/translation';
 import { Editor } from '@tinymce/tinymce-react';
 
-export const CampaignCreateForm: React.FC = () => {
+export const CampaignCreateForm = ({
+  setShown,
+  setCampaigns,
+  campaigns,
+  promotions,
+}) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<ICampaignCreatePayload>({ mode: 'onChange' });
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [editorContent, setEditorContent] = useState('');
-  const router = useRouter();
-
-  const loadUser = async (): Promise<IUser> => {
-    const userUuid = localStorage.getItem('userUuid');
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const user = fetch(`/api/user/${userUuid}`, options)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-    return user;
-  };
-
-  const loadCampaigns = async (): Promise<void> => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const user = await loadUser();
-    try {
-      const response = await fetch(
-        `/api/shop/${user.shop.id}/promotion`,
-        options,
-      );
-      const data = await response.json();
-      setPromotions(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const onSubmit: SubmitHandler<ICampaignCreatePayload> = useCallback(
     async (data) => {
@@ -95,7 +64,9 @@ export const CampaignCreateForm: React.FC = () => {
             autoClose: 3000,
             isLoading: false,
           });
-          router.reload();
+
+          setShown(false);
+          setCampaigns([body, ...campaigns]);
         }
       } catch (error) {
         console.error(error);
@@ -103,10 +74,6 @@ export const CampaignCreateForm: React.FC = () => {
     },
     [],
   );
-
-  useEffect(() => {
-    loadCampaigns();
-  }, []);
 
   return (
     <form
@@ -191,10 +158,12 @@ export const CampaignUpdateForm: React.FC = () => {
     setValue,
   } = useForm<ICampaignUpdatePayload>({ mode: 'onChange' });
 
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
-  const [message, setMessage] = useState('');
   const router = useRouter();
   const id = Number(router.query.id);
+
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [message, setMessage] = useState('');
+
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');
     const options = {
@@ -208,50 +177,53 @@ export const CampaignUpdateForm: React.FC = () => {
       .catch((error) => console.error(error));
     return user;
   };
-  useEffect(() => {
-    const loadCampaigns = async (): Promise<void> => {
-      const options = {
+
+  const loadPromotions = async (): Promise<void> => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getCampaign = async (): Promise<void> => {
+    try {
+      const response = await fetch(`/api/campaign/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/promotion`,
-          options,
-        );
-        const data = await response.json();
-        setPromotions(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const getCampaign = async (): Promise<void> => {
-      try {
-        const response = await fetch(`/api/campaign/${id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json(); // Extract JSON data from response
-        setValue('id', data.id);
-        setValue('shopId', data.shopId);
-        setValue('subject', data.subject);
-        setValue('textData', data.textData);
-        setValue('promotionId', data.promotionId);
-        setValue('htmlData', data.htmlData || '');
-        setMessage(data.htmlData || '');
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      });
+      const data = await response.json(); // Extract JSON data from response
+      setValue('id', data.id);
+      setValue('shopId', data.shopId);
+      setValue('subject', data.subject);
+      setValue('textData', data.textData);
+      setValue('promotionId', data.promotionId);
+      setValue('htmlData', data.htmlData || '');
+      setMessage(data.htmlData || '');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     if (id) {
       getCampaign();
     }
-    loadCampaigns();
+    loadPromotions();
   }, []);
 
   const onSubmit: SubmitHandler<ICampaignUpdatePayload> = useCallback(

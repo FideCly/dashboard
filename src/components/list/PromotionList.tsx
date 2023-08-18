@@ -1,55 +1,15 @@
-import { Fragment, useEffect, useState } from 'react';
-import { IPromotion } from '@/models/Promotions';
-import { IUser } from '@/models/User';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
 
-export default function PromotionList() {
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const loadUser = async (): Promise<IUser> => {
-    const userUuid = localStorage.getItem('userUuid');
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const user = fetch(`/api/user/${userUuid}`, options)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-    return user;
-  };
-
-  const loadPromotions = async (): Promise<void> => {
-    setIsLoading(true);
-
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const user = await loadUser();
-    try {
-      const response = await fetch(
-        `/api/shop/${user.shop.id}/promotion`,
-        options,
-      );
-      const data = await response.json();
-      setPromotions(data);
-    } catch (error) {
-      console.error(error);
-      setError(true);
-    }
-
-    setIsLoading(false);
-  };
-
+export default function PromotionList({
+  promotions,
+  setPromotions,
+  isLoading,
+  error,
+}) {
   const deletePromotion = async (id: number): Promise<void> => {
     const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/promotions/${id}`, {
@@ -82,10 +42,6 @@ export default function PromotionList() {
       setPromotions(promotions.filter((promotion) => promotion.id !== id));
     }
   };
-
-  useEffect(() => {
-    loadPromotions();
-  }, []);
 
   return (
     <div className="flow-root mt-8 rounded-lg bg-fidbg">
