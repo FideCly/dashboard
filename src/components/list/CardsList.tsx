@@ -42,7 +42,12 @@ export default function CardsList() {
         });
       });
 
-      list.sort((a, b) => a.updatedAt - b.updatedAt);
+      list.sort((a, b) =>
+        new Date(b.updatedAt).getTime() > new Date(a.updatedAt).getTime()
+          ? 1
+          : -1,
+      );
+      console.log(list);
       setBalances(list);
     } catch (error) {
       console.error(error);
