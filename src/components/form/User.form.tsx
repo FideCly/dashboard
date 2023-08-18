@@ -114,7 +114,7 @@ export const UserUpdateForm: React.FC = () => {
           name="email"
           id="email"
           disabled
-          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
+          className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
       </div>
       <div className="flex flex-col">
@@ -157,10 +157,12 @@ export const UserUpdateForm: React.FC = () => {
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           {...register('sexe', { required: true })}
         >
-          <option value="Male" selected>
+          <option value="Male" selected={getValues('sexe') === 'Male'}>
             Homme
           </option>
-          <option value="Female">Femme</option>
+          <option value="Female" selected={getValues('sexe') === 'Female'}>
+            Femme
+          </option>
         </select>
         {errors.sexe && (
           <span className="text-sm text-red-500">Ce champ est requis</span>
