@@ -21,39 +21,38 @@ export default function CardsList() {
       .catch((error) => console.error(error));
     return user;
   };
-  useEffect(() => {
-    const loadCards = async (): Promise<void> => {
-      setIsLoading(true);
 
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const user = await loadUser();
-      try {
-        const response = await fetch(
-          `/api/shop/${user.shop.id}/cards`,
-          options,
-        );
-        const data = await response.json();
-        const list = [];
-        data.forEach((c) => {
-          c.balances.forEach((b) => {
-            list.push({ ...b, username: c.user.username });
-          });
-        });
+  const loadCards = async (): Promise<void> => {
+    setIsLoading(true);
+    const user = await loadUser();
 
-        list.sort((a, b) => a.updatedAt - b.updatedAt);
-        setBalances(list);
-      } catch (error) {
-        console.error(error);
-        setError(true);
-      }
-
-      setIsLoading(false);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
+    try {
+      const response = await fetch(`/api/shop/${user.shop.id}/cards`, options);
+      const data = await response.json();
+      const list = [];
+      data.forEach((c) => {
+        c.balances.forEach((b) => {
+          list.push({ ...b, username: c.user.username });
+        });
+      });
+
+      list.sort((a, b) => a.updatedAt - b.updatedAt);
+      setBalances(list);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
     loadCards();
   }, []);
 
@@ -107,16 +106,35 @@ export default function CardsList() {
               </thead>
               <tbody className="bg-fidbg">
                 {isLoading && (
-                  <tr>
-                    <td
-                      className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
-                      colSpan={7}
-                    >
-                      Chargement de l'activité
+                  <tr className="border-t border-gray-300">
+                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
+                      <div className="animate-pulse flex space-x-4">
+                        <div className="h-2 bg-gray-200 rounded w-full"></div>
+                      </div>
+                    </td>
+                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+                      <div className="animate-pulse flex space-x-4 w-full">
+                        <div className="h-2 bg-gray-200 rounded w-full"></div>
+                      </div>
+                    </td>
+                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+                      <div className="animate-pulse flex space-x-4 w-full">
+                        <div className="h-2 bg-gray-200 rounded w-full"></div>
+                      </div>
+                    </td>
+                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+                      <div className="animate-pulse flex space-x-4 w-full">
+                        <div className="h-2 bg-gray-200 rounded w-full"></div>
+                      </div>
+                    </td>
+                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+                      <div className="animate-pulse flex space-x-4 w-full">
+                        <div className="h-2 bg-gray-200 rounded w-full"></div>
+                      </div>
                     </td>
                   </tr>
                 )}
-                {error && (
+                {!isLoading && error && (
                   <tr>
                     <td
                       className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3"
@@ -126,7 +144,8 @@ export default function CardsList() {
                     </td>
                   </tr>
                 )}
-                {!error &&
+                {!isLoading &&
+                  !error &&
                   balances.map((balance) => (
                     <tr
                       key={balance.username + balance.updatedAt}
@@ -136,7 +155,9 @@ export default function CardsList() {
                         {balance.username}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {balance.promotion?.description}
+                        {balance.promotion
+                          ? balance.promotion.name
+                          : 'Promotion supprimée'}
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {balance.counter}
@@ -149,7 +170,7 @@ export default function CardsList() {
                         </td>
                       ) : (
                         <td className="whitespace-nowrap px-3 py-4">
-                          <span className="whitespace-nowrap inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/20">
+                          <span className="whitespace-nowrap inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
                             {errorCode[200]['Balance updated']}
                           </span>
                         </td>

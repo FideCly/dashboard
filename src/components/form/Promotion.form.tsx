@@ -5,7 +5,7 @@ import type {
   IPromotion,
 } from '@/models/Promotions';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Label } from 'flowbite-react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import moment from 'moment';
@@ -64,7 +64,7 @@ export const PromotionCreateForm: React.FC = () => {
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
-        <TextInput
+        <input
           {...register('name', {
             required: 'Le nom de la promotion est requis',
             maxLength: {
@@ -73,7 +73,7 @@ export const PromotionCreateForm: React.FC = () => {
             },
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="name"
           maxLength={50}
           placeholder="Ma promotion"
@@ -86,12 +86,12 @@ export const PromotionCreateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="description">Description</Label>
-        <TextInput
+        <input
           {...register('description', {
             required: 'La description est requise',
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="description"
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
@@ -104,7 +104,7 @@ export const PromotionCreateForm: React.FC = () => {
       <div className="flex justify-center space-x-4">
         <div className="flex-1">
           <Label htmlFor="startAt">Date de début</Label>
-          <TextInput
+          <input
             {...register('startAt', {
               maxLength: {
                 value: 50,
@@ -112,7 +112,7 @@ export const PromotionCreateForm: React.FC = () => {
               },
             })}
             type="date"
-            className=""
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
             id="startAt"
             maxLength={50}
             placeholder={new Date().toDateString()}
@@ -125,7 +125,7 @@ export const PromotionCreateForm: React.FC = () => {
         </div>
         <div className="flex-1">
           <Label htmlFor="endAt">Date de fin</Label>
-          <TextInput
+          <input
             {...register('endAt', {
               required: 'La date de fin est requise',
               maxLength: {
@@ -134,7 +134,7 @@ export const PromotionCreateForm: React.FC = () => {
               },
             })}
             type="date"
-            className=""
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
             id="endAt"
             maxLength={50}
             placeholder="endAt"
@@ -148,7 +148,7 @@ export const PromotionCreateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="checkoutLimit">Limite de passage</Label>
-        <TextInput
+        <input
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
             valueAsNumber: true,
@@ -158,7 +158,7 @@ export const PromotionCreateForm: React.FC = () => {
             },
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="checkoutLimit"
           maxLength={50}
           min={1}
@@ -273,7 +273,7 @@ export const PromotionUpdateForm: React.FC = () => {
     >
       <div className="">
         <Label htmlFor="name">Nom</Label>
-        <TextInput
+        <input
           {...register('name', {
             required: 'Le nom de la promotion est requis',
             maxLength: {
@@ -282,7 +282,7 @@ export const PromotionUpdateForm: React.FC = () => {
             },
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="name"
           maxLength={50}
           placeholder="Ma promotion"
@@ -295,12 +295,12 @@ export const PromotionUpdateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="description">Description</Label>
-        <TextInput
+        <input
           {...register('description', {
             required: 'La description est requise',
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="description"
           placeholder="Réduction de 50% sur le deuxième produit acheté"
         />
@@ -313,7 +313,7 @@ export const PromotionUpdateForm: React.FC = () => {
       <div className="flex justify-center space-x-4">
         <div className="flex-1">
           <Label htmlFor="startAt">Date de début</Label>
-          <TextInput
+          <input
             {...register('startAt', {
               required: 'La date de début est requise',
               maxLength: {
@@ -322,7 +322,7 @@ export const PromotionUpdateForm: React.FC = () => {
               },
             })}
             type="date"
-            className=""
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
             id="startAt"
             maxLength={50}
             placeholder={new Date().toDateString()}
@@ -335,7 +335,7 @@ export const PromotionUpdateForm: React.FC = () => {
         </div>
         <div className="flex-1">
           <Label htmlFor="endAt">Date de fin</Label>
-          <TextInput
+          <input
             {...register('endAt', {
               maxLength: {
                 value: 50,
@@ -343,7 +343,7 @@ export const PromotionUpdateForm: React.FC = () => {
               },
             })}
             type="date"
-            className=""
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
             id="endAt"
             maxLength={50}
             placeholder="endAt"
@@ -357,7 +357,7 @@ export const PromotionUpdateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="checkoutLimit">Limite de passage</Label>
-        <TextInput
+        <input
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
             valueAsNumber: true,
@@ -367,7 +367,7 @@ export const PromotionUpdateForm: React.FC = () => {
             },
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="checkoutLimit"
           maxLength={50}
           min={1}
