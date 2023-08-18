@@ -26,7 +26,8 @@ export const PromotionCreateForm = ({
     async (data) => {
       const toastid = toast.loading('Vérification en cours...');
       const isActive: boolean =
-        data.startAt <= new Date() && data.endAt >= new Date();
+        new Date(data.startAt).toISOString() <= new Date().toISOString() &&
+        new Date(data.endAt).toISOString() >= new Date().toISOString();
 
       const response = await fetch('/api/promotions', {
         method: 'POST',
