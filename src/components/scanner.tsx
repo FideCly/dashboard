@@ -1,5 +1,5 @@
 import { IScanner } from '@/models/scanner';
-import { Button, Select } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 
 import React, { useCallback } from 'react';
 import { useState } from 'react';
@@ -134,14 +134,17 @@ export default function ScannerForm() {
         </h1>
 
         <div className="grid items-center content-center self-center w-full h-full gap-8">
-          <Select
-            className=""
+          <select
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
             name="promotion"
             id="promotion"
             {...register('promotionId', {
               required: 'Une promotion est requise',
             })}
           >
+            <option key="" value="">
+              -- Choisissez une option --
+            </option>
             {promotion.map((item: any) => {
               return (
                 <option key={item.id} value={item.id}>
@@ -149,7 +152,7 @@ export default function ScannerForm() {
                 </option>
               );
             })}
-          </Select>
+          </select>
           {errors.promotionId && (
             <span className="text-red-600 text-sm">
               {errors.promotionId.message.toString()}

@@ -1,5 +1,5 @@
 import { IUser, IUserUpdatePayload } from '@/models/User';
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Label } from 'flowbite-react';
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -94,11 +94,12 @@ export const UserUpdateForm: React.FC = () => {
           <Label htmlFor="zipCode" className="">
             Photo (optionnel)
           </Label>
-          <TextInput
+          <input
             {...register('pictureUrl')}
             type="text"
             id="pictureUrl"
             placeholder="https://example.com/picture"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
         </div>
       </div>
@@ -108,12 +109,12 @@ export const UserUpdateForm: React.FC = () => {
           Email
         </Label>
         <input
+          {...register('email')}
           type="text"
           name="email"
           id="email"
           disabled
-          className="p-2 border bg-gray-100 border-gray-300 rounded-md"
-          {...register('email')}
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
       </div>
       <div className="flex flex-col">
@@ -121,11 +122,11 @@ export const UserUpdateForm: React.FC = () => {
           Nom d'utilisateur
         </Label>
         <input
+          {...register('username', { required: true })}
           type="text"
           name="username"
           id="username"
-          className="p-2 border border-gray-300 rounded-md"
-          {...register('username', { required: true })}
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.username && (
           <span className="text-sm text-red-500">Ce champ est requis</span>
@@ -136,11 +137,11 @@ export const UserUpdateForm: React.FC = () => {
           Date de naissance
         </Label>
         <input
+          {...register('birthday', { required: true })}
           type="date"
           name="birthday"
           id="birthday"
-          className="p-2 border border-gray-300 rounded-md"
-          {...register('birthday', { required: true })}
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.birthday && (
           <span className="text-sm text-red-500">Ce champ est requis</span>
@@ -153,10 +154,12 @@ export const UserUpdateForm: React.FC = () => {
         <select
           name="sexe"
           id="sexe"
-          className="p-2 border border-gray-300 rounded-md"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           {...register('sexe', { required: true })}
         >
-          <option value="Male">Homme</option>
+          <option value="Male" selected>
+            Homme
+          </option>
           <option value="Female">Femme</option>
         </select>
         {errors.sexe && (

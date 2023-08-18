@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Label, Select, TextInput } from 'flowbite-react';
+import { Button, Label } from 'flowbite-react';
 import {
   ICampaignCreatePayload,
   ICampaignUpdatePayload,
@@ -116,7 +116,7 @@ export const CampaignCreateForm: React.FC = () => {
     >
       <div className="">
         <Label htmlFor="subject">Sujet</Label>
-        <TextInput
+        <input
           {...register('subject', {
             required: 'Le nom de la campagne est requise',
             maxLength: {
@@ -129,6 +129,7 @@ export const CampaignCreateForm: React.FC = () => {
           id="subject"
           maxLength={200}
           placeholder="subject"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.subject && (
           <span className="text-sm text-red-600">
@@ -149,19 +150,23 @@ export const CampaignCreateForm: React.FC = () => {
       </div>
       <div>
         <Label htmlFor="promotionId">Promotion liée</Label>
-        <Select
+        <select
           {...register('promotionId', {
             required: 'La promotion liée est requise',
           })}
           id="promotionId"
           placeholder="promotionId"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         >
+          <option key="" value="">
+            -- Choisissez une option --
+          </option>
           {promotions?.map((promotion) => (
             <option key={promotion.id} value={promotion.id}>
               {promotion.name}
             </option>
           ))}
-        </Select>
+        </select>
         {errors.promotionId && (
           <span className="text-sm text-red-600">
             {errors.promotionId.message.toString()}
@@ -300,7 +305,7 @@ export const CampaignUpdateForm: React.FC = () => {
     >
       <div className="">
         <Label htmlFor="subject">Sujet</Label>
-        <TextInput
+        <input
           {...register('subject', {
             required: 'Le sujet de la campagne est requise',
             maxLength: {
@@ -310,7 +315,7 @@ export const CampaignUpdateForm: React.FC = () => {
             },
           })}
           type="text"
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="subject"
           maxLength={200}
           placeholder="subject"
@@ -334,20 +339,23 @@ export const CampaignUpdateForm: React.FC = () => {
       </div>
       <div className="">
         <Label htmlFor="promotionId">Promotion liée</Label>
-        <Select
+        <select
           {...register('promotionId', {
             required: 'La promotion liée est requise',
           })}
-          className=""
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="promotionId"
           placeholder="promotionId"
         >
+          <option key="" value="">
+            -- Choisissez une option --
+          </option>
           {promotions?.map((promotion) => (
             <option key={promotion.id} value={promotion.id}>
               {promotion.name}
             </option>
           ))}
-        </Select>
+        </select>
         {errors.promotionId && (
           <span className="text-sm text-red-600">
             {errors.promotionId.message.toString()}

@@ -13,52 +13,68 @@ import Chart from 'chart.js/auto';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-function StatCard({ label, stat, total }) {
+function StatCard({ label, stat, total, isLoading }) {
   let percentage = 0;
   if (total && total != 0 && stat != 0)
     percentage = Math.round((stat * 100) / total);
 
   return (
     <div className="px-4 py-5 sm:p-6 border-t">
-      <dt className="text-base font-normal text-gray-900">{label}</dt>
-      <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-        <div className="flex items-baseline text-2xl font-semibold text-fidyellow">
-          {stat}
-          {total != null && (
-            <span className="ml-2 text-sm font-medium text-gray-500">
-              sur {total}
-            </span>
-          )}
-        </div>
-        {total != null && (
-          <div
-            className={
-              'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0 ' +
-              (percentage > 0
-                ? 'bg-green-100 text-green-800'
-                : 'bg-gray-100 text-gray-800')
-            }
-          >
-            <svg
-              className={
-                '-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center ' +
-                (percentage > 0 ? 'text-green-500' : 'text-gray-500')
-              }
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="sr-only"> A augmenté de </span>
-            {percentage}%
+      {(!isLoading && (
+        <>
+          <dt className="text-base font-normal text-gray-900">{label}</dt>
+          <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
+            <div className="flex items-baseline text-2xl font-semibold text-fidyellow">
+              {stat}
+              {total != null && (
+                <span className="ml-2 text-sm font-medium text-gray-500">
+                  sur {total}
+                </span>
+              )}
+            </div>
+            {total != null && (
+              <div
+                className={
+                  'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0 ' +
+                  (percentage > 0
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-gray-100 text-gray-800')
+                }
+              >
+                <svg
+                  className={
+                    '-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center ' +
+                    (percentage > 0 ? 'text-green-500' : 'text-gray-500')
+                  }
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="sr-only"> A augmenté de </span>
+                {percentage}%
+              </div>
+            )}
+          </dd>
+        </>
+      )) || (
+        <div className="animate-pulse flex space-x-4">
+          <div className="flex-1 space-y-6 py-1">
+            <div className="h-2 bg-gray-200 rounded"></div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-3 gap-4">
+                <div className="h-2 bg-gray-200 rounded col-span-2"></div>
+                <div className="h-2 bg-gray-200 rounded col-span-1"></div>
+              </div>
+            </div>
           </div>
-        )}
-      </dd>
+        </div>
+      )}
     </div>
   );
 }
@@ -84,6 +100,8 @@ export default function Home() {
   const [clientCountThisYear, setClientCountThisYear] =
     useState<IClientCount>();
   const [promotionRanking, setPromotionRanking] = useState<IPromotionRanking>();
+  const [isLoading, setIsLoading] = useState(true);
+
   const router = useRouter();
 
   const loadUser = async (): Promise<IUser> => {
@@ -263,6 +281,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     Chart.register(CategoryScale);
     checkShop();
     getClientCount();
@@ -272,6 +291,7 @@ export default function Home() {
     getAffluence();
     getAffluenceThisMonth();
     getAffluenceToday();
+    setIsLoading(false);
   }, []);
 
   return (
@@ -324,24 +344,28 @@ export default function Home() {
             label="Nombre de fréquentations aujourd'hui"
             stat={affluenceToday ? affluenceToday.value : 0}
             total={affluence ? affluence.value : 0}
+            isLoading={isLoading}
           />
           {/* Affluence this month */}
           <StatCard
             label="Nombre de fréquentations sur ce mois"
             stat={affluenceThisMonth ? affluenceThisMonth.value : 0}
             total={affluence ? affluence.value : 0}
+            isLoading={isLoading}
           />
           {/* Affluence this year */}
           <StatCard
             label="Nombre de fréquentations sur cette année"
             stat={affluence ? affluence.value : 0}
             total={null}
+            isLoading={isLoading}
           />
           {/* Clients count */}
           <StatCard
             label="Nombre total de clients"
             stat={clientCount ? clientCount.value : 0}
             total={null}
+            isLoading={isLoading}
           />
 
           {/* Clients count this month */}
@@ -349,12 +373,14 @@ export default function Home() {
             label="Nouveaux clients ce mois"
             stat={clientCountThisMonth ? clientCountThisMonth.value : 0}
             total={clientCount ? clientCount.value : 0}
+            isLoading={isLoading}
           />
           {/* Clients count this year */}
           <StatCard
             label="Nouveaux clients cette année"
             stat={clientCountThisYear ? clientCountThisYear.value : 0}
             total={clientCount ? clientCount.value : 0}
+            isLoading={isLoading}
           />
         </div>
       </div>

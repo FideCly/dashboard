@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IShopCreatePayload, IShopUpdatePayload } from '@/models/Shop';
-import { Button, Label, Select, TextInput } from 'flowbite-react';
+import { Button, Label } from 'flowbite-react';
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -92,13 +92,14 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="companyName" className="">
             Nom du shop
           </Label>
-          <TextInput
+          <input
             {...register('companyName', {
               required: 'Le nom du shop est requis',
             })}
             type="text"
             id="companyName"
             placeholder="Nom du shop"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.companyName && (
             <span className="text-sm text-red-600">
@@ -111,17 +112,20 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="activity" className="">
             Activité du shop
           </Label>
-          <Select
+          <select
             {...register('activity', {
               required: "L'activité du shop est requise",
             })}
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           >
-            <option value="Restauration">Restauration</option>
+            <option value="Restauration" selected>
+              Restauration
+            </option>
             <option value="Supply">Alimentation</option>
             <option value="Entertainment">Divertissement</option>
             <option value="Store">Magasin</option>
             <option value="Service">Service</option>
-          </Select>
+          </select>
           {errors.activity && (
             <span className="text-sm text-red-600">
               {errors.activity.message.toString()}
@@ -133,7 +137,7 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="email" className="">
             Email
           </Label>
-          <TextInput
+          <input
             {...register('email', {
               required: "L'email est requis",
               pattern: {
@@ -145,6 +149,7 @@ export const ShopCreateForm: React.FC = () => {
             type="text"
             id="email"
             placeholder="hello@fidelcly.com"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.email && (
             <span className="text-sm text-red-600">
@@ -157,7 +162,7 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="phone" className="">
             Numéro de téléphone
           </Label>
-          <TextInput
+          <input
             {...register('phone', {
               required: 'Le numéro de téléphone est requis',
               pattern: {
@@ -177,6 +182,7 @@ export const ShopCreateForm: React.FC = () => {
             id="phone"
             maxLength={10}
             placeholder="0XXXXXXXXX"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.phone && (
             <span className="text-sm text-red-600">
@@ -189,7 +195,7 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="siren" className="">
             Siren
           </Label>
-          <TextInput
+          <input
             {...register('siren', {
               required: 'Le siren est requis',
               pattern: {
@@ -210,6 +216,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength={9}
             minLength={9}
             placeholder="XXXXXXXXX"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.siren && (
             <span className="text-sm text-red-600">
@@ -222,7 +229,7 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="siret" className="">
             Siret
           </Label>
-          <TextInput
+          <input
             {...register('siret', {
               required: 'Le siret est requis',
               maxLength: {
@@ -239,6 +246,7 @@ export const ShopCreateForm: React.FC = () => {
             maxLength={14}
             minLength={14}
             placeholder="XXXXXXXXXXXXXX"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.siret && (
             <span className="text-sm text-red-600">
@@ -271,13 +279,14 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="city" className="">
             Ville
           </Label>
-          <TextInput
+          <input
             {...register('city', {
               required: 'La ville est requise',
             })}
             type="text"
             id="city"
             placeholder="Paris"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.city && (
             <span className="text-sm text-red-600">
@@ -290,7 +299,7 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="zipCode" className="">
             Code Postal
           </Label>
-          <TextInput
+          <input
             {...register('zipCode', {
               required: 'Le code postal est requis',
               pattern: {
@@ -312,6 +321,7 @@ export const ShopCreateForm: React.FC = () => {
             minLength={5}
             max={99999}
             placeholder="XXXXX"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
           {errors.zipCode && (
             <span className="text-sm text-red-600">
@@ -323,11 +333,12 @@ export const ShopCreateForm: React.FC = () => {
           <Label htmlFor="zipCode" className="">
             Logo (optionnel)
           </Label>
-          <TextInput
+          <input
             {...register('pictureUrl')}
             type="text"
             id="pictureUrl"
             placeholder="https://example.com/picture"
+            className="bg-fidbg border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
         </div>
       </div>
@@ -463,11 +474,12 @@ export const ShopUpdateForm: React.FC = () => {
           <Label htmlFor="zipCode" className="">
             Logo (optionnel)
           </Label>
-          <TextInput
+          <input
             {...register('pictureUrl')}
             type="text"
             id="pictureUrl"
             placeholder="https://example.com/picture"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           />
         </div>
       </div>
@@ -476,13 +488,14 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="companyName" className="">
           Nom du shop
         </Label>
-        <TextInput
+        <input
           {...register('companyName', {
             required: 'Le nom du shop est requis',
           })}
           type="text"
           id="companyName"
           placeholder="Nom du shop"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.companyName && (
           <span className="text-sm text-red-600">
@@ -495,11 +508,12 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="description" className="">
           Description (optionnel)
         </Label>
-        <TextInput
+        <input
           {...register('description')}
           type="text"
           id="description"
           placeholder="Description"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
       </div>
 
@@ -507,17 +521,20 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="activity" className="">
           Activité du shop
         </Label>
-        <Select
+        <select
           {...register('activity', {
             required: "L'activité du shop est requise",
           })}
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         >
-          <option value="Restauration">Restauration</option>
+          <option value="Restauration" selected>
+            Restauration
+          </option>
           <option value="Supply">Alimentation</option>
           <option value="Entertainment">Divertissement</option>
           <option value="Store">Magasin</option>
           <option value="Service">Service</option>
-        </Select>
+        </select>
         {errors.activity && (
           <span className="text-sm text-red-600">
             {errors.activity.message.toString()}
@@ -529,7 +546,7 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="email" className="">
           Email
         </Label>
-        <TextInput
+        <input
           {...register('email', {
             required: "L'email est requis",
             pattern: {
@@ -541,6 +558,7 @@ export const ShopUpdateForm: React.FC = () => {
           type="text"
           id="email"
           placeholder="hello@fidelcly.com"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.email && (
           <span className="text-sm text-red-600">
@@ -553,7 +571,7 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="phone" className="">
           Numéro de téléphone
         </Label>
-        <TextInput
+        <input
           {...register('phone', {
             required: 'Le numéro de téléphone est requis',
             pattern: {
@@ -573,6 +591,7 @@ export const ShopUpdateForm: React.FC = () => {
           id="phone"
           maxLength={10}
           placeholder="0XXXXXXXXX"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.phone && (
           <span className="text-sm text-red-600">
@@ -585,7 +604,7 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="siren" className="">
           Siren
         </Label>
-        <TextInput
+        <input
           {...register('siren', {
             required: 'Le siren est requis',
             pattern: {
@@ -606,6 +625,7 @@ export const ShopUpdateForm: React.FC = () => {
           maxLength={9}
           minLength={9}
           placeholder="XXXXXXXXX"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.siren && (
           <span className="text-sm text-red-600">
@@ -618,7 +638,7 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="siret" className="">
           Siret
         </Label>
-        <TextInput
+        <input
           {...register('siret', {
             required: 'Le siret est requis',
             maxLength: {
@@ -635,6 +655,7 @@ export const ShopUpdateForm: React.FC = () => {
           maxLength={14}
           minLength={14}
           placeholder="XXXXXXXXXXXXXX"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.siret && (
           <span className="text-sm text-red-600">
@@ -667,13 +688,14 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="city" className="">
           Ville
         </Label>
-        <TextInput
+        <input
           {...register('city', {
             required: 'La ville est requise',
           })}
           type="text"
           id="city"
           placeholder="Paris"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.city && (
           <span className="text-sm text-red-600">
@@ -686,7 +708,7 @@ export const ShopUpdateForm: React.FC = () => {
         <Label htmlFor="zipCode" className="">
           Code Postal
         </Label>
-        <TextInput
+        <input
           {...register('zipCode', {
             required: 'Le code postal est requis',
             pattern: {
@@ -708,6 +730,7 @@ export const ShopUpdateForm: React.FC = () => {
           minLength={5}
           max={99999}
           placeholder="XXXXX"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.zipCode && (
           <span className="text-sm text-red-600">
