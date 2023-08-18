@@ -11,13 +11,17 @@ import { useRouter } from 'next/router';
 import moment from 'moment';
 import { errorCode } from '@/translation';
 // react fc with a promotion variable
-export const PromotionCreateForm: React.FC = () => {
+export const PromotionCreateForm = ({
+  promotions,
+  setPromotions,
+  setShown,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPromotionCreatePayload>({ mode: 'onChange' });
-  const router = useRouter();
+
   const onSubmit: SubmitHandler<IPromotionCreatePayload> = useCallback(
     async (data) => {
       const toastid = toast.loading('Vérification en cours...');
@@ -50,8 +54,8 @@ export const PromotionCreateForm: React.FC = () => {
           autoClose: 3000,
           isLoading: false,
         });
-        // reload actual page
-        router.reload();
+        setPromotions([...promotions, body]);
+        setShown(false);
       }
     },
     [],
@@ -193,33 +197,36 @@ export const PromotionUpdateForm: React.FC = () => {
   const router = useRouter();
   const id = Number(router.query.id);
 
+  const loadPromotion = async (): Promise<void> => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await fetch(`/api/promotions/${id}`, options);
+      const data = await response.json();
+      setPromotion(data);
+
+      const startAt = moment(data.startAt).format('YYYY-MM-DD');
+      const endAt = moment(data.endAt).format('YYYY-MM-DD');
+      setValue('name', data.name);
+      setValue('description', data.description);
+      setValue('startAt', startAt);
+      setValue('endAt', endAt);
+      setValue('checkoutLimit', data.checkoutLimit);
+      setValue('id', data.id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (!id) return;
-    const loadPromotion = async (): Promise<void> => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      try {
-        const response = await fetch(`/api/promotions/${id}`, options);
-        const data = await response.json();
-        setPromotion(data);
-        const startAt = moment(data.startAt).format('YYYY-MM-DD');
-        const endAt = moment(data.endAt).format('YYYY-MM-DD');
-        setValue('name', data.name);
-        setValue('description', data.description);
-        setValue('startAt', startAt);
-        setValue('endAt', endAt);
-        setValue('checkoutLimit', data.checkoutLimit);
-        setValue('id', data.id);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     loadPromotion();
   }, [id]);
+
   const onSubmit: SubmitHandler<IPromotionUpdatePayload> = useCallback(
     async (data) => {
       const id = toast.loading('Vérification en cours...');

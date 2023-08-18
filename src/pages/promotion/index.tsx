@@ -1,14 +1,63 @@
 import { PromotionCreateForm } from '../../components/form/Promotion.form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
 import PromotionList from '@/components/list/PromotionList';
 import Navbar from '@/components/layout/Navbar';
+import { IPromotion } from '@/models/Promotions';
+import { IUser } from '@/models/User';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const loadUser = async (): Promise<IUser> => {
+    const userUuid = localStorage.getItem('userUuid');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = fetch(`/api/user/${userUuid}`, options)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+    return user;
+  };
+
+  const loadPromotions = async (): Promise<void> => {
+    setIsLoading(true);
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const user = await loadUser();
+    try {
+      const response = await fetch(
+        `/api/shop/${user.shop.id}/promotion`,
+        options,
+      );
+      const data = await response.json();
+      setPromotions(data);
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    }
+
+    setIsLoading(false);
+  };
+
   const handleClick = (): void => {
     setIsShown((current) => !current);
   };
+
+  useEffect(() => {
+    loadPromotions();
+  }, []);
 
   return (
     <div className="p-4 lg:p-8 min-h-screen">
@@ -35,10 +84,19 @@ export default function Promotion() {
       </div>
       {isShown && (
         <div>
-          <PromotionCreateForm />
+          <PromotionCreateForm
+            promotions={promotions}
+            setPromotions={setPromotions}
+            setShown={setIsShown}
+          />
         </div>
       )}
-      <PromotionList />
+      <PromotionList
+        promotions={promotions}
+        setPromotions={setPromotions}
+        isLoading={isLoading}
+        error={error}
+      />
     </div>
   );
 }

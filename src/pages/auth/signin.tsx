@@ -41,6 +41,7 @@ export default function SignIn() {
       },
       body: JSON.stringify(data),
     });
+
     const body = await response.json();
     if (response.status >= 400) {
       // read the response body
@@ -66,9 +67,10 @@ export default function SignIn() {
         autoClose: 3000,
         isLoading: false,
       });
-      // if user is has a shop, redirect home
-      const userShop = await loadUser();
-      if (userShop.shop) {
+
+      const user = await loadUser();
+      // if user has a shop, redirect home
+      if (user.shop) {
         router.push('/');
       } else {
         router.push('/shops/create');

@@ -1,56 +1,15 @@
-import { useEffect, useState } from 'react';
 import { ICampaign } from '@/models/Campaign';
-import { IUser } from '@/models/User';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
 import moment from 'moment';
 
-export default function CampaignList() {
-  const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const loadUser = async (): Promise<IUser> => {
-    const userUuid = localStorage.getItem('userUuid');
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    try {
-      const response = await fetch(`/api/user/${userUuid}`, options);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      setError(true);
-    }
-  };
-
-  const loadCampaigns = async (): Promise<void> => {
-    setIsLoading(true);
-    const user = await loadUser();
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    try {
-      const response = await fetch(
-        `/api/shop/${user.shop.id}/campaigns`,
-        options,
-      );
-      const data = await response.json();
-      setCampaigns(data);
-    } catch (error) {
-      setError(true);
-    }
-    setIsLoading(false);
-  };
-
+export default function CampaignList({
+  campaigns,
+  setCampaigns,
+  isLoading,
+  error,
+}) {
   async function deletecampaign(id: number): Promise<void> {
     const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/campaign/${id}`, {
@@ -117,11 +76,6 @@ export default function CampaignList() {
       });
     }
   }
-
-  useEffect(() => {
-    loadUser();
-    loadCampaigns();
-  }, []);
 
   return (
     <div className="flow-root mt-8 bg-fidbg rounded-lg">
@@ -208,9 +162,11 @@ export default function CampaignList() {
                       {campaign.subject}
                     </td>
                     <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
-                      {moment(campaign.updatedAt).format(
-                        'dddd, MMMM Do YYYY, h:mm:ss a',
-                      )}
+                      {campaign.updatedAt
+                        ? moment(campaign.updatedAt).format(
+                            'dddd, MMMM Do YYYY, h:mm:ss a',
+                          )
+                        : ''}
                     </td>
                     <td className="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-3">
                       {moment(campaign.createdAt).format(
