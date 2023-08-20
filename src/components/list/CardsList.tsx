@@ -3,6 +3,38 @@ import { IUser } from '@/models/User';
 import { errorCode } from '@/translation';
 import { DateTime } from 'luxon';
 
+function Skeleton() {
+  return (
+    <tr className="border-t border-gray-300">
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
+        <div className="animate-pulse flex space-x-4">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 export default function CardsList() {
   const [balances, setBalances] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +79,6 @@ export default function CardsList() {
           ? 1
           : -1,
       );
-      console.log(list);
       setBalances(list);
     } catch (error) {
       console.error(error);
@@ -111,33 +142,13 @@ export default function CardsList() {
               </thead>
               <tbody className="bg-fidbg">
                 {isLoading && (
-                  <tr className="border-t border-gray-300">
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
-                      <div className="animate-pulse flex space-x-4">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                  </tr>
+                  <>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </>
                 )}
                 {!isLoading && error && (
                   <tr>
