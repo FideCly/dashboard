@@ -374,7 +374,7 @@ export const ShopUpdateForm: React.FC = () => {
     setValue,
     getValues,
   } = useForm<IShopUpdatePayload>({ mode: 'onChange' });
-  const [, setShop] = React.useState<IShopUpdatePayload>();
+  const [shop, setShop] = React.useState<IShopUpdatePayload>();
 
   useEffect(() => {
     const getShop = async (): Promise<void> => {
@@ -401,6 +401,7 @@ export const ShopUpdateForm: React.FC = () => {
         setValue('long', data.long);
         setValue('pictureUrl', data.pictureUrl || '');
         setValue('description', data.description || '');
+        setValue('activity', data.activity);
       } catch (error) {
         console.log(error);
       }
@@ -527,13 +528,36 @@ export const ShopUpdateForm: React.FC = () => {
           })}
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         >
-          <option value="Restauration" selected>
+          <option
+            value="Restauration"
+            selected={shop?.activity === getValues('activity') ?? false}
+          >
             Restauration
           </option>
-          <option value="Supply">Alimentation</option>
-          <option value="Entertainment">Divertissement</option>
-          <option value="Store">Magasin</option>
-          <option value="Service">Service</option>
+          <option
+            value="Supply"
+            selected={shop?.activity === getValues('activity') ?? false}
+          >
+            Alimentation
+          </option>
+          <option
+            value="Entertainment"
+            selected={shop?.activity === getValues('activity') ?? false}
+          >
+            Divertissement
+          </option>
+          <option
+            value="Store"
+            selected={shop?.activity === getValues('activity') ?? false}
+          >
+            Magasin
+          </option>
+          <option
+            value="Service"
+            selected={shop?.activity === getValues('activity') ?? false}
+          >
+            Service
+          </option>
         </select>
         {errors.activity && (
           <span className="text-sm text-red-600">
