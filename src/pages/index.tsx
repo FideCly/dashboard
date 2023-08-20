@@ -13,6 +13,28 @@ import Chart from 'chart.js/auto';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+function ChartSkeleton() {
+  return (
+    <div
+      role="status"
+      className="p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
+    >
+      <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2.5"></div>
+      <div className="w-48 h-2 mb-10 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+      <div className="flex items-baseline mt-4 space-x-6">
+        <div className="w-full bg-gray-200 rounded-t-lg h-72 dark:bg-gray-700"></div>
+        <div className="w-full h-56 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
+        <div className="w-full bg-gray-200 rounded-t-lg h-72 dark:bg-gray-700"></div>
+        <div className="w-full h-64 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
+        <div className="w-full bg-gray-200 rounded-t-lg h-80 dark:bg-gray-700"></div>
+        <div className="w-full bg-gray-200 rounded-t-lg h-72 dark:bg-gray-700"></div>
+        <div className="w-full bg-gray-200 rounded-t-lg h-80 dark:bg-gray-700"></div>
+      </div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+}
+
 function StatCard({ label, stat, total, isLoading }) {
   let percentage = 0;
   if (total && total != 0 && stat != 0)
@@ -119,6 +141,8 @@ export default function Home() {
   };
 
   const checkShop = async (): Promise<void> => {
+    setIsLoading(true);
+
     const user = await loadUser();
     // if user not have shop got to create shop page
     if (!user?.shop) {
@@ -165,6 +189,7 @@ export default function Home() {
       );
       const data = await response.json(); // Extract JSON data from response
       setAffluenceToday(data); // Set state with extracted data
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -281,7 +306,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     Chart.register(CategoryScale);
     checkShop();
     getClientCount();
@@ -291,7 +315,6 @@ export default function Home() {
     getAffluence();
     getAffluenceThisMonth();
     getAffluenceToday();
-    setIsLoading(false);
   }, []);
 
   return (
@@ -393,12 +416,12 @@ export default function Home() {
             Représentation schématique de vos données analytiques.
           </p>
         </div>
-        {promotionRanking ? (
-          <div className="w-2/3 justify-center mx-auto text-gray-600 ">
-            <h3 className="text-lg font-normal text-gray-900">
-              Classement Des Promotions Par Popularité
-            </h3>
-            <div className="">
+        <div className="w-2/3 justify-center mx-auto text-gray-600 ">
+          {promotionRanking ? (
+            <>
+              <h3 className="text-lg font-normal text-gray-900">
+                Classement Des Promotions Par Popularité
+              </h3>
               <BarChart
                 chartData={{
                   labels: promotionRanking.promotionNames,
@@ -421,9 +444,11 @@ export default function Home() {
                   ],
                 }}
               />
-            </div>
-          </div>
-        ) : null}
+            </>
+          ) : (
+            <ChartSkeleton />
+          )}
+        </div>
       </div>
       <div id="activity" className="py-16 p-8">
         <CardsList />

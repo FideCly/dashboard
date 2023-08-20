@@ -4,6 +4,38 @@ import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
 import { DateTime } from 'luxon';
 
+function Skeleton() {
+  return (
+    <tr className="border-t border-gray-300">
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
+        <div className="animate-pulse flex space-x-4">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 export default function CampaignList({
   campaigns,
   setCampaigns,
@@ -116,33 +148,13 @@ export default function CampaignList({
             </thead>
             <tbody className="bg-fidbg">
               {isLoading && (
-                <tr className="border-t border-gray-300">
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
-                    <div className="animate-pulse flex space-x-4">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                </tr>
+                <>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                </>
               )}
               {!isLoading && error && (
                 <tr>
