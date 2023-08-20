@@ -8,12 +8,17 @@ import { QrReader } from 'react-qr-reader';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
 import { errorCode } from '@/translation';
+import { IPromotion } from '@/models/Promotions';
+import { ICard } from '@/models/Card';
 
 export default function ScannerForm() {
   const [data, setData] = useState(
     'Scanner un QR Code pour voir apparaître son contenu',
   );
-  const [promotion, setPromotion] = useState<any>([]);
+  const [promotion, setPromotion] = useState<IPromotion[]>([]);
+  const [cards, setCards] = useState<ICard[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -30,37 +35,70 @@ export default function ScannerForm() {
     return { facingMode: 'user' };
   };
 
-  React.useEffect(() => {
-    const loadPromotions = async (): Promise<void> => {
-      try {
-        const userUuid = localStorage.getItem('userUuid');
-        const user = await fetch(`/api/user/${userUuid}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await user.json();
-        const response = await fetch(
-          `/api/shop/${data.shop.id}/promotion?isActive=true`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        const dataPromotion = await response.json();
-        setPromotion(dataPromotion.filter((p) => p.isActive));
-      } catch (error) {
-        console.error(error);
+  const loadUser = async (): Promise<void> => {
+    try {
+      setLoading(true);
+      const userUuid = localStorage.getItem('userUuid');
+      const user = await fetch(`/api/user/${userUuid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await user.json();
+      localStorage.setItem('shopId', data.shop.id);
+    } catch (error) {}
+  };
+
+  const loadClients = async (): Promise<void> => {
+    try {
+      const shopId = localStorage.getItem('shopId');
+      const response = await fetch(`/api/shop/${shopId}/cards`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const body = await response.json();
+      if (response.status >= 400)
+        setData('Erreur lors du chargement des utilisateurs');
+      else {
+        setCards(body);
+        setLoading(false);
       }
-    };
-    void loadPromotions();
-  }, []);
+    } catch (error) {
+      setData('Erreur lors du chargement des utilisateurs');
+    }
+  };
+
+  const loadPromotions = async (): Promise<void> => {
+    const shopId = localStorage.getItem('shopId');
+    const response = await fetch(
+      `/api/shop/${shopId}/promotion?isActive=true`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    const dataPromotion = await response.json();
+    setPromotion(dataPromotion.filter((p) => p.isActive));
+  };
+
+  const findUsername = (uuid: string) => {
+    const card = cards.find((card) => {
+      return card.user.uuid === uuid;
+    });
+
+    card
+      ? setData(card.user.username)
+      : setData('Cet utilisateur ne possède pas de carte chez vous');
+  };
 
   const onSubmit: SubmitHandler<IScanner> = useCallback(async (data) => {
     const toastId = toast.loading('Vérification en cours...');
@@ -73,7 +111,6 @@ export default function ScannerForm() {
       body: JSON.stringify({ ...data, promotionId: +data.promotionId }),
     });
     const body = await response.json();
-    console.log(response);
     if (response.status >= 400) {
       toast.update(toastId, {
         render: `${
@@ -95,7 +132,15 @@ export default function ScannerForm() {
         isLoading: false,
         autoClose: 4000,
       });
+      setData('Scanner un QR Code pour voir apparaître son contenu');
+      setValue('uuid', null);
     }
+  }, []);
+
+  React.useEffect(() => {
+    loadUser();
+    loadPromotions();
+    loadClients();
   }, []);
 
   return (
@@ -109,25 +154,44 @@ export default function ScannerForm() {
           <span className="">Scanner</span>
         </h1>
 
-        <div className="grid content-center gap-4">
-          <QrReader
-            onResult={(result, error) => {
-              if (result) {
-                setData(result.getText());
-                setValue('uuid', result.getText());
-              }
-              if (error) {
-                console.log(error);
-                setData('Veuillez scanner un QR code valide pour continuer');
-              }
-            }}
-            constraints={handleConstraints()}
-            videoStyle={{ width: '100%' }}
-            className="w-full rounded-xl"
-            scanDelay={300}
-          />
-          <p className="mt-2 text-sm text-center text-gray-700">{data}</p>
-        </div>
+        {!isLoading ? (
+          <div className="flex flex-col gap-4 rounded-lg">
+            <QrReader
+              onResult={(result) => {
+                if (result) {
+                  findUsername(result.getText());
+                  setValue('uuid', result.getText());
+                }
+              }}
+              constraints={handleConstraints()}
+              videoStyle={{ width: '100%', height: '100%' }}
+              className="w-full"
+              scanDelay={300}
+            />
+            <p className="mt-2 text-sm font-semibold text-center text-gray-700">
+              {data}
+            </p>
+          </div>
+        ) : (
+          <div className="grid content-center gap-4">
+            <div
+              role="status"
+              className="flex items-center justify-center h-56 max-w-sm bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700"
+            >
+              <svg
+                className="w-10 h-10 text-gray-200 dark:text-gray-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 16 20"
+              >
+                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+                <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z" />
+              </svg>{' '}
+            </div>
+            <p className="mt-2 text-sm text-center text-gray-700">{data}</p>
+          </div>
+        )}
       </div>
       <div className="flex flex-col w-full h-full basis-1/2 p-14">
         <h1 className="flex justify-start gap-x-6 items-center text-lg leading-6 font-medium text-gray-600">
