@@ -1,8 +1,50 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
-import moment from 'moment';
 import { toast } from 'react-toastify';
 import { errorCode } from '@/translation';
+import { DateTime } from 'luxon';
+
+function Skeleton() {
+  return (
+    <tr className="border-t border-gray-300">
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+    </tr>
+  );
+}
 
 export default function PromotionList({
   promotions,
@@ -10,6 +52,9 @@ export default function PromotionList({
   isLoading,
   error,
 }) {
+  const activesPromotions = promotions.filter((p) => p.isActive);
+  const inactivesPromotions = promotions.filter((p) => p.isActive === false);
+
   const deletePromotion = async (id: number): Promise<void> => {
     const toastid = toast.loading('Vérification en cours...');
     const response = await fetch(`/api/promotions/${id}`, {
@@ -42,6 +87,8 @@ export default function PromotionList({
       setPromotions(promotions.filter((promotion) => promotion.id !== id));
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div className="flow-root mt-8 rounded-lg bg-fidbg">
@@ -90,43 +137,13 @@ export default function PromotionList({
             </thead>
             <tbody className="bg-fidbg">
               {isLoading && (
-                <tr className="border-t border-gray-300">
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                  <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/7">
-                    <div className="animate-pulse flex space-x-4 w-full">
-                      <div className="h-2 bg-gray-200 rounded w-full"></div>
-                    </div>
-                  </td>
-                </tr>
+                <>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton />
+                </>
               )}
               {!isLoading && error && (
                 <div>
@@ -140,7 +157,7 @@ export default function PromotionList({
               )}
               {!isLoading && !error && (
                 <>
-                  {promotions.length > 0 && (
+                  {activesPromotions.length > 0 && (
                     <Fragment key="Actives">
                       <tr className="border-t border-gray-200">
                         <th
@@ -151,52 +168,52 @@ export default function PromotionList({
                           Actives
                         </th>
                       </tr>
-                      {promotions
-                        .filter((p) => p.isActive)
-                        .map((promotion) => (
-                          <tr
-                            key={promotion.id}
-                            className="border-t border-gray-300"
-                          >
-                            <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
-                              {promotion.name}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {promotion.description}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {promotion.checkoutLimit}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {moment(promotion.startAt).format('DD/MM/YYYY')}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {moment(promotion.endAt).format('DD/MM/YYYY')}
-                            </td>
-                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                              <Link
-                                href={`/promotion/${promotion.id}/edit`}
-                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                              >
-                                Modifier
-                                <span className="sr-only">
-                                  {promotion.name}
-                                </span>
-                              </Link>
-                            </td>
-                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                              <button
-                                onClick={() => deletePromotion(promotion.id)}
-                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                              >
-                                Supprimer
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                      {activesPromotions.map((promotion) => (
+                        <tr
+                          key={promotion.id}
+                          className="border-t border-gray-300"
+                        >
+                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
+                            {promotion.name}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {promotion.description}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {promotion.checkoutLimit}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                            {DateTime.fromISO(promotion.startAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                            {DateTime.fromISO(promotion.endAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
+                          </td>
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                            <Link
+                              href={`/promotion/${promotion.id}/edit`}
+                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                            >
+                              Modifier
+                              <span className="sr-only">{promotion.name}</span>
+                            </Link>
+                          </td>
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                            <button
+                              onClick={() => deletePromotion(promotion.id)}
+                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                            >
+                              Supprimer
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                     </Fragment>
                   )}
-                  {promotions.length > 0 && (
+                  {inactivesPromotions.length > 0 && (
                     <Fragment key="Inactives">
                       <tr className="border-t border-gray-200">
                         <th
@@ -207,49 +224,49 @@ export default function PromotionList({
                           Inactives
                         </th>
                       </tr>
-                      {promotions
-                        .filter((p) => p.isActive === false)
-                        .map((promotion) => (
-                          <tr
-                            key={promotion.id}
-                            className="border-t border-gray-300"
-                          >
-                            <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
-                              {promotion.name}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {promotion.description}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {promotion.checkoutLimit}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {moment(promotion.startAt).format('DD/MM/YYYY')}
-                            </td>
-                            <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              {moment(promotion.endAt).format('DD/MM/YYYY')}
-                            </td>
-                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                              <Link
-                                href={`/promotion/${promotion.id}/edit`}
-                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                              >
-                                Modifier
-                                <span className="sr-only">
-                                  {promotion.name}
-                                </span>
-                              </Link>
-                            </td>
-                            <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
-                              <button
-                                onClick={() => deletePromotion(promotion.id)}
-                                className="text-fidgreen hover:text-fidgreen/80 hover:underline"
-                              >
-                                Supprimer
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                      {inactivesPromotions.map((promotion) => (
+                        <tr
+                          key={promotion.id}
+                          className="border-t border-gray-300"
+                        >
+                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-3">
+                            {promotion.name}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {promotion.description}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {promotion.checkoutLimit}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {DateTime.fromISO(promotion.startAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {DateTime.fromISO(promotion.endAt)
+                              .setLocale('fr')
+                              .toFormat('DDDD')}
+                          </td>
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                            <Link
+                              href={`/promotion/${promotion.id}/edit`}
+                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                            >
+                              Modifier
+                              <span className="sr-only">{promotion.name}</span>
+                            </Link>
+                          </td>
+                          <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-3">
+                            <button
+                              onClick={() => deletePromotion(promotion.id)}
+                              className="text-fidgreen hover:text-fidgreen/80 hover:underline"
+                            >
+                              Supprimer
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                     </Fragment>
                   )}
                 </>

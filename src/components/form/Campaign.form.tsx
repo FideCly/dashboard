@@ -155,6 +155,7 @@ export const CampaignUpdateForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
     setValue,
   } = useForm<ICampaignUpdatePayload>({ mode: 'onChange' });
 
@@ -319,11 +320,12 @@ export const CampaignUpdateForm: React.FC = () => {
           id="promotionId"
           placeholder="promotionId"
         >
-          <option key="" value="">
-            -- Choisissez une option --
-          </option>
           {promotions?.map((promotion) => (
-            <option key={promotion.id} value={promotion.id}>
+            <option
+              key={promotion.id}
+              value={promotion.id}
+              selected={promotion.id === +getValues('promotionId') ?? false}
+            >
               {promotion.name}
             </option>
           ))}

@@ -8,9 +8,9 @@ import { IUser } from '@/models/User';
 
 export default function Promotion() {
   const [isShown, setIsShown] = useState(false);
-  const [promotions, setPromotions] = useState<IPromotion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [promotions, setPromotions] = useState<IPromotion[]>([]);
 
   const loadUser = async (): Promise<IUser> => {
     const userUuid = localStorage.getItem('userUuid');

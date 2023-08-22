@@ -1,7 +1,39 @@
 import { useEffect, useState } from 'react';
 import { IUser } from '@/models/User';
-import moment from 'moment';
 import { errorCode } from '@/translation';
+import { DateTime } from 'luxon';
+
+function Skeleton() {
+  return (
+    <tr className="border-t border-gray-300">
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
+        <div className="animate-pulse flex space-x-4">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+      <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
+        <div className="animate-pulse flex space-x-4 w-full">
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+        </div>
+      </td>
+    </tr>
+  );
+}
 
 export default function CardsList() {
   const [balances, setBalances] = useState<any[]>([]);
@@ -42,7 +74,11 @@ export default function CardsList() {
         });
       });
 
-      list.sort((a, b) => a.updatedAt - b.updatedAt);
+      list.sort((a, b) =>
+        new Date(b.updatedAt).getTime() > new Date(a.updatedAt).getTime()
+          ? 1
+          : -1,
+      );
       setBalances(list);
     } catch (error) {
       console.error(error);
@@ -106,33 +142,13 @@ export default function CardsList() {
               </thead>
               <tbody className="bg-fidbg">
                 {isLoading && (
-                  <tr className="border-t border-gray-300">
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/4">
-                      <div className="animate-pulse flex space-x-4">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-3 text-sm mx-auto justify-center font-medium text-gray-900 whitespace-nowrap sm:pl-3 w-1/5">
-                      <div className="animate-pulse flex space-x-4 w-full">
-                        <div className="h-2 bg-gray-200 rounded w-full"></div>
-                      </div>
-                    </td>
-                  </tr>
+                  <>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </>
                 )}
                 {!isLoading && error && (
                   <tr>
@@ -162,7 +178,7 @@ export default function CardsList() {
                       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {balance.counter}
                       </td>
-                      {balance.counter == balance.promotion?.checkoutLimit ? (
+                      {balance.isActive === false ? (
                         <td className="whitespace-nowrap px-3 py-4">
                           <span className='className="whitespace-nowrap inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
                             {errorCode[200]['Promotion limit reached']}
@@ -175,10 +191,10 @@ export default function CardsList() {
                           </span>
                         </td>
                       )}
-                      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        {moment(balance.updatedAt).format(
-                          'dddd, MMMM Do YYYY, h:mm:ss a',
-                        )}
+                      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap capitalize">
+                        {DateTime.fromISO(balance.updatedAt)
+                          .setLocale('fr')
+                          .toFormat('DDDD t')}
                       </td>
                     </tr>
                   ))}
