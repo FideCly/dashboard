@@ -78,8 +78,8 @@ dependencies:
     specifier: ^9.0.1
     version: 9.0.1
   luxon:
-    specifier: ^3.4.0
-    version: 3.4.0
+    specifier: ^3.4.1
+    version: 3.4.1
   moment:
     specifier: ^2.29.4
     version: 2.29.4
@@ -3102,8 +3102,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /luxon@3.4.0:
-    resolution: {integrity: sha512-7eDo4Pt7aGhoCheGFIuq4Xa2fJm4ZpmldpGhjTYBNUYNCN6TIEP6v7chwwwt3KRp7YR+rghbfvjyo3V5y9hgBw==}
+  /luxon@3.4.1:
+    resolution: {integrity: sha512-2USspxOCXWGIKHwuQ9XElxPPYrDOJHDQ5DQ870CoD+CxJbBnRDIBCfhioUJJjct7BKOy80Ia8cVstIcIMb/0+Q==}
     engines: {node: '>=12'}
     dev: false
 
