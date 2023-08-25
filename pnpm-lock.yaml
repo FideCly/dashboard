@@ -149,8 +149,8 @@ devDependencies:
     specifier: ^13.4.19
     version: 13.4.19
   '@types/google.maps':
-    specifier: ^3.53.6
-    version: 3.53.6
+    specifier: ^3.54.0
+    version: 3.54.0
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.4.1
     version: 6.4.1(@typescript-eslint/parser@6.4.1)(eslint@8.46.0)(typescript@5.1.6)
@@ -706,8 +706,8 @@ packages:
     resolution: {integrity: sha512-HoRq4Te8J6krH7hj+TfdYepqegoKZCj3kkaK5gf+ySFSHLvyqYkDvkrtbcVJXQ6QBphQ0h1TF7p4J6sOh4r/zg==}
     dev: false
 
-  /@types/google.maps@3.53.6:
-    resolution: {integrity: sha512-zDU8c7K0YR1Ob7Wn0qCSQvICIuxilZH9KFIDHK6JO/5QzqEMv8e4+9bmyoDEktA9vPNmwP++zzg65h9y53iZ6Q==}
+  /@types/google.maps@3.54.0:
+    resolution: {integrity: sha512-b1MBy2eGrZoEFLnzq1RrlHbfzuWHz+Nitgqbb5N+MFA0kAUv0kYPmAXtczpb4dHlFZyu58EYzcKXtWNqSInyXg==}
 
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
@@ -3739,7 +3739,7 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@googlemaps/js-api-loader': 1.16.2
-      '@types/google.maps': 3.53.6
+      '@types/google.maps': 3.54.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-select: 5.7.4(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
