@@ -18,19 +18,21 @@ function NavLink({ icon, label, href }) {
   return (
     <div
       className={
-        'px-6 py-1 hover:bg-fidyellow ' +
-        (router.pathname == href ? 'bg-fidyellow ' : '')
+        'md:px-6 px-2 py-1 hover:bg-fidyellow ' +
+        (router.pathname == href ? 'bg-fidyellow' : '')
       }
     >
       <Link
         href={href}
-        className="flex items-center justify-between p-2 text-white gap-x-4"
+        className="flex items-center justify-between p-1 lg:p-2 text-white gap-x-4"
       >
         <div className="flex items-center gap-x-6">
           <FontAwesomeIcon icon={icon} />
-          <span className="whitespace-nowrap">{label}</span>
+          <span className="whitespace-nowrap hidden md:block">{label}</span>
         </div>
-        <FontAwesomeIcon icon={faChevronRight} />
+        <div className="hidden md:block">
+          <FontAwesomeIcon icon={faChevronRight} />
+        </div>
       </Link>
     </div>
   );
@@ -56,15 +58,15 @@ export default function Sidebar() {
     loadUser();
   }, []);
   return (
-    <div className="sticky inset-y-0 z-50 py-4 bg-fidgreen">
+    <div className="sticky inset-y-0 z-50 py-4 w-fit bg-fidgreen">
       <Image
         src="/logo_vertical.svg"
         width={150}
         height={100}
-        className="m-auto rounded"
+        className="m-auto rounded hidden md:block"
         alt="logo"
       />
-      <nav className="flex flex-col pt-10 space-y-4">
+      <nav className="flex flex-col w-fit pt-10 space-y-4">
         <NavLink icon={faQrcode} label={'Scanner'} href={'/scanner'} />
         <NavLink icon={faChartLine} label={'Tableau de bord'} href={'/'} />
         <NavLink icon={faTags} label={'Promotions'} href={'/promotion'} />

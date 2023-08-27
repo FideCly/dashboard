@@ -90,7 +90,7 @@ export default function Campaign() {
   }, []);
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 min-h-screen">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen h-screen">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
@@ -134,14 +134,14 @@ export default function Campaign() {
 
 Campaign.getLayout = function getLayout(page) {
   return (
-    <div className="w-full bg-fidbg flex">
-      <div className=" inset-y-0 z-50 bg-fidgreen">
+    <div className="w-full bg-fidbg flex min-h-screen">
+      <div className=" inset-y-0 z-50 bg-fidgreen min-h-screen">
         <Sidebar />
       </div>
-      <div className="w-full">
+      <div className="w-full min-h-screen">
         <Navbar />
-        <main className="">
-          <div className="mx-auto">{page}</div>
+        <main className="min-h-screen">
+          <div className="mx-auto min-h-screen">{page}</div>
         </main>
       </div>
     </div>
