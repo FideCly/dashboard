@@ -66,8 +66,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8 py-2 bg-gray-50 border-b">
-      <div className="flex items-center w-full h-fit px-4 border-gray-200 shadow-sm gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+    <div className="sticky top-0 z-40 w-full lg:mx-auto lg:px-8 py-2 bg-gray-50 border-b shadow">
+      <div className="flex items-center w-full h-fit px-4 border-gray-200 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
         {isLoading ? (
           <Skeleton />
         ) : (
@@ -77,23 +77,23 @@ export default function Navbar() {
               href="/settings#shop"
             >
               <img
-                className="inline-block h-10 w-10 rounded-full"
+                className="inline-block h-10 w-10 rounded-full hidden md:block"
                 src={user?.shop.pictureUrl}
                 alt=""
               ></img>
-              <span className="flex-1 ml-4 text-2xl font-medium leading-6 text-gray-900 w-fit">
+              <span className="flex-1 md:ml-4 text-2xl font-medium leading-6 text-gray-900 w-fit">
                 {user?.shop.companyName}
               </span>
             </Link>
             <Link href="/settings#profile">
               {user?.pictureUrl ? (
                 <img
-                  className="inline-block h-10 w-10 rounded-full"
+                  className="inline-block h-10 w-10 rounded-full hidden md:block"
                   src={user?.pictureUrl}
                   alt=""
                 ></img>
               ) : (
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-500">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-500 hidden md:block">
                   <span className="font-medium leading-none text-white">
                     {user?.username[0]}
                   </span>

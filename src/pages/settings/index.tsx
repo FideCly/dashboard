@@ -62,11 +62,11 @@ export default function GeneralSettings() {
 
   return (
     <main className="w-full h-full">
-      <h1 className="text-xl font-semibold leading-6 text-gray-900 p-12">
+      <h1 className="text-xl font-semibold leading-6 text-gray-900 md:p-12 p-4">
         Réglages
       </h1>
       <header className="shadow bg-gray-50">
-        <nav className="flex py-4 px-12">
+        <nav className="flex p-2 md:py-4 md:px-12">
           <ul
             role="list"
             className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
@@ -91,7 +91,7 @@ export default function GeneralSettings() {
       </header>
       <div className="divide-y">
         <div
-          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:py-16 p-4 sm:px-6 md:grid-cols-3 md:px-10 lg:px-20"
           id="qrcode"
         >
           <div>
@@ -108,11 +108,11 @@ export default function GeneralSettings() {
             <QRCode
               id="fancy-qr-code"
               value={user?.shop.id.toString()}
-              className="p-8 mx-auto rounded-md shadow-md bg-fidbg"
-              size={500}
+              className="md:p-8 p-4 mx-auto rounded-md shadow-md bg-fidbg md:w-1/2 w-full"
+              size={300}
             />
             <button
-              className="w-1/2 px-3 py-2 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
+              className="md:w-1/2 px-3 py-2 mx-auto text-sm font-medium text-center text-white rounded-md shadow-sm bg-fidgreen hover:bg-fidgreen/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fidgreen"
               onClick={downloadQRCode}
             >
               Télécharger le QR code
@@ -121,7 +121,7 @@ export default function GeneralSettings() {
         </div>
 
         <div
-          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:py-16 p-4 sm:px-6 md:grid-cols-3 lg:px-20"
           id="shop"
         >
           <div>
@@ -137,7 +137,7 @@ export default function GeneralSettings() {
         </div>
 
         <div
-          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 sm:px-6 md:grid-cols-3 px-10 lg:px-20"
+          className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:py-16 p-4 sm:px-6 md:grid-cols-3 lg:px-20"
           id="profile"
         >
           <div>

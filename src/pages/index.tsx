@@ -319,7 +319,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      <div className="p-12">
+      <div className="p-6 md:p-12">
         <h1 className="text-xl font-semibold leading-6 text-gray-900">
           Données analytiques
         </h1>
@@ -328,7 +328,7 @@ export default function Home() {
         </p>
       </div>
       <header className=" bg-gray-50 shadow">
-        <nav className="flex py-4 px-12">
+        <nav className="flex py-4 px-2 md:px-12">
           <ul
             role="list"
             className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-800 sm:px-6 lg:px-8"
@@ -352,8 +352,8 @@ export default function Home() {
         </nav>
       </header>
 
-      <div id="stats" className="py-16">
-        <div className="sm:flex-auto px-12 pb-8">
+      <div id="stats" className="py-6 md:py-16">
+        <div className="sm:flex-auto px-6 md:px-12 pb-6 md:pb-8">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
             Chiffres clés
           </h1>
@@ -408,7 +408,7 @@ export default function Home() {
         </div>
       </div>
       <div id="charts" className="">
-        <div className="sm:flex-auto px-12 pb-8">
+        <div className="sm:flex-auto px-6 md:px-12 pb-6 md:pb-8">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
             Graphiques
           </h1>
@@ -416,7 +416,7 @@ export default function Home() {
             Représentation schématique de vos données analytiques.
           </p>
         </div>
-        <div className="w-2/3 justify-center mx-auto text-gray-600 ">
+        <div className="px-1 md:w-2/3 justify-center mx-auto text-gray-600 ">
           {promotionRanking ? (
             <>
               <h3 className="text-lg font-normal text-gray-900">
@@ -450,7 +450,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div id="activity" className="py-16 p-8">
+      <div id="activity" className="p-6 md:py-16 md:p-8">
         <CardsList />
       </div>
     </main>

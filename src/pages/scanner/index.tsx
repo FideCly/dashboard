@@ -6,7 +6,7 @@ export default function Scanner() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex items-center">
-        <div className="sm:flex-auto border-b p-12">
+        <div className="sm:flex-auto border-b p-4 md:p-12">
           <h1 className="text-xl font-semibold leading-6 text-gray-900">
             Valider le passage
           </h1>
@@ -16,7 +16,7 @@ export default function Scanner() {
           </p>
         </div>
       </div>
-      <div className="sm:flex-auto px-12">
+      <div className="sm:flex-auto w-full md:px-12">
         <ScannerForm />
       </div>
     </div>

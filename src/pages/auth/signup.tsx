@@ -57,7 +57,13 @@ export default function signup() {
   return (
     <section className="relative z-10">
       <div className="flex flex-col items-center justify-center h-screen px-6 mx-auto gap-y-10 lg:py-0">
-        <Image src="/logo.svg" width={400} height={100} alt="logo" />
+        <Image
+          src="/logo.svg"
+          width={400}
+          height={100}
+          alt="logo"
+          className="lg:w-1/4 w-3/4"
+        />
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <div>
@@ -65,7 +71,7 @@ export default function signup() {
                 S'inscrire
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                Inscris-toi et commence à gérer ta boutique.
+                Inscris-toi et commences à gérer ta boutique.
               </p>
             </div>
             <form
