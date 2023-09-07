@@ -84,7 +84,7 @@ export default function ScannerForm() {
       },
     );
     if (response.status >= 400) {
-      throw new Error('Bad response from server');
+     toast.error('Erreur lors du chargement des promotions');
     }
     const dataPromotion = await response.json();
     setPromotion(dataPromotion.filter((p) => p.isActive));
@@ -145,11 +145,11 @@ export default function ScannerForm() {
 
   return (
     <form
-      className="grid md:grid-cols-2 h-full md:divide-x divide-y border-b"
+      className="grid h-full border-b divide-y md:grid-cols-2 md:divide-x"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col justify-center w-full h-full basis-1/2 md:p-14 p-4">
-        <h1 className="flex justify-start gap-x-6 items-center text-lg leading-6 font-medium text-gray-600">
+      <div className="flex flex-col justify-center w-full h-full p-4 basis-1/2 md:p-14">
+        <h1 className="flex items-center justify-start text-lg font-medium leading-6 text-gray-600 gap-x-6">
           <span className="">1.</span>
           <span className="">Scanner</span>
         </h1>
@@ -193,8 +193,8 @@ export default function ScannerForm() {
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full h-full basis-1/2 md:p-14 p-4 gap-8">
-        <h1 className="flex justify-start gap-x-6 items-center text-lg leading-6 font-medium text-gray-600">
+      <div className="flex flex-col w-full h-full gap-8 p-4 basis-1/2 md:p-14">
+        <h1 className="flex items-center justify-start text-lg font-medium leading-6 text-gray-600 gap-x-6">
           <span className="">2.</span>
           <span className="">Sélectionner la promotion à appliquer</span>
         </h1>
@@ -220,7 +220,7 @@ export default function ScannerForm() {
             })}
           </select>
           {errors.promotionId && (
-            <span className="text-red-600 text-sm">
+            <span className="text-sm text-red-600">
               {errors.promotionId.message.toString()}
             </span>
           )}
