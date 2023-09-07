@@ -35,11 +35,13 @@ export const UserUpdateForm: React.FC = () => {
       setValue('id', user?.id);
       setValue('email', user?.email);
       setValue('username', user?.username);
-      setValue('birthday', moment(user?.birthday).format('YYYY-MM-DD'));
-      setValue('sexe', user?.sexe);
-      setValue('pictureUrl', user?.pictureUrl ?? '');
+      setValue(
+        'birthday',
+        user?.birthday ? moment(user.birthday).format('YYYY-MM-DD') : null,
+      );
+      setValue('sexe', user?.sexe ?? null);
+      setValue('pictureUrl', user.pictureUrl);
     };
-
     loadUserShop();
   }, []);
 
@@ -82,12 +84,12 @@ export const UserUpdateForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col md:col-span-2 gap-y-4"
     >
-      <div className="col-span-full flex items-center gap-x-8">
+      <div className="flex items-center col-span-full gap-x-8">
         {getValues('pictureUrl') && (
           <img
             src={getValues('pictureUrl')}
             alt=""
-            className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"
+            className="flex-none object-cover w-24 h-24 bg-gray-800 rounded-lg"
           />
         )}
         <div className="w-full">
@@ -137,7 +139,7 @@ export const UserUpdateForm: React.FC = () => {
           Date de naissance
         </Label>
         <input
-          {...register('birthday', { required: true })}
+          {...register('birthday', { required: false })}
           type="date"
           name="birthday"
           id="birthday"
@@ -155,7 +157,7 @@ export const UserUpdateForm: React.FC = () => {
           name="sexe"
           id="sexe"
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
-          {...register('sexe', { required: true })}
+          {...register('sexe', { required: false })}
         >
           <option value="Male" selected={getValues('sexe') === 'Male'}>
             Homme
