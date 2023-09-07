@@ -93,7 +93,7 @@ export default function Navbar() {
                   alt=""
                 ></img>
               ) : (
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-500 hidden md:block">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gray-500">
                   <span className="font-medium leading-none text-white">
                     {user?.username[0]}
                   </span>

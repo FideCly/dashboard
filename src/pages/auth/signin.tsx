@@ -44,6 +44,7 @@ export default function SignIn() {
 
     const body = await response.json();
     if (response.status >= 400) {
+      console.log(response.body);
       // read the response body
       toast.update(toastid, {
         render: `${
