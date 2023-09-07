@@ -76,11 +76,13 @@ export default function Navbar() {
               className=" w-full justify-start items-center flex"
               href="/settings#shop"
             >
-              <img
-                className="inline-block h-10 w-10 rounded-full hidden md:block"
-                src={user?.shop.pictureUrl}
-                alt=""
-              ></img>
+              {user?.shop.pictureUrl && (
+                <img
+                  className="inline-block h-10 w-10 rounded-full hidden md:block object-cover"
+                  src={user?.shop.pictureUrl}
+                  alt=""
+                ></img>
+              )}
               <span className="flex-1 md:ml-4 text-2xl font-medium leading-6 text-gray-900 w-fit">
                 {user?.shop.companyName}
               </span>
@@ -88,7 +90,7 @@ export default function Navbar() {
             <Link href="/settings#profile">
               {user?.pictureUrl ? (
                 <img
-                  className="inline-block h-10 w-10 rounded-full hidden md:block"
+                  className="inline-block h-10 w-10 rounded-full hidden md:block object-cover"
                   src={user?.pictureUrl}
                   alt=""
                 ></img>

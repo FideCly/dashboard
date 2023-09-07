@@ -95,7 +95,7 @@ export const CampaignCreateForm = ({
           type="text"
           id="subject"
           maxLength={200}
-          placeholder="subject"
+          placeholder="Sujet"
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
         />
         {errors.subject && (
