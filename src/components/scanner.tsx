@@ -62,13 +62,17 @@ export default function ScannerForm() {
 
       const body = await response.json();
       if (response.status >= 400)
-        setData('Erreur lors du chargement des utilisateurs');
+        setData(
+          'Erreur lors du chargement des utilisateurs. Veuillez recharger la page.',
+        );
       else {
         setCards(body);
         setLoading(false);
       }
     } catch (error) {
-      setData('Erreur lors du chargement des utilisateurs');
+      setData(
+        'Erreur lors du chargement des utilisateurs. Veuillez recharger la page.',
+      );
     }
   };
 
