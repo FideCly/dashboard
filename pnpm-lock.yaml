@@ -102,8 +102,8 @@ dependencies:
     specifier: ^5.2.0
     version: 5.2.0(chart.js@4.4.0)(react@18.2.0)
   react-cookie:
-    specifier: ^6.1.0
-    version: 6.1.0(react@18.2.0)
+    specifier: ^6.1.1
+    version: 6.1.1(react@18.2.0)
   react-device-detect:
     specifier: ^2.2.3
     version: 2.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -3800,8 +3800,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-cookie@6.1.0(react@18.2.0):
-    resolution: {integrity: sha512-j/q0kf4f8kK7zXyTdGEebtZ3IKhVCPZVL3pf6y9/KlfFThxRjb+xvgdKAvRB2VrdkXyu9Qbrb/VuiFUNK6/3+g==}
+  /react-cookie@6.1.1(react@18.2.0):
+    resolution: {integrity: sha512-fuFRpf8LH6SfmVMowDUIRywJF5jAUDUWrm0EI5VdXfTl5bPcJ7B0zWbuYpT0Tvikx7Gs18MlvAT+P+744dUz2g==}
     peerDependencies:
       react: '>= 16.3.0'
     dependencies:
