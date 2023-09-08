@@ -165,15 +165,15 @@ export const PromotionCreateForm = ({
               message: 'La limite de passage doit être un nombre',
             },
             min: {
-              value: 1,
-              message: 'La limite de passage doit être supérieure à 0',
+              value: 2,
+              message: 'La limite de passage doit être supérieure à 1',
             },
           })}
           type="text"
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="checkoutLimit"
           maxLength={50}
-          min={1}
+          min={2}
           placeholder="10"
         />
         {errors.checkoutLimit && (
@@ -380,8 +380,8 @@ export const PromotionUpdateForm: React.FC = () => {
           {...register('checkoutLimit', {
             required: 'La limite de passage est requise',
             min: {
-              value: 1,
-              message: 'La limite de passage doit être supérieure à 0',
+              value: 2,
+              message: 'La limite de passage doit être supérieure à 1',
             },
             pattern: {
               value: /^\d*$/,
@@ -392,7 +392,7 @@ export const PromotionUpdateForm: React.FC = () => {
           className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fidgreen focus:border-fidgreen block w-full p-2.5"
           id="checkoutLimit"
           maxLength={50}
-          min={1}
+          min={2}
           placeholder="10"
         />
         {errors.checkoutLimit && (
