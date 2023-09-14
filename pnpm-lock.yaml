@@ -4019,7 +4019,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.2.1
-      set-function-name: 2.0.0
+      set-function-name: 2.0.1
     dev: false
 
   /request-progress@3.0.0:
@@ -4157,11 +4157,12 @@ packages:
     resolution: {integrity: sha512-RVnVQxTXuerk653XfuliOxBP81Sf0+qfQE73LIYKcyMYHG94AuH0kgrQpRDuTZnSmjpysHmzxJXKNfa6PjFhyQ==}
     dev: false
 
-  /set-function-name@2.0.0:
-    resolution: {integrity: sha512-WmS8UHojv5s1eSoRSmzO5zzgDq8PE1/X/ij0k+9fMYmINCc6+j+SF3Om8YyucKn2yjnK4ItNZOoQycNnHsZJTw==}
+  /set-function-name@2.0.1:
+    resolution: {integrity: sha512-tMNCiqYVkXIZgc2Hnoy2IvC/f8ezc5koaRFkCjrpWzGpCd3qbZXPzVy9MAZzK1ch/X0jvSkojys3oqJN0qCmdA==}
     engines: {node: '>= 0.4'}
     dependencies:
       define-data-property: 1.0.1
+      functions-have-names: 1.2.3
       has-property-descriptors: 1.0.0
     dev: false
 
@@ -4295,7 +4296,7 @@ packages:
       has-symbols: 1.0.3
       internal-slot: 1.0.5
       regexp.prototype.flags: 1.5.1
-      set-function-name: 2.0.0
+      set-function-name: 2.0.1
       side-channel: 1.0.4
     dev: false
 
